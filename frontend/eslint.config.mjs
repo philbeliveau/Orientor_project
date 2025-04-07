@@ -11,6 +11,19 @@ const compat = new FlatCompat({
 
 const eslintConfig = [
   ...compat.extends("next/core-web-vitals", "next/typescript"),
+  {
+    plugins: ["tailwindcss"],
+    rules: {
+      "tailwindcss/classnames-order": "warn",
+      "tailwindcss/no-custom-classname": "off",
+      "at-rule-no-unknown": [
+        true,
+        {
+          ignoreAtRules: ["apply", "tailwind", "layer", "variants", "responsive", "screen"],
+        },
+      ],
+    },
+  },
 ];
 
 export default eslintConfig;

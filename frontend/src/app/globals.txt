@@ -1,26 +1,126 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  body {
+    @apply bg-gray-900 text-gray-100;
+    background-color: dimgray;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  .grok-container {
+    @apply min-h-screen p-4 flex flex-col;
+  }
+
+  .grok-card {
+    @apply bg-gray-800 rounded-xl border border-gray-700 shadow-lg;
+  }
+
+  .grok-input {
+    @apply w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-xl
+    text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500/50
+    transition-all duration-200;
+  }
+
+  .grok-button {
+    @apply px-6 py-3 bg-blue-600 hover:bg-blue-500 text-white rounded-xl
+    font-medium transition-all duration-200 hover:shadow-lg hover:shadow-blue-500/20
+    focus:outline-none focus:ring-2 focus:ring-blue-500/50 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .grok-tabs {
+    @apply flex space-x-2 p-1 bg-gray-700 rounded-xl;
+  }
+
+  .grok-tab {
+    @apply px-4 py-2 rounded-lg text-gray-300 hover:text-gray-100 transition-all duration-200;
+  }
+
+  .grok-tab-active {
+    @apply bg-gray-600 text-gray-100;
+  }
+
+  .grok-link {
+    @apply text-blue-500 hover:text-blue-400 transition-all duration-200;
+  }
+
+  /* Chat specific styles */
+  .chat-container {
+    @apply min-h-screen w-full flex items-center justify-center p-4;
+  }
+
+  .chat-box {
+    @apply w-full max-w-4xl h-[80vh] bg-gray-800 rounded-xl border border-gray-700 flex flex-col overflow-hidden shadow-lg;
+  }
+
+  .chat-header {
+    @apply p-6 border-b border-gray-700 bg-gray-800/50 backdrop-blur-sm;
+  }
+
+  .chat-messages {
+    @apply flex-1 overflow-y-auto p-6 space-y-6;
+  }
+
+  .chat-message {
+    @apply flex items-start gap-3 transition-all duration-300 max-w-[80%];
+    opacity: 0;
+    animation: messageAppear 0.3s ease forwards;
+  }
+
+  .chat-message-content {
+    @apply rounded-xl p-4 shadow-lg;
+  }
+
+  .chat-message-user {
+    @apply ml-auto;
+    .chat-message-content {
+      @apply bg-blue-600 text-white;
+    }
+  }
+
+  .chat-message-bot {
+    @apply mr-auto;
+    .chat-message-content {
+      @apply bg-gray-700 text-gray-100;
+    }
+  }
+
+  .chat-input-container {
+    @apply p-6 border-t border-gray-700 bg-gray-800/50 backdrop-blur-sm;
+  }
+
+  .chat-input-wrapper {
+    @apply flex items-center gap-3;
+  }
+
+  .chat-input {
+    @apply grok-input text-lg flex-1;
+  }
+
+  .chat-send-button {
+    @apply grok-button flex items-center gap-2;
+  }
+
+  /* Animations */
+  @keyframes messageAppear {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Feedback component */
+  .feedback-container {
+    @apply flex items-center gap-2 mt-2 text-sm text-gray-400;
+  }
+
+  .feedback-button {
+    @apply p-1.5 rounded-lg hover:bg-gray-700 transition-colors;
+  }
 }

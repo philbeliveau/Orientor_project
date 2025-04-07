@@ -1,0 +1,9 @@
+/* tailwindcss directives */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Optional: You can add a simple body style to test Tailwind */
+body {
+  @apply bg-gray-900 text-gray-100; /* Set a dark background and light text */
+}

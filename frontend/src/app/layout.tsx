@@ -1,21 +1,13 @@
-import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "../styles/globals.css";
-import Link from 'next/link';
-
-// Inside your component
-<Link href="/profile">Profile</Link>
+import "./globals.css";
+import NavTabs from "@/components/layout/NavTabs";
 
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: "Orientor - Your AI Assistant",
-  description: "AI-powered chat and assistance platform",
-};
-
+// Root layout as a server component
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -23,20 +15,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.variable} antialiased`}>
-        <div className="grok-container">
-          <nav className="grok-card p-4 mb-6">
-            <div className="grok-tabs">
-              <Link href="/login" className="grok-tab grok-tab-active">
-                Sign In
-              </Link>
-              <Link href="/register" className="grok-tab">
-                Register
-              </Link>
-              <Link href="/chat" className="grok-tab">
-                Chat
-              </Link>
-            </div>
+      <body className={`${inter.variable} min-h-screen bg-white text-gray-900`}>
+        <div className="min-h-screen p-4 flex flex-col">
+          <nav className="bg-gray-100 rounded-xl border border-gray-200 p-4 mb-6 shadow-lg">
+            <NavTabs />
           </nav>
           <main className="flex-1">
             {children}
@@ -45,4 +27,4 @@ export default function RootLayout({
       </body>
     </html>
   );
-} 
+}

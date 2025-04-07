@@ -34,7 +34,7 @@ export default function ChatInterface() {
   };
 
   return (
-    <div className="bg-gray-800 rounded-lg shadow-lg border border-gray-700 p-6">
+    <div className="bg-white rounded-lg shadow-md border border-gray-200 p-6">
       <div className="space-y-4">
         {/* Messages container */}
         <div className="space-y-4 h-[400px] overflow-y-auto mb-4">
@@ -55,11 +55,11 @@ export default function ChatInterface() {
             onChange={(e) => setInputText(e.target.value)}
             onKeyPress={(e) => e.key === 'Enter' && handleSend()}
             placeholder="Type your message..."
-            className="flex-1 p-2 rounded-lg bg-gray-700 border border-gray-600 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="flex-1 p-2 rounded-lg bg-gray-50 border border-gray-300 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           />
           <button 
             onClick={handleSend}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors duration-200"
+            className="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-lg transition-colors duration-200"
           >
             Send
           </button>
