@@ -1,0 +1,15 @@
+import axios from 'axios';
+
+const ProfilePage = () => {
+    const handleUpdate = async (e: React.FormEvent) => {
+        try {
+            // ... existing code ...
+        } catch (error) {
+            if (axios.isAxiosError(error)) {
+                setMessage('Error updating profile: ' + (error.response?.data.detail || 'Unknown error'));
+            } else {
+                setMessage('Error updating profile: Unknown error');
+            }
+        }
+    };
+}; 
