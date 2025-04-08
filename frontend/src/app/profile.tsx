@@ -4,17 +4,17 @@ import axios from 'axios';
 // import { AxiosError } from 'axios';
 
 const ProfilePage = () => {
-    const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
+
     const handleUpdate = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
             const token = localStorage.getItem('access_token'); // Assuming you store the token in local storage
             await axios.put( 
                 'http://localhost:8000/users/update',
-                { username, email, password },
+                { email, password },
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -23,43 +23,49 @@ const ProfilePage = () => {
                 }
             );
             setMessage('Profile updated successfully!');
-        // ... existing code ...
         } catch (error) {
             const axiosError = error as { response?: { data?: { detail?: string } } };
             setMessage('Error updating profile: ' + (axiosError.response?.data?.detail || 'Unknown error'));
         }
     };
+
     return (
-        <div>
-            <h1>User Profile</h1>
-            <form onSubmit={handleUpdate}>
-                <div>
-                    <label>Username:</label>
-                    <input
-                        type="text"
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
-                    />
-                </div>
-                <div>
-                    <label>Email:</label>
+        <div className="container mx-auto p-4">
+            <h1 className="text-2xl font-bold mb-6">User Profile</h1>
+            <form onSubmit={handleUpdate} className="max-w-md space-y-4">
+                <div className="space-y-2">
+                    <label className="block text-sm font-medium">Email:</label>
                     <input
                         type="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
+                        className="w-full p-2 border rounded-md"
                     />
                 </div>
-                <div>
-                    <label>Password:</label>
+                <div className="space-y-2">
+                    <label className="block text-sm font-medium">New Password (optional):</label>
                     <input
                         type="password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
+                        className="w-full p-2 border rounded-md"
+                        placeholder="Leave blank to keep current password"
                     />
                 </div>
-                <button type="submit">Update Profile</button>
+                <button 
+                    type="submit" 
+                    className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition-colors"
+                >
+                    Update Profile
+                </button>
             </form>
-            {message && <p>{message}</p>}
+            {message && (
+                <p className={`mt-4 p-3 rounded ${
+                    message.includes('Error') ? 'bg-red-100 text-red-700' : 'bg-green-100 text-green-700'
+                }`}>
+                    {message}
+                </p>
+            )}
         </div>
     );
 };

@@ -6,7 +6,9 @@ from openai import OpenAI
 from pydantic import BaseModel
 from dotenv import load_dotenv
 from app.routes.user import get_current_user
-from app.schemas.user import User
+from app.models import User, UserProfile
+from sqlalchemy.orm import Session
+from app.utils.database import get_db
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
@@ -51,23 +53,45 @@ SYSTEM_PROMPT = """You are a Socratic mentor engaging the student in a "game" of
 6. Acknowledge and validate their thoughts and feelings while gently pushing them to explore deeper.
 7. When they express a goal or interest, ask them to elaborate on why it matters to them.
 8. Help them identify patterns in their thinking and interests.
+9. Use their personal preferences (favorite movies, books, celebrities) to create relatable examples and analogies.
+10. Consider their learning style when suggesting approaches or activities.
 
 Remember: Your goal is not to give answers, but to help them discover their own path through thoughtful questioning."""
 
 @router.post("/send", response_model=MessageResponse)
 async def send_message(
     message: MessageRequest,
-    current_user: User = Depends(get_current_user)
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db)
 ):
     try:
         logger.info(f"Received message from user {current_user.id}: {message.text}")
+        
+        # Get user's profile information
+        profile = db.query(UserProfile).filter(UserProfile.user_id == current_user.id).first()
         
         # Initialize conversation history for this user if it doesn't exist yet
         user_id = current_user.id
         if user_id not in conversation_history:
             logger.info(f"Initializing conversation history for user {user_id}")
+            
+            # Create initial system message with user profile context
+            system_message = SYSTEM_PROMPT
+            if profile:
+                system_message += f"\n\nUser Profile Information:\n"
+                if profile.favorite_movie:
+                    system_message += f"- Favorite Movie: {profile.favorite_movie}\n"
+                if profile.favorite_book:
+                    system_message += f"- Favorite Book: {profile.favorite_book}\n"
+                if profile.favorite_celebrities:
+                    system_message += f"- Role Models: {profile.favorite_celebrities}\n"
+                if profile.learning_style:
+                    system_message += f"- Learning Style: {profile.learning_style}\n"
+                if profile.interests:
+                    system_message += f"- Interests: {profile.interests}\n"
+            
             conversation_history[user_id] = [
-                {"role": "system", "content": SYSTEM_PROMPT}
+                {"role": "system", "content": system_message}
             ]
         
         # Add the new user message to history
