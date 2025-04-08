@@ -2,12 +2,14 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
 from app.routes import user  # Import the user router
+from app.routes import chat  # Import the chat router
 
 load_dotenv()
 
 app = FastAPI(title="Orientor API")
 
 app.include_router(user.router, prefix="/users", tags=["users"])
+app.include_router(chat.router, prefix="/chat", tags=["chat"])
 
 # Configure CORS
 app.add_middleware(

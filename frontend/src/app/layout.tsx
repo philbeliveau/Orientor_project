@@ -15,7 +15,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.variable} min-h-screen bg-white text-gray-900`}>
+      <body className={`${inter.variable} min-h-screen`}>
         <div className="min-h-screen p-4 flex flex-col">
           <nav className="bg-gray-100 rounded-xl border border-gray-200 p-4 mb-6 shadow-lg">
             <NavTabs />

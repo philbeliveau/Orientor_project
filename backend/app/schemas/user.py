@@ -1,5 +1,4 @@
 from pydantic import BaseModel, EmailStr
-from pydantic import BaseModel, EmailStr
 
 class UserUpdate(BaseModel):
     username: str | None = None
@@ -14,6 +13,15 @@ class UserCreate(BaseModel):
 class UserLogin(BaseModel):
     email: EmailStr
     password: str
+
+class User(BaseModel):
+    id: int
+    username: str
+    email: EmailStr
+    is_active: bool = True
+
+    class Config:
+        from_attributes = True
 
 class UserOut(BaseModel):
     id: int

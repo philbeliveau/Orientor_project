@@ -1,9 +1,25 @@
-/* tailwindcss directives */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Optional: You can add a simple body style to test Tailwind */
-body {
-  @apply bg-gray-900 text-gray-100; /* Set a dark background and light text */
+@layer base {
+  body {
+    background: linear-gradient(to bottom right, #424864, #848282);
+    color: #f3f4f6;
+    min-height: 100vh;
+  }
 }
+
+
+@layer components {
+  .tab-gradient {
+    background: linear-gradient(to right, #3b82f6, #1d4ed8); /* Adjust colors as needed */
+    color: white; /* Text color for the gradient tab */
+  }
+
+  .tab-hover {
+    background: linear-gradient(to right, #60a5fa, #3b82f6); /* Lighter gradient for hover effect */
+    color: white; /* Text color for hover */
+  }
+}
+

@@ -44,7 +44,7 @@ export default function ProfilePage() {
     return (
         <MainLayout>
             <div className="space-y-6">
-                <h2 className="text-2xl font-bold text-gray-800">User Profile</h2>
+                <h2 className="text-2xl font-bold text-white">User Profile</h2>
                 <div className="bg-white rounded-lg shadow-md border border-gray-200 p-6">
                     <form onSubmit={handleUpdate} className="space-y-4">
                         <div>
