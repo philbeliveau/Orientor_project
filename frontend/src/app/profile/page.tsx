@@ -98,30 +98,41 @@ export default function ProfilePage() {
 
     return (
         <MainLayout>
-            <div className="space-y-6">
-                <h2 className="text-2xl font-bold text-white">User Profile</h2>
-                <div className="bg-white rounded-lg shadow-md border border-gray-200 p-6">
-                    <form onSubmit={handleUpdate} className="space-y-4">
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="max-w-4xl mx-auto space-y-6">
+                <div className="flex items-center justify-between">
+                    <h2 className="text-2xl font-bold text-neutral-lightgray">Your Profile</h2>
+                    <div className="text-sm text-neutral-lightgray opacity-70">
+                        Help us personalize your experience
+                    </div>
+                </div>
+                
+                <div className="card">
+                    <form onSubmit={handleUpdate} className="space-y-6">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             {/* Account Settings Section */}
                             <div className="space-y-4">
-                                <h3 className="text-lg font-semibold text-gray-700">Account Settings</h3>
+                                <h3 className="text-xl font-semibold text-secondary-teal mb-4">Account Settings</h3>
                                 <div>
-                                    <label className="block text-gray-700 mb-2">Email</label>
+                                    <label className="block text-sm font-medium text-neutral-lightgray mb-1">
+                                        Email Address
+                                    </label>
                                     <input
                                         type="email"
                                         value={email}
                                         onChange={(e) => setEmail(e.target.value)}
-                                        className="flex-1 w-full p-2 rounded-lg bg-gray-50 border border-gray-300 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                        className="input"
+                                        placeholder="your@email.com"
                                     />
                                 </div>
                                 <div>
-                                    <label className="block text-gray-700 mb-2">New Password (optional)</label>
+                                    <label className="block text-sm font-medium text-neutral-lightgray mb-1">
+                                        New Password
+                                    </label>
                                     <input
                                         type="password"
                                         value={password}
                                         onChange={(e) => setPassword(e.target.value)}
-                                        className="flex-1 w-full p-2 rounded-lg bg-gray-50 border border-gray-300 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                        className="input"
                                         placeholder="Leave blank to keep current password"
                                     />
                                 </div>
@@ -129,43 +140,51 @@ export default function ProfilePage() {
 
                             {/* Personal Preferences Section */}
                             <div className="space-y-4">
-                                <h3 className="text-lg font-semibold text-gray-700">Personal Preferences</h3>
+                                <h3 className="text-xl font-semibold text-secondary-purple mb-4">Personal Preferences</h3>
                                 <div>
-                                    <label className="block text-gray-700 mb-2">Favorite Movie</label>
+                                    <label className="block text-sm font-medium text-neutral-lightgray mb-1">
+                                        Favorite Movie
+                                    </label>
                                     <input
                                         type="text"
                                         value={profile.favorite_movie}
                                         onChange={handleProfileChange('favorite_movie')}
-                                        className="flex-1 w-full p-2 rounded-lg bg-gray-50 border border-gray-300 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                        className="input"
                                         placeholder="What's your favorite movie?"
                                     />
                                 </div>
                                 <div>
-                                    <label className="block text-gray-700 mb-2">Favorite Book</label>
+                                    <label className="block text-sm font-medium text-neutral-lightgray mb-1">
+                                        Favorite Book
+                                    </label>
                                     <input
                                         type="text"
                                         value={profile.favorite_book}
                                         onChange={handleProfileChange('favorite_book')}
-                                        className="flex-1 w-full p-2 rounded-lg bg-gray-50 border border-gray-300 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                        className="input"
                                         placeholder="What's your favorite book?"
                                     />
                                 </div>
                                 <div>
-                                    <label className="block text-gray-700 mb-2">Favorite Celebrities</label>
+                                    <label className="block text-sm font-medium text-neutral-lightgray mb-1">
+                                        Role Models
+                                    </label>
                                     <input
                                         type="text"
                                         value={profile.favorite_celebrities}
                                         onChange={handleProfileChange('favorite_celebrities')}
-                                        className="flex-1 w-full p-2 rounded-lg bg-gray-50 border border-gray-300 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                        className="input"
                                         placeholder="Who inspires you? (comma-separated)"
                                     />
                                 </div>
                                 <div>
-                                    <label className="block text-gray-700 mb-2">Learning Style</label>
+                                    <label className="block text-sm font-medium text-neutral-lightgray mb-1">
+                                        Learning Style
+                                    </label>
                                     <select
                                         value={profile.learning_style}
                                         onChange={handleProfileChange('learning_style')}
-                                        className="flex-1 w-full p-2 rounded-lg bg-gray-50 border border-gray-300 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                        className="input bg-gray-800"
                                     >
                                         <option value="">Select your learning style</option>
                                         <option value="Visual">Visual</option>
@@ -175,11 +194,13 @@ export default function ProfilePage() {
                                     </select>
                                 </div>
                                 <div>
-                                    <label className="block text-gray-700 mb-2">Interests</label>
+                                    <label className="block text-sm font-medium text-neutral-lightgray mb-1">
+                                        Interests & Hobbies
+                                    </label>
                                     <textarea
                                         value={profile.interests}
                                         onChange={handleProfileChange('interests')}
-                                        className="flex-1 w-full p-2 rounded-lg bg-gray-50 border border-gray-300 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                        className="input"
                                         placeholder="What are your interests? (comma-separated)"
                                         rows={3}
                                     />
@@ -187,20 +208,23 @@ export default function ProfilePage() {
                             </div>
                         </div>
 
-                        <button
-                            type="submit"
-                            className="w-full bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-lg transition-colors duration-200"
-                        >
-                            Update Profile
-                        </button>
+                        <div className="pt-4">
+                            <button
+                                type="submit"
+                                className="btn btn-primary w-full md:w-auto"
+                            >
+                                Save Changes
+                            </button>
+                        </div>
                     </form>
+
                     {error && (
-                        <div className="mt-4 p-2 bg-red-100 text-red-700 rounded-lg">
+                        <div className="mt-4 p-3 bg-red-900/20 border border-secondary-coral text-secondary-coral rounded-lg">
                             {error}
                         </div>
                     )}
                     {message && (
-                        <div className="mt-4 p-2 bg-green-100 text-green-700 rounded-lg">
+                        <div className="mt-4 p-3 bg-green-900/20 border border-secondary-teal text-secondary-teal rounded-lg">
                             {message}
                         </div>
                     )}

@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from app.utils.database import get_db
-from app.models import User
+from app.models import User, UserProfile
 from app.schemas.user import UserCreate, UserOut, UserUpdate, UserLogin, PasswordUpdate
 from passlib.context import CryptContext
 from jose import JWTError, jwt
@@ -61,9 +61,24 @@ def register_user(user: UserCreate, db: Session = Depends(get_db)):
     hashed_password = pwd_context.hash(user.password)
     db_user = User(email=user.email, hashed_password=hashed_password)
     
+    # Add and commit the user first to get the user_id
     db.add(db_user)
     db.commit()
     db.refresh(db_user)
+    
+    # Create an empty UserProfile for the new user
+    user_profile = UserProfile(
+        user_id=db_user.id,
+        favorite_movie="",
+        favorite_book="",
+        favorite_celebrities="",
+        learning_style="",
+        interests=""
+    )
+    
+    # Add and commit the profile
+    db.add(user_profile)
+    db.commit()
     
     return db_user
 

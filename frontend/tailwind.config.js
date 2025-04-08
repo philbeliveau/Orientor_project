@@ -1,42 +1,60 @@
-// /** @type {import('tailwindcss').Config} */
-// module.exports = {
-//   content: [
-//     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
-//     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
-//     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
-//   ],
-//   darkMode: 'class',
-//   theme: {
-//     extend: {
-//       colors: {
-//         gray: {
-//           100: '#f5f5f5',
-//           200: '#eeeeee',
-//           300: '#e0e0e0',
-//           400: '#bdbdbd',
-//           500: '#9e9e9e',
-//           600: '#757575',
-//           700: '#616161',
-//           800: '#424242',
-//           900: '#212121',
-//         },
-//         blue: {
-//           500: '#2196f3',
-//           600: '#1e88e5',
-//         },
-//       },
-//     },
-//   },
-//   plugins: [],
-// }; 
-
-  /** @type {import('tailwindcss').Config} */
-  module.exports = {
+/** @type {import('tailwindcss').Config} */
+module.exports = {
   content: [
-    "./src/**/*.{js,ts,jsx,tsx}", // Adjust paths as necessary
+    "./src/**/*.{js,ts,jsx,tsx}", // All files in src directory
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        base: {
+          charcoal: '#1F2937',
+          indigo: '#2C3E50',
+        },
+        metallic: {
+          gold: '#DAA520',
+          'gold-light': '#FFD700',
+          purple: '#6C63FF',
+          'purple-deep': '#7E5BEF',
+        },
+        surface: {
+          light: '#F5F6FA',
+          warm: '#FFF8F0',
+          dark: 'rgba(31, 41, 55, 0.7)', // semi-transparent charcoal
+        },
+      },
+      backgroundImage: {
+        'gradient-metallic-gold': 'linear-gradient(135deg, #DAA520 0%, #FFD700 100%)',
+        'gradient-metallic-purple': 'linear-gradient(135deg, #6C63FF 0%, #7E5BEF 100%)',
+        'gradient-dark': 'linear-gradient(180deg, #1F2937 0%, #2C3E50 100%)',
+      },
+      fontFamily: {
+        sans: ['Poppins', 'Montserrat', 'sans-serif'],
+      },
+      boxShadow: {
+        'glow-gold': '0 0 15px rgba(218, 165, 32, 0.3)',
+        'glow-purple': '0 0 15px rgba(108, 99, 255, 0.3)',
+      },
+      animation: {
+        'gradient-x': 'gradient-x 3s ease infinite',
+        'shimmer': 'shimmer 2s linear infinite',
+      },
+      keyframes: {
+        'gradient-x': {
+          '0%, 100%': {
+            'background-size': '200% 200%',
+            'background-position': 'left center',
+          },
+          '50%': {
+            'background-size': '200% 200%',
+            'background-position': 'right center',
+          },
+        },
+        'shimmer': {
+          '0%': { backgroundPosition: '-200% 0' },
+          '100%': { backgroundPosition: '200% 0' },
+        },
+      },
+    },
   },
   plugins: [],
 };

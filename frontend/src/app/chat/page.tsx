@@ -45,7 +45,7 @@ export default function ChatPage() {
         // Display welcome message when component mounts and user is authenticated
         const welcomeMessage: Message = {
             id: Date.now(),
-            text: "Hello! I'm your Career Advisor. How can I help you today?",
+            text: "Hello! I'm your Socratic mentor. What would you like to explore today about your career path or personal interests?",
             sender: 'ai',
             timestamp: new Date(),
         };
@@ -97,7 +97,7 @@ export default function ChatPage() {
         } catch (error: any) {
             console.error('Failed to get AI response:', error);
             
-            let errorMessage = "Sorry, I'm having trouble connecting to my brain right now. Please try again later.";
+            let errorMessage = "Sorry, I'm having trouble connecting right now. Please try again later.";
             
             if (error.response?.status === 401) {
                 router.push('/login');
@@ -151,7 +151,7 @@ export default function ChatPage() {
             // Add welcome message
             const welcomeMessage: Message = {
                 id: Date.now(),
-                text: "Hello! I'm your Career Advisor. How can I help you today?",
+                text: "Hello! I'm your Socratic mentor. What would you like to explore today about your career path or personal interests?",
                 sender: 'ai',
                 timestamp: new Date(),
             };
@@ -170,93 +170,84 @@ export default function ChatPage() {
 
     return (
         <MainLayout>
-            <div className="chat-container">
-                <div className="chat-box">
-                    <div className="chat-header">
-                        <div className="flex justify-between items-center w-full">
-                            <div>
-                                <h1 className="text-xl font-semibold text-white">Career Advisor</h1>
-                                <div className="text-sm text-gray-400">AI Assistant</div>
-                            </div>
-                            <button
-                                onClick={handleClearChat}
-                                disabled={isClearingChat || messages.length === 0}
-                                className="px-3 py-1 bg-gray-600 text-white text-sm rounded hover:bg-gray-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                            >
-                                Clear Chat
-                            </button>
-                        </div>
+            <div className="flex flex-col h-[calc(100vh-12rem)] max-w-4xl mx-auto">
+                <div className="flex justify-between items-center mb-4">
+                    <div>
+                        <h1 className="text-2xl font-semibold text-neutral-lightgray">Orientor Chat</h1>
+                        <p className="text-sm text-neutral-lightgray opacity-70">Your Socratic mentor for self-discovery</p>
                     </div>
-                    
-                    {authError && (
-                        <div className="bg-red-500/10 border border-red-500/50 text-red-500 px-4 py-2 rounded-lg m-4">
-                            {authError}
+                    <button
+                        onClick={handleClearChat}
+                        disabled={isClearingChat || messages.length === 0}
+                        className="btn btn-secondary text-sm"
+                    >
+                        Clear Chat
+                    </button>
+                </div>
+                
+                {authError && (
+                    <div className="bg-red-900/20 border border-secondary-coral text-secondary-coral px-4 py-3 rounded-lg mb-4">
+                        {authError}
+                    </div>
+                )}
+                
+                <div className="flex-1 overflow-y-auto bg-primary-indigo/50 rounded-lg p-4 mb-4">
+                    {messages.map((message) => (
+                        <div
+                            key={message.id}
+                            className={`flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'} mb-4`}
+                        >
+                            <div className={message.sender === 'user' ? 'message-user' : 'message-system'}>
+                                <div className="whitespace-pre-wrap">{message.text}</div>
+                                {message.sender === 'ai' && !feedback.find(f => f.messageId === message.id) && (
+                                    <div className="flex items-center justify-end mt-2 space-x-2 text-xs">
+                                        <button
+                                            onClick={() => handleFeedback(message.id, 'helpful')}
+                                            className="text-neutral-lightgray hover:text-secondary-teal transition-colors"
+                                        >
+                                        </button>
+                                        <button
+                                            onClick={() => handleFeedback(message.id, 'not_helpful')}
+                                            className="text-neutral-lightgray hover:text-secondary-coral transition-colors"
+                                        >
+                                        </button>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    ))}
+                    {isTyping && (
+                        <div className="flex justify-start mb-4">
+                            <div className="message-system flex items-center space-x-2">
+                                <div className="flex space-x-1">
+                                    <div className="h-2 w-2 bg-secondary-teal rounded-full animate-bounce [animation-delay:-0.3s]"></div>
+                                    <div className="h-2 w-2 bg-secondary-teal rounded-full animate-bounce [animation-delay:-0.15s]"></div>
+                                    <div className="h-2 w-2 bg-secondary-teal rounded-full animate-bounce"></div>
+                                </div>
+                                <span className="text-sm">Thinking...</span>
+                            </div>
                         </div>
                     )}
-                    
-                    <div className="chat-messages">
-                        {messages.map((message) => (
-                            <div
-                                key={message.id}
-                                className={`chat-message ${
-                                    message.sender === 'user' ? 'justify-end' : 'justify-start'
-                                }`}
-                            >
-                                <div
-                                    className={`chat-message-content ${
-                                        message.sender === 'user' ? 'chat-message-user' : 'chat-message-bot'
-                                    }`}
-                                >
-                                    <div className="message-text">{message.text}</div>
-                                    {message.sender === 'ai' && !feedback.find(f => f.messageId === message.id) && (
-                                        <div className="feedback-container">
-                                            <button
-                                                onClick={() => handleFeedback(message.id, 'helpful')}
-                                                className="feedback-button"
-                                            >
-                                                👍 Helpful
-                                            </button>
-                                            <button
-                                                onClick={() => handleFeedback(message.id, 'not_helpful')}
-                                                className="feedback-button"
-                                            >
-                                                👎 Not helpful
-                                            </button>
-                                        </div>
-                                    )}
-                                </div>
-                            </div>
-                        ))}
-                        {isTyping && (
-                            <div className="chat-message justify-start">
-                                <div className="chat-message-content chat-message-bot">
-                                    <div className="typing-indicator">Typing...</div>
-                                </div>
-                            </div>
-                        )}
-                        <div ref={messagesEndRef} />
-                    </div>
-
-                    <div className="chat-input-container">
-                        <form onSubmit={handleSubmit} className="chat-input-wrapper">
-                            <input
-                                type="text"
-                                value={inputMessage}
-                                onChange={(e) => setInputMessage(e.target.value)}
-                                placeholder="Ask about your career path..."
-                                className="chat-input"
-                                disabled={isTyping}
-                            />
-                            <button
-                                type="submit"
-                                className="chat-send-button"
-                                disabled={!inputMessage.trim() || isTyping}
-                            >
-                                Send
-                            </button>
-                        </form>
-                    </div>
+                    <div ref={messagesEndRef} />
                 </div>
+
+                <form onSubmit={handleSubmit} className="relative">
+                    <input
+                        type="text"
+                        value={inputMessage}
+                        onChange={(e) => setInputMessage(e.target.value)}
+                        placeholder="Ask anything about your career path, interests, or goals..."
+                        className="input pr-20 py-3"
+                        disabled={isTyping}
+                    />
+                    <button
+                        type="submit"
+                        disabled={!inputMessage.trim() || isTyping}
+                        className="absolute right-2 top-1/2 -translate-y-1/2 btn btn-primary py-1 px-4"
+                    >
+                        Send
+                    </button>
+                </form>
             </div>
         </MainLayout>
     );

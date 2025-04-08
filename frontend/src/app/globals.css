@@ -4,22 +4,94 @@
 
 @layer base {
   body {
-    background: linear-gradient(to bottom right, #424864, #848282);
-    color: #f3f4f6;
-    min-height: 100vh;
+    @apply bg-gradient-dark text-surface-light min-h-screen font-sans;
+  }
+
+  h1 {
+    @apply text-3xl font-bold mb-4;
+  }
+
+  h2 {
+    @apply text-2xl font-semibold mb-3;
+  }
+
+  h3 {
+    @apply text-xl font-medium mb-2;
   }
 }
 
-
 @layer components {
-  .tab-gradient {
-    background: linear-gradient(to right, #3b82f6, #1d4ed8); /* Adjust colors as needed */
-    color: white; /* Text color for the gradient tab */
+  /* Buttons */
+  .btn {
+    @apply px-4 py-2 rounded-lg font-medium transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-opacity-50 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+  
+  .btn-primary {
+    @apply bg-gradient-metallic-purple hover:shadow-glow-purple text-white;
+  }
+  
+  .btn-secondary {
+    @apply bg-gradient-metallic-gold hover:shadow-glow-gold text-base-charcoal;
   }
 
-  .tab-hover {
-    background: linear-gradient(to right, #60a5fa, #3b82f6); /* Lighter gradient for hover effect */
-    color: white; /* Text color for hover */
+  .btn-outline {
+    @apply border-2 border-metallic-purple hover:bg-metallic-purple/10 text-metallic-purple;
+  }
+
+  /* Cards & Containers */
+  .card {
+    @apply bg-surface-dark backdrop-blur-sm rounded-xl p-6 shadow-lg border border-metallic-purple/20;
+  }
+  
+  .panel {
+    @apply bg-surface-warm/5 rounded-lg p-4;
+  }
+
+  /* Form Elements */
+  .input {
+    @apply w-full px-4 py-2 bg-base-charcoal border border-metallic-purple/30 rounded-lg 
+    focus:outline-none focus:ring-2 focus:ring-metallic-purple focus:border-transparent
+    text-surface-light placeholder-surface-light/50;
+  }
+
+  .input-group {
+    @apply space-y-1;
+  }
+
+  .label {
+    @apply block text-sm font-medium text-surface-light/80;
+  }
+
+  /* Navigation */
+  .nav-link {
+    @apply px-4 py-2 rounded-lg transition-all duration-200 text-surface-light 
+    hover:bg-metallic-purple/20 hover:shadow-glow-purple;
+  }
+
+  .nav-link-active {
+    @apply bg-gradient-metallic-purple text-white shadow-glow-purple;
+  }
+
+  /* Chat Elements */
+  .message-bubble {
+    @apply rounded-xl p-4 my-2 max-w-[80%] shadow-lg;
+  }
+  
+  .message-user {
+    @apply message-bubble bg-gradient-metallic-purple text-white ml-auto;
+  }
+  
+  .message-system {
+    @apply message-bubble bg-surface-dark backdrop-blur-sm border border-metallic-purple/20;
+  }
+
+  /* Animations */
+  .hover-glow {
+    @apply transition-all duration-300 hover:shadow-glow-purple;
+  }
+
+  .shimmer {
+    @apply bg-gradient-to-r from-transparent via-white/10 to-transparent bg-[length:200%_100%] animate-shimmer;
   }
 }
 

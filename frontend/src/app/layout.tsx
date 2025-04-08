@@ -1,10 +1,10 @@
-import { Inter } from "next/font/google";
+import { Poppins } from "next/font/google";
 import "./globals.css";
-import NavTabs from "@/components/layout/NavTabs";
 
-const inter = Inter({
-  variable: "--font-inter",
+const poppins = Poppins({
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-poppins",
 });
 
 // Root layout as a server component
@@ -15,12 +15,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.variable} min-h-screen`}>
-        <div className="min-h-screen p-4 flex flex-col">
-          <nav className="bg-gray-100 rounded-xl border border-gray-200 p-4 mb-6 shadow-lg">
-            <NavTabs />
-          </nav>
-          <main className="flex-1">
+      <body className={`${poppins.variable} min-h-screen bg-gradient-dark text-surface-light antialiased`}>
+        <div className="min-h-screen p-6 flex flex-col">
+          <main className="flex-1 max-w-7xl mx-auto w-full">
             {children}
           </main>
         </div>
