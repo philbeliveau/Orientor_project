@@ -6,7 +6,7 @@
 //   return (
 //     <MainLayout>
 //       <div className="space-y-6">
-//         <h2 className="text-2xl font-bold text-gray-100">Welcome to Orientor</h2>
+//         <h2 className="text-2xl font-bold text-gray-100">Welcome to Navigo</h2>
 //         <h1 className="text-3xl font-bold text-blue-500">This is a test message!</h1> {/* Test message */}
 //         <button className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-500">
 //           Click Me

@@ -173,7 +173,6 @@ export default function ChatPage() {
             <div className="flex flex-col h-[calc(100vh-12rem)] max-w-4xl mx-auto">
                 <div className="flex justify-between items-center mb-4">
                     <div>
-                        <h1 className="text-2xl font-semibold text-neutral-lightgray">Orientor Chat</h1>
                         <p className="text-sm text-neutral-lightgray opacity-70">Your Socratic mentor for self-discovery</p>
                     </div>
                     <button

@@ -68,7 +68,7 @@ export default function RegisterPage() {
                 <div className="w-full max-w-md space-y-8 bg-gray-800 p-8 rounded-lg shadow-lg">
                     <div>
                         <h2 className="text-center text-3xl font-bold text-gray-100">
-                            Sign up for Orientor
+                            Sign up for Navigo
                         </h2>
                     </div>
                     <form className="mt-8 space-y-6" onSubmit={handleSubmit}>

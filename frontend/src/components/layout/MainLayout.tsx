@@ -57,7 +57,7 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
                     <div className="flex justify-between h-16">
                         <div className="flex items-center">
                             <Link href="/" className="text-2xl font-semibold text-secondary-teal hover:text-secondary-purple transition-colors duration-200">
-                                Orientor
+                                Navigo
                             </Link>
                         </div>
                         <nav className="flex items-center space-x-4">

@@ -46,7 +46,7 @@ export default function LoginPage() {
             <div className="w-full max-w-md card space-y-6">
                 <div className="text-center">
                     <h1 className="text-4xl font-bold text-secondary-teal mb-2">
-                        Orientor
+                        Navigo
                     </h1>
                     <h2 className="text-2xl font-bold text-neutral-lightgray mb-2">
                         Sign In
