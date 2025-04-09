@@ -4,10 +4,7 @@ from dotenv import load_dotenv
 from app.routes import user  # Import the user router
 from app.routes import chat  # Import the chat router
 from app.routers.profiles import router as profiles_router  # Import the profiles router
-from sqlalchemy import create_engine
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
-import os
+from app.utils.database import engine  # Import database configuration from utils
 
 load_dotenv()
 
@@ -25,21 +22,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-# Use psycopg2 driver explicitly for PostgreSQL
-DATABASE_URL = os.getenv("DATABASE_URL")
-if not DATABASE_URL:
-    DATABASE_URL = "postgresql+psycopg2://postgres:Mac.phil.007@localhost:5432/orientor_db"
-
-engine = create_engine(DATABASE_URL)
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-Base = declarative_base()
-
-try:
-    with engine.connect() as connection:
-        print("Connection successful!")
-except Exception as e:
-    print(f"Connection failed: {e}")
 
 @app.get("/")
 async def root():

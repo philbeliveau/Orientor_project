@@ -14,29 +14,54 @@ interface ApiError {
         data?: {
             detail?: string;
         };
+        status?: number;
     };
+    message?: string;
 }
 
 export default function RegisterPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);
     const router = useRouter();
+    
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        setLoading(true);
+        setError('');
+        
         try {
-            await axios.post<RegisterResponse>('http://localhost:8000/users/register', {
-                email,
-                password
-            });
+            console.log('Attempting to register with:', { email, password });
+            const response = await axios.post<RegisterResponse>(
+                'http://localhost:8000/users/register', 
+                { email, password },
+                { 
+                    headers: { 'Content-Type': 'application/json' },
+                    timeout: 10000 // 10 second timeout
+                }
+            );
+            
+            console.log('Registration successful:', response.data);
             
             // Redirect to login page after successful registration
             router.push('/login');
         } catch (err) {
             const error = err as ApiError;
-            setError(error.response?.data?.detail || 'Registration failed');
+            console.error('Registration error:', error);
+            
+            if (error.message === 'Network Error') {
+                setError('Cannot connect to the server. Please check if the backend server is running.');
+            } else if (error.response?.status === 400) {
+                setError(error.response.data?.detail || 'Email already registered or invalid format.');
+            } else {
+                setError(error.response?.data?.detail || error.message || 'Registration failed. Please try again.');
+            }
+        } finally {
+            setLoading(false);
         }
     };
+    
     return (
         <MainLayout>
             <div className="flex min-h-[80vh] items-center justify-center">
@@ -61,6 +86,7 @@ export default function RegisterPage() {
                                     placeholder="Email address"
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
+                                    disabled={loading}
                                 />
                             </div>
                             <div>
@@ -76,12 +102,13 @@ export default function RegisterPage() {
                                     placeholder="Password"
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
+                                    disabled={loading}
                                 />
                             </div>
                         </div>
 
                         {error && (
-                            <div className="text-red-500 text-sm text-center">
+                            <div className="text-red-500 text-sm p-2 bg-red-500/10 rounded-md text-center">
                                 {error}
                             </div>
                         )}
@@ -90,8 +117,9 @@ export default function RegisterPage() {
                             <button
                                 type="submit"
                                 className="group relative flex w-full justify-center rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+                                disabled={loading}
                             >
-                                Sign up
+                                {loading ? 'Signing up...' : 'Sign up'}
                             </button>
                         </div>
                     </form>
