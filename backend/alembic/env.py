@@ -4,14 +4,28 @@ from sqlalchemy import pool
 from alembic import context
 from app.models import User  # Import your User model
 from app.utils.database import Base  # Import Base if you have it
+import os
+from dotenv import load_dotenv
+
+# Load environment variables
+load_dotenv()
 
 # This is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 config = context.config
 
+# Get the DATABASE_URL from environment variable
+database_url = os.getenv("DATABASE_URL")
+if database_url and database_url.startswith("postgres://"):
+    database_url = database_url.replace("postgres://", "postgresql://", 1)
+
+# Set the sqlalchemy.url in the alembic.ini file
+config.set_main_option("sqlalchemy.url", database_url or "")
+
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.
-fileConfig(config.config_file_name)
+if config.config_file_name is not None:
+    fileConfig(config.config_file_name)
 
 # Add your model's MetaData object here
 target_metadata = Base.metadata  # Set this to your Base's metadata

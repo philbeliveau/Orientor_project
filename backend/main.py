@@ -5,6 +5,7 @@ from app.routes import user  # Import the user router
 from app.routes import chat  # Import the chat router
 from app.routers.profiles import router as profiles_router  # Import the profiles router
 from app.utils.database import engine  # Import database configuration from utils
+import os
 
 load_dotenv()
 
@@ -15,9 +16,20 @@ app.include_router(chat.router, prefix="/chat", tags=["chat"])
 app.include_router(profiles_router)  # Include the profiles router
 
 # Configure CORS
+allowed_origins = [
+    "http://localhost:3000",  # Local development
+    "https://navigoproject-eopf9mduw-philippe-beliveaus-projects.vercel.app",  # Vercel deployment URL
+    "https://navigoproject.vercel.app"  # Custom domain (if you set one up)
+]
+
+# Add Railway URL to allowed origins if it exists
+RAILWAY_URL = os.getenv("RAILWAY_STATIC_URL")
+if RAILWAY_URL:
+    allowed_origins.append(f"https://{RAILWAY_URL}")
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],
+    allow_origins=allowed_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
