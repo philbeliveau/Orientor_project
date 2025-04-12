@@ -10,6 +10,9 @@ uvicorn main:app --reload
 # Run locally 
 cd backend python start_server.py
 
+# Start railway? 
+cd backed
+
 
 # Start dev server 
 tart your development server: If you haven't already, make sure your development server is running. You can typically do this by navigating to your project directory in the terminal and running:
