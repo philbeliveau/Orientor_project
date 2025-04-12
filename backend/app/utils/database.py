@@ -16,7 +16,7 @@ logger = logging.getLogger(__name__)
 # Load environment variables
 load_dotenv()
 
-def wait_for_db(engine, max_retries=5, initial_delay=1):
+def wait_for_db(engine, max_retries=10, initial_delay=5):
     """Wait for database to become available with exponential backoff."""
     delay = initial_delay
     for attempt in range(max_retries):
@@ -28,9 +28,9 @@ def wait_for_db(engine, max_retries=5, initial_delay=1):
                 return True
         except OperationalError as e:
             if attempt < max_retries - 1:
-                logger.warning(f"Database connection attempt {attempt + 1} failed. Retrying in {delay} seconds...")
+                logger.warning(f"Database connection attempt {attempt + 1} failed. Retrying in {delay} seconds... Error: {str(e)}")
                 time.sleep(delay)
-                delay *= 2  # Exponential backoff
+                delay *= 1.5  # Gentler exponential backoff
             else:
                 logger.error(f"Failed to connect to database after {max_retries} attempts: {str(e)}")
                 return False
@@ -76,11 +76,11 @@ try:
         DATABASE_URL,
         pool_size=5,
         max_overflow=10,
-        pool_timeout=30,
+        pool_timeout=60,  # Increased timeout
         pool_recycle=1800,
         pool_pre_ping=True,  # Enable connection health checks
         connect_args={
-            'connect_timeout': 10,
+            'connect_timeout': 30,  # Increased timeout
             'keepalives': 1,
             'keepalives_idle': 30,
             'keepalives_interval': 10,
@@ -90,8 +90,9 @@ try:
     
     # Wait for database to become available ONLY on Railway
     if os.getenv("RAILWAY_ENVIRONMENT"):
-        if not wait_for_db(engine, max_retries=5, initial_delay=2):
-            logger.warning("Database not available after retries, but continuing startup")
+        if not wait_for_db(engine, max_retries=10, initial_delay=5):
+            logger.error("Database not available after all retries - exiting")
+            sys.exit(1)  # Exit if we can't connect to the database
     
     # Test the connection and log database information
     try:
