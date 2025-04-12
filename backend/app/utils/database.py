@@ -43,11 +43,9 @@ def get_database_url():
     
     if is_railway:
         logger.info("Running on Railway environment")
-        # First try the full DATABASE_URL
-        DATABASE_URL = os.getenv("DATABASE_URL")
-        if DATABASE_URL:
-            logger.info("Using Railway DATABASE_URL environment variable")
-        else:
+        # When on Railway, use their DATABASE_URL or construct from their variables
+        DATABASE_URL = os.getenv("DATABASE_URL") or os.getenv("RAILWAY_DATABASE_URL")
+        if not DATABASE_URL:
             # Fallback to constructing from individual variables
             pg_host = os.getenv("PGHOST") or "postgres.railway.internal"
             pg_db = os.getenv("PGDATABASE") or os.getenv("POSTGRES_DB")
@@ -65,9 +63,18 @@ def get_database_url():
                 if not pg_password: missing_vars.append("PGPASSWORD/POSTGRES_PASSWORD")
                 logger.error(f"Missing required Railway PostgreSQL variables: {', '.join(missing_vars)}")
                 sys.exit(1)
+        logger.info("Using Railway database configuration")
     else:
-        # Local development - use the exact working configuration
-        DATABASE_URL = "postgresql+psycopg2://postgres:Mac.phil.007@localhost:5432/orientor_db"
+        # Local development - use LOCAL_DATABASE_URL
+        DATABASE_URL = os.getenv("LOCAL_DATABASE_URL")
+        if not DATABASE_URL:
+            # Fallback to constructing from individual variables
+            pg_user = os.getenv("POSTGRES_USER", "postgres")
+            pg_password = os.getenv("POSTGRES_PASSWORD", "Mac.phil.007")
+            pg_host = os.getenv("POSTGRES_HOST", "localhost")
+            pg_port = os.getenv("POSTGRES_PORT", "5432")
+            pg_db = os.getenv("POSTGRES_DB", "orientor_db")
+            DATABASE_URL = f"postgresql://{pg_user}:{pg_password}@{pg_host}:{pg_port}/{pg_db}"
         logger.info("Using local development database configuration")
     
     # Log URL (without sensitive info)
