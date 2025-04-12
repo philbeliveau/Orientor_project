@@ -18,8 +18,9 @@ app.include_router(profiles_router)  # Include the profiles router
 # Configure CORS
 allowed_origins = [
     "http://localhost:3000",  # Local development
-    "https://navigoproject-eopf9mduw-philippe-beliveaus-projects.vercel.app",  # Vercel deployment URL
-    "https://navigoproject.vercel.app"  # Custom domain (if you set one up)
+    "https://navigoproject.vercel.app",  # Your Vercel deployment
+    "https://orientor-backend-production.up.railway.app",  # Your Railway backend
+    "https://orientor-frontend.vercel.app",  # Add this if it's your frontend URL
 ]
 
 # Add Railway URL to allowed origins if it exists

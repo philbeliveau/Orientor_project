@@ -1,40 +1,19 @@
-from sqlalchemy import create_engine, text
-from sqlalchemy.orm import sessionmaker
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.exc import SQLAlchemyError, OperationalError
-from dotenv import load_dotenv
 import os
-import logging
 import sys
 import time
-from urllib.parse import urlparse, urlunparse
+import logging
+from urllib.parse import urlparse
+from sqlalchemy import create_engine, text
+from sqlalchemy.exc import SQLAlchemyError, OperationalError
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker
+from dotenv import load_dotenv
 
-# Configure logging
-logging.basicConfig(level=logging.INFO)
+# Set up logging
 logger = logging.getLogger(__name__)
 
-# Load environment variables
-load_dotenv()
-
-def wait_for_db(engine, max_retries=10, initial_delay=5):
-    """Wait for database to become available with exponential backoff."""
-    delay = initial_delay
-    for attempt in range(max_retries):
-        try:
-            with engine.connect() as conn:
-                result = conn.execute(text("SELECT 1"))
-                result.fetchone()
-                logger.info(f"Successfully connected to database after {attempt + 1} attempts")
-                return True
-        except OperationalError as e:
-            if attempt < max_retries - 1:
-                logger.warning(f"Database connection attempt {attempt + 1} failed. Retrying in {delay} seconds... Error: {str(e)}")
-                time.sleep(delay)
-                delay *= 1.5  # Gentler exponential backoff
-            else:
-                logger.error(f"Failed to connect to database after {max_retries} attempts: {str(e)}")
-                return False
-    return False
+# Create Base class for models
+Base = declarative_base()
 
 def get_database_url():
     """Get the database URL based on the environment."""
@@ -91,7 +70,6 @@ try:
     )
     
     # Create all tables if they don't exist
-    # This is safe to call multiple times
     Base.metadata.create_all(bind=engine)
     logger.info("Database tables created or verified")
     
@@ -114,17 +92,16 @@ try:
             logger.info(f"Available tables: {tables}")
     except SQLAlchemyError as e:
         logger.error(f"Database connection test failed: {str(e)}")
-        raise  # We want to fail fast if we can't connect during startup
+        raise
         
 except SQLAlchemyError as e:
     logger.error(f"Database connection error: {str(e)}")
-    raise  # Fail fast if we can't connect to the database
+    raise
 except Exception as e:
     logger.error(f"Unexpected error: {str(e)}")
     raise
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-Base = declarative_base()
 
 def get_db():
     """Get database session."""
