@@ -46,9 +46,22 @@ def get_database_url():
         # When on Railway, use their DATABASE_URL
         DATABASE_URL = os.getenv("DATABASE_URL")
         if not DATABASE_URL:
-            logger.error("DATABASE_URL not found in Railway environment!")
-            logger.error("Please set the DATABASE_URL variable in your Railway dashboard.")
-            sys.exit(1)
+            # Try loading from .env as fallback
+            load_dotenv()
+            DATABASE_URL = os.getenv("DATABASE_URL")
+            if not DATABASE_URL:
+                logger.error("DATABASE_URL not found in Railway environment or .env!")
+                sys.exit(1)
+        
+        # Ensure we're using the external URL, not internal
+        if "postgres.railway.internal" in DATABASE_URL:
+            # Replace with the external URL from .env
+            load_dotenv()
+            env_url = os.getenv("DATABASE_URL")
+            if env_url and "containers-us-west-207.railway.app" in env_url:
+                DATABASE_URL = env_url
+                logger.info("Using external Railway database URL")
+            
         logger.info("Using Railway database configuration")
     else:
         # Local development - use the exact working configuration
