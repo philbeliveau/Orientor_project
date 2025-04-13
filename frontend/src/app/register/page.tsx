@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import MainLayout from '@/components/layout/MainLayout';
 import { endpoint, logApiDetails } from '@/utils/api';
 
 interface RegisterResponse {
@@ -23,6 +22,7 @@ interface ApiError {
 export default function RegisterPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
     const router = useRouter();
@@ -34,6 +34,12 @@ export default function RegisterPage() {
     
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        
+        if (password !== confirmPassword) {
+            setError('Passwords do not match');
+            return;
+        }
+        
         setLoading(true);
         setError('');
         
@@ -73,18 +79,25 @@ export default function RegisterPage() {
     };
     
     return (
-        <MainLayout>
-            <div className="flex min-h-[80vh] items-center justify-center">
-                <div className="w-full max-w-md space-y-8 bg-gray-800 p-8 rounded-lg shadow-lg">
-                    <div>
-                        <h2 className="text-center text-3xl font-bold text-gray-100">
-                            Sign up for Navigo
-                        </h2>
-                    </div>
-                    <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-                        <div className="space-y-4 rounded-md shadow-sm">
-                            <div>
-                                <label htmlFor="email" className="sr-only">
+        <div className="min-h-screen flex items-center justify-center px-4 py-12">
+            <div className="w-full max-w-md">
+                <div className="text-center mb-8">
+                    <h1 className="text-4xl font-bold font-display gradient-text mb-2">
+                        Navigo
+                    </h1>
+                    <h2 className="text-2xl font-bold text-neutral-100 mb-2">
+                        Create Your Account
+                    </h2>
+                    <p className="text-neutral-300">
+                        Join our community and start your journey
+                    </p>
+                </div>
+                
+                <div className="card backdrop-blur-md">
+                    <form className="space-y-6" onSubmit={handleSubmit}>
+                        <div className="space-y-4">
+                            <div className="input-group">
+                                <label htmlFor="email" className="label">
                                     Email address
                                 </label>
                                 <input
@@ -92,15 +105,16 @@ export default function RegisterPage() {
                                     name="email"
                                     type="email"
                                     required
-                                    className="relative block w-full rounded-md border-0 p-2 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-blue-600"
-                                    placeholder="Email address"
+                                    className="input"
+                                    placeholder="you@example.com"
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
                                     disabled={loading}
                                 />
                             </div>
-                            <div>
-                                <label htmlFor="password" className="sr-only">
+                            
+                            <div className="input-group">
+                                <label htmlFor="password" className="label">
                                     Password
                                 </label>
                                 <input
@@ -108,17 +122,34 @@ export default function RegisterPage() {
                                     name="password"
                                     type="password"
                                     required
-                                    className="relative block w-full rounded-md border-0 p-2 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-blue-600"
-                                    placeholder="Password"
+                                    className="input"
+                                    placeholder="Create a strong password"
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
+                                    disabled={loading}
+                                />
+                            </div>
+                            
+                            <div className="input-group">
+                                <label htmlFor="confirmPassword" className="label">
+                                    Confirm Password
+                                </label>
+                                <input
+                                    id="confirmPassword"
+                                    name="confirmPassword"
+                                    type="password"
+                                    required
+                                    className="input"
+                                    placeholder="Confirm your password"
+                                    value={confirmPassword}
+                                    onChange={(e) => setConfirmPassword(e.target.value)}
                                     disabled={loading}
                                 />
                             </div>
                         </div>
 
                         {error && (
-                            <div className="text-red-500 text-sm p-2 bg-red-500/10 rounded-md text-center">
+                            <div className="text-accent-coral text-sm text-center py-3 px-4 bg-accent-coral/10 border border-accent-coral/20 rounded-lg">
                                 {error}
                             </div>
                         )}
@@ -126,21 +157,37 @@ export default function RegisterPage() {
                         <div>
                             <button
                                 type="submit"
-                                className="group relative flex w-full justify-center rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+                                className="btn btn-primary w-full"
                                 disabled={loading}
                             >
-                                {loading ? 'Signing up...' : 'Sign up'}
+                                {loading ? (
+                                    <span className="flex items-center justify-center">
+                                        <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                        </svg>
+                                        Creating account...
+                                    </span>
+                                ) : 'Create Account'}
                             </button>
                         </div>
+                        
+                        <div className="text-center text-sm text-neutral-300 pt-4">
+                            Already have an account?{' '}
+                            <Link href="/login" className="text-primary-teal hover:text-primary-lilac transition-colors duration-300 font-medium">
+                                Sign in
+                            </Link>
+                        </div>
                     </form>
-                    <div className="text-center text-sm text-gray-400">
-                        Already have an account?{' '}
-                        <Link href="/login" className="text-blue-400 hover:text-blue-300">
-                            Sign in
-                        </Link>
-                    </div>
+                </div>
+                
+                <div className="mt-8 text-center text-xs text-neutral-400">
+                    By signing up, you agree to our
+                    <a href="#" className="text-primary-teal hover:text-primary-lilac mx-1">Terms of Service</a>
+                    and
+                    <a href="#" className="text-primary-teal hover:text-primary-lilac mx-1">Privacy Policy</a>
                 </div>
             </div>
-        </MainLayout>
+        </div>
     );
 } 

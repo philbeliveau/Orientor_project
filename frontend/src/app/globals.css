@@ -2,96 +2,169 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Import fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@500;600;700&family=Literata:wght@400;500;600;700&display=swap');
+
 @layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  
   body {
-    @apply bg-gradient-dark text-surface-light min-h-screen font-sans;
+    @apply bg-gradient-dark bg-fixed text-neutral-50 min-h-screen font-sans antialiased;
+    background-size: 200% 200%;
+    animation: gradient-shift 15s ease infinite;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display text-neutral-50 tracking-tight;
   }
 
   h1 {
-    @apply text-3xl font-bold mb-4;
+    @apply text-3xl md:text-4xl font-bold mb-6;
   }
 
   h2 {
-    @apply text-2xl font-semibold mb-3;
+    @apply text-2xl md:text-3xl font-semibold mb-4;
   }
 
   h3 {
-    @apply text-xl font-medium mb-2;
+    @apply text-xl md:text-2xl font-medium mb-3;
+  }
+
+  p {
+    @apply leading-relaxed text-base md:text-lg text-neutral-100;
+  }
+
+  a {
+    @apply text-primary-teal hover:text-primary-lilac transition-colors duration-300;
   }
 }
 
 @layer components {
   /* Buttons */
   .btn {
-    @apply px-4 py-2 rounded-lg font-medium transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-opacity-50 disabled:opacity-50 disabled:cursor-not-allowed;
+    @apply inline-flex items-center justify-center px-6 py-3 font-medium rounded-lg
+    transition-all duration-300 transform hover:-translate-y-1
+    focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-neutral-800 focus:ring-opacity-50
+    disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:translate-y-0
+    text-base;
   }
   
   .btn-primary {
-    @apply bg-gradient-metallic-purple hover:shadow-glow-purple text-white;
+    @apply bg-gradient-primary text-neutral-50 shadow-btn hover:shadow-glow-purple;
   }
   
   .btn-secondary {
-    @apply bg-gradient-metallic-gold hover:shadow-glow-gold text-base-charcoal;
+    @apply bg-gradient-secondary text-neutral-50 shadow-btn hover:shadow-glow-teal;
+  }
+
+  .btn-accent {
+    @apply bg-gradient-accent text-neutral-900 shadow-btn;
   }
 
   .btn-outline {
-    @apply border-2 border-metallic-purple hover:bg-metallic-purple/10 text-metallic-purple;
+    @apply border-2 border-primary-purple bg-transparent hover:bg-gradient-subtle text-neutral-50;
+  }
+
+  .btn-ghost {
+    @apply bg-transparent hover:bg-neutral-800/30 text-neutral-200;
+  }
+
+  .btn-sm {
+    @apply px-4 py-2 text-sm rounded-md;
+  }
+
+  .btn-lg {
+    @apply px-8 py-4 text-lg rounded-lg;
   }
 
   /* Cards & Containers */
   .card {
-    @apply bg-surface-dark backdrop-blur-sm rounded-xl p-6 shadow-lg border border-metallic-purple/20;
+    @apply bg-gradient-glass backdrop-blur-sm rounded-lg p-6 md:p-8 
+    shadow-card border border-neutral-700/20 hover:border-primary-teal/30 
+    transition-all duration-300;
   }
   
   .panel {
-    @apply bg-surface-warm/5 rounded-lg p-4;
+    @apply bg-neutral-800/60 backdrop-blur-md rounded-lg p-6 shadow-soft;
+  }
+
+  .glass {
+    @apply bg-neutral-800/40 backdrop-blur-md border border-neutral-700/30;
   }
 
   /* Form Elements */
   .input {
-    @apply w-full px-4 py-2 bg-base-charcoal border border-metallic-purple/30 rounded-lg 
-    focus:outline-none focus:ring-2 focus:ring-metallic-purple focus:border-transparent
-    text-surface-light placeholder-surface-light/50;
+    @apply w-full px-4 py-3 bg-neutral-800/60 border border-neutral-600/50 rounded-lg
+    focus:outline-none focus:ring-2 focus:ring-primary-teal focus:border-transparent
+    text-neutral-50 placeholder-neutral-400 shadow-input;
   }
 
   .input-group {
-    @apply space-y-1;
+    @apply space-y-2;
   }
 
   .label {
-    @apply block text-sm font-medium text-surface-light/80;
+    @apply block text-sm font-medium text-neutral-300 mb-1;
   }
 
   /* Navigation */
   .nav-link {
-    @apply px-4 py-2 rounded-lg transition-all duration-200 text-surface-light 
-    hover:bg-metallic-purple/20 hover:shadow-glow-purple;
+    @apply px-4 py-2 rounded-lg transition-all duration-300 text-neutral-200
+    hover:bg-primary-purple/20 hover:text-neutral-50;
   }
 
   .nav-link-active {
-    @apply bg-gradient-metallic-purple text-white shadow-glow-purple;
+    @apply bg-gradient-primary text-neutral-50 shadow-glow-purple;
   }
 
   /* Chat Elements */
   .message-bubble {
-    @apply rounded-xl p-4 my-2 max-w-[80%] shadow-lg;
+    @apply rounded-xl p-4 my-2 max-w-[85%] shadow-soft;
   }
   
   .message-user {
-    @apply message-bubble bg-gradient-metallic-purple text-white ml-auto;
+    @apply message-bubble bg-gradient-primary text-neutral-50 ml-auto;
   }
   
   .message-system {
-    @apply message-bubble bg-surface-dark backdrop-blur-sm border border-metallic-purple/20;
+    @apply message-bubble bg-neutral-800/60 backdrop-blur-md border border-neutral-700/30;
   }
 
-  /* Animations */
+  /* Section layouts */
+  .section {
+    @apply py-12 md:py-20;
+  }
+
+  .container-narrow {
+    @apply max-w-4xl mx-auto px-4;
+  }
+
+  /* Animations & Effects */
+  .hover-lift {
+    @apply transition-transform duration-300 hover:-translate-y-1;
+  }
+
   .hover-glow {
     @apply transition-all duration-300 hover:shadow-glow-purple;
   }
 
   .shimmer {
-    @apply bg-gradient-to-r from-transparent via-white/10 to-transparent bg-[length:200%_100%] animate-shimmer;
+    @apply bg-gradient-to-r from-transparent via-neutral-400/10 to-transparent bg-[length:200%_100%] animate-shimmer;
+  }
+
+  /* Gradients for text */
+  .gradient-text {
+    @apply bg-clip-text text-transparent bg-gradient-primary;
+  }
+
+  .gradient-text-secondary {
+    @apply bg-clip-text text-transparent bg-gradient-secondary;
+  }
+
+  .gradient-text-accent {
+    @apply bg-clip-text text-transparent bg-gradient-accent;
   }
 }
 

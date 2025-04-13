@@ -31,7 +31,7 @@ export default function MainLayout({
     // For public routes, render immediately without checking auth
     if (isPublicRoute) {
         return (
-            <div className="min-h-screen bg-primary-charcoal flex flex-col">
+            <div className="min-h-screen flex flex-col">
                 <main className="flex-1 w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
                     {children}
                 </main>
@@ -56,14 +56,14 @@ export default function MainLayout({
     ];
 
     return (
-        <div className="min-h-screen bg-primary-charcoal flex flex-col">
+        <div className="min-h-screen flex flex-col">
             {/* Header/Navigation */}
             {showNav && (
-                <header className="bg-primary-indigo shadow-md">
+                <header className="bg-neutral-800/60 backdrop-blur-md border-b border-neutral-700/30 sticky top-0 z-10">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                         <div className="flex justify-between h-16">
                             <div className="flex items-center">
-                                <Link href="/" className="text-2xl font-semibold text-secondary-teal hover:text-secondary-purple transition-colors duration-200">
+                                <Link href="/" className="text-2xl font-display font-semibold gradient-text hover:text-neutral-50 transition-colors duration-200">
                                     Navigo
                                 </Link>
                             </div>
@@ -92,11 +92,11 @@ export default function MainLayout({
                 </header>
             )}
             {!showNav && (
-                <header className="bg-primary-indigo shadow-md">
+                <header className="bg-neutral-800/60 backdrop-blur-md border-b border-neutral-700/30 sticky top-0 z-10">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                         <div className="flex justify-between h-16">
                             <div className="flex items-center">
-                                <span className="text-2xl font-semibold text-secondary-teal">
+                                <span className="text-2xl font-display font-semibold gradient-text">
                                     Navigo
                                 </span>
                             </div>
@@ -104,7 +104,7 @@ export default function MainLayout({
                                 <Link href="/login" className="nav-link">
                                     Login
                                 </Link>
-                                <Link href="/register" className="btn btn-primary">
+                                <Link href="/register" className="btn btn-primary btn-sm">
                                     Sign Up
                                 </Link>
                             </nav>

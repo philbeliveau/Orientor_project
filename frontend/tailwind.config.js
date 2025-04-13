@@ -6,67 +6,114 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        base: {
-          charcoal: '#1F2937',
-          indigo: '#2C3E50',
-        },
-        metallic: {
-          gold: '#DAA520',
-          'gold-light': '#FFD700',
-          purple: '#6C63FF',
-          'purple-deep': '#7E5BEF',
-        },
-        surface: {
-          light: '#F5F6FA',
-          warm: '#FFF8F0',
-          dark: 'rgba(31, 41, 55, 0.7)', // semi-transparent charcoal
-        },
+        // New primary palette - premium gradient colors
         primary: {
-          charcoal: '#1F2937',
-          indigo: '#2C3E50',
+          purple: '#7D5BA6',
+          teal: '#59C2C9',
+          indigo: '#5B6CD9',
+          lilac: '#9F7AEA',
         },
-        secondary: {
-          teal: '#4FD1C5',
-          purple: '#7E5BEF',
-          coral: '#F56565',
-        },
+        // Supporting neutral shades
         neutral: {
-          lightgray: '#E2E8F0',
-        }
+          50: '#F7F9FC',  // Soft off-white
+          100: '#EDF2F7',
+          200: '#E2E8F0',
+          300: '#CBD5E0',
+          400: '#A0AEC0',
+          500: '#718096',
+          600: '#4A5568',
+          700: '#2D3748',
+          800: '#1A202C',
+          900: '#171923',  // Deep charcoal
+        },
+        // Accent colors
+        accent: {
+          coral: '#FF6B81',
+          amber: '#FFBE3D',
+          emerald: '#38B2AC',
+          sky: '#4FD1C5',
+        },
       },
       backgroundImage: {
-        'gradient-metallic-gold': 'linear-gradient(135deg, #DAA520 0%, #FFD700 100%)',
-        'gradient-metallic-purple': 'linear-gradient(135deg, #6C63FF 0%, #7E5BEF 100%)',
-        'gradient-dark': 'linear-gradient(180deg, #1F2937 0%, #2C3E50 100%)',
+        // Main gradients
+        'gradient-primary': 'linear-gradient(135deg, #7D5BA6 0%, #59C2C9 100%)',
+        'gradient-secondary': 'linear-gradient(135deg, #5B6CD9 0%, #9F7AEA 100%)',
+        'gradient-accent': 'linear-gradient(135deg, #FF6B81 0%, #FFBE3D 100%)',
+        'gradient-dark': 'linear-gradient(180deg, #1A202C 0%, #2D3748 100%)',
+        // Subtle gradients
+        'gradient-subtle': 'linear-gradient(135deg, rgba(125, 91, 166, 0.1) 0%, rgba(89, 194, 201, 0.1) 100%)',
+        'gradient-glass': 'linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%)',
       },
       fontFamily: {
-        sans: ['Poppins', 'Montserrat', 'sans-serif'],
+        sans: ['"Inter"', '"Poppins"', 'system-ui', 'sans-serif'],
+        display: ['"Montserrat"', 'sans-serif'],
+        serif: ['"Literata"', 'serif'],
       },
       boxShadow: {
-        'glow-gold': '0 0 15px rgba(218, 165, 32, 0.3)',
-        'glow-purple': '0 0 15px rgba(108, 99, 255, 0.3)',
+        'glow-purple': '0 0 20px rgba(125, 91, 166, 0.3)',
+        'glow-teal': '0 0 20px rgba(89, 194, 201, 0.3)',
+        'soft': '0 4px 20px rgba(0, 0, 0, 0.08)',
+        'card': '0 10px 30px rgba(0, 0, 0, 0.1)',
+        'btn': '0 4px 6px rgba(125, 91, 166, 0.2)',
+        'input': 'inset 0 2px 4px rgba(0, 0, 0, 0.05)',
+      },
+      borderRadius: {
+        'sm': '6px',
+        'md': '10px',
+        'lg': '16px',
+        'xl': '24px',
+        '2xl': '32px',
       },
       animation: {
-        'gradient-x': 'gradient-x 3s ease infinite',
+        'gradient-shift': 'gradient-shift 8s ease infinite',
         'shimmer': 'shimmer 2s linear infinite',
+        'float': 'float 6s ease-in-out infinite',
       },
       keyframes: {
-        'gradient-x': {
+        'gradient-shift': {
           '0%, 100%': {
-            'background-size': '200% 200%',
-            'background-position': 'left center',
+            'background-position': '0% 50%',
           },
           '50%': {
-            'background-size': '200% 200%',
-            'background-position': 'right center',
+            'background-position': '100% 50%',
           },
         },
         'shimmer': {
           '0%': { backgroundPosition: '-200% 0' },
           '100%': { backgroundPosition: '200% 0' },
         },
+        'float': {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-8px)' },
+        },
+      },
+      typography: {
+        DEFAULT: {
+          css: {
+            lineHeight: 1.7,
+            fontSize: '1.125rem',
+            color: '#F7F9FC',
+            h1: {
+              fontSize: '2.5rem',
+              fontWeight: 700,
+              lineHeight: 1.2,
+            },
+            h2: {
+              fontSize: '2rem',
+              fontWeight: 600,
+              lineHeight: 1.25,
+            },
+            h3: {
+              fontSize: '1.5rem',
+              fontWeight: 600,
+              lineHeight: 1.3,
+            },
+          },
+        },
       },
     },
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/typography'),
+  ],
 };
