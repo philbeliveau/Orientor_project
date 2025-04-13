@@ -2,18 +2,20 @@
  * API utility functions for consistent API URL handling
  */
 
-// Get the API URL from environment variables
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://orientor-backend-production.up.railway.app';
+// Get the API URL from environment variables with production fallback
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
 
 // Clean API URL (remove trailing spaces)
 export const apiUrl = API_URL.trim();
 
 // Helper to build full endpoint URLs
 export const endpoint = (path: string): string => {
-  // Make sure path starts with a slash
-  const formattedPath = path.startsWith('/') ? path : `/${path}`;
+  // Remove /api prefix if present since our backend doesn't use it
+  const cleanPath = path.replace('/api/', '/');
   
-  // Keep the /api prefix as it's needed for the rewrite rules
+  // Make sure path starts with a slash
+  const formattedPath = cleanPath.startsWith('/') ? cleanPath : `/${cleanPath}`;
+  
   return `${apiUrl}${formattedPath}`;
 };
 
@@ -33,7 +35,5 @@ export const logApiDetails = () => {
   console.log('Environment:', process.env.NODE_ENV);
   console.log('Is production:', process.env.NODE_ENV === 'production');
   console.log('API URL from env:', process.env.NEXT_PUBLIC_API_URL);
-  // Add more detailed logging
-  const testEndpoint = endpoint('/api/users/login');
-  console.log('Example login endpoint:', testEndpoint);
+  console.log('Example login endpoint:', endpoint('/users/login'));
 }; 

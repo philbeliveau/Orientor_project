@@ -26,28 +26,6 @@ export default function LoginPage() {
         
         // Log API details for debugging
         logApiDetails();
-        
-        // Perform a health check to the backend
-        const checkBackendHealth = async () => {
-            try {
-                const healthUrl = endpoint('/api/health');
-                console.log('Checking backend health at:', healthUrl);
-                const response = await axios.get(healthUrl, { 
-                    timeout: 5000,
-                    withCredentials: true 
-                });
-                console.log('Backend health check result:', response.data);
-            } catch (err: any) {
-                console.error('Backend health check failed:', {
-                    message: err.message,
-                    status: err.response?.status,
-                    data: err.response?.data,
-                    url: err.config?.url
-                });
-            }
-        };
-        
-        checkBackendHealth();
     }, [router]);
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -58,7 +36,7 @@ export default function LoginPage() {
         try {
             console.log('Attempting to login with:', { email });
             
-            const loginUrl = endpoint('/api/users/login');
+            const loginUrl = endpoint('/users/login');
             console.log('Full login URL:', loginUrl);
             
             const response = await axios.post<LoginResponse>(
@@ -68,8 +46,7 @@ export default function LoginPage() {
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    timeout: 10000,
-                    withCredentials: true
+                    timeout: 10000
                 }
             );
             
@@ -85,8 +62,7 @@ export default function LoginPage() {
                 message: err.message,
                 status: err.response?.status,
                 statusText: err.response?.statusText,
-                data: err.response?.data,
-                headers: err.response?.headers
+                data: err.response?.data
             });
             
             // Handle different error cases

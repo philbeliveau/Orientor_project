@@ -20,7 +20,7 @@ const nextConfig = {
   },
   // Handle environment variables
   env: {
-    NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL || 'https://orientor-backend-production.up.railway.app',
+    NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000',
   },
   // Configure build output - ensure this is properly set
   output: 'standalone',
@@ -38,12 +38,17 @@ const nextConfig = {
   },
   // Remove static export settings
   async rewrites() {
-    return [
-      {
-        source: '/api/:path*',
-        destination: 'https://orientor-backend-production.up.railway.app/api/:path*',
-      },
-    ];
+    // Only apply rewrites in production (Vercel)
+    if (process.env.NODE_ENV === 'production') {
+      return [
+        {
+          source: '/api/:path*',
+          destination: 'https://orientor-backend-production.up.railway.app/:path*',
+        },
+      ];
+    }
+    // Return empty array for local development
+    return [];
   },
   // Custom error handling
   async headers() {
