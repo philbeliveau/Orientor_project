@@ -1,0 +1,59 @@
+The key difference between your **working deployment** and the **one showing a 404** is that the working version includes **`app` directory routes** like:
+
+```
+/_next/static/chunks/app/chat/page.js
+/_next/static/chunks/app/login/page.js
+/_next/static/chunks/app/page.js
+/_next/static/chunks/app/profile/page.js
+```
+
+Whereas the broken version **does not include any `app/` routes at all**, only:
+
+```
+/_next/static/chunks/pages/_app.js
+/_next/static/chunks/pages/_error.js
+```
+
+---
+
+### ✅ Conclusion:
+**Your latest deployment is not using the `app/` directory routes**, which means:
+- Either **your Next.js app isn't in the expected root** when deploying (e.g., maybe `frontend/` is not set properly as the project root)
+- Or the build process is ignoring the `app/` directory entirely
+
+---
+
+### 🔍 Most Likely Problem
+Your **project directory is not correctly set to `frontend/`** in Vercel.
+
+Even if `vercel.json` is correct, Vercel might still be building from the wrong root **unless you explicitly set it during deployment**.
+
+---
+
+### ✅ Fix Step-by-Step
+
+1. **Ensure `frontend/` is your project root** (contains `app/`, `next.config.js`, `package.json`)
+2. In your terminal, from the root of the project, run:
+
+```bash
+cd frontend
+vercel --prod
+```
+
+When prompted:
+- ❓ *"Set up and deploy?"* → Yes
+- ❓ *"Which scope?"* → Your personal project or team
+- ❓ *"Link to existing project?"* → Yes (if you've already deployed it)
+- ❓ *"What's the name?"* → `navigo_project` (or whatever your project name is)
+- ❓ *"Which directory?"* → just press Enter (you're already in `frontend/`)
+
+3. After deployment, you **should see `/app/...` chunks** again, and your app will not return 404.
+
+---
+
+### 🔍 Optional: Check `next.config.js`
+Make sure you didn’t accidentally change `pageExtensions` or other build config that disables the app directory.
+
+---
+
+Let me know if you want a `vercel.json` that is compatible with both frontend and backend in a monorepo — that’s also possible.

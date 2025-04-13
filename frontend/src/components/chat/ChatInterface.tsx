@@ -13,6 +13,10 @@ interface Message {
   timestamp: Date;
 }
 
+interface ChatResponse {
+  text: string;
+}
+
 export default function ChatInterface() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputText, setInputText] = useState('');
@@ -67,7 +71,7 @@ export default function ChatInterface() {
     setIsTyping(true);
 
     try {
-      const response = await axios.post(
+      const response = await axios.post<ChatResponse>(
         'http://localhost:8000/chat/send',
         { text: newMessage.text },
         {

@@ -16,6 +16,10 @@ interface MessageFeedback {
     type: 'helpful' | 'not_helpful';
 }
 
+interface ChatResponse {
+    text: string;
+}
+
 // Define API URL with fallback and trim any trailing spaces
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
 const cleanApiUrl = API_URL ? API_URL.trim() : '';
@@ -79,7 +83,7 @@ export default function ChatPage() {
         setAuthError(null);
 
         try {
-            const response = await axios.post(
+            const response = await axios.post<ChatResponse>(
                 `${cleanApiUrl}/chat/send`,
                 { text: newMessage.text },
                 {
