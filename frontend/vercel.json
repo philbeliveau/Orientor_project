@@ -29,5 +29,11 @@
       "source": "/api/:path*",
       "destination": "https://orientor-backend-production.up.railway.app/api/:path*"
     }
+  ],
+  "builds": [
+    {
+      "src": "frontend/next.config.js",
+      "use": "@vercel/next"
+    }
   ]
 } 

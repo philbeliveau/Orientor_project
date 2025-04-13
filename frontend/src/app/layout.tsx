@@ -1,9 +1,28 @@
 'use client';
 
-import { Inter } from 'next/font/google';
+import { Inter, Montserrat } from 'next/font/google';
+import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import './globals.css';
 
-const inter = Inter({ subsets: ['latin'] });
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-inter',
+  display: 'swap',
+  weight: ['400', '500', '600', '700'],
+});
+
+const montserrat = Montserrat({
+  subsets: ['latin'],
+  variable: '--font-montserrat',
+  display: 'swap',
+  weight: ['500', '600', '700'],
+});
+
+export const metadata = {
+  title: 'Navigo - Your Personal Guide',
+  description: 'Your personal guidance for growth and self-discovery',
+};
 
 export default function RootLayout({
   children,
@@ -11,11 +30,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
-        <main className="min-h-screen bg-gradient-to-br from-neutral-900 via-neutral-800 to-neutral-900">
-          {children}
-        </main>
+    <html lang="en" className={`${inter.variable} ${montserrat.variable} scroll-smooth`}>
+      <body className="min-h-screen bg-gradient-dark text-neutral-50 antialiased">
+        {/* Background gradient elements */}
+        <div className="fixed inset-0 -z-10 bg-[radial-gradient(circle_at_top_right,rgba(125,91,166,0.15),transparent_40%)]"></div>
+        <div className="fixed inset-0 -z-10 bg-[radial-gradient(circle_at_bottom_left,rgba(89,194,201,0.15),transparent_40%)]"></div>
+        
+        <div className="min-h-screen flex flex-col">
+          <main className="flex-1 max-w-7xl mx-auto w-full p-4 md:p-6">
+            {children}
+          </main>
+        </div>
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );

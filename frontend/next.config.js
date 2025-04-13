@@ -22,6 +22,16 @@ const nextConfig = {
   env: {
     NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL || 'https://orientor-backend-production.up.railway.app',
   },
+  // Explicitly enable App Router
+  experimental: {
+    appDir: true,
+    serverActions: true,
+  },
+  // Ensure proper page extensions
+  pageExtensions: ['js', 'jsx', 'ts', 'tsx'],
+  // Configure build output
+  output: 'standalone',
+  poweredByHeader: false,
   // Remove static export settings
   async rewrites() {
     return [
