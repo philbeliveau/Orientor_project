@@ -1,30 +1,34 @@
-// import React from 'react';
-// import MainLayout from '@/components/layout/MainLayout';
-// import ChatInterface from '@/components/chat/ChatInterface';
-
-// export default function Home() {
-//   return (
-//     <MainLayout>
-//       <div className="space-y-6">
-//         <h2 className="text-2xl font-bold text-gray-100">Welcome to Navigo</h2>
-//         <h1 className="text-3xl font-bold text-blue-500">This is a test message!</h1> {/* Test message */}
-//         <button className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-500">
-//           Click Me
-//         </button>
-//         <ChatInterface />
-//       </div>
-//     </MainLayout>
-//   );
-// }
-
+'use client';
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import ChatInterface from '@/components/chat/ChatInterface';
 import MainLayout from '@/components/layout/MainLayout';
+import LandingPage from '@/components/landing/LandingPage';
 
 export default function Home() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const router = useRouter();
+
+  useEffect(() => {
+    // Check if user is logged in
+    const token = localStorage.getItem('access_token');
+    setIsLoggedIn(!!token);
+    setLoading(false);
+  }, []);
+
+  if (loading) {
+    return null; // Show nothing while checking auth status
+  }
+
   return (
-    <MainLayout>
+    <MainLayout showNav={isLoggedIn}>
       <div className="space-y-6">
-        <ChatInterface />
+        {isLoggedIn ? (
+          <ChatInterface />
+        ) : (
+          <LandingPage />
+        )}
       </div>
     </MainLayout>
   );

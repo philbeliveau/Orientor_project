@@ -21,6 +21,18 @@ module.exports = {
           warm: '#FFF8F0',
           dark: 'rgba(31, 41, 55, 0.7)', // semi-transparent charcoal
         },
+        primary: {
+          charcoal: '#1F2937',
+          indigo: '#2C3E50',
+        },
+        secondary: {
+          teal: '#4FD1C5',
+          purple: '#7E5BEF',
+          coral: '#F56565',
+        },
+        neutral: {
+          lightgray: '#E2E8F0',
+        }
       },
       backgroundImage: {
         'gradient-metallic-gold': 'linear-gradient(135deg, #DAA520 0%, #FFD700 100%)',
