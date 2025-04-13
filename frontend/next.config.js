@@ -22,6 +22,19 @@ const nextConfig = {
   env: {
     NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL,
   },
+  // Add configuration for handling client-side rendering
+  experimental: {
+    appDir: true,
+  },
+  // Ensure proper handling of dynamic routes
+  async rewrites() {
+    return [
+      {
+        source: '/api/:path*',
+        destination: 'https://orientor-backend-production.up.railway.app/api/:path*',
+      },
+    ];
+  },
 };
 
 module.exports = nextConfig;
