@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "buildCommand": "npm run build",
-  "installCommand": "npm install",
-  "outputDirectory": ".next",
+  "buildCommand": "cd frontend && npm run build",
+  "installCommand": "cd frontend && npm install",
+  "outputDirectory": "frontend/.next",
   "framework": "nextjs",
   "regions": ["iad1"],
   "headers": [
@@ -30,4 +30,4 @@
       "destination": "https://orientor-backend-production.up.railway.app/api/:path*"
     }
   ]
-}
+} 
