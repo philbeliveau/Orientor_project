@@ -22,10 +22,10 @@ const nextConfig = {
   env: {
     NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL,
   },
-  // Add configuration for handling client-side rendering
-  experimental: {
-    appDir: true,
-  },
+  // Remove experimental flag since app directory is stable in Next.js 13
+  output: 'export', // Enable static export
+  distDir: '.next',
+  trailingSlash: true, // Add trailing slashes to all routes
   // Ensure proper handling of dynamic routes
   async rewrites() {
     return [
