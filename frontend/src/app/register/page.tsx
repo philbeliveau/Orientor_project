@@ -19,6 +19,8 @@ interface ApiError {
     message?: string;
 }
 
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+
 export default function RegisterPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -33,8 +35,9 @@ export default function RegisterPage() {
         
         try {
             console.log('Attempting to register with:', { email, password });
+            console.log('Using API URL:', API_URL);
             const response = await axios.post<RegisterResponse>(
-                'http://localhost:8000/users/register', 
+                `${API_URL}/users/register`, 
                 { email, password },
                 { 
                     headers: { 'Content-Type': 'application/json' },

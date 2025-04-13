@@ -23,8 +23,6 @@ allowed_origins = [
     "https://navigoproject-*.vercel.app",  # All Vercel preview deployments
     "https://orientor-frontend.vercel.app",  # Production frontend
     "https://orientor-backend-production.up.railway.app",  # Railway backend
-    #     "https://orientor-backend-production.up.railway.app",  # Your Railway backend
-    # "https://orientor-frontend.vercel.app",  # Add this if it's your frontend URL
 ]
 
 # Add Railway URL to allowed origins if it exists
@@ -37,12 +35,22 @@ print("Allowed origins:", allowed_origins)
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=allowed_origins,
+    allow_origins=["*"],  # Temporarily allow all origins for testing
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
+    expose_headers=["*"]
 )
 
 @app.get("/")
 async def root():
     return {"message": "Welcome to Orientor API"}
+
+@app.get("/debug-info")
+async def debug_info():
+    return {
+        "allowed_origins": allowed_origins,
+        "railway_url": os.getenv("RAILWAY_STATIC_URL"),
+        "environment": os.getenv("RAILWAY_ENVIRONMENT"),
+        "database_connected": True
+    }
