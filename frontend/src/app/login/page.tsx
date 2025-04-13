@@ -30,15 +30,19 @@ export default function LoginPage() {
         // Perform a health check to the backend
         const checkBackendHealth = async () => {
             try {
-                const healthUrl = endpoint('/health');
+                const healthUrl = endpoint('/api/health');
                 console.log('Checking backend health at:', healthUrl);
-                const response = await axios.get(healthUrl, { timeout: 5000 });
+                const response = await axios.get(healthUrl, { 
+                    timeout: 5000,
+                    withCredentials: true 
+                });
                 console.log('Backend health check result:', response.data);
             } catch (err: any) {
                 console.error('Backend health check failed:', {
                     message: err.message,
                     status: err.response?.status,
-                    data: err.response?.data
+                    data: err.response?.data,
+                    url: err.config?.url
                 });
             }
         };
@@ -54,21 +58,18 @@ export default function LoginPage() {
         try {
             console.log('Attempting to login with:', { email });
             
-            const loginUrl = endpoint('/users/login');
+            const loginUrl = endpoint('/api/users/login');
             console.log('Full login URL:', loginUrl);
             
-            // Add debugging headers
             const response = await axios.post<LoginResponse>(
                 loginUrl,
                 { email, password },
                 {
                     headers: {
-                        'Content-Type': 'application/json',
-                        // Adding these headers to help debug CORS issues
-                        'Access-Control-Allow-Origin': '*'
+                        'Content-Type': 'application/json'
                     },
-                    // Add timeout and clear error message
-                    timeout: 10000
+                    timeout: 10000,
+                    withCredentials: true
                 }
             );
             

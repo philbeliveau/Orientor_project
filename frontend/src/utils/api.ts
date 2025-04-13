@@ -12,6 +12,12 @@ export const apiUrl = API_URL.trim();
 export const endpoint = (path: string): string => {
   // Make sure path starts with a slash
   const formattedPath = path.startsWith('/') ? path : `/${path}`;
+  
+  // If the path already includes /api, don't add it again
+  if (formattedPath.startsWith('/api/')) {
+    return `${apiUrl}${formattedPath.substring(4)}`; // Remove /api prefix since it's in the rewrite
+  }
+  
   return `${apiUrl}${formattedPath}`;
 };
 

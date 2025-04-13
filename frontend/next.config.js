@@ -41,7 +41,7 @@ const nextConfig = {
     return [
       {
         source: '/api/:path*',
-        destination: 'https://orientor-backend-production.up.railway.app/api/:path*',
+        destination: 'https://orientor-backend-production.up.railway.app/:path*',
       },
     ];
   },
@@ -58,6 +58,23 @@ const nextConfig = {
           {
             key: 'Strict-Transport-Security',
             value: 'max-age=63072000; includeSubDomains; preload',
+          },
+          // Add CORS headers
+          {
+            key: 'Access-Control-Allow-Origin',
+            value: '*',
+          },
+          {
+            key: 'Access-Control-Allow-Methods',
+            value: 'GET, POST, PUT, DELETE, OPTIONS',
+          },
+          {
+            key: 'Access-Control-Allow-Headers',
+            value: 'Content-Type, Authorization',
+          },
+          {
+            key: 'Access-Control-Allow-Credentials',
+            value: 'true',
           },
         ],
       },
