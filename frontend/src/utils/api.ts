@@ -13,11 +13,7 @@ export const endpoint = (path: string): string => {
   // Make sure path starts with a slash
   const formattedPath = path.startsWith('/') ? path : `/${path}`;
   
-  // If the path already includes /api, don't add it again
-  if (formattedPath.startsWith('/api/')) {
-    return `${apiUrl}${formattedPath.substring(4)}`; // Remove /api prefix since it's in the rewrite
-  }
-  
+  // Keep the /api prefix as it's needed for the rewrite rules
   return `${apiUrl}${formattedPath}`;
 };
 
@@ -37,4 +33,7 @@ export const logApiDetails = () => {
   console.log('Environment:', process.env.NODE_ENV);
   console.log('Is production:', process.env.NODE_ENV === 'production');
   console.log('API URL from env:', process.env.NEXT_PUBLIC_API_URL);
+  // Add more detailed logging
+  const testEndpoint = endpoint('/api/users/login');
+  console.log('Example login endpoint:', testEndpoint);
 }; 
