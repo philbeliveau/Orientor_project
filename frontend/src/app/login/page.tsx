@@ -26,6 +26,24 @@ export default function LoginPage() {
         
         // Log API details for debugging
         logApiDetails();
+        
+        // Perform a health check to the backend
+        const checkBackendHealth = async () => {
+            try {
+                const healthUrl = endpoint('/health');
+                console.log('Checking backend health at:', healthUrl);
+                const response = await axios.get(healthUrl, { timeout: 5000 });
+                console.log('Backend health check result:', response.data);
+            } catch (err: any) {
+                console.error('Backend health check failed:', {
+                    message: err.message,
+                    status: err.response?.status,
+                    data: err.response?.data
+                });
+            }
+        };
+        
+        checkBackendHealth();
     }, [router]);
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -39,10 +57,22 @@ export default function LoginPage() {
             const loginUrl = endpoint('/users/login');
             console.log('Full login URL:', loginUrl);
             
-            const response = await axios.post<LoginResponse>(loginUrl, {
-                email,
-                password
-            });
+            // Add debugging headers
+            const response = await axios.post<LoginResponse>(
+                loginUrl,
+                { email, password },
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        // Adding these headers to help debug CORS issues
+                        'Access-Control-Allow-Origin': '*'
+                    },
+                    // Add timeout and clear error message
+                    timeout: 10000
+                }
+            );
+            
+            console.log('Login successful, token received');
             
             // Store the token in localStorage
             localStorage.setItem('access_token', response.data.access_token);
@@ -50,8 +80,31 @@ export default function LoginPage() {
             // Redirect to chat page after successful login
             router.push('/chat');
         } catch (err: any) {
-            console.error('Login error:', err);
-            setError(err.response?.data?.detail || 'Login failed');
+            console.error('Login error details:', {
+                message: err.message,
+                status: err.response?.status,
+                statusText: err.response?.statusText,
+                data: err.response?.data,
+                headers: err.response?.headers
+            });
+            
+            // Handle different error cases
+            if (err.code === 'ECONNABORTED') {
+                setError('Connection timeout. The server took too long to respond.');
+            } else if (err.message.includes('Network Error')) {
+                setError('Network error. Please check your connection or the server might be down.');
+            } else if (err.response?.status === 401) {
+                setError('Invalid email or password');
+            } else if (err.response?.status === 403) {
+                setError('Access forbidden. You may not have permission to log in.');
+            } else if (err.response?.status === 404) {
+                setError('Login endpoint not found. Please contact support.');
+            } else if (err.response?.status === 500) {
+                setError('Server error. Please try again later.');
+            } else {
+                setError(err.response?.data?.detail || 'Login failed. Please try again.');
+            }
+            
             setIsLoading(false);
         }
     };

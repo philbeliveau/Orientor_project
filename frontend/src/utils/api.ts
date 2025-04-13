@@ -3,7 +3,7 @@
  */
 
 // Get the API URL from environment variables
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://orientor-backend-production.up.railway.app';
 
 // Clean API URL (remove trailing spaces)
 export const apiUrl = API_URL.trim();
@@ -17,8 +17,12 @@ export const endpoint = (path: string): string => {
 
 // Authentication helper
 export const getAuthHeader = (): Record<string, string> => {
-  const token = localStorage.getItem('access_token');
-  return token ? { 'Authorization': `Bearer ${token}` } : {};
+  // Ensure this works in both browser and server environments
+  if (typeof window !== 'undefined') {
+    const token = localStorage.getItem('access_token');
+    return token ? { 'Authorization': `Bearer ${token}` } : {};
+  }
+  return {};
 };
 
 // Debug/logging helper
@@ -26,4 +30,5 @@ export const logApiDetails = () => {
   console.log('API URL:', apiUrl);
   console.log('Environment:', process.env.NODE_ENV);
   console.log('Is production:', process.env.NODE_ENV === 'production');
+  console.log('API URL from env:', process.env.NEXT_PUBLIC_API_URL);
 }; 
