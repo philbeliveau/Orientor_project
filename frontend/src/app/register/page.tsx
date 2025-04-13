@@ -1,9 +1,10 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import MainLayout from '@/components/layout/MainLayout';
+import { endpoint, logApiDetails } from '@/utils/api';
 
 interface RegisterResponse {
     access_token: string;
@@ -19,14 +20,17 @@ interface ApiError {
     message?: string;
 }
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
-
 export default function RegisterPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
     const router = useRouter();
+    
+    // Log API details when component mounts
+    useEffect(() => {
+        logApiDetails();
+    }, []);
     
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -35,9 +39,12 @@ export default function RegisterPage() {
         
         try {
             console.log('Attempting to register with:', { email, password });
-            console.log('Using API URL:', API_URL);
+            
+            const registerUrl = endpoint('/users/register');
+            console.log('Full request URL:', registerUrl);
+            
             const response = await axios.post<RegisterResponse>(
-                `${API_URL}/users/register`, 
+                registerUrl, 
                 { email, password },
                 { 
                     headers: { 'Content-Type': 'application/json' },

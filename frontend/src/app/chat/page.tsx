@@ -16,6 +16,10 @@ interface MessageFeedback {
     type: 'helpful' | 'not_helpful';
 }
 
+// Define API URL with fallback and trim any trailing spaces
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+const cleanApiUrl = API_URL ? API_URL.trim() : '';
+
 export default function ChatPage() {
     const router = useRouter();
     const [messages, setMessages] = useState<Message[]>([]);
@@ -76,7 +80,7 @@ export default function ChatPage() {
 
         try {
             const response = await axios.post(
-                'http://localhost:8000/chat/send',
+                `${cleanApiUrl}/chat/send`,
                 { text: newMessage.text },
                 {
                     headers: {
@@ -134,7 +138,7 @@ export default function ChatPage() {
             }
             
             await axios.post(
-                'http://localhost:8000/chat/clear',
+                `${cleanApiUrl}/chat/clear`,
                 {},
                 {
                     headers: {

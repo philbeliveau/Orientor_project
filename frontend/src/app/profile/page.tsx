@@ -3,12 +3,18 @@ import { useState, useEffect } from 'react';
 import MainLayout from '@/components/layout/MainLayout';
 import axios from 'axios';
 
+// Define API URL with fallback and trim any trailing spaces
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+const cleanApiUrl = API_URL ? API_URL.trim() : '';
+
 interface ApiError {
     response?: {
         data?: {
             detail?: string;
         };
+        status?: number;
     };
+    message?: string;
 }
 
 interface Profile {
@@ -37,7 +43,7 @@ export default function ProfilePage() {
         const fetchProfile = async () => {
             try {
                 const token = localStorage.getItem('access_token');
-                const response = await axios.get('http://localhost:8000/profiles/me', {
+                const response = await axios.get(`${cleanApiUrl}/profiles/me`, {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
@@ -57,7 +63,7 @@ export default function ProfilePage() {
             // Update user info
             if (email || password) {
                 await axios.put(
-                    'http://localhost:8000/users/update',
+                    `${cleanApiUrl}/users/update`,
                     { email, password },
                     {
                         headers: {
@@ -70,7 +76,7 @@ export default function ProfilePage() {
 
             // Update profile info
             await axios.put(
-                'http://localhost:8000/profiles/update',
+                `${cleanApiUrl}/profiles/update`,
                 profile,
                 {
                     headers: {

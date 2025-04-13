@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { endpoint, logApiDetails } from '@/utils/api';
 
 interface LoginResponse {
     access_token: string;
@@ -21,12 +22,20 @@ export default function LoginPage() {
         if (token) {
             router.push('/chat');
         }
+        
+        // Log API details for debugging
+        logApiDetails();
     }, [router]);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            const response = await axios.post<LoginResponse>('http://localhost:8000/users/login', {
+            console.log('Attempting to login with:', { email });
+            
+            const loginUrl = endpoint('/users/login');
+            console.log('Full login URL:', loginUrl);
+            
+            const response = await axios.post<LoginResponse>(loginUrl, {
                 email,
                 password
             });
@@ -37,6 +46,7 @@ export default function LoginPage() {
             // Redirect to chat page after successful login
             router.push('/chat');
         } catch (err: any) {
+            console.error('Login error:', err);
             setError(err.response?.data?.detail || 'Login failed');
         }
     };
