@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "vercel-build": "next build",
-    "vercel-install": "npm install"
+    "vercel-install": "npm install",
+    "postbuild": "cp public/404.html .next/404.html && cp public/index.html .next/index.html"
   },
   "dependencies": {
     "@tailwindcss/typography": "^0.5.16",

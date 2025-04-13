@@ -32,7 +32,7 @@
   ],
   "builds": [
     {
-      "src": "frontend/next.config.js",
+      "src": "next.config.js",
       "use": "@vercel/next"
     }
   ]

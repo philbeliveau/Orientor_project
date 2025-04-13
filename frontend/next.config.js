@@ -22,8 +22,9 @@ const nextConfig = {
   env: {
     NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL || 'https://orientor-backend-production.up.railway.app',
   },
-  // Configure build output
+  // Configure build output - ensure this is properly set
   output: 'standalone',
+  distDir: '.next',
   poweredByHeader: false,
   // Performance optimizations
   experimental: {
