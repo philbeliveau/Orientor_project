@@ -26,6 +26,10 @@
   ],
   "rewrites": [
     {
+      "source": "/(.*)",
+      "destination": "/"
+    },
+    {
       "source": "/api/:path*",
       "destination": "https://orientor-backend-production.up.railway.app/api/:path*"
     },
