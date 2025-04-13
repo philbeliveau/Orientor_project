@@ -1,3 +1,17 @@
+
+{
+  "version":2,
+  "builds": [
+    { "src": "*.js", "use": "@vercel/node" }
+  ],
+  "routes": [
+      {
+        "src": "/(.*)",
+        "dest": "/"
+      }
+  ]
+}
+
 // {
 //   "version": 2,
 //   "buildCommand": "npm run build",
@@ -45,12 +59,3 @@
 //     }
 //   ]
 // } 
-
-{
-  "version": 2,
-  "buildCommand": "npm run build",
-  "devCommand": "npm run dev",
-  "installCommand": "npm install",
-  "framework": "nextjs",
-  "outputDirectory": ".next"
-} 
