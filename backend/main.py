@@ -19,14 +19,21 @@ app.include_router(profiles_router)  # Include the profiles router
 allowed_origins = [
     "http://localhost:3000",  # Local development
     "https://navigoproject.vercel.app",  # Your Vercel deployment
-    "https://orientor-backend-production.up.railway.app",  # Your Railway backend
-    "https://orientor-frontend.vercel.app",  # Add this if it's your frontend URL
+    "https://navigoproject-git-main.vercel.app",  # Vercel main branch deployment
+    "https://navigoproject-*.vercel.app",  # All Vercel preview deployments
+    "https://orientor-frontend.vercel.app",  # Production frontend
+    "https://orientor-backend-production.up.railway.app",  # Railway backend
+    #     "https://orientor-backend-production.up.railway.app",  # Your Railway backend
+    # "https://orientor-frontend.vercel.app",  # Add this if it's your frontend URL
 ]
 
 # Add Railway URL to allowed origins if it exists
 RAILWAY_URL = os.getenv("RAILWAY_STATIC_URL")
 if RAILWAY_URL:
     allowed_origins.append(f"https://{RAILWAY_URL}")
+    
+# Log the allowed origins for debugging
+print("Allowed origins:", allowed_origins)
 
 app.add_middleware(
     CORSMiddleware,
