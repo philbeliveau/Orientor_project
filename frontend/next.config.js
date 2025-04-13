@@ -6,10 +6,24 @@
 
 // export default nextConfig;
 
-   /** @type {import('next').NextConfig} */
-   const nextConfig = {
-    reactStrictMode: true,
-    // Add any other configurations you need
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  reactStrictMode: true,
+  images: {
+    domains: ['orientor-backend-production.up.railway.app'], // Add your image domains here
+    unoptimized: true, // This helps with static exports if needed
+  },
+  // Vercel specific settings
+  swcMinify: true,
+  compiler: {
+    removeConsole: process.env.NODE_ENV === 'production',
+  },
+  // Handle environment variables
+  env: {
+    NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL,
+  },
+  // Optimize output
+  output: 'standalone',
 };
 
 module.exports = nextConfig;
