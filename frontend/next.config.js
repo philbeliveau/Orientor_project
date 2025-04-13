@@ -20,13 +20,9 @@ const nextConfig = {
   },
   // Handle environment variables
   env: {
-    NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL,
+    NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL || 'https://orientor-backend-production.up.railway.app',
   },
-  // Remove experimental flag since app directory is stable in Next.js 13
-  output: 'export', // Enable static export
-  distDir: '.next',
-  trailingSlash: true, // Add trailing slashes to all routes
-  // Ensure proper handling of dynamic routes
+  // Remove static export settings
   async rewrites() {
     return [
       {

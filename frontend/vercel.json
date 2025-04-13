@@ -29,9 +29,5 @@
       "source": "/api/:path*",
       "destination": "https://orientor-backend-production.up.railway.app/api/:path*"
     }
-  ],
-  "routes": [
-    { "handle": "filesystem" },
-    { "src": "/(.*)", "dest": "/index.html" }
   ]
 } 
