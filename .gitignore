@@ -33,3 +33,7 @@ out/
 logs
 *.log
 npm-debug.log*
+
+# Data
+df_students.csv
+df_users.csv

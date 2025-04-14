@@ -52,6 +52,7 @@ export default function MainLayout({
 
     const navLinks = [
         { href: '/chat', label: 'Chat', requiresAuth: true },
+        { href: '/peers', label: 'Suggested Peers', requiresAuth: true },
         { href: '/profile', label: 'Profile', requiresAuth: true },
     ];
 
