@@ -79,6 +79,28 @@ async def send_message(
             system_message = SYSTEM_PROMPT
             if profile:
                 system_message += f"\n\nUser Profile Information:\n"
+                if profile.name:
+                    system_message += f"- Name: {profile.name}\n"
+                if profile.age:
+                    system_message += f"- Age: {profile.age}\n"
+                if profile.sex:
+                    system_message += f"- Sex: {profile.sex}\n"
+                if profile.major:
+                    system_message += f"- Major: {profile.major}\n"
+                if profile.year:
+                    system_message += f"- Year: {profile.year}\n"
+                if profile.gpa:
+                    system_message += f"- GPA: {profile.gpa}\n"
+                if profile.hobbies:
+                    system_message += f"- Hobbies: {profile.hobbies}\n"
+                if profile.country:
+                    system_message += f"- Country: {profile.country}\n"
+                if profile.state_province:
+                    system_message += f"- State/Province: {profile.state_province}\n"
+                if profile.unique_quality:
+                    system_message += f"- Unique Quality: {profile.unique_quality}\n"
+                if profile.story:
+                    system_message += f"- Personal Story: {profile.story}\n"
                 if profile.favorite_movie:
                     system_message += f"- Favorite Movie: {profile.favorite_movie}\n"
                 if profile.favorite_book:
@@ -103,7 +125,7 @@ async def send_message(
             response = client.chat.completions.create(
                 model="gpt-3.5-turbo",
                 messages=conversation_history[user_id],
-                max_tokens=500,
+                max_tokens=30,
                 temperature=0.8,  # Slightly higher temperature for more creative responses
                 presence_penalty=0.6,  # Encourage more diverse responses
                 frequency_penalty=0.3,  # Reduce repetition while maintaining coherence

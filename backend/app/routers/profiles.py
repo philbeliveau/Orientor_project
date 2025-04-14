@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from typing import Optional, List
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from ..utils.database import get_db
 from ..models import User, UserProfile
 from ..routes.user import get_current_user
@@ -9,6 +9,17 @@ from ..routes.user import get_current_user
 router = APIRouter(prefix="/profiles", tags=["profiles"])
 
 class ProfileUpdate(BaseModel):
+    name: Optional[str] = None
+    age: Optional[int] = Field(None, ge=0)
+    sex: Optional[str] = None
+    major: Optional[str] = None
+    year: Optional[int] = Field(None, ge=1)
+    gpa: Optional[float] = Field(None, ge=0.0, le=4.0)
+    hobbies: Optional[str] = None
+    country: Optional[str] = None
+    state_province: Optional[str] = None
+    unique_quality: Optional[str] = None
+    story: Optional[str] = None
     favorite_movie: Optional[str] = None
     favorite_book: Optional[str] = None
     favorite_celebrities: Optional[str] = None

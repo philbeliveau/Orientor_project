@@ -18,6 +18,17 @@ interface ApiError {
 }
 
 interface Profile {
+    name: string;
+    age: number | '';
+    sex: string;
+    major: string;
+    year: number | '';
+    gpa: number | '';
+    hobbies: string;
+    country: string;
+    state_province: string;
+    unique_quality: string;
+    story: string;
     favorite_movie: string;
     favorite_book: string;
     favorite_celebrities: string;
@@ -29,6 +40,17 @@ export default function ProfilePage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [profile, setProfile] = useState<Profile>({
+        name: '',
+        age: '',
+        sex: '',
+        major: '',
+        year: '',
+        gpa: '',
+        hobbies: '',
+        country: '',
+        state_province: '',
+        unique_quality: '',
+        story: '',
         favorite_movie: '',
         favorite_book: '',
         favorite_celebrities: '',
@@ -96,9 +118,18 @@ export default function ProfilePage() {
     };
 
     const handleProfileChange = (field: keyof Profile) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+        let value: string | number = e.target.value;
+        
+        // Convert numeric fields
+        if (['age', 'year'].includes(field) && value !== '') {
+            value = parseInt(value);
+        } else if (field === 'gpa' && value !== '') {
+            value = parseFloat(value);
+        }
+        
         setProfile(prev => ({
             ...prev,
-            [field]: e.target.value
+            [field]: value
         }));
     };
 
@@ -144,9 +175,170 @@ export default function ProfilePage() {
                                 </div>
                             </div>
 
-                            {/* Personal Preferences Section */}
+                            {/* Basic Information Section */}
                             <div className="space-y-4">
-                                <h3 className="text-xl font-semibold text-secondary-purple mb-4">Personal Preferences</h3>
+                                <h3 className="text-xl font-semibold text-secondary-purple mb-4">Basic Information</h3>
+                                <div>
+                                    <label className="block text-sm font-medium text-neutral-lightgray mb-1">
+                                        Full Name
+                                    </label>
+                                    <input
+                                        type="text"
+                                        value={profile.name}
+                                        onChange={handleProfileChange('name')}
+                                        className="input"
+                                        placeholder="Your full name"
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-medium text-neutral-lightgray mb-1">
+                                        Age
+                                    </label>
+                                    <input
+                                        type="number"
+                                        value={profile.age}
+                                        onChange={handleProfileChange('age')}
+                                        className="input"
+                                        placeholder="Your age"
+                                        min="0"
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-medium text-neutral-lightgray mb-1">
+                                        Sex
+                                    </label>
+                                    <select
+                                        value={profile.sex}
+                                        onChange={handleProfileChange('sex')}
+                                        className="input bg-gray-800"
+                                    >
+                                        <option value="">Select your sex</option>
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                        <option value="Other">Other</option>
+                                        <option value="Prefer not to say">Prefer not to say</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            {/* Academic Information Section */}
+                            <div className="space-y-4">
+                                <h3 className="text-xl font-semibold text-secondary-teal mb-4">Academic Information</h3>
+                                <div>
+                                    <label className="block text-sm font-medium text-neutral-lightgray mb-1">
+                                        Major
+                                    </label>
+                                    <input
+                                        type="text"
+                                        value={profile.major}
+                                        onChange={handleProfileChange('major')}
+                                        className="input"
+                                        placeholder="Your field of study"
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-medium text-neutral-lightgray mb-1">
+                                        Year
+                                    </label>
+                                    <input
+                                        type="number"
+                                        value={profile.year}
+                                        onChange={handleProfileChange('year')}
+                                        className="input"
+                                        placeholder="Current year of study"
+                                        min="1"
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-medium text-neutral-lightgray mb-1">
+                                        GPA
+                                    </label>
+                                    <input
+                                        type="number"
+                                        value={profile.gpa}
+                                        onChange={handleProfileChange('gpa')}
+                                        className="input"
+                                        placeholder="Your GPA"
+                                        step="0.01"
+                                        min="0"
+                                        max="4.0"
+                                    />
+                                </div>
+                            </div>
+
+                            {/* Location Section */}
+                            <div className="space-y-4">
+                                <h3 className="text-xl font-semibold text-secondary-purple mb-4">Location</h3>
+                                <div>
+                                    <label className="block text-sm font-medium text-neutral-lightgray mb-1">
+                                        Country
+                                    </label>
+                                    <input
+                                        type="text"
+                                        value={profile.country}
+                                        onChange={handleProfileChange('country')}
+                                        className="input"
+                                        placeholder="Your country"
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-medium text-neutral-lightgray mb-1">
+                                        State/Province
+                                    </label>
+                                    <input
+                                        type="text"
+                                        value={profile.state_province}
+                                        onChange={handleProfileChange('state_province')}
+                                        className="input"
+                                        placeholder="Your state or province"
+                                    />
+                                </div>
+                            </div>
+
+                            {/* Personal Details Section */}
+                            <div className="space-y-4">
+                                <h3 className="text-xl font-semibold text-secondary-teal mb-4">Personal Details</h3>
+                                <div>
+                                    <label className="block text-sm font-medium text-neutral-lightgray mb-1">
+                                        Hobbies
+                                    </label>
+                                    <textarea
+                                        value={profile.hobbies}
+                                        onChange={handleProfileChange('hobbies')}
+                                        className="input"
+                                        placeholder="What are your hobbies? (comma-separated)"
+                                        rows={3}
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-medium text-neutral-lightgray mb-1">
+                                        Unique Quality
+                                    </label>
+                                    <textarea
+                                        value={profile.unique_quality}
+                                        onChange={handleProfileChange('unique_quality')}
+                                        className="input"
+                                        placeholder="What makes you unique?"
+                                        rows={3}
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-medium text-neutral-lightgray mb-1">
+                                        Your Story
+                                    </label>
+                                    <textarea
+                                        value={profile.story}
+                                        onChange={handleProfileChange('story')}
+                                        className="input"
+                                        placeholder="Tell us your story"
+                                        rows={4}
+                                    />
+                                </div>
+                            </div>
+
+                            {/* Preferences Section */}
+                            <div className="space-y-4">
+                                <h3 className="text-xl font-semibold text-secondary-purple mb-4">Preferences</h3>
                                 <div>
                                     <label className="block text-sm font-medium text-neutral-lightgray mb-1">
                                         Favorite Movie
@@ -201,7 +393,7 @@ export default function ProfilePage() {
                                 </div>
                                 <div>
                                     <label className="block text-sm font-medium text-neutral-lightgray mb-1">
-                                        Interests & Hobbies
+                                        Interests
                                     </label>
                                     <textarea
                                         value={profile.interests}

@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, ForeignKey, Text, DateTime
+from sqlalchemy import Column, Integer, String, ForeignKey, Text, DateTime, Float
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 from ..utils.database import Base
@@ -8,6 +8,17 @@ class UserProfile(Base):
     
     id = Column(Integer, primary_key=True, index=True)
     user_id = Column(Integer, ForeignKey("users.id"), unique=True)
+    name = Column(String(255))
+    age = Column(Integer)
+    sex = Column(String(50))
+    major = Column(String(255))
+    year = Column(Integer)
+    gpa = Column(Float)
+    hobbies = Column(Text)
+    country = Column(String(255))
+    state_province = Column(String(255))
+    unique_quality = Column(Text)
+    story = Column(Text)
     favorite_movie = Column(String(255))
     favorite_book = Column(String(255))
     favorite_celebrities = Column(Text)  # Stored as comma-separated values
