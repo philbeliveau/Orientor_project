@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import MainLayout from '@/components/layout/MainLayout';
 import axios from 'axios';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 // Define API URL with fallback and trim any trailing spaces
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
@@ -19,6 +20,7 @@ interface PeerProfile {
 }
 
 export default function SuggestedPeersPage() {
+  const router = useRouter();
   const [peers, setPeers] = useState<PeerProfile[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -31,7 +33,8 @@ export default function SuggestedPeersPage() {
         
         const token = localStorage.getItem('access_token');
         if (!token) {
-          throw new Error('Not authenticated');
+          router.push('/login');
+          return;
         }
         
         const response = await axios.get<PeerProfile[]>(`${cleanApiUrl}/peers/suggested`, {
@@ -50,7 +53,7 @@ export default function SuggestedPeersPage() {
     };
     
     fetchPeers();
-  }, []);
+  }, [router]);
   
   // Function to format similarity score as percentage
   const formatSimilarity = (value: number) => {
@@ -61,15 +64,15 @@ export default function SuggestedPeersPage() {
     <MainLayout>
       <div className="max-w-4xl mx-auto space-y-6">
         <div className="flex items-center justify-between">
-          <h2 className="text-2xl font-bold text-neutral-lightgray">Suggested Peers</h2>
-          <div className="text-sm text-neutral-lightgray opacity-70">
+          <h2 className="text-2xl font-bold text-neutral-darkest">Suggested Peers</h2>
+          <div className="text-sm text-neutral-gray">
             Students with similar interests and backgrounds
           </div>
         </div>
         
         {loading ? (
           <div className="flex justify-center py-10">
-            <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-secondary-teal"></div>
+            <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-secondary-purple"></div>
           </div>
         ) : error ? (
           <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded">
@@ -120,7 +123,7 @@ export default function SuggestedPeersPage() {
                   
                   <div className="mt-4 pt-4 border-t border-neutral-lightest">
                     <Link 
-                      href={`/chat?peer=${peer.user_id}`}
+                      href={`/chat/${peer.user_id}`}
                       className="inline-flex items-center justify-center w-full px-4 py-2 bg-secondary-purple bg-opacity-10 hover:bg-opacity-20 text-secondary-purple rounded font-medium transition-colors"
                     >
                       <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">

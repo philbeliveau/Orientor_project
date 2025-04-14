@@ -4,7 +4,7 @@ import uvicorn
 import os
 import logging
 
-# Import routers directly instead of through the routers module
+# Import routers directly
 from app.routes.user import router as auth_router
 from app.routers.users import router as users_router
 from app.routes.chat import router as chat_router
@@ -47,4 +47,4 @@ def read_root():
     return {"message": "Welcome to the Orientor API"}
 
 if __name__ == "__main__":
-    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
+    uvicorn.run("app.main:app", host="0.0.0.0", port=8000, reload=True)
