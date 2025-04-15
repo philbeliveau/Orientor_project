@@ -37,5 +37,6 @@ npm-debug.log*
 # Data
 df_students.csv
 df_users.csv
+KnowledgeBase.csv
 # Ignore all files in the data_n_notebook/data directory
-/Users/philippebeliveau/Desktop/Notebook/Orientor_project/Orientor_project/data_n_notebook/data/**
+data_n_notebook/data/
