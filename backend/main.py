@@ -10,6 +10,7 @@ from app.routers.users import router as users_router
 from app.routes.chat import router as chat_router
 from app.routers.peers import router as peers_router
 from app.routers.messages import router as messages_router
+from app.routes.vector_search import router as vector_router
 
 # Configure logging
 logger = logging.getLogger(__name__)
@@ -41,6 +42,7 @@ app.include_router(users_router)
 app.include_router(chat_router)
 app.include_router(peers_router)
 app.include_router(messages_router)
+app.include_router(vector_router)
 
 @app.get("/")
 def read_root():

@@ -33,12 +33,7 @@ export default function RootLayout({
         {/* Background gradient elements */}
         <div className="fixed inset-0 -z-10 bg-[radial-gradient(circle_at_top_right,rgba(125,91,166,0.15),transparent_40%)]"></div>
         <div className="fixed inset-0 -z-10 bg-[radial-gradient(circle_at_bottom_left,rgba(89,194,201,0.15),transparent_40%)]"></div>
-        
-        <div className="min-h-screen flex flex-col">
-          <main className="flex-1 max-w-7xl mx-auto w-full p-4 md:p-6">
-            {children}
-          </main>
-        </div>
+        {children}
         <Analytics />
         <SpeedInsights />
       </body>
