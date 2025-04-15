@@ -16,7 +16,10 @@ logger = logging.getLogger(__name__)
 
 load_dotenv()
 
-router = APIRouter()
+router = APIRouter(
+    prefix="/chat",
+    tags=["chat"]
+)
 
 # Initialize OpenAI client with base configuration
 api_key = os.getenv("OPENAI_API_KEY")
