@@ -12,6 +12,7 @@ from app.routers.peers import router as peers_router
 from app.routers.messages import router as messages_router
 from app.routers.profiles import router as profiles_router
 from app.routers.test import router as test_router
+from app.routers.space import router as space_router
 
 # Configure logging
 logger = logging.getLogger(__name__)
@@ -38,22 +39,40 @@ app.add_middleware(
 )
 
 # Print debug information about routers
-logger.info(f"Registering auth_router routes: {[route.path for route in auth_router.routes]}")
-logger.info(f"Registering users_router routes: {[route.path for route in users_router.routes]}")
-logger.info(f"Registering chat_router routes: {[route.path for route in chat_router.routes]}")
-logger.info(f"Registering peers_router routes: {[route.path for route in peers_router.routes]}")
-logger.info(f"Registering messages_router routes: {[route.path for route in messages_router.routes]}")
-logger.info(f"Registering profiles_router routes: {[route.path for route in profiles_router.routes]}")
-logger.info(f"Registering test_router routes: {[route.path for route in test_router.routes]}")
+try:
+    logger.info("======= ROUTER REGISTRATION DETAILS =======")
+    logger.info(f"auth_router import path: {auth_router.__module__}")
+    logger.info(f"get_current_user import path: {get_current_user.__module__}")
+    logger.info(f"profiles_router import path: {profiles_router.__module__}")
+    
+    logger.info(f"Registering auth_router routes: {[f'{route.path} [{route.methods}]' for route in auth_router.routes]}")
+    logger.info(f"Registering profiles_router routes: {[f'{route.path} [{route.methods}]' for route in profiles_router.routes]}")
+    logger.info(f"Registering users_router routes: {[f'{route.path} [{route.methods}]' for route in users_router.routes]}")
+    logger.info(f"Registering chat_router routes: {[f'{route.path} [{route.methods}]' for route in chat_router.routes]}")
+    logger.info(f"Registering peers_router routes: {[f'{route.path} [{route.methods}]' for route in peers_router.routes]}")
+    logger.info(f"Registering messages_router routes: {[f'{route.path} [{route.methods}]' for route in messages_router.routes]}")
+    logger.info(f"Registering test_router routes: {[f'{route.path} [{route.methods}]' for route in test_router.routes]}")
+    logger.info(f"Registering space_router routes: {[f'{route.path} [{route.methods}]' for route in space_router.routes]}")
+    logger.info("============================================")
+except Exception as e:
+    logger.error(f"Error while logging router details: {str(e)}")
 
-# Include routers
-app.include_router(auth_router)  # Include auth router first - it defines dependencies
-app.include_router(profiles_router)  # Include profiles router after auth router
+# Include routers in the correct order
+logger.info("Including routers in the FastAPI app")
+# Include auth router first - it defines dependencies
+app.include_router(auth_router)
+logger.info("Auth router included successfully")
+# Include profiles router after auth router
+app.include_router(profiles_router)
+logger.info("Profiles router included successfully")
+# Include remaining routers
 app.include_router(test_router)
 app.include_router(users_router)
 app.include_router(chat_router)
 app.include_router(peers_router)
 app.include_router(messages_router)
+app.include_router(space_router)
+logger.info("All routers included successfully")
 
 # Explicitly capture route after including it
 logger.info("=== Available Routes ===")

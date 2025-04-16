@@ -54,6 +54,7 @@ export default function MainLayout({
         { href: '/chat', label: 'Chat', requiresAuth: true },
         { href: '/peers', label: 'Suggested Peers', requiresAuth: true },
         { href: '/vector-search', label: 'Career recommendation', requiresAuth: true },
+        { href: '/space', label: 'My Space', requiresAuth: true },
         { href: '/profile', label: 'Profile', requiresAuth: true },
     ];
 

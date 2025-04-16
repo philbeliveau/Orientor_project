@@ -47,4 +47,14 @@ if __name__ == "__main__":
     host = "0.0.0.0"  # Bind to all interfaces
     
     print(f"Starting server on {host}:{port}...")
-    uvicorn.run("main:app", host=host, port=port, reload=not is_railway)  # Only use reload in development 
+    
+    # Fix: Use the correct module path
+    import sys
+    import os
+    
+    # Add the current directory to the Python path if not already there
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    if current_dir not in sys.path:
+        sys.path.insert(0, current_dir)
+    
+    uvicorn.run("app.main:app", host=host, port=port, reload=not is_railway)  # Use app.main:app for proper imports 

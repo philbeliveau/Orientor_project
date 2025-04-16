@@ -5,7 +5,9 @@
                                   database="Platform")
 
 # Run backend
-uvicorn main:app --reload
+uvicorn main:app --reload # old version
+cd backend
+python -m app.main
 
 # Run locally 
 cd backend python start_server.py

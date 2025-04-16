@@ -36,26 +36,33 @@ def create_access_token(data: dict, expires_delta: timedelta = None):
     encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
     return encoded_jwt
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/users/login")
 
 def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)):
+    logger.debug(f"Authenticating token: {token[:10]}...")
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Could not validate credentials",
         headers={"WWW-Authenticate": "Bearer"},
     )
     try:
+        logger.debug("Attempting to decode JWT token")
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         email: str = payload.get("sub")
         if email is None:
+            logger.error("No 'sub' claim found in token payload")
             raise credentials_exception
+        logger.debug(f"Token is for email: {email}")
     except JWTError as e:
         logger.error(f"JWT decode error: {str(e)}")
         raise credentials_exception
+    
+    logger.debug(f"Looking up user in database for email: {email}")
     user = db.query(User).filter(User.email == email).first()
     if user is None:
         logger.error(f"User not found for email: {email}")
         raise credentials_exception
+    logger.debug(f"Successfully authenticated user ID: {user.id}")
     return user
 
 @router.post("/register", response_model=UserOut)

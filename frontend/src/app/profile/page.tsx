@@ -35,6 +35,11 @@ interface Profile {
     favorite_celebrities: string | null;
     learning_style: string | null;
     interests: string | null;
+    creativity: number | null;
+    leadership: number | null;
+    digital_literacy: number | null;
+    critical_thinking: number | null;
+    problem_solving: number | null;
 }
 
 export default function ProfilePage() {
@@ -57,7 +62,12 @@ export default function ProfilePage() {
         favorite_book: null,
         favorite_celebrities: null,
         learning_style: null,
-        interests: null
+        interests: null,
+        creativity: null,
+        leadership: null,
+        digital_literacy: null,
+        critical_thinking: null,
+        problem_solving: null
     });
     const [error, setError] = useState<string | null>(null);
     const [message, setMessage] = useState<string | null>(null);
@@ -414,6 +424,111 @@ export default function ProfilePage() {
                                         placeholder="What are your interests? (comma-separated)"
                                         rows={3}
                                     />
+                                </div>
+                            </div>
+
+                            {/* Add Skills Section after Preferences */}
+                            <div className="space-y-4 md:col-span-2">
+                                <h3 className="text-xl font-semibold text-secondary-teal mb-4">Skills Assessment</h3>
+                                <p className="text-sm text-neutral-400 mb-4">
+                                    Rate your skills from 1-5 (5 being the highest). These ratings will be used for career path comparisons.
+                                </p>
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label className="block text-sm font-medium text-neutral-lightgray mb-1">
+                                            Creativity
+                                        </label>
+                                        <div className="flex items-center">
+                                            <input
+                                                type="range"
+                                                min="1"
+                                                max="5"
+                                                step="1"
+                                                value={profile.creativity || 1}
+                                                onChange={handleProfileChange('creativity')}
+                                                className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer"
+                                            />
+                                            <span className="ml-2 text-neutral-300 w-5 text-center">
+                                                {profile.creativity || 1}
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label className="block text-sm font-medium text-neutral-lightgray mb-1">
+                                            Leadership
+                                        </label>
+                                        <div className="flex items-center">
+                                            <input
+                                                type="range"
+                                                min="1"
+                                                max="5"
+                                                step="1"
+                                                value={profile.leadership || 1}
+                                                onChange={handleProfileChange('leadership')}
+                                                className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer"
+                                            />
+                                            <span className="ml-2 text-neutral-300 w-5 text-center">
+                                                {profile.leadership || 1}
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label className="block text-sm font-medium text-neutral-lightgray mb-1">
+                                            Digital Literacy
+                                        </label>
+                                        <div className="flex items-center">
+                                            <input
+                                                type="range"
+                                                min="1"
+                                                max="5"
+                                                step="1"
+                                                value={profile.digital_literacy || 1}
+                                                onChange={handleProfileChange('digital_literacy')}
+                                                className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer"
+                                            />
+                                            <span className="ml-2 text-neutral-300 w-5 text-center">
+                                                {profile.digital_literacy || 1}
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label className="block text-sm font-medium text-neutral-lightgray mb-1">
+                                            Critical Thinking
+                                        </label>
+                                        <div className="flex items-center">
+                                            <input
+                                                type="range"
+                                                min="1"
+                                                max="5"
+                                                step="1"
+                                                value={profile.critical_thinking || 1}
+                                                onChange={handleProfileChange('critical_thinking')}
+                                                className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer"
+                                            />
+                                            <span className="ml-2 text-neutral-300 w-5 text-center">
+                                                {profile.critical_thinking || 1}
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label className="block text-sm font-medium text-neutral-lightgray mb-1">
+                                            Problem Solving
+                                        </label>
+                                        <div className="flex items-center">
+                                            <input
+                                                type="range"
+                                                min="1"
+                                                max="5"
+                                                step="1"
+                                                value={profile.problem_solving || 1}
+                                                onChange={handleProfileChange('problem_solving')}
+                                                className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer"
+                                            />
+                                            <span className="ml-2 text-neutral-300 w-5 text-center">
+                                                {profile.problem_solving || 1}
+                                            </span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
