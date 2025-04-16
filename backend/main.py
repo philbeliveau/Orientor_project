@@ -28,6 +28,7 @@ origins = [
     "http://localhost:5173",
     "https://localhost:3000",
     "https://localhost:5173",
+    "https://navigoproject.vercel.app"
     # Add additional allowed origins as needed for production
 ]
 
