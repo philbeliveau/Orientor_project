@@ -15,13 +15,21 @@ export interface Recommendation {
   role_critical_thinking?: number;
   role_problem_solving?: number;
   saved_at: string;
-  skill_comparison?: SkillComparison;
+  skill_comparison?: SkillsComparison;
   notes?: Note[];
 }
 
 export interface SkillComparison {
-  user_skills: UserSkills;
-  job_skills: UserSkills;
+  user_skill?: number;
+  role_skill?: number;
+}
+
+export interface SkillsComparison {
+  creativity: SkillComparison;
+  leadership: SkillComparison;
+  digital_literacy: SkillComparison;
+  critical_thinking: SkillComparison;
+  problem_solving: SkillComparison;
 }
 
 export interface Note {
@@ -39,14 +47,6 @@ export interface NoteCreate {
 
 export interface NoteUpdate {
   content: string;
-}
-
-export interface UserSkills {
-  creativity?: number;
-  leadership?: number;
-  digital_literacy?: number;
-  critical_thinking?: number;
-  problem_solving?: number;
 }
 
 // Configure axios with the token
