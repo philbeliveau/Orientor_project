@@ -28,11 +28,13 @@ origins = [
     "https://localhost:3000",
     "https://localhost:5173",
     # Add additional allowed origins as needed for production
+    "YOUR_VERCEL_APP_URL_HERE", # Replace with your Vercel frontend URL
 ]
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    # allow_origins=origins, # Temporarily allow all origins for debugging
+    allow_origins=["*"],      # Or replace YOUR_VERCEL_APP_URL_HERE above and uncomment the previous line
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
