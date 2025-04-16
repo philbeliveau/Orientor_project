@@ -8,12 +8,13 @@ import NotesSection from '@/components/space/NotesSection';
 import NoSavedRecommendations from '@/components/space/NoSavedRecommendations';
 import LoadingSpinner from '@/components/ui/LoadingSpinner';
 import { fetchSavedRecommendations } from '@/services/spaceService';
+import type { Recommendation } from '@/services/spaceService';
 
 export default function SpacePage() {
-  const [recommendations, setRecommendations] = useState([]);
-  const [selectedRecommendation, setSelectedRecommendation] = useState(null);
+  const [recommendations, setRecommendations] = useState<Recommendation[]>([]);
+  const [selectedRecommendation, setSelectedRecommendation] = useState<Recommendation | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const loadRecommendations = async () => {
@@ -48,7 +49,7 @@ export default function SpacePage() {
     loadRecommendations();
   }, []);
 
-  const handleSelectRecommendation = (recommendation) => {
+  const handleSelectRecommendation = (recommendation: Recommendation) => {
     console.log('Selected recommendation:', recommendation);
     setSelectedRecommendation(recommendation);
   };

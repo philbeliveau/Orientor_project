@@ -3,7 +3,7 @@ import axios from 'axios';
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
 
 // Type definitions
-interface Recommendation {
+export interface Recommendation {
   id: number;
   oasis_code: string;
   label: string;
@@ -15,11 +15,16 @@ interface Recommendation {
   role_critical_thinking?: number;
   role_problem_solving?: number;
   saved_at: string;
-  skill_comparison?: any;
-  notes?: any[];
+  skill_comparison?: SkillComparison;
+  notes?: Note[];
 }
 
-interface Note {
+export interface SkillComparison {
+  user_skills: UserSkills;
+  job_skills: UserSkills;
+}
+
+export interface Note {
   id: number;
   content: string;
   saved_recommendation_id?: number;
@@ -27,16 +32,16 @@ interface Note {
   updated_at: string;
 }
 
-interface NoteCreate {
+export interface NoteCreate {
   content: string;
   saved_recommendation_id?: number;
 }
 
-interface NoteUpdate {
+export interface NoteUpdate {
   content: string;
 }
 
-interface UserSkills {
+export interface UserSkills {
   creativity?: number;
   leadership?: number;
   digital_literacy?: number;

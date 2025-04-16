@@ -9,6 +9,7 @@ import {
   Legend
 } from 'chart.js';
 import { Radar } from 'react-chartjs-2';
+import type { SkillComparison, UserSkills } from '@/services/spaceService';
 
 // Register required Chart.js components
 ChartJS.register(
@@ -20,21 +21,8 @@ ChartJS.register(
   Legend
 );
 
-interface SkillComparison {
-  user_skill: number | null;
-  role_skill: number | null;
-}
-
-interface SkillsComparison {
-  creativity: SkillComparison;
-  leadership: SkillComparison;
-  digital_literacy: SkillComparison;
-  critical_thinking: SkillComparison;
-  problem_solving: SkillComparison;
-}
-
 interface SkillRadarChartProps {
-  skillComparison: SkillsComparison;
+  skillComparison: SkillComparison;
 }
 
 const SkillRadarChart: React.FC<SkillRadarChartProps> = ({ skillComparison }) => {
@@ -46,12 +34,15 @@ const SkillRadarChart: React.FC<SkillRadarChartProps> = ({ skillComparison }) =>
       .join(' ');
   };
 
-  // Extract keys and format them
-  const skills = Object.keys(skillComparison).map(formatSkillLabel);
+  const skillKeys = ['creativity', 'leadership', 'digital_literacy', 'critical_thinking', 'problem_solving'] as const;
+  type SkillKey = typeof skillKeys[number];
   
-  // Extract user and role skill values, replacing nulls with 0
-  const userSkills = Object.values(skillComparison).map(skill => skill.user_skill || 0);
-  const roleSkills = Object.values(skillComparison).map(skill => skill.role_skill || 0);
+  // Extract keys and format them
+  const skills = skillKeys.map(formatSkillLabel);
+  
+  // Extract user and role skill values, replacing undefined with 0
+  const userSkills = skillKeys.map(key => skillComparison.user_skills[key as keyof UserSkills] || 0);
+  const roleSkills = skillKeys.map(key => skillComparison.job_skills[key as keyof UserSkills] || 0);
 
   const chartData = {
     labels: skills,
