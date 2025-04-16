@@ -16,11 +16,8 @@ branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
 
 def upgrade() -> None:
-    # Create vector extension if it doesn't exist
-    op.execute('CREATE EXTENSION IF NOT EXISTS vector;')
-    
-    # Add embedding column to user_profiles (vector with 384 dimensions, common for BERT-like models)
-    op.execute('ALTER TABLE user_profiles ADD COLUMN IF NOT EXISTS embedding vector(384);')
+    # Add embedding column to user_profiles (using float array instead of vector)
+    op.execute('ALTER TABLE user_profiles ADD COLUMN IF NOT EXISTS embedding float[];')
     
     # Create suggested_peers table
     op.create_table(
@@ -44,6 +41,4 @@ def downgrade() -> None:
     op.drop_table('suggested_peers')
     
     # Drop embedding column from user_profiles
-    op.execute('ALTER TABLE user_profiles DROP COLUMN IF EXISTS embedding;')
-    
-    # Don't drop the vector extension as it might be used by other tables 
+    op.execute('ALTER TABLE user_profiles DROP COLUMN IF EXISTS embedding;') 

@@ -27,14 +27,14 @@ origins = [
     "http://localhost:5173",
     "https://localhost:3000",
     "https://localhost:5173",
-    # Add additional allowed origins as needed for production
-    "YOUR_VERCEL_APP_URL_HERE", # Replace with your Vercel frontend URL
+    "https://orientor-project.vercel.app",  # Add your Vercel domain
+    "https://orientor.vercel.app",          # Add potential Vercel domain variations
+    "https://*.vercel.app"                  # Allow all subdomains on vercel.app
 ]
 
 app.add_middleware(
     CORSMiddleware,
-    # allow_origins=origins, # Temporarily allow all origins for debugging
-    allow_origins=["*"],      # Or replace YOUR_VERCEL_APP_URL_HERE above and uncomment the previous line
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

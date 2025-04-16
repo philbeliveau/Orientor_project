@@ -20,9 +20,7 @@ def run_migrations():
         
         if result.returncode == 0:
             logger.info("Migrations completed successfully!")
-            logger.info(f"stdout:\n{result.stdout}")
-            if result.stderr:
-                logger.info(f"stderr:\n{result.stderr}")
+            logger.info(result.stdout)
             return True
         else:
             logger.error("Migration failed!")

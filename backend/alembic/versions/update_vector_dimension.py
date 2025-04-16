@@ -20,11 +20,11 @@ def upgrade() -> None:
     op.execute('ALTER TABLE user_profiles DROP COLUMN IF EXISTS embedding;')
     
     # Then add the new embedding column with correct dimensions
-    op.execute('ALTER TABLE user_profiles ADD COLUMN embedding vector(384);')
+    op.execute('ALTER TABLE user_profiles ADD COLUMN embedding float[];')
 
 def downgrade() -> None:
-    # First drop the 384-dimension embedding column
+    # First drop the embedding column
     op.execute('ALTER TABLE user_profiles DROP COLUMN IF EXISTS embedding;')
     
-    # Then restore the original 768-dimension embedding column
-    op.execute('ALTER TABLE user_profiles ADD COLUMN embedding vector(768);') 
+    # Then restore the original embedding column
+    op.execute('ALTER TABLE user_profiles ADD COLUMN embedding float[];') 
