@@ -116,9 +116,8 @@ export default function SpacePage() {
                     )}
                   </div>
                   
-                  <NotesSection 
+                  <NotesSection
                     recommendation={selectedRecommendation}
-                    notes={selectedRecommendation.notes || []}
                   />
                 </>
               )}
