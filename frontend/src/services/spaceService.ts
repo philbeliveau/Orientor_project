@@ -32,6 +32,14 @@ export interface SkillsComparison {
   problem_solving: SkillComparison;
 }
 
+export interface UserSkills {
+  creativity: number;
+  leadership: number;
+  digital_literacy: number;
+  critical_thinking: number;
+  problem_solving: number;
+}
+
 export interface Note {
   id: number;
   content: string;
