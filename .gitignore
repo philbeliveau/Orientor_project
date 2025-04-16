@@ -40,3 +40,5 @@ df_users.csv
 KnowledgeBase.csv
 # Ignore all files in the data_n_notebook/data directory
 data_n_notebook/data/
+
+.env.production
