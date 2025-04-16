@@ -35,7 +35,7 @@ def upgrade() -> None:
                existing_server_default=sa.text('now()'))
     op.drop_index('ix_user_profiles_user_id', table_name='user_profiles')
     op.create_index(op.f('ix_user_profiles_id'), 'user_profiles', ['id'], unique=False)
-    op.create_unique_constraint(None, 'user_profiles', ['user_id'])
+    op.create_unique_constraint('uq_user_profiles_user_id', 'user_profiles', ['user_id'])
     op.drop_column('user_profiles', 'embedding')
     op.alter_column('users', 'email',
                existing_type=sa.VARCHAR(),
@@ -63,8 +63,7 @@ def downgrade() -> None:
     op.alter_column('users', 'email',
                existing_type=sa.VARCHAR(),
                nullable=True)
-    op.add_column('user_profiles', sa.Column('embedding', sa.NullType(), autoincrement=False, nullable=True))
-    op.drop_constraint(None, 'user_profiles', type_='unique')
+    op.add_column('user_profiles', sa.Column('embedding', postgresql.ARRAY(sa.Float()), autoincrement=False, nullable=True))
     op.drop_index(op.f('ix_user_profiles_id'), table_name='user_profiles')
     op.create_index('ix_user_profiles_user_id', 'user_profiles', ['user_id'], unique=False)
     op.alter_column('user_profiles', 'created_at',

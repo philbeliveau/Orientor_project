@@ -8,15 +8,18 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 def check_db_tables():
-    load_dotenv()
+    # Load environment variables from .env file
+    if os.getenv("ENV") == "production":
+        load_dotenv(".env.production")
+        DATABASE_URL = os.getenv("RAILWAY_DATABASE_URL")
+    else:
+        load_dotenv()
+        DATABASE_URL = os.getenv("LOCAL_DATABASE_URL", "postgresql://postgres:postgres@localhost:5432/orientor")
     
-    # Get database connection - use local database URL
-    LOCAL_DATABASE_URL = os.getenv("LOCAL_DATABASE_URL", "postgresql://postgres:postgres@localhost:5432/orientor")
-    
-    logger.info(f"Connecting to database: {LOCAL_DATABASE_URL}")
+    logger.info(f"Connecting to database: {DATABASE_URL}")
     
     # Create engine
-    engine = create_engine(LOCAL_DATABASE_URL)
+    engine = create_engine(DATABASE_URL)
     
     try:
         # Connect to database
