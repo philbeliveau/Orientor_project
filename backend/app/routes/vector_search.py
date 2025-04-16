@@ -27,21 +27,29 @@ client = AsyncOpenAI()
 # Setup API
 router = APIRouter(prefix="/vector", tags=["vector"])
 
-# Initialize Pinecone
-pinecone_api_key = os.getenv("PINECONE_API_KEY")
-pinecone_environment = os.getenv("PINECONE_ENVIRONMENT", "us-east-1-aws")
-index_name = "oasis-minilm-index"
-
-logger.info(f"Initializing Pinecone with environment: {pinecone_environment}")
-
-# Initialize Pinecone
-try:
-    pc = Pinecone(api_key=pinecone_api_key)
-    index = pc.Index(index_name)
-    logger.info("Successfully initialized Pinecone")
-except Exception as e:
-    logger.error(f"Error initializing Pinecone: {e}")
-    # We'll handle errors later in the endpoint
+def get_pinecone_index():
+    """Get or initialize Pinecone index with proper error handling"""
+    try:
+        pinecone_api_key = os.getenv("PINECONE_API_KEY")
+        if not pinecone_api_key:
+            raise ValueError("PINECONE_API_KEY environment variable is not set")
+            
+        pinecone_environment = os.getenv("PINECONE_ENVIRONMENT")
+        if not pinecone_environment:
+            raise ValueError("PINECONE_ENVIRONMENT environment variable is not set")
+            
+        index_name = "oasis-minilm-index"
+        
+        logger.info(f"Initializing Pinecone with environment: {pinecone_environment}")
+        pc = Pinecone(api_key=pinecone_api_key)
+        index = pc.Index(index_name)
+        return index
+    except Exception as e:
+        logger.error(f"Error initializing Pinecone: {e}")
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail=f"Vector search service unavailable: {str(e)}"
+        )
 
 def try_parse_float(value: str) -> Optional[float]:
     """Try to parse a string to float, return None if fails"""
@@ -80,6 +88,9 @@ async def search_embeddings(request: SearchRequest):
     try:
         logger.info(f"Searching with query: {request.query}")
         
+        # Get Pinecone index with proper error handling
+        index = get_pinecone_index()
+        
         # Format query payload for integrated embeddings
         query_payload = {
             "inputs": {
@@ -95,15 +106,21 @@ async def search_embeddings(request: SearchRequest):
                 query=query_payload
             )
             logger.info("Received response from Pinecone")
-            print(pinecone_response)
+            logger.debug(f"Pinecone response: {pinecone_response}")
             
             # Extract hits from the response
             hits = pinecone_response.result.hits if hasattr(pinecone_response, 'result') else []
             logger.info(f"Found {len(hits)} matches")
             
+            if not hits:
+                return SearchResponse(query=request.query, results=[])
+            
         except Exception as e:
             logger.error(f"Pinecone query error: {e}")
-            raise HTTPException(status_code=500, detail=f"Error querying Pinecone: {str(e)}")
+            raise HTTPException(
+                status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+                detail=f"Error querying vector database: {str(e)}"
+            )
 
         # Format results
         results = {}
