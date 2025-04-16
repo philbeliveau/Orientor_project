@@ -10,7 +10,7 @@ logging.basicConfig(level=logging.INFO)
 
 from ..utils.database import get_db
 from app.routes.user import get_current_user
-from ..models import User, SavedRecommendation, UserNote
+from ..models import User, SavedRecommendation, UserNote, UserSkill
 from ..schemas.space import (
     SavedRecommendationCreate, SavedRecommendation as SavedRecommendationSchema,
     UserNoteCreate, UserNoteUpdate, UserNote as UserNoteSchema,
@@ -95,6 +95,9 @@ def get_saved_recommendations(
     
     logger.info(f"Found {len(recommendations)} recommendations for user {current_user.id}")
     
+    # Get the user's skills from UserSkill table
+    user_skills = db.query(UserSkill).filter(UserSkill.user_id == current_user.id).first()
+    
     result = []
     for rec in recommendations:
         # Get notes for this recommendation
@@ -105,14 +108,14 @@ def get_saved_recommendations(
         
         # Build skill comparison if both user and role skills are available
         skill_comparison = None
-        if current_user.creativity is not None or current_user.leadership is not None or \
-           current_user.digital_literacy is not None or current_user.critical_thinking is not None or \
-           current_user.problem_solving is not None:
+        if user_skills and (user_skills.creativity is not None or user_skills.leadership is not None or \
+           user_skills.digital_literacy is not None or user_skills.critical_thinking is not None or \
+           user_skills.problem_solving is not None):
             
             # Log user skills
-            logger.info(f"User skills: creativity={current_user.creativity}, leadership={current_user.leadership}, "
-                       f"digital_literacy={current_user.digital_literacy}, critical_thinking={current_user.critical_thinking}, "
-                       f"problem_solving={current_user.problem_solving}")
+            logger.info(f"User skills: creativity={user_skills.creativity}, leadership={user_skills.leadership}, "
+                       f"digital_literacy={user_skills.digital_literacy}, critical_thinking={user_skills.critical_thinking}, "
+                       f"problem_solving={user_skills.problem_solving}")
             
             # Build comparison dict
             comparison = {}
@@ -120,7 +123,7 @@ def get_saved_recommendations(
                 role_skill_name = f"role_{skill}"
                 
                 comparison[skill] = SkillComparison(
-                    user_skill=getattr(current_user, skill),
+                    user_skill=getattr(user_skills, skill),
                     role_skill=getattr(rec, role_skill_name)
                 )
             
@@ -285,26 +288,32 @@ def update_user_skills(
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user)
 ):
-    # Update user's skills
-    updated = False
+    # Get or create the user's skills record
+    user_skill = db.query(UserSkill).filter(UserSkill.user_id == current_user.id).first()
+    if not user_skill:
+        # Create a new user skills record if it doesn't exist
+        user_skill = UserSkill(user_id=current_user.id)
+        db.add(user_skill)
     
     # Update skill values if provided
+    updated = False
     for field in ["creativity", "leadership", "digital_literacy", "critical_thinking", "problem_solving"]:
         value = getattr(skills, field)
         if value is not None:
-            setattr(current_user, field, value)
+            setattr(user_skill, field, value)
             updated = True
     
     if updated:
         db.commit()
+        db.refresh(user_skill)
     
     # Return the updated skills
     return UserSkillUpdate(
-        creativity=current_user.creativity,
-        leadership=current_user.leadership,
-        digital_literacy=current_user.digital_literacy,
-        critical_thinking=current_user.critical_thinking,
-        problem_solving=current_user.problem_solving
+        creativity=user_skill.creativity,
+        leadership=user_skill.leadership,
+        digital_literacy=user_skill.digital_literacy,
+        critical_thinking=user_skill.critical_thinking,
+        problem_solving=user_skill.problem_solving
     )
 
 # ===== Special Endpoints =====
@@ -325,12 +334,18 @@ def get_skill_comparison(
             detail="Recommendation not found"
         )
     
+    # Get user's skills
+    user_skill = db.query(UserSkill).filter(UserSkill.user_id == current_user.id).first()
+    if not user_skill:
+        user_skill = UserSkill(user_id=current_user.id)
+        db.add(user_skill)
+    
     # Build comparison
     comparison = {}
     for skill in ["creativity", "leadership", "digital_literacy", "critical_thinking", "problem_solving"]:
         role_skill_name = f"role_{skill}"
         comparison[skill] = SkillComparison(
-            user_skill=getattr(current_user, skill),
+            user_skill=getattr(user_skill, skill),
             role_skill=getattr(recommendation, role_skill_name)
         )
     
