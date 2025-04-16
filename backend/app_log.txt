@@ -1,0 +1,101 @@
+/Users/philippebeliveau/miniforge3/envs/orientor/lib/python3.11/site-packages/pydantic/_internal/_config.py:334: UserWarning: Valid config keys have changed in V2:
+* 'orm_mode' has been renamed to 'from_attributes'
+  warnings.warn(message, UserWarning)
+INFO:app.routes.chat:OpenAI API Key exists and starts with: sk-pr...
+INFO:__main__:Registering auth_router routes: ['/users/register', '/users/login', '/users/update', '/users/change-password']
+INFO:__main__:Registering users_router routes: ['/users/me', '/users/{user_id}/profile']
+INFO:__main__:Registering chat_router routes: ['/chat/send', '/chat/clear']
+INFO:__main__:Registering peers_router routes: ['/peers/suggested']
+INFO:__main__:Registering messages_router routes: ['/messages', '/messages/conversation/{peer_id}', '/messages/conversations', '/messages/suggested-peers']
+INFO:__main__:Registering profiles_router routes: ['/profiles/test', '/profiles/me', '/profiles/update']
+INFO:__main__:Available app routes after inclusion: ['/openapi.json', '/docs', '/docs/oauth2-redirect', '/redoc', '/users/register', '/users/login', '/users/update', '/users/change-password', '/users/me', '/users/{user_id}/profile', '/chat/send', '/chat/clear', '/peers/suggested', '/messages', '/messages/conversation/{peer_id}', '/messages/conversations', '/messages/suggested-peers', '/profiles/test', '/profiles/me', '/profiles/update']
+INFO:     Will watch for changes in these directories: ['/Users/philippebeliveau/Desktop/Notebook/Orientor_project/Orientor_project/backend']
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+INFO:     Started reloader process [5378] using WatchFiles
+/Users/philippebeliveau/miniforge3/envs/orientor/lib/python3.11/site-packages/pydantic/_internal/_config.py:334: UserWarning: Valid config keys have changed in V2:
+* 'orm_mode' has been renamed to 'from_attributes'
+  warnings.warn(message, UserWarning)
+INFO:app.routes.chat:OpenAI API Key exists and starts with: sk-pr...
+INFO:__mp_main__:Registering auth_router routes: ['/users/register', '/users/login', '/users/update', '/users/change-password']
+INFO:__mp_main__:Registering users_router routes: ['/users/me', '/users/{user_id}/profile']
+INFO:__mp_main__:Registering chat_router routes: ['/chat/send', '/chat/clear']
+INFO:__mp_main__:Registering peers_router routes: ['/peers/suggested']
+INFO:__mp_main__:Registering messages_router routes: ['/messages', '/messages/conversation/{peer_id}', '/messages/conversations', '/messages/suggested-peers']
+INFO:__mp_main__:Registering profiles_router routes: ['/profiles/test', '/profiles/me', '/profiles/update']
+INFO:__mp_main__:Available app routes after inclusion: ['/openapi.json', '/docs', '/docs/oauth2-redirect', '/redoc', '/users/register', '/users/login', '/users/update', '/users/change-password', '/users/me', '/users/{user_id}/profile', '/chat/send', '/chat/clear', '/peers/suggested', '/messages', '/messages/conversation/{peer_id}', '/messages/conversations', '/messages/suggested-peers', '/profiles/test', '/profiles/me', '/profiles/update']
+INFO:app.main:Registering auth_router routes: ['/users/register', '/users/login', '/users/update', '/users/change-password']
+INFO:app.main:Registering users_router routes: ['/users/me', '/users/{user_id}/profile']
+INFO:app.main:Registering chat_router routes: ['/chat/send', '/chat/clear']
+INFO:app.main:Registering peers_router routes: ['/peers/suggested']
+INFO:app.main:Registering messages_router routes: ['/messages', '/messages/conversation/{peer_id}', '/messages/conversations', '/messages/suggested-peers']
+INFO:app.main:Registering profiles_router routes: ['/profiles/test', '/profiles/me', '/profiles/update']
+INFO:app.main:Available app routes after inclusion: ['/openapi.json', '/docs', '/docs/oauth2-redirect', '/redoc', '/users/register', '/users/login', '/users/update', '/users/change-password', '/users/me', '/users/{user_id}/profile', '/chat/send', '/chat/clear', '/peers/suggested', '/messages', '/messages/conversation/{peer_id}', '/messages/conversations', '/messages/suggested-peers', '/profiles/test', '/profiles/me', '/profiles/update']
+INFO:     Started server process [5393]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:watchfiles.main:1 change detected
+WARNING:  WatchFiles detected changes in 'app/routers/profiles.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [5393]
+/Users/philippebeliveau/miniforge3/envs/orientor/lib/python3.11/site-packages/pydantic/_internal/_config.py:334: UserWarning: Valid config keys have changed in V2:
+* 'orm_mode' has been renamed to 'from_attributes'
+  warnings.warn(message, UserWarning)
+INFO:app.routes.chat:OpenAI API Key exists and starts with: sk-pr...
+INFO:__mp_main__:Registering auth_router routes: ['/users/register', '/users/login', '/users/update', '/users/change-password']
+INFO:__mp_main__:Registering users_router routes: ['/users/me', '/users/{user_id}/profile']
+INFO:__mp_main__:Registering chat_router routes: ['/chat/send', '/chat/clear']
+INFO:__mp_main__:Registering peers_router routes: ['/peers/suggested']
+INFO:__mp_main__:Registering messages_router routes: ['/messages', '/messages/conversation/{peer_id}', '/messages/conversations', '/messages/suggested-peers']
+INFO:__mp_main__:Registering profiles_router routes: ['/profiles/test', '/profiles/me', '/profiles/update']
+INFO:__mp_main__:Available app routes after inclusion: ['/openapi.json', '/docs', '/docs/oauth2-redirect', '/redoc', '/users/register', '/users/login', '/users/update', '/users/change-password', '/users/me', '/users/{user_id}/profile', '/chat/send', '/chat/clear', '/peers/suggested', '/messages', '/messages/conversation/{peer_id}', '/messages/conversations', '/messages/suggested-peers', '/profiles/test', '/profiles/me', '/profiles/update']
+INFO:app.main:Registering auth_router routes: ['/users/register', '/users/login', '/users/update', '/users/change-password']
+INFO:app.main:Registering users_router routes: ['/users/me', '/users/{user_id}/profile']
+INFO:app.main:Registering chat_router routes: ['/chat/send', '/chat/clear']
+INFO:app.main:Registering peers_router routes: ['/peers/suggested']
+INFO:app.main:Registering messages_router routes: ['/messages', '/messages/conversation/{peer_id}', '/messages/conversations', '/messages/suggested-peers']
+INFO:app.main:Registering profiles_router routes: ['/profiles/test', '/profiles/me', '/profiles/update']
+INFO:app.main:Available app routes after inclusion: ['/openapi.json', '/docs', '/docs/oauth2-redirect', '/redoc', '/users/register', '/users/login', '/users/update', '/users/change-password', '/users/me', '/users/{user_id}/profile', '/chat/send', '/chat/clear', '/peers/suggested', '/messages', '/messages/conversation/{peer_id}', '/messages/conversations', '/messages/suggested-peers', '/profiles/test', '/profiles/me', '/profiles/update']
+INFO:     Started server process [5749]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:watchfiles.main:3 changes detected
+INFO:watchfiles.main:1 change detected
+WARNING:  WatchFiles detected changes in 'app/routers/profiles.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [5749]
+/Users/philippebeliveau/miniforge3/envs/orientor/lib/python3.11/site-packages/pydantic/_internal/_config.py:334: UserWarning: Valid config keys have changed in V2:
+* 'orm_mode' has been renamed to 'from_attributes'
+  warnings.warn(message, UserWarning)
+INFO:app.routes.chat:OpenAI API Key exists and starts with: sk-pr...
+INFO:__mp_main__:Registering auth_router routes: ['/users/register', '/users/login', '/users/update', '/users/change-password']
+INFO:__mp_main__:Registering users_router routes: ['/users/me', '/users/{user_id}/profile']
+INFO:__mp_main__:Registering chat_router routes: ['/chat/send', '/chat/clear']
+INFO:__mp_main__:Registering peers_router routes: ['/peers/suggested']
+INFO:__mp_main__:Registering messages_router routes: ['/messages', '/messages/conversation/{peer_id}', '/messages/conversations', '/messages/suggested-peers']
+INFO:__mp_main__:Registering profiles_router routes: ['/profiles/test', '/profiles/me', '/profiles/update']
+INFO:__mp_main__:Available app routes after inclusion: ['/openapi.json', '/docs', '/docs/oauth2-redirect', '/redoc', '/users/register', '/users/login', '/users/update', '/users/change-password', '/users/me', '/users/{user_id}/profile', '/chat/send', '/chat/clear', '/peers/suggested', '/messages', '/messages/conversation/{peer_id}', '/messages/conversations', '/messages/suggested-peers', '/profiles/test', '/profiles/me', '/profiles/update']
+INFO:app.main:Registering auth_router routes: ['/users/register', '/users/login', '/users/update', '/users/change-password']
+INFO:app.main:Registering users_router routes: ['/users/me', '/users/{user_id}/profile']
+INFO:app.main:Registering chat_router routes: ['/chat/send', '/chat/clear']
+INFO:app.main:Registering peers_router routes: ['/peers/suggested']
+INFO:app.main:Registering messages_router routes: ['/messages', '/messages/conversation/{peer_id}', '/messages/conversations', '/messages/suggested-peers']
+INFO:app.main:Registering profiles_router routes: ['/profiles/test', '/profiles/me', '/profiles/update']
+INFO:app.main:Available app routes after inclusion: ['/openapi.json', '/docs', '/docs/oauth2-redirect', '/redoc', '/users/register', '/users/login', '/users/update', '/users/change-password', '/users/me', '/users/{user_id}/profile', '/chat/send', '/chat/clear', '/peers/suggested', '/messages', '/messages/conversation/{peer_id}', '/messages/conversations', '/messages/suggested-peers', '/profiles/test', '/profiles/me', '/profiles/update']
+INFO:     Started server process [5774]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:watchfiles.main:3 changes detected
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [5774]
+INFO:     Stopping reloader process [5378]
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [5353]
+INFO:     Stopping reloader process [5131]

@@ -18,44 +18,46 @@ interface ApiError {
 }
 
 interface Profile {
-    name: string;
-    age: number | '';
-    sex: string;
-    major: string;
-    year: number | '';
-    gpa: number | '';
-    hobbies: string;
-    country: string;
-    state_province: string;
-    unique_quality: string;
-    story: string;
-    favorite_movie: string;
-    favorite_book: string;
-    favorite_celebrities: string;
-    learning_style: string;
-    interests: string;
+    user_id: number;
+    name: string | null;
+    age: number | null;
+    sex: string | null;
+    major: string | null;
+    year: number | null;
+    gpa: number | null;
+    hobbies: string | null;
+    country: string | null;
+    state_province: string | null;
+    unique_quality: string | null;
+    story: string | null;
+    favorite_movie: string | null;
+    favorite_book: string | null;
+    favorite_celebrities: string | null;
+    learning_style: string | null;
+    interests: string | null;
 }
 
 export default function ProfilePage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [profile, setProfile] = useState<Profile>({
-        name: '',
-        age: '',
-        sex: '',
-        major: '',
-        year: '',
-        gpa: '',
-        hobbies: '',
-        country: '',
-        state_province: '',
-        unique_quality: '',
-        story: '',
-        favorite_movie: '',
-        favorite_book: '',
-        favorite_celebrities: '',
-        learning_style: '',
-        interests: ''
+        user_id: 0,
+        name: null,
+        age: null,
+        sex: null,
+        major: null,
+        year: null,
+        gpa: null,
+        hobbies: null,
+        country: null,
+        state_province: null,
+        unique_quality: null,
+        story: null,
+        favorite_movie: null,
+        favorite_book: null,
+        favorite_celebrities: null,
+        learning_style: null,
+        interests: null
     });
     const [error, setError] = useState<string | null>(null);
     const [message, setMessage] = useState<string | null>(null);
@@ -65,14 +67,22 @@ export default function ProfilePage() {
         const fetchProfile = async () => {
             try {
                 const token = localStorage.getItem('access_token');
+                if (!token) {
+                    console.error('No access token found');
+                    return;
+                }
+                
                 const response = await axios.get<Profile>(`${cleanApiUrl}/profiles/me`, {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
                 });
+                console.log('Profile data received:', response.data);
                 setProfile(response.data);
             } catch (err) {
-                console.log('No existing profile found');
+                const error = err as ApiError;
+                console.error('Error fetching profile:', error.response?.data || error.message);
+                setError(error.response?.data?.detail || 'Failed to fetch profile');
             }
         };
         fetchProfile();
@@ -118,13 +128,15 @@ export default function ProfilePage() {
     };
 
     const handleProfileChange = (field: keyof Profile) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-        let value: string | number = e.target.value;
+        let value: string | number | null = e.target.value;
         
         // Convert numeric fields
         if (['age', 'year'].includes(field) && value !== '') {
-            value = parseInt(value);
+            value = parseInt(value) || null;
         } else if (field === 'gpa' && value !== '') {
-            value = parseFloat(value);
+            value = parseFloat(value) || null;
+        } else if (value === '') {
+            value = null;
         }
         
         setProfile(prev => ({
@@ -184,7 +196,7 @@ export default function ProfilePage() {
                                     </label>
                                     <input
                                         type="text"
-                                        value={profile.name}
+                                        value={profile.name || ''}
                                         onChange={handleProfileChange('name')}
                                         className="input"
                                         placeholder="Your full name"
@@ -196,7 +208,7 @@ export default function ProfilePage() {
                                     </label>
                                     <input
                                         type="number"
-                                        value={profile.age}
+                                        value={profile.age || ''}
                                         onChange={handleProfileChange('age')}
                                         className="input"
                                         placeholder="Your age"
@@ -208,7 +220,7 @@ export default function ProfilePage() {
                                         Sex
                                     </label>
                                     <select
-                                        value={profile.sex}
+                                        value={profile.sex || ''}
                                         onChange={handleProfileChange('sex')}
                                         className="input bg-gray-800"
                                     >
@@ -230,7 +242,7 @@ export default function ProfilePage() {
                                     </label>
                                     <input
                                         type="text"
-                                        value={profile.major}
+                                        value={profile.major || ''}
                                         onChange={handleProfileChange('major')}
                                         className="input"
                                         placeholder="Your field of study"
@@ -242,7 +254,7 @@ export default function ProfilePage() {
                                     </label>
                                     <input
                                         type="number"
-                                        value={profile.year}
+                                        value={profile.year || ''}
                                         onChange={handleProfileChange('year')}
                                         className="input"
                                         placeholder="Current year of study"
@@ -255,7 +267,7 @@ export default function ProfilePage() {
                                     </label>
                                     <input
                                         type="number"
-                                        value={profile.gpa}
+                                        value={profile.gpa || ''}
                                         onChange={handleProfileChange('gpa')}
                                         className="input"
                                         placeholder="Your GPA"
@@ -275,7 +287,7 @@ export default function ProfilePage() {
                                     </label>
                                     <input
                                         type="text"
-                                        value={profile.country}
+                                        value={profile.country || ''}
                                         onChange={handleProfileChange('country')}
                                         className="input"
                                         placeholder="Your country"
@@ -287,7 +299,7 @@ export default function ProfilePage() {
                                     </label>
                                     <input
                                         type="text"
-                                        value={profile.state_province}
+                                        value={profile.state_province || ''}
                                         onChange={handleProfileChange('state_province')}
                                         className="input"
                                         placeholder="Your state or province"
@@ -303,7 +315,7 @@ export default function ProfilePage() {
                                         Hobbies
                                     </label>
                                     <textarea
-                                        value={profile.hobbies}
+                                        value={profile.hobbies || ''}
                                         onChange={handleProfileChange('hobbies')}
                                         className="input"
                                         placeholder="What are your hobbies? (comma-separated)"
@@ -315,7 +327,7 @@ export default function ProfilePage() {
                                         Unique Quality
                                     </label>
                                     <textarea
-                                        value={profile.unique_quality}
+                                        value={profile.unique_quality || ''}
                                         onChange={handleProfileChange('unique_quality')}
                                         className="input"
                                         placeholder="What makes you unique?"
@@ -327,7 +339,7 @@ export default function ProfilePage() {
                                         Your Story
                                     </label>
                                     <textarea
-                                        value={profile.story}
+                                        value={profile.story || ''}
                                         onChange={handleProfileChange('story')}
                                         className="input"
                                         placeholder="Tell us your story"
@@ -345,7 +357,7 @@ export default function ProfilePage() {
                                     </label>
                                     <input
                                         type="text"
-                                        value={profile.favorite_movie}
+                                        value={profile.favorite_movie || ''}
                                         onChange={handleProfileChange('favorite_movie')}
                                         className="input"
                                         placeholder="What's your favorite movie?"
@@ -357,7 +369,7 @@ export default function ProfilePage() {
                                     </label>
                                     <input
                                         type="text"
-                                        value={profile.favorite_book}
+                                        value={profile.favorite_book || ''}
                                         onChange={handleProfileChange('favorite_book')}
                                         className="input"
                                         placeholder="What's your favorite book?"
@@ -369,7 +381,7 @@ export default function ProfilePage() {
                                     </label>
                                     <input
                                         type="text"
-                                        value={profile.favorite_celebrities}
+                                        value={profile.favorite_celebrities || ''}
                                         onChange={handleProfileChange('favorite_celebrities')}
                                         className="input"
                                         placeholder="Who inspires you? (comma-separated)"
@@ -380,7 +392,7 @@ export default function ProfilePage() {
                                         Learning Style
                                     </label>
                                     <select
-                                        value={profile.learning_style}
+                                        value={profile.learning_style || ''}
                                         onChange={handleProfileChange('learning_style')}
                                         className="input bg-gray-800"
                                     >
@@ -396,7 +408,7 @@ export default function ProfilePage() {
                                         Interests
                                     </label>
                                     <textarea
-                                        value={profile.interests}
+                                        value={profile.interests || ''}
                                         onChange={handleProfileChange('interests')}
                                         className="input"
                                         placeholder="What are your interests? (comma-separated)"
