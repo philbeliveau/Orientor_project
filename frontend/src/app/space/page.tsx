@@ -20,6 +20,7 @@ export default function SpacePage() {
     const loadRecommendations = async () => {
       try {
         setIsLoading(true);
+        setError(null);
         const data = await fetchSavedRecommendations();
         console.log('Recommendations from API:', data);
         
@@ -30,13 +31,22 @@ export default function SpacePage() {
           return;
         }
         
-        setRecommendations(data);
+        // Validate each recommendation
+        const validRecommendations = data.filter(rec => {
+          if (!rec.id || !rec.oasis_code || !rec.label) {
+            console.warn('Invalid recommendation data:', rec);
+            return false;
+          }
+          return true;
+        });
+        
+        setRecommendations(validRecommendations);
         
         // If recommendations exist, select the first one by default
-        if (data.length > 0) {
-          console.log('First recommendation:', data[0]);
-          console.log('Skill comparison:', data[0].skill_comparison);
-          setSelectedRecommendation(data[0]);
+        if (validRecommendations.length > 0) {
+          console.log('First recommendation:', validRecommendations[0]);
+          console.log('Skill comparison:', validRecommendations[0].skill_comparison);
+          setSelectedRecommendation(validRecommendations[0]);
         }
       } catch (err) {
         console.error('Error loading saved recommendations:', err);
@@ -98,24 +108,17 @@ export default function SpacePage() {
                       )}
                     </div>
                     
-                    {selectedRecommendation.skill_comparison ? (
-                      <div className="mt-8">
-                        <h3 className="text-lg font-semibold mb-4">Skills Comparison</h3>
-                        <div className="h-72">
-                          <SkillRadarChart 
-                            skillComparison={selectedRecommendation.skill_comparison} 
-                          />
-                        </div>
-                      </div>
-                    ) : (
-                      <div className="mt-8 p-4 bg-neutral-800/50 rounded-lg text-neutral-400 text-center">
-                        <p>Skill comparison not available. Please update your skills in your profile.</p>
+                    {selectedRecommendation.skill_comparison && (
+                      <div className="mt-6">
+                        <h3 className="text-lg font-semibold mb-4">Skill Comparison</h3>
+                        <SkillRadarChart skillComparison={selectedRecommendation.skill_comparison} />
                       </div>
                     )}
                   </div>
                   
                   <NotesSection 
-                    recommendationId={selectedRecommendation.id}
+                    recommendation={selectedRecommendation}
+                    notes={selectedRecommendation.notes || []}
                   />
                 </>
               )}
