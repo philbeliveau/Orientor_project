@@ -13,27 +13,37 @@ export default function LandingPage() {
       {/* Hero Section */}
       <section className="section">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-          <div className="space-y-8">
+          <motion.div
+            className="space-y-8"
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+          >
             <h1 className="text-4xl md:text-6xl font-bold gradient-text">
               Welcome to Navigo
             </h1>
             <p className="text-xl text-neutral-200 leading-relaxed">
-              Your personal guide to discovering who you are—and who you could become. Navigo helps you reflect, plan, and progress with purpose, backed by intelligent guidance and skill tracking.
+              Discover who you are, and who you could become. Navigo helps you reflect, explore, and track your growth with personalized, intelligent guidance.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Link href="/login" className="btn btn-primary">Log In</Link>
               <Link href="/register" className="btn btn-outline">Sign Up</Link>
             </div>
-          </div>
-          <div className="relative h-80 md:h-96 rounded-lg overflow-hidden shadow-glow-purple">
-            <div className="absolute inset-0 bg-gradient-primary opacity-20 animate-gradient-shift bg-[length:200%_200%]"></div>
-            <div className="absolute top-1/4 left-1/4 w-16 h-16 rounded-full bg-primary-purple opacity-40 animate-float"></div>
-            <div className="absolute bottom-1/4 right-1/4 w-12 h-12 rounded-full bg-primary-teal opacity-40 animate-float [animation-delay:1s]"></div>
-            <div className="absolute top-1/2 right-1/3 w-8 h-8 rounded-full bg-accent-amber opacity-30 animate-float [animation-delay:2s]"></div>
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="text-5xl font-display font-bold gradient-text">Navigo</div>
-            </div>
-          </div>
+          </motion.div>
+
+          <motion.div
+            className="relative h-80 md:h-96 rounded-lg overflow-hidden"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.3, duration: 0.8 }}
+          >
+            <Player
+              autoplay
+              loop
+              src="https://assets9.lottiefiles.com/packages/lf20_uegxllzu.json" // Replace with your Lottie file URL
+              className="w-full h-full"
+            />
+          </motion.div>
         </div>
       </section>
 
