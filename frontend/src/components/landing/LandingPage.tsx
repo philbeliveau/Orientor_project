@@ -17,7 +17,7 @@ export default function LandingPage() {
             <h1 className="text-4xl md:text-6xl font-bold gradient-text">
               Welcome to Navigo
             </h1>
-            <p className="text-xl text-neutral-200 leading-relaxed">
+            <p className="text-xl text-neutral-500 leading-relaxed">
               Your personal guide to discovering who you are—and who you could become. Navigo helps you reflect, plan, and progress with purpose, backed by intelligent guidance and skill tracking.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
@@ -26,7 +26,7 @@ export default function LandingPage() {
             </div>
           </div>
           <div className="relative h-80 md:h-96 rounded-lg overflow-hidden shadow-glow-purple">
-            <div className="absolute inset-0 bg-gradient-primary opacity-20 animate-gradient-shift bg-[length:200%_200%]"></div>
+            <div className="absolute inset-0 bg-gradient-primary opacity-20 animate-gradient-shift bg-[length:500%_500%]"></div>
             <div className="absolute top-1/4 left-1/4 w-16 h-16 rounded-full bg-primary-purple opacity-40 animate-float"></div>
             <div className="absolute bottom-1/4 right-1/4 w-12 h-12 rounded-full bg-primary-teal opacity-40 animate-float [animation-delay:1s]"></div>
             <div className="absolute top-1/2 right-1/3 w-8 h-8 rounded-full bg-accent-amber opacity-30 animate-float [animation-delay:2s]"></div>
@@ -42,10 +42,10 @@ export default function LandingPage() {
         <div className="card container-narrow">
           <div className="text-center space-y-8">
             <h2 className="text-3xl md:text-4xl font-bold gradient-text-secondary">Our Mission</h2>
-            <p className="text-xl text-neutral-200 leading-relaxed">
+            <p className="text-xl text-neutral-500 leading-relaxed">
               Navigo empowers young minds to understand their strengths, track their growth, and explore career paths they may have never imagined. Our platform gives students tools to reflect, challenge themselves, and set meaningful direction.
             </p>
-            <p className="text-xl text-neutral-200 leading-relaxed">
+            <p className="text-xl text-neutral-500 leading-relaxed">
               Through interactive guidance, skill-based mapping, and daily recommendations, we help students craft their future one thoughtful step at a time.
             </p>
           </div>
@@ -65,7 +65,7 @@ export default function LandingPage() {
               </svg>
             </div>
             <h3 className="text-xl font-bold text-primary-teal mb-4">Skill-Based Career Mapping</h3>
-            <p className="text-neutral-300">
+            <p className="text-neutral-500">
               We go beyond job titles. Navigo builds a graph of your skills to suggest personalized next steps—based on what you know, what you’re building, and where you want to go.
             </p>
           </div>
@@ -78,7 +78,7 @@ export default function LandingPage() {
               </svg>
             </div>
             <h3 className="text-xl font-bold text-accent-amber mb-4">Space: Your Personal Mission Hub</h3>
-            <p className="text-neutral-300">
+            <p className="text-neutral-500">
               Track your chosen career goals, compare your current skills with what’s needed, reflect on daily progress, and receive micro-recommendations on how to advance.
             </p>
           </div>
@@ -91,7 +91,7 @@ export default function LandingPage() {
               </svg>
             </div>
             <h3 className="text-xl font-bold text-primary-lilac mb-4">See Your Possible Futures</h3>
-            <p className="text-neutral-300">
+            <p className="text-neutral-500">
               Navigo predicts skill-based branches of what you could become. Think of it as a constellation of futures—mapped out based on your growth patterns and intentions.
             </p>
           </div>
@@ -106,7 +106,7 @@ export default function LandingPage() {
               <h2 className="text-3xl md:text-4xl font-bold text-center text-neutral-50">
                 Start Your Journey Today
               </h2>
-              <p className="text-xl text-center text-neutral-200">
+              <p className="text-xl text-center text-neutral-500">
                 Join Navigo and let your curiosity, discipline, and imagination build the future you're meant to explore.
               </p>
               <div className="flex flex-col sm:flex-row justify-center gap-4">

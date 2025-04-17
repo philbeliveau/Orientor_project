@@ -232,7 +232,7 @@ export default function ProfilePage() {
                                     <select
                                         value={profile.sex || ''}
                                         onChange={handleProfileChange('sex')}
-                                        className="input bg-gray-800"
+                                        className="input bg-gray-100"
                                     >
                                         <option value="">Select your sex</option>
                                         <option value="Male">Male</option>
@@ -404,7 +404,7 @@ export default function ProfilePage() {
                                     <select
                                         value={profile.learning_style || ''}
                                         onChange={handleProfileChange('learning_style')}
-                                        className="input bg-gray-800"
+                                        className="input bg-gray-100"
                                     >
                                         <option value="">Select your learning style</option>
                                         <option value="Visual">Visual</option>
