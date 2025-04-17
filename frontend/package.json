@@ -1,44 +1,36 @@
 {
-  "name": "frontend",
-  "version": "1.0.0",
+  "name": "orientor-frontend",
+  "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "vercel-build": "next build",
-    "vercel-install": "npm install",
-    "postbuild": "cp public/404.html .next/404.html && cp public/index.html .next/index.html"
+    "lint": "next lint"
   },
   "dependencies": {
-    "@lottiefiles/react-lottie-player": "^3.6.0",
+    "@radix-ui/react-slider": "^1.1.2",
     "@tailwindcss/typography": "^0.5.16",
     "@vercel/analytics": "^1.5.0",
     "@vercel/speed-insights": "^1.2.0",
-    "autoprefixer": "^10.4.14",
-    "axios": "^1.6.2",
-    "chart.js": "^4.4.9",
-    "date-fns": "^4.1.0",
-    "framer-motion": "^12.7.3",
-    "lottie-react": "^2.4.1",
-    "next": "^13.5.11",
-    "postcss": "^8.4.27",
-    "react": "18.2.0",
-    "react-chartjs-2": "^5.3.0",
-    "react-dom": "18.2.0",
-    "tailwindcss": "^3.3.0"
+    "clsx": "^2.0.0",
+    "critters": "^0.0.23",
+    "framer-motion": "^10.16.4",
+    "next": "13.4.19",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "reactflow": "^11.11.4",
+    "tailwind-merge": "^2.0.0",
+    "tailwindcss": "^3.3.3",
+    "typescript": "^5.1.6"
   },
   "devDependencies": {
-    "@types/node": "20.4.2",
-    "@types/react": "18.2.12",
-    "@types/react-dom": "18.2.5",
-    "critters": "^0.0.23",
-    "eslint": "^8.43.0",
-    "eslint-config-next": "13.4.10",
-    "typescript": "5.1.6"
-  },
-  "engines": {
-    "node": ">=18.0.0"
+    "@types/node": "^20.5.0",
+    "@types/react": "^18.2.20",
+    "@types/react-dom": "^18.2.7",
+    "autoprefixer": "^10.4.15",
+    "eslint": "^8.47.0",
+    "eslint-config-next": "13.4.19",
+    "postcss": "^8.4.29"
   }
 }
