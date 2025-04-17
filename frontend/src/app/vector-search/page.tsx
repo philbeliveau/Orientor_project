@@ -191,19 +191,19 @@ export default function VectorSearchPage() {
                         </button>
                       </div>
                     </div>
-                    <p className="text-sm text-neutral-400 mb-3">OaSIS Code: {result.oasis_code}</p>
+                    <p className="text-sm text-neutral-900 mb-3">OaSIS Code: {result.oasis_code}</p>
                     
                     {result.lead_statement && (
                       <div className="mb-3">
-                        <h4 className="font-medium text-sm text-neutral-300">Description:</h4>
-                        <p className="text-sm text-neutral-200">{result.lead_statement}</p>
+                        <h4 className="font-medium text-sm text-neutral-900">Description:</h4>
+                        <p className="text-sm text-neutral-900">{result.lead_statement}</p>
                       </div>
                     )}
                     
                     {result.main_duties && (
                       <div className="mb-3">
-                        <h4 className="font-medium text-sm text-neutral-300">Main Duties:</h4>
-                        <p className="text-sm text-neutral-200">{result.main_duties}</p>
+                        <h4 className="font-medium text-sm text-neutral-900">Main Duties:</h4>
+                        <p className="text-sm text-neutral-900">{result.main_duties}</p>
                       </div>
                     )}
                   </div>
@@ -212,7 +212,7 @@ export default function VectorSearchPage() {
             </div>
           ) : (
             !loading && (
-              <div className="text-center text-neutral-400 py-12">
+              <div className="text-center text-neutral-600 py-12">
                 <p>No results to display. Try searching for occupations or skills.</p>
                 <p className="mt-2 text-sm">Example searches: "software developer", "healthcare", "creative jobs"</p>
               </div>

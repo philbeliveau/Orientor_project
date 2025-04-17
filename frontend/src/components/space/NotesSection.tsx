@@ -66,7 +66,7 @@ const NotesSection: React.FC<NotesSectionProps> = ({ recommendation }) => {
       {/* Add new note */}
       <div className="mb-6">
         <textarea
-          className="w-full p-3 rounded-lg bg-neutral-800/50 border border-neutral-700/30 focus:border-primary-teal/50 focus:ring-1 focus:ring-primary-teal/50"
+          className="w-full p-3 rounded-lg bg-neutral-100/50 border border-neutral-100/30 focus:border-primary-teal/50 focus:ring-1 focus:ring-primary-teal/50"
           rows={3}
           placeholder="Add a note..."
           value={newNote}

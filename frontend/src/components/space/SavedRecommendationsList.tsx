@@ -28,15 +28,15 @@ const SavedRecommendationsList: React.FC<SavedRecommendationsListProps> = ({
         {recommendations.map((recommendation) => (
           <div
             key={recommendation.id}
-            className={`p-4 rounded-lg transition-all duration-300 cursor-pointer hover:bg-neutral-700/30 ${
+            className={`p-4 rounded-lg transition-all duration-300 cursor-pointer hover:bg-neutral-100/30 ${
               selectedRecommendation?.id === recommendation.id 
                 ? 'bg-gradient-subtle border border-primary-teal/30' 
-                : 'bg-neutral-800/60 border border-neutral-700/30'
+                : 'bg-neutral-100/60 border border-neutral-100/30'
             }`}
             onClick={() => onSelectRecommendation(recommendation)}
           >
             <h3 className="text-lg font-medium">{recommendation.label}</h3>
-            <p className="text-sm text-neutral-400 mt-1">
+            <p className="text-sm text-neutral-100 mt-1">
               {recommendation.oasis_code}
             </p>
           </div>
