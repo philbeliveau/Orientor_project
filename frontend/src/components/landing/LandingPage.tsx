@@ -26,10 +26,10 @@ export default function LandingPage() {
             </div>
           </div>
           <div className="relative h-80 md:h-96 rounded-lg overflow-hidden shadow-glow-purple">
-            <div className="absolute inset-0 bg-gradient-primary opacity-20 animate-gradient-shift bg-[length:500%_500%]"></div>
-            <div className="absolute top-1/4 left-1/4 w-16 h-16 rounded-full bg-primary-purple opacity-40 animate-float"></div>
-            <div className="absolute bottom-1/4 right-1/4 w-12 h-12 rounded-full bg-primary-teal opacity-40 animate-float [animation-delay:1s]"></div>
-            <div className="absolute top-1/2 right-1/3 w-8 h-8 rounded-full bg-accent-amber opacity-30 animate-float [animation-delay:2s]"></div>
+            <div className="absolute inset-0 bg-gradient-primary opacity-500 animate-gradient-shift bg-[length:200%_200%]"></div>
+            <div className="absolute top-1/4 left-1/4 w-16 h-16 rounded-full bg-primary-purple opacity-500 animate-float [animation-duration:3s]"></div>
+            <div className="absolute bottom-1/4 right-1/4 w-12 h-12 rounded-full bg-primary-teal opacity-500 animate-float [animation-duration:3s] [animation-delay:1s]"></div>
+            <div className="absolute top-1/2 right-1/3 w-8 h-8 rounded-full bg-accent-amber opacity-500 animate-float [animation-duration:3s] [animation-delay:2s]"></div>
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="text-5xl font-display font-bold gradient-text">Navigo</div>
             </div>

@@ -2,7 +2,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
-import type { AxiosError, isAxiosError } from 'axios';
+// import type { AxiosError, isAxiosError } from 'axios';
 import MainLayout from '@/components/layout/MainLayout';
 
 interface Message {
@@ -18,7 +18,7 @@ interface MessageFeedback {
 }
 
 interface ChatResponse {
-    response: string;
+    text: string;
 }
 
 // Define API URL with fallback and trim any trailing spaces
@@ -84,8 +84,8 @@ export default function ChatPage() {
             }
 
             const response = await axios.post<ChatResponse>(
-                `${cleanApiUrl}/chat`,
-                { message: inputMessage },
+                `${cleanApiUrl}/chat/send`,
+                { text: inputMessage },
                 {
                     headers: {
                         'Authorization': `Bearer ${token}`,
@@ -96,7 +96,7 @@ export default function ChatPage() {
 
             const aiMessage: Message = {
                 id: Date.now() + 1,
-                text: response.data.response,
+                text: response.data.text,
                 sender: 'ai',
                 timestamp: new Date(),
             };

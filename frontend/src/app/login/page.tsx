@@ -93,10 +93,10 @@ export default function LoginPage() {
                     <h1 className="text-4xl font-bold font-display gradient-text mb-2">
                         Navigo
                     </h1>
-                    <h2 className="text-2xl font-bold text-neutral-100 mb-2">
+                    <h2 className="text-2xl font-bold text-neutral-500 mb-2">
                         Welcome Back
                     </h2>
-                    <p className="text-neutral-300">
+                    <p className="text-neutral-500">
                         Your personal guide for growth and self-discovery
                     </p>
                 </div>
@@ -167,7 +167,7 @@ export default function LoginPage() {
                             </button>
                         </div>
                     
-                        <div className="text-center text-sm text-neutral-300 pt-4">
+                        <div className="text-center text-sm text-neutral-500 pt-4">
                             Don't have an account?{' '}
                             <Link href="/register" className="text-primary-teal hover:text-primary-lilac transition-colors duration-300 font-medium">
                                 Register here
