@@ -2,6 +2,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
+import type { AxiosError, isAxiosError } from 'axios';
 import MainLayout from '@/components/layout/MainLayout';
 
 interface Message {
@@ -13,11 +14,11 @@ interface Message {
 
 interface MessageFeedback {
     messageId: number;
-    type: 'helpful' | 'not_helpful';
+    feedback: 'helpful' | 'not_helpful';
 }
 
 interface ChatResponse {
-    text: string;
+    response: string;
 }
 
 // Define API URL with fallback and trim any trailing spaces
@@ -64,116 +65,105 @@ export default function ChatPage() {
         e.preventDefault();
         if (!inputMessage.trim() || isTyping) return;
 
-        const token = localStorage.getItem('access_token');
-        if (!token) {
-            router.push('/login');
-            return;
-        }
-
-        const newMessage: Message = {
+        const userMessage: Message = {
             id: Date.now(),
             text: inputMessage,
             sender: 'user',
             timestamp: new Date(),
         };
 
-        setMessages(prev => [...prev, newMessage]);
+        setMessages(prev => [...prev, userMessage]);
         setInputMessage('');
         setIsTyping(true);
-        setAuthError(null);
 
         try {
+            const token = localStorage.getItem('access_token');
+            if (!token) {
+                router.push('/login');
+                return;
+            }
+
             const response = await axios.post<ChatResponse>(
-                `${cleanApiUrl}/chat/send`,
-                { text: newMessage.text },
+                `${cleanApiUrl}/chat`,
+                { message: inputMessage },
                 {
                     headers: {
                         'Authorization': `Bearer ${token}`,
-                        'Content-Type': 'application/json'
-                    }
+                        'Content-Type': 'application/json',
+                    },
                 }
             );
-            
+
             const aiMessage: Message = {
-                id: Date.now(),
-                text: response.data.text,
+                id: Date.now() + 1,
+                text: response.data.response,
                 sender: 'ai',
                 timestamp: new Date(),
             };
-            
+
             setMessages(prev => [...prev, aiMessage]);
-        } catch (error: any) {
-            console.error('Failed to get AI response:', error);
-            
-            let errorMessage = "Sorry, I'm having trouble connecting right now. Please try again later.";
-            
-            if (error.response?.status === 401) {
-                router.push('/login');
-                return;
-            } else if (error.response?.data?.detail) {
-                errorMessage = error.response.data.detail;
+        } catch (error: unknown) {
+            console.error('Error sending message:', error);
+            if (error && typeof error === 'object' && 'response' in error && 
+                typeof error.response === 'object' && error.response && 
+                'status' in error.response && error.response.status === 401) {
+                setAuthError('Your session has expired. Please log in again.');
+                setTimeout(() => router.push('/login'), 2000);
+            } else {
+                setAuthError('An error occurred while sending your message. Please try again.');
             }
-            
-            const errorMsg: Message = {
-                id: Date.now(),
-                text: errorMessage,
-                sender: 'ai',
-                timestamp: new Date(),
-            };
-            
-            setMessages(prev => [...prev, errorMsg]);
         } finally {
             setIsTyping(false);
         }
     };
 
-    const handleFeedback = (messageId: number, type: 'helpful' | 'not_helpful') => {
-        setFeedback(prev => [...prev, { messageId, type }]);
-    };
-
     const handleClearChat = async () => {
+        if (isClearingChat || messages.length === 0) return;
+        setIsClearingChat(true);
+
         try {
-            setIsClearingChat(true);
             const token = localStorage.getItem('access_token');
-            
             if (!token) {
                 router.push('/login');
                 return;
             }
-            
+
             await axios.post(
                 `${cleanApiUrl}/chat/clear`,
                 {},
                 {
                     headers: {
                         'Authorization': `Bearer ${token}`,
-                        'Content-Type': 'application/json'
-                    }
+                        'Content-Type': 'application/json',
+                    },
                 }
             );
-            
-            // Clear local messages
+
             setMessages([]);
-            setFeedback([]);
-            
-            // Add welcome message
             const welcomeMessage: Message = {
                 id: Date.now(),
                 text: "Hello! I'm your Socratic mentor. What would you like to explore today about your career path or personal interests?",
                 sender: 'ai',
                 timestamp: new Date(),
             };
-            
             setMessages([welcomeMessage]);
-        } catch (error: any) {
-            console.error('Failed to clear chat:', error);
-            if (error.response?.status === 401) {
-                router.push('/login');
-                return;
+        } catch (error: unknown) {
+            console.error('Error clearing chat:', error);
+            if (error && typeof error === 'object' && 'response' in error && 
+                typeof error.response === 'object' && error.response && 
+                'status' in error.response && error.response.status === 401) {
+                setAuthError('Your session has expired. Please log in again.');
+                setTimeout(() => router.push('/login'), 2000);
+            } else {
+                setAuthError('An error occurred while clearing the chat. Please try again.');
             }
         } finally {
             setIsClearingChat(false);
         }
+    };
+
+    const handleFeedback = (messageId: number, feedbackType: 'helpful' | 'not_helpful') => {
+        setFeedback(prev => [...prev, { messageId, feedback: feedbackType }]);
     };
 
     return (
@@ -198,7 +188,7 @@ export default function ChatPage() {
                     </div>
                 )}
                 
-                <div className="flex-1 overflow-y-auto bg-primary-indigo/50 rounded-lg p-4 mb-4">
+                <div className="flex-1 overflow-y-auto bg-white/30 backdrop-blur-sm rounded-lg p-4 mb-4">
                     {messages.map((message) => (
                         <div
                             key={message.id}
@@ -227,9 +217,9 @@ export default function ChatPage() {
                         <div className="flex justify-start mb-4">
                             <div className="message-system flex items-center space-x-2">
                                 <div className="flex space-x-1">
-                                    <div className="h-2 w-2 bg-secondary-teal rounded-full animate-bounce [animation-delay:-0.3s]"></div>
-                                    <div className="h-2 w-2 bg-secondary-teal rounded-full animate-bounce [animation-delay:-0.15s]"></div>
-                                    <div className="h-2 w-2 bg-secondary-teal rounded-full animate-bounce"></div>
+                                    <div className="h-2 w-2 bg-primary-blue rounded-full animate-bounce [animation-delay:-0.3s]"></div>
+                                    <div className="h-2 w-2 bg-primary-blue rounded-full animate-bounce [animation-delay:-0.15s]"></div>
+                                    <div className="h-2 w-2 bg-primary-blue rounded-full animate-bounce"></div>
                                 </div>
                                 <span className="text-sm">Thinking...</span>
                             </div>

@@ -1,21 +1,19 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    "./src/**/*.{js,ts,jsx,tsx}", // All files in src directory
+    "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
     extend: {
       colors: {
-        // New primary palette - premium gradient colors
+        // Primary colors
         primary: {
-          purple: '#7D5BA6',
-          teal: '#59C2C9',
-          indigo: '#5B6CD9',
-          lilac: '#9F7AEA',
+          blue: '#3B82F6',
+          indigo: '#6366F1',
         },
-        // Supporting neutral shades
+        // Neutral palette
         neutral: {
-          50: '#F7F9FC',  // Soft off-white
+          50: '#F7F9FC',
           100: '#EDF2F7',
           200: '#E2E8F0',
           300: '#CBD5E0',
@@ -24,89 +22,65 @@ module.exports = {
           600: '#4A5568',
           700: '#2D3748',
           800: '#1A202C',
-          900: '#171923',  // Deep charcoal
-        },
-        // Accent colors
-        accent: {
-          coral: '#FF6B81',
-          amber: '#FFBE3D',
-          emerald: '#38B2AC',
-          sky: '#4FD1C5',
+          900: '#171923',
         },
       },
       backgroundImage: {
-        // Main gradients
-        'gradient-primary': 'linear-gradient(135deg, #7D5BA6 0%, #59C2C9 100%)',
-        'gradient-secondary': 'linear-gradient(135deg, #5B6CD9 0%, #9F7AEA 100%)',
-        'gradient-accent': 'linear-gradient(135deg, #FF6B81 0%, #FFBE3D 100%)',
-        'gradient-dark': 'linear-gradient(180deg, #1A202C 0%, #2D3748 100%)',
-        // Subtle gradients
-        'gradient-subtle': 'linear-gradient(135deg, rgba(125, 91, 166, 0.1) 0%, rgba(89, 194, 201, 0.1) 100%)',
-        'gradient-glass': 'linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%)',
+        'gradient-radial': 'radial-gradient(#f7f9fc, #ffffff)',
+        'branch-pattern': "url('/patterns/branch.svg')",
+        'grid-pattern': "url('/patterns/grid.svg')",
       },
       fontFamily: {
-        sans: ['"Inter"', '"Poppins"', 'system-ui', 'sans-serif'],
-        display: ['"Montserrat"', 'sans-serif'],
-        serif: ['"Literata"', 'serif'],
+        sans: ['Inter', 'system-ui', 'sans-serif'],
+        serif: ['Playfair Display', 'serif'],
       },
       boxShadow: {
-        'glow-purple': '0 0 20px rgba(125, 91, 166, 0.3)',
-        'glow-teal': '0 0 20px rgba(89, 194, 201, 0.3)',
-        'soft': '0 4px 20px rgba(0, 0, 0, 0.08)',
-        'card': '0 10px 30px rgba(0, 0, 0, 0.1)',
-        'btn': '0 4px 6px rgba(125, 91, 166, 0.2)',
-        'input': 'inset 0 2px 4px rgba(0, 0, 0, 0.05)',
-      },
-      borderRadius: {
-        'sm': '6px',
-        'md': '10px',
-        'lg': '16px',
-        'xl': '24px',
-        '2xl': '32px',
+        'soft': '0 2px 12px rgba(0,0,0,0.05)',
+        'glass': '0 4px 30px rgba(0, 0, 0, 0.1)',
       },
       animation: {
-        'gradient-shift': 'gradient-shift 8s ease infinite',
-        'shimmer': 'shimmer 2s linear infinite',
+        'fade-in': 'fadeIn 0.5s ease-in-out',
         'float': 'float 6s ease-in-out infinite',
+        'grow': 'grow 0.3s ease-out',
       },
       keyframes: {
-        'gradient-shift': {
-          '0%, 100%': {
-            'background-position': '0% 50%',
-          },
-          '50%': {
-            'background-position': '100% 50%',
-          },
+        fadeIn: {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
         },
-        'shimmer': {
-          '0%': { backgroundPosition: '-200% 0' },
-          '100%': { backgroundPosition: '200% 0' },
-        },
-        'float': {
+        float: {
           '0%, 100%': { transform: 'translateY(0)' },
-          '50%': { transform: 'translateY(-8px)' },
+          '50%': { transform: 'translateY(-10px)' },
+        },
+        grow: {
+          '0%': { transform: 'scaleX(0)' },
+          '100%': { transform: 'scaleX(1)' },
         },
       },
       typography: {
         DEFAULT: {
           css: {
-            lineHeight: 1.7,
-            fontSize: '1.125rem',
-            color: '#F7F9FC',
+            color: '#333',
+            a: {
+              color: '#3B82F6',
+              '&:hover': {
+                color: '#2563EB',
+              },
+            },
             h1: {
-              fontSize: '2.5rem',
-              fontWeight: 700,
-              lineHeight: 1.2,
+              fontFamily: 'Playfair Display',
+              fontWeight: '300',
+              letterSpacing: '0.05em',
             },
             h2: {
-              fontSize: '2rem',
-              fontWeight: 600,
-              lineHeight: 1.25,
+              fontFamily: 'Playfair Display',
+              fontWeight: '300',
+              letterSpacing: '0.05em',
             },
             h3: {
-              fontSize: '1.5rem',
-              fontWeight: 600,
-              lineHeight: 1.3,
+              fontFamily: 'Playfair Display',
+              fontWeight: '300',
+              letterSpacing: '0.05em',
             },
           },
         },

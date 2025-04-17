@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Main branch -->
+  <path d="M100 0 L100 100" stroke="rgba(0,0,0,0.05)" stroke-width="1"/>
+  
+  <!-- Left branches -->
+  <path d="M100 30 L70 50" stroke="rgba(0,0,0,0.05)" stroke-width="1"/>
+  <path d="M100 60 L60 80" stroke="rgba(0,0,0,0.05)" stroke-width="1"/>
+  <path d="M100 90 L50 110" stroke="rgba(0,0,0,0.05)" stroke-width="1"/>
+  
+  <!-- Right branches -->
+  <path d="M100 30 L130 50" stroke="rgba(0,0,0,0.05)" stroke-width="1"/>
+  <path d="M100 60 L140 80" stroke="rgba(0,0,0,0.05)" stroke-width="1"/>
+  <path d="M100 90 L150 110" stroke="rgba(0,0,0,0.05)" stroke-width="1"/>
+  
+  <!-- Secondary branches -->
+  <path d="M70 50 L50 70" stroke="rgba(0,0,0,0.03)" stroke-width="0.5"/>
+  <path d="M130 50 L150 70" stroke="rgba(0,0,0,0.03)" stroke-width="0.5"/>
+  <path d="M60 80 L40 100" stroke="rgba(0,0,0,0.03)" stroke-width="0.5"/>
+  <path d="M140 80 L160 100" stroke="rgba(0,0,0,0.03)" stroke-width="0.5"/>
+</svg> 

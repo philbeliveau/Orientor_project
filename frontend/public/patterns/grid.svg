@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Hexagonal grid pattern -->
+  <g stroke="rgba(0,0,0,0.03)" stroke-width="0.5">
+    <!-- Horizontal lines -->
+    <path d="M0 50 L200 50" />
+    <path d="M0 100 L200 100" />
+    <path d="M0 150 L200 150" />
+    
+    <!-- Diagonal lines (right) -->
+    <path d="M0 0 L200 100" />
+    <path d="M0 50 L200 150" />
+    
+    <!-- Diagonal lines (left) -->
+    <path d="M200 0 L0 100" />
+    <path d="M200 50 L0 150" />
+    
+    <!-- Vertical lines -->
+    <path d="M50 0 L50 200" />
+    <path d="M100 0 L100 200" />
+    <path d="M150 0 L150 200" />
+  </g>
+</svg> 
