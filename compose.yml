@@ -1,0 +1,94 @@
+version: "3.8"
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: orientor_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  minio:
+    image: minio/minio
+    restart: unless-stopped
+    command: server /data
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin
+    ports:
+      - "9000:9000"
+    volumes:
+      - minio:/data
+
+  chrome:
+    image: browserless/chrome:latest
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      PORT: 3000
+      TIMEOUT: 300000
+      CONCURRENT: 10
+      CORS: true
+      DEBUG: true
+      PREBOOT: true
+      KEEP_ALIVE: true
+      WORKSPACE: true
+      PROXY_HOST: app
+      PROXY_PORT: 3100
+      HEALTH: true
+      TOKEN: ""
+
+  app:
+    image: ghcr.io/amruthpillai/reactive-resume:latest
+    restart: unless-stopped
+    ports:
+      - "3100:3100"
+    environment:
+      PORT: 3100
+      PUBLIC_URL: http://localhost:3100
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: 5432
+      POSTGRES_DB: orientor_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      STORAGE_DRIVER: minio
+      STORAGE_ENDPOINT: minio:9000
+      STORAGE_BUCKET_NAME: reactive-resume
+      STORAGE_ACCESS_KEY: minioadmin
+      STORAGE_SECRET_KEY: minioadmin
+      STORAGE_REGION: us-east-1
+      CHROME_URL: ws://chrome:3000
+      CHROME_IGNORE_HTTPS_ERRORS: true
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
+      GITHUB_CLIENT_ID: ${GITHUB_CLIENT_ID}
+      GITHUB_CLIENT_SECRET: ${GITHUB_CLIENT_SECRET}
+      GITHUB_CALLBACK_URL: http://localhost:3100/api/auth/github/callback
+      GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID}
+      GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET}
+      GOOGLE_CALLBACK_URL: http://localhost:3100/api/auth/google/callback
+      SECRET_KEY: change-me-to-something-secure
+      USE_EXTERNAL_AUTH: true
+      EXTERNAL_AUTH_URL: http://localhost:8000/api/auth/verify
+      EXTERNAL_AUTH_METHOD: POST
+      EXTERNAL_AUTH_HEADER: Authorization
+      EXTERNAL_AUTH_TOKEN_PREFIX: Bearer
+    depends_on:
+      postgres:
+        condition: service_healthy
+      minio:
+        condition: service_started
+      chrome:
+        condition: service_started
+
+volumes:
+  postgres:
+  minio: 

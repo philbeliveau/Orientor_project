@@ -10,4 +10,4 @@ if current_dir not in sys.path:
 # This will let you run with: python run.py
 if __name__ == "__main__":
     print("Starting server with proper Python path configuration...")
-    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True) 
+    uvicorn.run("app.main:app", host="0.0.0.0", port=8000, reload=True) 

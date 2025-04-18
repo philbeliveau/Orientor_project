@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
 import os
 import logging
+import requests
 
 # Import routers directly
 from app.routes.user import router as auth_router, get_current_user
@@ -13,6 +14,7 @@ from app.routers.messages import router as messages_router
 from app.routers.profiles import router as profiles_router
 from app.routers.test import router as test_router
 from app.routers.space import router as space_router
+from app.routers.resume import router as resume_router
 
 # Configure logging
 logger = logging.getLogger(__name__)
@@ -27,6 +29,8 @@ origins = [
     "http://localhost:5173",
     "https://localhost:3000",
     "https://localhost:5173",
+    "http://localhost:3100",     # Reactive Resume base URL
+    "http://localhost:3100/cv",  # Reactive Resume local development
     "https://orientor-project.vercel.app",  # Add your Vercel domain
     "https://orientor.vercel.app",          # Add potential Vercel domain variations
     "https://*.vercel.app"                  # Allow all subdomains on vercel.app
@@ -55,6 +59,7 @@ try:
     logger.info(f"Registering messages_router routes: {[f'{route.path} [{route.methods}]' for route in messages_router.routes]}")
     logger.info(f"Registering test_router routes: {[f'{route.path} [{route.methods}]' for route in test_router.routes]}")
     logger.info(f"Registering space_router routes: {[f'{route.path} [{route.methods}]' for route in space_router.routes]}")
+    logger.info(f"Registering resume_router routes: {[f'{route.path} [{route.methods}]' for route in resume_router.routes]}")
     logger.info("============================================")
 except Exception as e:
     logger.error(f"Error while logging router details: {str(e)}")
@@ -74,6 +79,7 @@ app.include_router(chat_router)
 app.include_router(peers_router)
 app.include_router(messages_router)
 app.include_router(space_router)
+app.include_router(resume_router, prefix="/resume")
 logger.info("All routers included successfully")
 
 # Explicitly capture route after including it
@@ -85,6 +91,31 @@ logger.info("======================")
 @app.get("/")
 def read_root():
     return {"message": "Welcome to the Orientor API"}
+
+@app.get("/resume-health")
+def check_resume_service():
+    """
+    Health check for the Reactive Resume service
+    """
+    reactive_resume_url = os.getenv("REACTIVE_RESUME_API_URL", "http://localhost:3100/api")
+    
+    try:
+        # Check if the Reactive Resume service is running
+        response = requests.get(f"{reactive_resume_url}/health")
+        response.raise_for_status()
+        
+        # Return the health status of the Reactive Resume service
+        return {
+            "status": "ok",
+            "message": "Resume service is available",
+            "details": response.json()
+        }
+    except requests.exceptions.RequestException as e:
+        return {
+            "status": "error",
+            "message": f"Resume service is not available: {str(e)}",
+            "details": None
+        }
 
 # Direct routes for testing profiles
 @app.get("/direct-profile-test")

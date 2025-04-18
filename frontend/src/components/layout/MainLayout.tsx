@@ -62,6 +62,7 @@ export default function MainLayout({
                             <Link href="/chat" className="nav-link">Chat</Link>
                             <Link href="/peers" className="nav-link">Suggested Peers</Link>
                             <Link href="/vector-search" className="nav-link">Career recommendation</Link>
+                            <Link href="/cv" className="nav-link">Resume Builder</Link>
                             <Link href="/space" className="nav-link">My Space</Link>
                             <Link href="/profile" className="nav-link">Profile</Link>
                             <button onClick={handleLogout} className="nav-link">Logout</button>
