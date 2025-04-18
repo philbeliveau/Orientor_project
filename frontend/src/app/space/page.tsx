@@ -103,8 +103,6 @@ export default function SpacePage() {
                 <>
                   <div className="card">
                     <h2 className="text-2xl font-bold mb-4">{selectedRecommendation.label}</h2>
-                    <h2 className="text-2xl font-bold mb-4">
-                      {selectedRecommendation.label || selectedRecommendation.all_fields?.label || "No label"}</h2>
                     <div className="mb-4">
                       {selectedRecommendation.description && (
                         <p className="mb-2">{selectedRecommendation.description}</p>
@@ -125,20 +123,19 @@ export default function SpacePage() {
                     )}
                   </div>
 
-                  {selectedRecommendation.all_fields && (
-                    <div className="mt-6">
-                      <h3 className="text-lg font-semibold mb-2">Additional Details</h3>
-                      <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-sm text-neutral-500">
-                        {Object.entries(selectedRecommendation.all_fields).map(([key, value]) => (
-                          <div key={key} className="flex gap-1">
-                            <span className="font-medium">{key.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase())}:</span>
-                            <span>{value}</span>
-                          </div>
-                        ))}
-                      </div>
+                    {selectedRecommendation.all_fields && (
+                      <div className="mt-6">
+                        <h3 className="text-lg font-semibold mb-2">Additional Details</h3>
+                        <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-sm text-neutral-500">
+                          {Object.entries(selectedRecommendation.all_fields).map(([key, value]) => (
+                            <div key={key} className="flex gap-1">
+                              <span className="font-medium">{key.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase())}:</span>
+                              <span>{value}</span>
+                            </div>
+                          ))}
+                        </div>
                     </div>
                   )}
-                  
                   <NotesSection
                     recommendation={selectedRecommendation}
                   />
