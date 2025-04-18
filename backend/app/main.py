@@ -15,6 +15,7 @@ from app.routers.profiles import router as profiles_router
 from app.routers.test import router as test_router
 from app.routers.space import router as space_router
 from app.routers.resume import router as resume_router
+from app.routes.vector_search import router as vector_router
 
 # Configure logging
 logger = logging.getLogger(__name__)
@@ -60,6 +61,7 @@ try:
     logger.info(f"Registering test_router routes: {[f'{route.path} [{route.methods}]' for route in test_router.routes]}")
     logger.info(f"Registering space_router routes: {[f'{route.path} [{route.methods}]' for route in space_router.routes]}")
     logger.info(f"Registering resume_router routes: {[f'{route.path} [{route.methods}]' for route in resume_router.routes]}")
+    logger.info(f"Registering vector_router routes: {[f'{route.path} [{route.methods}]' for route in vector_router.routes]}")
     logger.info("============================================")
 except Exception as e:
     logger.error(f"Error while logging router details: {str(e)}")
@@ -80,6 +82,7 @@ app.include_router(peers_router)
 app.include_router(messages_router)
 app.include_router(space_router)
 app.include_router(resume_router, prefix="/resume")
+app.include_router(vector_router)
 logger.info("All routers included successfully")
 
 # Explicitly capture route after including it
