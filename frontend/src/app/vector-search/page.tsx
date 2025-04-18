@@ -11,6 +11,7 @@ interface SearchResult {
   label: string;
   lead_statement?: string;
   main_duties?: string;
+  // all_fields?: { [key: string]: string };
 }
 
 interface SkillValues {
@@ -77,9 +78,10 @@ export default function VectorSearchPage() {
         label: result.label,
         description: result.lead_statement || '',
         main_duties: result.main_duties || '',
+        // all_fields: result.all_fields || {},
         saved_at: new Date().toISOString(),
         id: Date.now(), // Temporary ID that will be replaced by the backend
-        ...skills
+        
       };
       
       // Save to space
@@ -87,6 +89,7 @@ export default function VectorSearchPage() {
       
       // Show success message
       setSaveSuccess(`Successfully saved "${result.label}" to your Space`);
+      {console.log("Result:", result)}
       
       // Remove from saving state
       setSavingIds(prev => {
@@ -175,9 +178,9 @@ export default function VectorSearchPage() {
               <h2 className="text-xl font-semibold mb-4">Search Results</h2>
               <div className="space-y-6">
                 {results.map((result) => (
-                  <div key={result.id} className="card">
-                    <div className="flex justify-between items-start mb-2">
-                      <h3 className="text-lg font-medium">{result.label}</h3>
+                  <div key={result.id} className="card p-6 bg-white/5 backdrop-blur-sm border border-white/10 rounded-lg">
+                    <div className="flex justify-between items-start mb-4">
+                      <h3 className="text-xl font-bold text-primary-teal">{result.label || 'No label available'}</h3>
                       <div className="flex items-center gap-2">
                         <span className="text-sm bg-primary-purple/30 text-primary-teal px-2 py-1 rounded-full">
                           Match: {(result.score * 100).toFixed(0)}%
@@ -191,21 +194,39 @@ export default function VectorSearchPage() {
                         </button>
                       </div>
                     </div>
-                    <p className="text-sm text-neutral-900 mb-3">OaSIS Code: {result.oasis_code}</p>
-                    
-                    {result.lead_statement && (
+                    <div className="space-y-3">
+                      <p className="text-sm text-neutral-400">Job title: {result.label}</p>
+                      {result.lead_statement && (
+                        <div>
+                          <h4 className="font-medium text-sm text-neutral-400 mb-1">Description</h4>
+                          <p className="text-sm text-neutral-400">{result.lead_statement}</p>
+                        </div>
+                      )}
+                      
+                      {result.main_duties && (
+                        <div>
+                          <h4 className="font-medium text-sm text-neutral-400 mb-1">Main Duties</h4>
+                          <p className="text-sm text-neutral-400">{result.main_duties}</p>
+                        </div>
+                      )}
+{/* 
+                      {result.all_fields && (
                       <div className="mb-3">
-                        <h4 className="font-medium text-sm text-neutral-900">Description:</h4>
-                        <p className="text-sm text-neutral-900">{result.lead_statement}</p>
+                        <h4 className="font-medium text-sm text-neutral-900 mb-1">All Fields:</h4>
+                        <div className="text-sm text-neutral-800 grid grid-cols-2 gap-x-6 gap-y-1">
+                          {Object.entries(result.all_fields).map(([key, value]) => (
+                            <div key={key} className="flex gap-2">
+                              <span className="font-semibold capitalize">{key.replace(/_/g, '')}:</span>
+                              <span className="text-neutral-700">{value}</span>
+                            </div>
+                          ))}
+                        </div>
                       </div>
-                    )}
-                    
-                    {result.main_duties && (
-                      <div className="mb-3">
-                        <h4 className="font-medium text-sm text-neutral-900">Main Duties:</h4>
-                        <p className="text-sm text-neutral-900">{result.main_duties}</p>
-                      </div>
-                    )}
+                      )} */}
+                      <p className="text-xs text-neutral-500 italic mt-2">
+                        Save to your Space to view all job details and requirements
+                      </p>
+                    </div>
                   </div>
                 ))}
               </div>

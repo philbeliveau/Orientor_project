@@ -9,8 +9,8 @@ load_dotenv()
 # === Config ===
 PINECONE_API_KEY = os.getenv("PINECONE_API_KEY")
 INDEX_NAME = "oasis-minilm-index"
-CSV_PATH = "/Users/philippebeliveau/Desktop/Notebook/Orientor_project/Orientor_project/data_n_notebook/data/KnowledgeBase/KnowledgeBase.csv"
-BATCH_SIZE = 96
+CSV_PATH = "/Users/philippebeliveau/Desktop/Notebook/Orientor_project/Orientor_project/data_n_notebook/data/KnowlegdeBase/KnowledgeBase.csv"
+BATCH_SIZE = 10
 
 # ✅ Initialize Pinecone client
 pc = Pinecone(api_key=PINECONE_API_KEY)
@@ -19,16 +19,9 @@ index = pc.Index(INDEX_NAME)
 def combine_row_text(row: Dict[str, str]) -> str:
     text_parts = []
 
-    if row.get("Label"):
-        text_parts.append(f"Occupation: {row['Label']}")
-    if row.get("Lead statement"):
-        text_parts.append(f"Description: {row['Lead statement']}")
-    if row.get("Main duties"):
-        text_parts.append(f"Main duties: {row['Main duties']}")
-
-    for col in ["Creativity", "Leadership", "Digital Literacy", "Critical Thinking", "Problem Solving"]:
-        if row.get(col):
-            text_parts.append(f"{col}: {row[col]}")
+    for key, value in row.items():
+        if value and str(value).strip() not in {"", "nan"}:
+            text_parts.append(f"{key}: {value}")
 
     return ". ".join(text_parts).strip()
 

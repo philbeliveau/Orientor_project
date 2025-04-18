@@ -12,6 +12,8 @@ from ..schemas.space import SavedRecommendationCreate
 from ..utils.database import get_db
 from sqlalchemy.orm import Session
 import re
+from typing import List, Optional, Dict
+
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -71,6 +73,8 @@ class SearchResult(BaseModel):
     digital_literacy: Optional[float] = None
     critical_thinking: Optional[float] = None
     problem_solving: Optional[float] = None
+    all_fields: Optional[Dict[str, str]] = None
+
 
 class SearchResponse(BaseModel):
     query: str
@@ -122,63 +126,58 @@ async def search_embeddings(request: SearchRequest):
                 detail=f"Error querying vector database: {str(e)}"
             )
 
-        # Format results
-        results = {}
+        # Format results - use a list instead of dict
+        results = []
         for hit in hits:
-            # Extract the OASIS code from the _id (format: oasis-{code}-{number})
+            # Extract the OASIS code from the _id
             oasis_code = hit['_id'].split('-')[1] if len(hit['_id'].split('-')) > 1 else ""
-            
-            # Extract text fields from the response
             fields = hit.get('fields', {})
             text = fields.get('text', '')
-            
-            # Parse the text to extract label and other fields
-            text_parts = text.split('. ')
-            label = ""
-            lead_statement = ""
-            main_duties = ""
-            creativity = None
-            leadership = None
-            digital_literacy = None
-            critical_thinking = None
-            problem_solving = None
-            
-            for part in text_parts:
-                if part.startswith("Occupation: "):
-                    label = part.replace("Occupation: ", "")
-                elif part.startswith("Description: "):
-                    lead_statement = part.replace("Description: ", "")
-                elif part.startswith("Main duties: "):
-                    main_duties = part.replace("Main duties: ", "")
-                elif part.startswith("Creativity: "):
-                    creativity = try_parse_float(part.replace("Creativity: ", ""))
-                elif part.startswith("Leadership: "):
-                    leadership = try_parse_float(part.replace("Leadership: ", ""))
-                elif part.startswith("Digital Literacy: "):
-                    digital_literacy = try_parse_float(part.replace("Digital Literacy: ", ""))
-                elif part.startswith("Critical Thinking: "):
-                    critical_thinking = try_parse_float(part.replace("Critical Thinking: ", ""))
-                elif part.startswith("Problem Solving: "):
-                    problem_solving = try_parse_float(part.replace("Problem Solving: ", ""))
-                    
-            if oasis_code not in results:
-                results[oasis_code] = SearchResult(
-                    id=hit['_id'],
-                    score=float(hit['_score']),
-                    oasis_code=oasis_code,
-                    label=label,
-                    lead_statement=lead_statement,
-                    main_duties=main_duties,
-                    creativity=creativity,
-                    leadership=leadership,
-                    digital_literacy=digital_literacy,
-                    critical_thinking=critical_thinking,
-                    problem_solving=problem_solving
-                )
+
+            # Use regex that safely splits key-value pairs, supporting colons in keys
+            pattern = r"([^:\n\r]+?):\s*(.*?)(?=  [A-Z][a-z]+:|$)"
+
+            parsed_fields = {}
+            for match in re.finditer(pattern, text):
+                raw_key = match.group(1).strip()
+                value = match.group(2).strip()
+                # Normalize the key for consistency
+                norm_key = raw_key.lower().replace(" ", "_").replace("-", "_")
+                parsed_fields[norm_key] = value
+
+
+            # Assign key fields for compatibility   
+            label = parsed_fields.get("oas_is_label___final_y") or parsed_fields.get("label") or ""
+            lead_statement = parsed_fields.get("lead_statement", "")
+            main_duties = parsed_fields.get("main_duties", "")
+
+            # Parse a few common skill scores for backwards compatibility
+            def safe_float(val):
+                try:
+                    return float(val)
+                except:
+                    return None
+
+            result = SearchResult(
+                id=hit['_id'],
+                score=float(hit['_score']),
+                oasis_code=oasis_code,
+                label=label,
+                lead_statement=lead_statement,
+                main_duties=main_duties,
+                creativity=safe_float(parsed_fields.get("creativity")),
+                leadership=safe_float(parsed_fields.get("leadership")),
+                digital_literacy=safe_float(parsed_fields.get("digital_literacy")),
+                critical_thinking=safe_float(parsed_fields.get("critical_thinking")),
+                problem_solving=safe_float(parsed_fields.get("problem_solving")),
+                all_fields=parsed_fields
+            )
+            results.append(result)  # Add the result to the list
+            print(result)
 
         return SearchResponse(
             query=request.query,
-            results=list(results.values())
+            results=results
         )
 
     except Exception as e:
