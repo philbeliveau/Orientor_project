@@ -1,12 +1,9 @@
 import React, { useState } from 'react';
-import { Note } from '@/services/spaceService';
+import { Note, Recommendation } from '@/services/spaceService';
 import { createNote, updateNote, deleteNote } from '@/services/spaceService';
 
 interface NotesSectionProps {
-  recommendation: {
-    id: number;
-    notes?: Note[];
-  };
+  recommendation: Recommendation;
 }
 
 const NotesSection: React.FC<NotesSectionProps> = ({ recommendation }) => {

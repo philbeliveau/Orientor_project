@@ -14,9 +14,18 @@ export interface Recommendation {
   role_digital_literacy?: number;
   role_critical_thinking?: number;
   role_problem_solving?: number;
+  analytical_thinking?: number;
+  attention_to_detail?: number;
+  collaboration?: number;
+  adaptability?: number;
+  independence?: number;
+  evaluation?: number;
+  decision_making?: number;
+  stress_tolerance?: number;
   saved_at?: string;
   skill_comparison?: SkillsComparison;
   notes?: Note[];
+  all_fields?: Record<string, string>;
 }
 
 export interface SkillComparison {

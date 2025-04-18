@@ -20,14 +20,8 @@ depends_on: Union[str, Sequence[str], None] = None
 def upgrade() -> None:
     # Add embedding column to user_profiles
     op.add_column('user_profiles', sa.Column('embedding', postgresql.ARRAY(sa.Float()), nullable=True))
-    
-    # Create an index for vector similarity search
-    op.execute('CREATE INDEX IF NOT EXISTS ix_user_profiles_embedding ON user_profiles USING ivfflat (embedding vector_cosine_ops) WITH (lists = 100);')
 
 
 def downgrade() -> None:
-    # Drop the index first
-    op.execute('DROP INDEX IF EXISTS ix_user_profiles_embedding;')
-    
     # Drop the embedding column
     op.drop_column('user_profiles', 'embedding') 

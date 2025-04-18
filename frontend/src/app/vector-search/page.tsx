@@ -16,15 +16,32 @@ interface SearchResult {
   digital_literacy?: number | null;
   critical_thinking?: number | null;
   problem_solving?: number | null;
+  analytical_thinking?: number | null;
+  attention_to_detail?: number | null;
+  collaboration?: number | null;
+  adaptability?: number | null;
+  independence?: number | null;
+  evaluation?: number | null;
+  decision_making?: number | null;
+  stress_tolerance?: number | null;
   all_fields?: { [key: string]: string };
 }
 
 interface SkillValues {
-  creativity?: number | null;
-  leadership?: number | null;
-  digital_literacy?: number | null;
-  critical_thinking?: number | null;
+  role_creativity?: number | null;
+  role_leadership?: number | null;
+  role_digital_literacy?: number | null;
+  role_critical_thinking?: number | null;
+  role_problem_solving?: number | null;
+  analytical_thinking?: number | null;
+  attention_to_detail?: number | null;
+  collaboration?: number | null;
+  adaptability?: number | null;
+  independence?: number | null;
+  evaluation?: number | null;
+  decision_making?: number | null;
   problem_solving?: number | null;
+  stress_tolerance?: number | null;
 }
 
 export default function VectorSearchPage() {
@@ -78,11 +95,19 @@ export default function VectorSearchPage() {
         label: result.label,
         description: result.lead_statement || '',
         main_duties: result.main_duties || '',
-        creativity: result.creativity || 0,
-        leadership: result.leadership || 0,
-        digital_literacy: result.digital_literacy || 0,
-        critical_thinking: result.critical_thinking || 0,
-        problem_solving: result.problem_solving || 0,
+        role_creativity: result.creativity ?? 0,
+        role_leadership: result.leadership ?? 0,
+        role_digital_literacy: result.digital_literacy ?? 0,
+        role_critical_thinking: result.critical_thinking ?? 0,
+        role_problem_solving: result.problem_solving ?? 0,
+        analytical_thinking: result.analytical_thinking ?? 0,
+        attention_to_detail: result.attention_to_detail ?? 0,
+        collaboration: result.collaboration ?? 0,
+        adaptability: result.adaptability ?? 0,
+        independence: result.independence ?? 0,
+        evaluation: result.evaluation ?? 0,
+        decision_making: result.decision_making ?? 0,
+        stress_tolerance: result.stress_tolerance ?? 0,
         all_fields: result.all_fields || {}
       };
 

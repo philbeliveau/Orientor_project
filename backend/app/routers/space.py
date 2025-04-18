@@ -15,7 +15,7 @@ from ..schemas.space import (
     SavedRecommendationCreate, SavedRecommendation as SavedRecommendationSchema,
     UserNoteCreate, UserNoteUpdate, UserNote as UserNoteSchema,
     UserSkillUpdate,
-    RecommendationWithNotes, SkillComparison, SkillsComparison
+    RecommendationWithNotes, SkillComparison, SkillsComparison, CognitiveTraits
 )
 
 router = APIRouter(
@@ -74,7 +74,16 @@ def create_saved_recommendation(
         role_leadership=recommendation.role_leadership,
         role_digital_literacy=recommendation.role_digital_literacy,
         role_critical_thinking=recommendation.role_critical_thinking,
-        role_problem_solving=recommendation.role_problem_solving
+        role_problem_solving=recommendation.role_problem_solving,
+        analytical_thinking=recommendation.analytical_thinking,
+        attention_to_detail=recommendation.attention_to_detail,
+        collaboration=recommendation.collaboration,
+        adaptability=recommendation.adaptability,
+        independence=recommendation.independence,
+        evaluation=recommendation.evaluation,
+        decision_making=recommendation.decision_making,
+        stress_tolerance=recommendation.stress_tolerance,
+        all_fields=recommendation.all_fields
     )
     
     db.add(db_recommendation)
@@ -132,6 +141,18 @@ def get_saved_recommendations(
         else:
             logger.info(f"User has no skills set, cannot create skill comparison")
         
+        # Create cognitive traits object
+        cognitive_traits = CognitiveTraits(
+            analytical_thinking=rec.analytical_thinking,
+            attention_to_detail=rec.attention_to_detail,
+            collaboration=rec.collaboration,
+            adaptability=rec.adaptability,
+            independence=rec.independence,
+            evaluation=rec.evaluation,
+            decision_making=rec.decision_making,
+            stress_tolerance=rec.stress_tolerance
+        )
+        
         # Create recommendation with notes
         recommendation_with_notes = RecommendationWithNotes(
             id=rec.id,
@@ -147,7 +168,8 @@ def get_saved_recommendations(
             role_problem_solving=rec.role_problem_solving,
             saved_at=rec.saved_at,
             notes=notes,
-            skill_comparison=skill_comparison
+            skill_comparison=skill_comparison,
+            cognitive_traits=cognitive_traits
         )
         
         # Log the complete structure

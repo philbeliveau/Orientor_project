@@ -1,5 +1,5 @@
 from pydantic import BaseModel, Field
-from typing import Optional, List
+from typing import Optional, List, Dict
 from datetime import datetime
 from typing import Optional, Dict
 
@@ -14,6 +14,14 @@ class SavedRecommendationBase(BaseModel):
     role_digital_literacy: Optional[float] = None
     role_critical_thinking: Optional[float] = None
     role_problem_solving: Optional[float] = None
+    analytical_thinking: Optional[float] = None
+    attention_to_detail: Optional[float] = None
+    collaboration: Optional[float] = None
+    adaptability: Optional[float] = None
+    independence: Optional[float] = None
+    evaluation: Optional[float] = None
+    decision_making: Optional[float] = None
+    stress_tolerance: Optional[float] = None
     all_fields: Optional[Dict[str, str]] = None  # ✅ New addition to support full parsed info
 
 class SavedRecommendationCreate(SavedRecommendationBase):
@@ -72,10 +80,21 @@ class SkillsComparison(BaseModel):
     critical_thinking: SkillComparison
     problem_solving: SkillComparison
 
+class CognitiveTraits(BaseModel):
+    analytical_thinking: Optional[float] = None
+    attention_to_detail: Optional[float] = None
+    collaboration: Optional[float] = None
+    adaptability: Optional[float] = None
+    independence: Optional[float] = None
+    evaluation: Optional[float] = None
+    decision_making: Optional[float] = None
+    stress_tolerance: Optional[float] = None
+
+
 class RecommendationWithNotes(SavedRecommendation):
     notes: List[UserNote] = []
     skill_comparison: Optional[SkillsComparison] = None
-
+    cognitive_traits: Optional[CognitiveTraits] = None
     class Config:
         orm_mode = True
         from_attributes = True 

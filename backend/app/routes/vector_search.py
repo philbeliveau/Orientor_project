@@ -83,6 +83,26 @@ def extract_fields_from_text(text: str) -> Dict[str, str]:
         )
         fields[key_clean] = value.strip()
 
+    # Extract cognitive traits using a more specific pattern
+    cognitive_traits = [
+        "analytical_thinking",
+        "attention_to_detail",
+        "collaboration",
+        "adaptability",
+        "independence",
+        "evaluation",
+        "decision_making",
+        "stress_tolerance"
+    ]
+
+    for trait in cognitive_traits:
+        # Try both with and without underscores
+        trait_name = trait.replace("_", " ").title()
+        pattern = f"{trait_name}:\\s*(\\d+)"
+        match = re.search(pattern, text, re.IGNORECASE)
+        if match:
+            fields[trait] = match.group(1)
+
     return fields
 
 # Models
@@ -98,6 +118,12 @@ class SearchResult(BaseModel):
     digital_literacy: Optional[float] = None
     critical_thinking: Optional[float] = None
     problem_solving: Optional[float] = None
+    stress_tolerance: Optional[float] = None
+    analytical_thinking: Optional[float] = None
+    attention_to_detail: Optional[float] = None
+    collaboration: Optional[float] = None
+    adaptability: Optional[float] = None
+    independence: Optional[float] = None
     all_fields: Optional[Dict[str, str]] = None
 
 
@@ -159,9 +185,6 @@ async def search_embeddings(request: SearchRequest):
 
             parsed_fields = {}
             for match in re.finditer(r"([^:\n\r]+?):\s*(.*?)(?=  [A-Z][a-z]+:|$)", text):
-                # raw_key = match.group(1).strip()
-                # value = match.group(2).strip()
-                # parsed_fields[raw_key] = value
                 parsed_fields = extract_fields_from_text(text)
 
             label = parsed_fields.get("oasis_label__final_x") or parsed_fields.get("label") or ""
@@ -180,6 +203,14 @@ async def search_embeddings(request: SearchRequest):
                 digital_literacy=try_parse_float(parsed_fields.get("digital_literacy")),
                 critical_thinking=try_parse_float(parsed_fields.get("critical_thinking")),
                 problem_solving=try_parse_float(parsed_fields.get("problem_solving")),
+                stress_tolerance=try_parse_float(parsed_fields.get("stress_tolerance")),
+                analytical_thinking=try_parse_float(parsed_fields.get("analytical_thinking")),
+                attention_to_detail=try_parse_float(parsed_fields.get("attention_to_detail")),
+                collaboration=try_parse_float(parsed_fields.get("collaboration")),
+                adaptability=try_parse_float(parsed_fields.get("adaptability")),
+                independence=try_parse_float(parsed_fields.get("independence")),
+                evaluation=try_parse_float(parsed_fields.get("evaluation")),
+                decision_making=try_parse_float(parsed_fields.get("decision_making")),
                 all_fields=parsed_fields
             )
             results.append(result)
@@ -214,7 +245,15 @@ async def save_search_result(
             not recommendation.role_leadership or
             not recommendation.role_digital_literacy or
             not recommendation.role_critical_thinking or
-            not recommendation.role_problem_solving):
+            not recommendation.role_problem_solving or 
+            not recommendation.analytical_thinking or
+            not recommendation.attention_to_detail or
+            not recommendation.collaboration or
+            not recommendation.adaptability or
+            not recommendation.independence or
+            not recommendation.evaluation or
+            not recommendation.decision_making or
+            not recommendation.stress_tolerance):
             
             # Helper function to extract skill values using regex
             def extract_skill_value(text, skill_name):
@@ -242,6 +281,24 @@ async def save_search_result(
                 recommendation.role_critical_thinking = extract_skill_value(full_text, "Critical Thinking")
             if not recommendation.role_problem_solving:
                 recommendation.role_problem_solving = extract_skill_value(full_text, "Problem Solving")
+            
+            # Extract cognitive traits
+            if not recommendation.analytical_thinking:
+                recommendation.analytical_thinking = extract_skill_value(full_text, "Analytical Thinking")
+            if not recommendation.attention_to_detail:
+                recommendation.attention_to_detail = extract_skill_value(full_text, "Attention to Detail")
+            if not recommendation.collaboration:
+                recommendation.collaboration = extract_skill_value(full_text, "Collaboration")
+            if not recommendation.adaptability:
+                recommendation.adaptability = extract_skill_value(full_text, "Adaptability")
+            if not recommendation.independence:
+                recommendation.independence = extract_skill_value(full_text, "Independence")
+            if not recommendation.evaluation:
+                recommendation.evaluation = extract_skill_value(full_text, "Evaluation")
+            if not recommendation.decision_making:
+                recommendation.decision_making = extract_skill_value(full_text, "Decision Making")
+            if not recommendation.stress_tolerance:
+                recommendation.stress_tolerance = extract_skill_value(full_text, "Stress Tolerance")
         
         # Create new saved recommendation
         new_recommendation = SavedRecommendation(
@@ -254,9 +311,17 @@ async def save_search_result(
             role_leadership=recommendation.role_leadership,
             role_digital_literacy=recommendation.role_digital_literacy,
             role_critical_thinking=recommendation.role_critical_thinking,
-            role_problem_solving=recommendation.role_problem_solving
+            role_problem_solving=recommendation.role_problem_solving,
+            analytical_thinking=recommendation.analytical_thinking,
+            attention_to_detail=recommendation.attention_to_detail,
+            collaboration=recommendation.collaboration,
+            adaptability=recommendation.adaptability,
+            independence=recommendation.independence,
+            evaluation=recommendation.evaluation,
+            decision_making=recommendation.decision_making,
+            stress_tolerance=recommendation.stress_tolerance
         )
-        
+        print(f'stress_tolerance: {recommendation.stress_tolerance}')
         db.add(new_recommendation)
         db.commit()
         db.refresh(new_recommendation)
