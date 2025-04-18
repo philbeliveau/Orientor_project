@@ -157,22 +157,16 @@ async def search_embeddings(request: SearchRequest):
             fields = hit.get('fields', {})
             text = fields.get('text', '')
 
-            # print(f'oasis_code: {oasis_code}')
-            # print(f'fields: {fields}')
-            # print(f'text: {text}')
-
             parsed_fields = {}
             for match in re.finditer(r"([^:\n\r]+?):\s*(.*?)(?=  [A-Z][a-z]+:|$)", text):
                 # raw_key = match.group(1).strip()
                 # value = match.group(2).strip()
                 # parsed_fields[raw_key] = value
                 parsed_fields = extract_fields_from_text(text)
-            print(f'parsed_fields: {parsed_fields}')
-
 
             label = parsed_fields.get("oasis_label__final_x") or parsed_fields.get("label") or ""
-            lead_statement = parsed_fields.get("Lead statement", "")
-            main_duties = parsed_fields.get("Main duties", "")
+            lead_statement = parsed_fields.get("lead_statement", "")
+            main_duties = parsed_fields.get("main_duties", "")
 
             result = SearchResult(
                 id=hit['_id'],
@@ -181,14 +175,15 @@ async def search_embeddings(request: SearchRequest):
                 label=label,
                 lead_statement=lead_statement,
                 main_duties=main_duties,
-                creativity=try_parse_float(parsed_fields.get("Creativity")),
-                leadership=try_parse_float(parsed_fields.get("Leadership")),
-                digital_literacy=try_parse_float(parsed_fields.get("Digital Literacy")),
-                critical_thinking=try_parse_float(parsed_fields.get("Critical Thinking")),
-                problem_solving=try_parse_float(parsed_fields.get("Problem Solving")),
+                creativity=try_parse_float(parsed_fields.get("creativity")),
+                leadership=try_parse_float(parsed_fields.get("leadership")),
+                digital_literacy=try_parse_float(parsed_fields.get("digital_literacy")),
+                critical_thinking=try_parse_float(parsed_fields.get("critical_thinking")),
+                problem_solving=try_parse_float(parsed_fields.get("problem_solving")),
                 all_fields=parsed_fields
             )
             results.append(result)
+            print(f'result: {result}')
 
         return SearchResponse(query=request.query, results=results)
     except Exception as e:

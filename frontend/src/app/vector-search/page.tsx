@@ -11,15 +11,20 @@ interface SearchResult {
   label: string;
   lead_statement?: string;
   main_duties?: string;
+  creativity?: number | null;
+  leadership?: number | null;
+  digital_literacy?: number | null;
+  critical_thinking?: number | null;
+  problem_solving?: number | null;
   all_fields?: { [key: string]: string };
 }
 
 interface SkillValues {
-  role_creativity?: number | null;
-  role_leadership?: number | null;
-  role_digital_literacy?: number | null;
-  role_critical_thinking?: number | null;
-  role_problem_solving?: number | null;
+  creativity?: number | null;
+  leadership?: number | null;
+  digital_literacy?: number | null;
+  critical_thinking?: number | null;
+  problem_solving?: number | null;
 }
 
 export default function VectorSearchPage() {
@@ -73,11 +78,11 @@ export default function VectorSearchPage() {
         label: result.label,
         description: result.lead_statement || '',
         main_duties: result.main_duties || '',
-        role_creativity: undefined,
-        role_leadership: undefined,
-        role_digital_literacy: undefined,
-        role_critical_thinking: undefined,
-        role_problem_solving: undefined,
+        creativity: result.creativity || 0,
+        leadership: result.leadership || 0,
+        digital_literacy: result.digital_literacy || 0,
+        critical_thinking: result.critical_thinking || 0,
+        problem_solving: result.problem_solving || 0,
         all_fields: result.all_fields || {}
       };
 
@@ -174,19 +179,29 @@ export default function VectorSearchPage() {
                           <p className="text-sm text-neutral-600">{result.main_duties}</p>
                         </div>
                       )}
-                      {result.all_fields && (
-                        <div>
-                          <h4 className="font-medium text-sm text-neutral-600 mb-1">Additional Info</h4>
-                          <div className="text-sm text-neutral-600 grid grid-cols-2 gap-x-6 gap-y-1">
-                            {Object.entries(result.all_fields).map(([key, value]) => (
-                              <div key={key} className="flex gap-2">
-                                <span className="font-semibold capitalize whitespace-nowrap">{key.replace(/_/g, ' ')}:</span>
-                                <span className="text-neutral-600">{value}</span>
-                              </div>
-                            ))}
-                          </div>
+                      {(result.creativity || result.leadership || result.digital_literacy || result.critical_thinking || result.problem_solving) && (
+                        <div className="mt-4">
+                          <h4 className="font-medium text-sm text-neutral-600 mb-1">Key Skills</h4>
+                          <ul className="text-sm text-neutral-600 grid grid-cols-2 gap-x-4 gap-y-1">
+                            {result.creativity !== null && (
+                              <li><span className="font-semibold">Creativity:</span> {result.creativity}</li>
+                            )}
+                            {result.leadership !== null && (
+                              <li><span className="font-semibold">Leadership:</span> {result.leadership}</li>
+                            )}
+                            {result.digital_literacy !== null && (
+                              <li><span className="font-semibold">Digital Literacy:</span> {result.digital_literacy}</li>
+                            )}
+                            {result.critical_thinking !== null && (
+                              <li><span className="font-semibold">Critical Thinking:</span> {result.critical_thinking}</li>
+                            )}
+                            {result.problem_solving !== null && (
+                              <li><span className="font-semibold">Problem Solving:</span> {result.problem_solving}</li>
+                            )}
+                          </ul>
                         </div>
                       )}
+                        
                       <p className="text-xs text-neutral-500 italic mt-2">
                         Save to your Space to view all job details and requirements
                       </p>
