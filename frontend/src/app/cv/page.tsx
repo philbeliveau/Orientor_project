@@ -82,7 +82,7 @@ export default function ResumePage() {
     <MainLayout>
       <Container maxWidth="xl" sx={{ py: 2, mt: 8 }}>
         <Paper elevation={2} sx={{ p: 2, mb: 3 }}>
-          <Typography variant="h7" component="h1" gutterBottom>
+          <Typography variant="h4" component="h1" gutterBottom>
             Professional Resume Builder
           </Typography>
           <Typography variant="body1" color="text.secondary">
