@@ -2,10 +2,11 @@
 
 import { useState, useEffect } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, Legend } from 'recharts';
-import { fetchSavedRecommendations, Recommendation as SpaceServiceRecommendation, Note } from '@/services/spaceService';
+import { fetchSavedRecommendations, Recommendation as SpaceServiceRecommendation, Note, deleteRecommendation } from '@/services/spaceService';
 import MainLayout from '@/components/layout/MainLayout';
 import NotesSection from '@/components/space/NotesSection';
 import { extractChartData } from '@/utils/chartUtils';
+import { toast } from 'react-hot-toast';
 
 // Define a stricter type for our components that requires certain fields
 interface Recommendation extends Omit<SpaceServiceRecommendation, 'id'> {
@@ -63,6 +64,20 @@ export default function SpacePage() {
     setSelectedRecommendation(recommendation);
   };
 
+  const handleDeleteRecommendation = async (recommendationId: number) => {
+    try {
+      await deleteRecommendation(recommendationId);
+      setRecommendations(prev => prev.filter(rec => rec.id !== recommendationId));
+      if (selectedRecommendation?.id === recommendationId) {
+        setSelectedRecommendation(null);
+      }
+      toast.success('Recommendation deleted successfully');
+    } catch (err) {
+      console.error('Error deleting recommendation:', err);
+      toast.error('Failed to delete recommendation');
+    }
+  };
+
   return (
     <MainLayout>
       <div className="container mx-auto px-4 py-8">
@@ -89,10 +104,17 @@ export default function SpacePage() {
                         ? 'bg-blue-100 border-2 border-blue-500'
                         : 'bg-white border border-gray-200 hover:border-blue-300'
                     }`}
-                    onClick={() => handleRecommendationSelect(rec)}
                   >
-                    <h3 className="font-medium">{rec.label}</h3>
-                    <p className="text-sm text-gray-500">{rec.oasis_code}</p>
+                    <div onClick={() => handleRecommendationSelect(rec)}>
+                      <h3 className="font-medium">{rec.label}</h3>
+                      <p className="text-sm text-gray-500">{rec.oasis_code}</p>
+                    </div>
+                    <button
+                      onClick={() => rec.id && handleDeleteRecommendation(rec.id)}
+                      className="mt-2 text-gray-200 hover:text-gray-700 text-sm font-medium"
+                    >
+                      Delete
+                    </button>
                   </div>
                 ))}
               </div>

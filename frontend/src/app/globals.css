@@ -146,11 +146,11 @@
 
   /* Background patterns */
   .bg-branch {
-    @apply bg-branch-pattern bg-repeat opacity-10;
+    @apply bg-branch-pattern bg-repeat opacity-900;
   }
 
   .bg-grid {
-    @apply bg-grid-pattern bg-repeat opacity-10;
+    @apply bg-grid-pattern bg-repeat opacity-900;
   }
 
   /* Animations & Effects */
