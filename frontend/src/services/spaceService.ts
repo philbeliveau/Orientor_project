@@ -4,7 +4,7 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
 
 // Type definitions
 export interface Recommendation {
-  id: number;
+  id?: number;
   oasis_code: string;
   label: string;
   description?: string;
@@ -14,7 +14,7 @@ export interface Recommendation {
   role_digital_literacy?: number;
   role_critical_thinking?: number;
   role_problem_solving?: number;
-  saved_at: string;
+  saved_at?: string;
   skill_comparison?: SkillsComparison;
   notes?: Note[];
 }

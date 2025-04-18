@@ -60,6 +60,31 @@ def try_parse_float(value: str) -> Optional[float]:
     except (ValueError, AttributeError):
         return None
 
+def extract_fields_from_text(text: str) -> Dict[str, str]:
+    """
+    Extracts all key-value pairs from the raw Pinecone embedded text using robust pattern matching.
+    """
+    fields = {}
+
+    # Replace unusual whitespace with normal space
+    text = text.replace("\xa0", " ")
+
+    # Normalize common field delimiters
+    field_pattern = re.compile(r'([\w\s\-:]+):\s+([^.:|]+(?:\|[^.:]+)*)')
+    matches = field_pattern.findall(text)
+
+    for key, value in matches:
+        key_clean = (
+            key.strip()
+            .replace(" ", "_")
+            .replace("-", "_")
+            .replace("__", "_")
+            .lower()
+        )
+        fields[key_clean] = value.strip()
+
+    return fields
+
 # Models
 class SearchResult(BaseModel):
     id: str
@@ -126,37 +151,28 @@ async def search_embeddings(request: SearchRequest):
                 detail=f"Error querying vector database: {str(e)}"
             )
 
-        # Format results - use a list instead of dict
         results = []
         for hit in hits:
-            # Extract the OASIS code from the _id
-            oasis_code = hit['_id'].split('-')[1] if len(hit['_id'].split('-')) > 1 else ""
+            oasis_code = hit['_id'].split('-')[1] if '-' in hit['_id'] else ""
             fields = hit.get('fields', {})
             text = fields.get('text', '')
 
-            # Use regex that safely splits key-value pairs, supporting colons in keys
-            pattern = r"([^:\n\r]+?):\s*(.*?)(?=  [A-Z][a-z]+:|$)"
+            # print(f'oasis_code: {oasis_code}')
+            # print(f'fields: {fields}')
+            # print(f'text: {text}')
 
             parsed_fields = {}
-            for match in re.finditer(pattern, text):
-                raw_key = match.group(1).strip()
-                value = match.group(2).strip()
-                # Normalize the key for consistency
-                norm_key = raw_key.lower().replace(" ", "_").replace("-", "_")
-                parsed_fields[norm_key] = value
+            for match in re.finditer(r"([^:\n\r]+?):\s*(.*?)(?=  [A-Z][a-z]+:|$)", text):
+                # raw_key = match.group(1).strip()
+                # value = match.group(2).strip()
+                # parsed_fields[raw_key] = value
+                parsed_fields = extract_fields_from_text(text)
+            print(f'parsed_fields: {parsed_fields}')
 
 
-            # Assign key fields for compatibility   
-            label = parsed_fields.get("oas_is_label___final_y") or parsed_fields.get("label") or ""
-            lead_statement = parsed_fields.get("lead_statement", "")
-            main_duties = parsed_fields.get("main_duties", "")
-
-            # Parse a few common skill scores for backwards compatibility
-            def safe_float(val):
-                try:
-                    return float(val)
-                except:
-                    return None
+            label = parsed_fields.get("oasis_label__final_x") or parsed_fields.get("label") or ""
+            lead_statement = parsed_fields.get("Lead statement", "")
+            main_duties = parsed_fields.get("Main duties", "")
 
             result = SearchResult(
                 id=hit['_id'],
@@ -165,24 +181,19 @@ async def search_embeddings(request: SearchRequest):
                 label=label,
                 lead_statement=lead_statement,
                 main_duties=main_duties,
-                creativity=safe_float(parsed_fields.get("creativity")),
-                leadership=safe_float(parsed_fields.get("leadership")),
-                digital_literacy=safe_float(parsed_fields.get("digital_literacy")),
-                critical_thinking=safe_float(parsed_fields.get("critical_thinking")),
-                problem_solving=safe_float(parsed_fields.get("problem_solving")),
+                creativity=try_parse_float(parsed_fields.get("Creativity")),
+                leadership=try_parse_float(parsed_fields.get("Leadership")),
+                digital_literacy=try_parse_float(parsed_fields.get("Digital Literacy")),
+                critical_thinking=try_parse_float(parsed_fields.get("Critical Thinking")),
+                problem_solving=try_parse_float(parsed_fields.get("Problem Solving")),
                 all_fields=parsed_fields
             )
-            results.append(result)  # Add the result to the list
-            print(result)
+            results.append(result)
 
-        return SearchResponse(
-            query=request.query,
-            results=results
-        )
-
+        return SearchResponse(query=request.query, results=results)
     except Exception as e:
-        logger.error(f"Error in search_embeddings: {str(e)}", exc_info=True)
-        raise HTTPException(status_code=500, detail=f"Error performing vector search: {str(e)}")
+        logger.error(f"Search error: {e}", exc_info=True)
+        raise HTTPException(status_code=500, detail=f"Vector search failed: {str(e)}")
 
 @router.post("/search/save", status_code=status.HTTP_201_CREATED)
 async def save_search_result(

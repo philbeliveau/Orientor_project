@@ -1,6 +1,7 @@
 from pydantic import BaseModel, Field
 from typing import Optional, List
 from datetime import datetime
+from typing import Optional, Dict
 
 # ===== SavedRecommendation Schemas =====
 class SavedRecommendationBase(BaseModel):
@@ -13,6 +14,7 @@ class SavedRecommendationBase(BaseModel):
     role_digital_literacy: Optional[float] = None
     role_critical_thinking: Optional[float] = None
     role_problem_solving: Optional[float] = None
+    all_fields: Optional[Dict[str, str]] = None  # ✅ New addition to support full parsed info
 
 class SavedRecommendationCreate(SavedRecommendationBase):
     pass
@@ -21,7 +23,7 @@ class SavedRecommendation(SavedRecommendationBase):
     id: int
     user_id: int
     saved_at: datetime
-    
+    all_fields: Optional[Dict[str, str]] = None
     class Config:
         orm_mode = True
         from_attributes = True

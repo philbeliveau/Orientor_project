@@ -11,7 +11,7 @@ interface SearchResult {
   label: string;
   lead_statement?: string;
   main_duties?: string;
-  // all_fields?: { [key: string]: string };
+  all_fields?: { [key: string]: string };
 }
 
 interface SkillValues {
@@ -32,27 +32,27 @@ export default function VectorSearchPage() {
 
   async function handleSearch(e: React.FormEvent) {
     e.preventDefault();
-    
+
     if (!query.trim()) {
       setError('Please enter a search query');
       return;
     }
-    
+
     setLoading(true);
     setError('');
     setSaveSuccess(null);
-    
+
     try {
       const response = await fetch('http://localhost:8000/vector/search', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ query, top_k: 5 })
       });
-      
+
       if (!response.ok) {
         throw new Error(`Error: ${response.status}`);
       }
-      
+
       const data = await response.json();
       setResults(data.results);
     } catch (err) {
@@ -65,48 +65,41 @@ export default function VectorSearchPage() {
 
   async function handleSaveToSpace(result: SearchResult) {
     try {
-      // Mark this result as saving
       setSavingIds(prev => new Set(prev).add(result.id));
       setSaveSuccess(null);
-      
-      // Extract skill levels from text if available
-      const skills = extractSkillsFromText(result.lead_statement || '', result.main_duties || '');
-      
-      // Create recommendation object
+
       const recommendation = {
         oasis_code: result.oasis_code,
         label: result.label,
         description: result.lead_statement || '',
         main_duties: result.main_duties || '',
-        // all_fields: result.all_fields || {},
-        saved_at: new Date().toISOString(),
-        id: Date.now(), // Temporary ID that will be replaced by the backend
-        
+        role_creativity: undefined,
+        role_leadership: undefined,
+        role_digital_literacy: undefined,
+        role_critical_thinking: undefined,
+        role_problem_solving: undefined,
+        all_fields: result.all_fields || {}
       };
-      
-      // Save to space
+
       await saveRecommendation(recommendation);
-      
-      // Show success message
+
       setSaveSuccess(`Successfully saved "${result.label}" to your Space`);
-      {console.log("Result:", result)}
-      
-      // Remove from saving state
       setSavingIds(prev => {
         const newSet = new Set(prev);
         newSet.delete(result.id);
         return newSet;
       });
-      
-      // Clear success message after 3 seconds
+
       setTimeout(() => {
         setSaveSuccess(null);
       }, 3000);
-    } catch (err) {
-      setError('Failed to save to Space. Please try again.');
+    } catch (err: any) {
+      if (err.response?.status === 400 && err.response?.data?.detail === "This recommendation is already saved.") {
+        setError('This recommendation is already in your Space.');
+      } else {
+        setError('Failed to save to Space. Please try again.');
+      }
       console.error('Save error:', err);
-      
-      // Remove from saving state
       setSavingIds(prev => {
         const newSet = new Set(prev);
         newSet.delete(result.id);
@@ -115,38 +108,11 @@ export default function VectorSearchPage() {
     }
   }
 
-  // Helper function to extract skill levels from text
-  function extractSkillsFromText(description: string, duties: string) {
-    const text = `${description} ${duties}`;
-    const skills = {
-      role_creativity: 0,
-      role_leadership: 0,
-      role_digital_literacy: 0,
-      role_critical_thinking: 0,
-      role_problem_solving: 0
-    };
-    
-    // Extract skills using regex
-    const extractSkill = (skillName: string): number => {
-      const regex = new RegExp(`${skillName.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}: (\\d+)`, 'i');
-      const match = text.match(regex);
-      return match ? parseFloat(match[1]) : 0;
-    };
-    
-    skills.role_creativity = extractSkill('creativity');
-    skills.role_leadership = extractSkill('leadership');
-    skills.role_digital_literacy = extractSkill('digital_literacy');
-    skills.role_critical_thinking = extractSkill('critical_thinking');
-    skills.role_problem_solving = extractSkill('problem_solving');
-    
-    return skills;
-  }
-
   return (
     <MainLayout>
       <div className="container mx-auto px-4 py-8">
         <h1 className="text-2xl font-bold mb-6 gradient-text">Career Recommendations</h1>
-        
+
         <form onSubmit={handleSearch} className="mb-8">
           <div className="flex gap-2">
             <input
@@ -171,7 +137,7 @@ export default function VectorSearchPage() {
             </div>
           )}
         </form>
-        
+
         <div>
           {results.length > 0 ? (
             <div>
@@ -195,34 +161,32 @@ export default function VectorSearchPage() {
                       </div>
                     </div>
                     <div className="space-y-3">
-                      <p className="text-sm text-neutral-400">Job title: {result.label}</p>
+                      <p className="text-sm text-neutral-600">Job title: {result.label}</p>
                       {result.lead_statement && (
                         <div>
-                          <h4 className="font-medium text-sm text-neutral-400 mb-1">Description</h4>
-                          <p className="text-sm text-neutral-400">{result.lead_statement}</p>
+                          <h4 className="font-medium text-sm text-neutral-600 mb-1">Description</h4>
+                          <p className="text-sm text-neutral-600">{result.lead_statement}</p>
                         </div>
                       )}
-                      
                       {result.main_duties && (
                         <div>
-                          <h4 className="font-medium text-sm text-neutral-400 mb-1">Main Duties</h4>
-                          <p className="text-sm text-neutral-400">{result.main_duties}</p>
+                          <h4 className="font-medium text-sm text-neutral-600 mb-1">Main Duties</h4>
+                          <p className="text-sm text-neutral-600">{result.main_duties}</p>
                         </div>
                       )}
-{/* 
                       {result.all_fields && (
-                      <div className="mb-3">
-                        <h4 className="font-medium text-sm text-neutral-900 mb-1">All Fields:</h4>
-                        <div className="text-sm text-neutral-800 grid grid-cols-2 gap-x-6 gap-y-1">
-                          {Object.entries(result.all_fields).map(([key, value]) => (
-                            <div key={key} className="flex gap-2">
-                              <span className="font-semibold capitalize">{key.replace(/_/g, '')}:</span>
-                              <span className="text-neutral-700">{value}</span>
-                            </div>
-                          ))}
+                        <div>
+                          <h4 className="font-medium text-sm text-neutral-600 mb-1">Additional Info</h4>
+                          <div className="text-sm text-neutral-600 grid grid-cols-2 gap-x-6 gap-y-1">
+                            {Object.entries(result.all_fields).map(([key, value]) => (
+                              <div key={key} className="flex gap-2">
+                                <span className="font-semibold capitalize whitespace-nowrap">{key.replace(/_/g, ' ')}:</span>
+                                <span className="text-neutral-600">{value}</span>
+                              </div>
+                            ))}
+                          </div>
                         </div>
-                      </div>
-                      )} */}
+                      )}
                       <p className="text-xs text-neutral-500 italic mt-2">
                         Save to your Space to view all job details and requirements
                       </p>
@@ -243,4 +207,4 @@ export default function VectorSearchPage() {
       </div>
     </MainLayout>
   );
-} 
+}
