@@ -19,6 +19,26 @@ const ChatOnboard: React.FC<ChatOnboardProps> = ({ onComplete, className = '' })
   const [showSwipe, setShowSwipe] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
+
+  // Add custom styles to override global focus styles
+  React.useEffect(() => {
+    const style = document.createElement('style');
+    style.textContent = `
+      .onboarding-textarea:focus {
+        outline: none !important;
+        border: none !important;
+        box-shadow: none !important;
+        ring: none !important;
+      }
+    `;
+    document.head.appendChild(style);
+    
+    return () => {
+      if (document.head.contains(style)) {
+        document.head.removeChild(style);
+      }
+    };
+  }, []);
   
   const {
     messages,
@@ -434,10 +454,10 @@ const PaperMessage: React.FC<PaperMessageProps> = ({
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
               placeholder="Write here.."
-              className="w-full text-xl leading-relaxed text-gray-800 placeholder-gray-300 
+              className="onboarding-textarea w-full text-xl leading-relaxed text-gray-800 placeholder-gray-400 
                 bg-transparent border-none outline-none resize-none font-light tracking-wide
                 focus:text-gray-900 transition-all duration-300 min-h-[2.5rem]
-                focus:placeholder-gray-200"
+                focus:placeholder-gray-300"
               rows={1}
               onKeyDown={(e) => {
                 if (e.key === 'Enter' && !e.shiftKey) {

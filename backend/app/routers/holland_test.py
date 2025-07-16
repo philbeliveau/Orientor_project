@@ -592,10 +592,18 @@ async def get_user_latest_results(
         result = db.execute(query, {"user_id": str(current_user.id)}).fetchone()
         
         if not result:
-            raise HTTPException(
-                status_code=status.HTTP_404_NOT_FOUND,
-                detail="Aucun résultat de test Holland trouvé pour cet utilisateur"
-            )
+            logger.warning(f"No Holland test results found for user {current_user.id}")
+            # Instead of 404, return default values to allow frontend to continue
+            return {
+                "r_score": 0.0,
+                "i_score": 0.0,
+                "a_score": 0.0,
+                "s_score": 0.0,
+                "e_score": 0.0,
+                "c_score": 0.0,
+                "top_3_code": "",
+                "personality_description": "No test results available. Please complete the Holland test to see your career interests profile."
+            }
         
         # Récupérer la description de la personnalité dominante
         personality_description = None
@@ -679,10 +687,9 @@ async def get_user_profile_description(
         riasec_result = db.execute(riasec_query, {"user_id": str(current_user.id)}).fetchone()
         
         if not riasec_result:
-            raise HTTPException(
-                status_code=status.HTTP_404_NOT_FOUND,
-                detail="Aucun résultat de test Holland trouvé pour cet utilisateur"
-            )
+            logger.warning(f"No Holland test results found for user {current_user.id} in profile description")
+            # Return default response instead of 404
+            return {"description": "No Holland test results available. Please complete the Holland test to receive your personalized career profile description."}
         
         # 2. Récupérer les données du profil utilisateur
         profile_query = text("""

@@ -40,7 +40,7 @@ from app.routers.courses import router as courses_router
 from app.routers.enhanced_chat import router as enhanced_chat_router
 from app.routers.socratic_chat import router as socratic_chat_router
 from app.routers.career_goals import router as career_goals_router
-# from app.api.endpoints.job_recommendations import router as job_recommendations_router
+from app.api.endpoints.job_recommendations import router as job_recommendations_router
 from app.routers.llm_career_advisor import router as llm_career_advisor_router
 from app.routers.orientator import router as orientator_router
 from fastapi import FastAPI, HTTPException
@@ -157,7 +157,7 @@ app.include_router(courses_router)
 app.include_router(enhanced_chat_router, prefix="/api/v1")
 app.include_router(socratic_chat_router)
 app.include_router(career_goals_router)
-# app.include_router(job_recommendations_router, prefix="/api/v1/jobs")
+app.include_router(job_recommendations_router, prefix="/api/v1/jobs")
 app.include_router(llm_career_advisor_router)
 app.include_router(orientator_router, prefix="/api")
 logger.info("All routers included successfully")

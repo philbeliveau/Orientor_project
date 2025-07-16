@@ -7,7 +7,7 @@ import logging
 from datetime import datetime
 from pathlib import Path
 
-# Configure logging for Railway
+# Configure logging for Railway BEFORE importing routers
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -16,6 +16,87 @@ logging.basicConfig(
     ]
 )
 logger = logging.getLogger(__name__)
+
+# Import all necessary routers for complete functionality
+try:
+    from app.routers.user import router as auth_router
+    from app.routers.chat import router as chat_router
+    from app.routers.conversations import router as conversations_router
+    from app.routers.share import router as share_router
+    from app.routers.chat_analytics import router as chat_analytics_router
+    from app.routers.peers import router as peers_router
+    from app.routers.messages import router as messages_router
+    from app.routers.profiles import router as profiles_router
+    from app.routers.test import router as test_router
+    from app.routers.space import router as space_router
+    from app.routers.vector_search import router as vector_router
+    from app.routers.recommendations import router as recommendations_router
+    from app.routers.careers import router as careers_router
+    from app.routers.tree import router as tree_router
+    from app.routers.tree_paths import router as tree_paths_router
+    from app.routers.node_notes import router as node_notes_router
+    from app.routers.user_progress import router as user_progress_router
+    from app.routers.jobs import router as jobs_router
+    from app.routers.program_recommendations import router as program_recommendations_router
+    from app.routers.holland_test import router as holland_test_router
+    from app.routers.hexaco_test import router as hexaco_test_router
+    from app.routers.insight_router import router as insight_router
+    from app.routers.competence_tree import router as competence_tree_router
+    from app.routers.career_progression import router as career_progression_router
+    from app.routers.users import router as users_router
+    from app.routers.reflection_router import router as reflection_router
+    from app.routers.avatar import router as avatar_router
+    from app.routers.onboarding import router as onboarding_router
+    from app.routers.education import router as education_router
+    from app.routers.school_programs import router as school_programs_router
+    from app.routers.courses import router as courses_router
+    from app.routers.enhanced_chat import router as enhanced_chat_router
+    from app.routers.socratic_chat import router as socratic_chat_router
+    from app.routers.career_goals import router as career_goals_router
+    from app.routers.llm_career_advisor import router as llm_career_advisor_router
+    from app.routers.orientator import router as orientator_router
+    ROUTERS_AVAILABLE = True
+    logger.info("✅ All routers imported successfully")
+except ImportError as e:
+    ROUTERS_AVAILABLE = False
+    logger.warning(f"⚠️ Some routers could not be imported: {str(e)}")
+    # Set None for missing routers - fallback for basic mode
+    auth_router = None
+    holland_test_router = None
+    profiles_router = None
+    test_router = None
+    conversations_router = None
+    chat_router = None
+    share_router = None
+    chat_analytics_router = None
+    peers_router = None
+    messages_router = None
+    space_router = None
+    vector_router = None
+    recommendations_router = None
+    careers_router = None
+    tree_router = None
+    tree_paths_router = None
+    node_notes_router = None
+    user_progress_router = None
+    jobs_router = None
+    program_recommendations_router = None
+    hexaco_test_router = None
+    insight_router = None
+    competence_tree_router = None
+    career_progression_router = None
+    users_router = None
+    reflection_router = None
+    avatar_router = None
+    onboarding_router = None
+    education_router = None
+    school_programs_router = None
+    courses_router = None
+    enhanced_chat_router = None
+    socratic_chat_router = None
+    career_goals_router = None
+    llm_career_advisor_router = None
+    orientator_router = None
 
 # Create a production-ready FastAPI app
 app = FastAPI(
@@ -148,6 +229,103 @@ async def get_me():
         "platform": "railway",
         "timestamp": datetime.utcnow().isoformat()
     }
+
+# Include all routers if available
+if ROUTERS_AVAILABLE:
+    try:
+        logger.info("🔌 Including routers in the FastAPI app...")
+        
+        # Include auth router first - it defines dependencies
+        if auth_router:
+            app.include_router(auth_router)
+            logger.info("✅ Auth router included")
+        
+        # Include profiles router after auth router
+        if profiles_router:
+            app.include_router(profiles_router)
+            logger.info("✅ Profiles router included")
+            
+        # Include remaining routers
+        if test_router:
+            app.include_router(test_router)
+        if conversations_router:
+            app.include_router(conversations_router)
+        if chat_router:
+            app.include_router(chat_router)
+        if share_router:
+            app.include_router(share_router)
+        if chat_analytics_router:
+            app.include_router(chat_analytics_router)
+        if peers_router:
+            app.include_router(peers_router)
+        if messages_router:
+            app.include_router(messages_router)
+        if space_router:
+            app.include_router(space_router)
+        if vector_router:
+            app.include_router(vector_router)
+        if recommendations_router:
+            app.include_router(recommendations_router)
+        if careers_router:
+            app.include_router(careers_router)
+        if tree_router:
+            app.include_router(tree_router)
+        if tree_paths_router:
+            app.include_router(tree_paths_router)
+        if node_notes_router:
+            app.include_router(node_notes_router)
+        if user_progress_router:
+            app.include_router(user_progress_router)
+        if jobs_router:
+            app.include_router(jobs_router, prefix="/api/v1")
+        if program_recommendations_router:
+            app.include_router(program_recommendations_router, prefix="/api/v1")
+            
+        # CRITICAL: Include Holland test router - this was missing and causing 404 errors
+        if holland_test_router:
+            app.include_router(holland_test_router)
+            logger.info("✅ Holland test router included - /api/tests/holland endpoints now available")
+            
+        if hexaco_test_router:
+            app.include_router(hexaco_test_router)
+        if insight_router:
+            app.include_router(insight_router)
+        if competence_tree_router:
+            app.include_router(competence_tree_router, prefix="/api/v1")
+        if career_progression_router:
+            app.include_router(career_progression_router, prefix="/api/v1")
+        if users_router:
+            app.include_router(users_router, prefix="/api/v1")
+        if reflection_router:
+            app.include_router(reflection_router, prefix="/api/v1")
+        if avatar_router:
+            app.include_router(avatar_router, prefix="/api/v1")
+        if onboarding_router:
+            app.include_router(onboarding_router, prefix="/api/v1")
+        if education_router:
+            app.include_router(education_router, prefix="/api/v1")
+        if school_programs_router:
+            app.include_router(school_programs_router, prefix="/api/v1")
+        if courses_router:
+            app.include_router(courses_router, prefix="/api/v1")
+        if enhanced_chat_router:
+            app.include_router(enhanced_chat_router, prefix="/api/v1")
+        if socratic_chat_router:
+            app.include_router(socratic_chat_router, prefix="/api/v1")
+        if career_goals_router:
+            app.include_router(career_goals_router, prefix="/api/v1")
+        if llm_career_advisor_router:
+            app.include_router(llm_career_advisor_router, prefix="/api/v1")
+        if orientator_router:
+            app.include_router(orientator_router, prefix="/api/v1")
+            
+        logger.info("✅ All available routers included successfully")
+        
+    except Exception as e:
+        logger.error(f"❌ Error including routers: {str(e)}")
+        # Continue with basic functionality even if routers fail to load
+else:
+    logger.warning("⚠️ Routers not available - running in basic mode")
 
 # Error handlers
 @app.exception_handler(404)

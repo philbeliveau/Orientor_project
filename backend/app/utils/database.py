@@ -6,6 +6,7 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.dialects.postgresql import UUID
 from uuid import uuid4
 from typing import Optional
+from fastapi import HTTPException
 from ..core.config import settings
 
 # Set up logging
@@ -142,7 +143,7 @@ def initialize_database():
         return False
 
 def get_db():
-    """Get database session with error handling"""
+    """Get database session with enhanced error handling and recovery"""
     global SessionLocal, engine
     
     # Initialize database on first access if not already done
@@ -154,18 +155,57 @@ def get_db():
         logger.error("Database session factory not initialized")
         raise Exception("Database not available")
     
-    db = SessionLocal()
+    db = None
     try:
+        db = SessionLocal()
+        # Test the connection before yielding
+        db.execute(text("SELECT 1"))
         yield db
+    except OperationalError as e:
+        logger.error(f"Database operational error: {str(e)}")
+        if db:
+            db.rollback()
+        # Try to reinitialize database connection
+        try:
+            logger.info("🔄 Attempting to reinitialize database connection...")
+            initialize_database()
+            if SessionLocal:
+                db = SessionLocal()
+                db.execute(text("SELECT 1"))
+                yield db
+            else:
+                raise Exception("Database reinitialize failed")
+        except Exception as reinit_error:
+            logger.error(f"Database reinitialize failed: {str(reinit_error)}")
+            raise HTTPException(
+                status_code=503, 
+                detail="Database service temporarily unavailable"
+            )
+    except SQLAlchemyError as e:
+        logger.error(f"Database SQLAlchemy error: {str(e)}")
+        if db:
+            db.rollback()
+        raise HTTPException(
+            status_code=500,
+            detail="Database query error"
+        )
     except Exception as e:
         logger.error(f"Database session error: {str(e)}")
         logger.error(f"Error type: {type(e)}")
         import traceback
         logger.error(f"Traceback: {traceback.format_exc()}")
-        db.rollback()
-        raise
+        if db:
+            db.rollback()
+        raise HTTPException(
+            status_code=500,
+            detail=f"Database session error: {str(e)}"
+        )
     finally:
-        db.close()
+        if db:
+            try:
+                db.close()
+            except Exception as close_error:
+                logger.warning(f"Error closing database session: {str(close_error)}")
 
 def check_database_health():
     """Check if database is healthy"""

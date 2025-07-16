@@ -101,25 +101,29 @@ export default function RegisterPage() {
     };
     
     return (
-        <div className="min-h-screen flex items-center justify-center px-4 py-12">
+        <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 flex items-center justify-center px-4 py-12">
             <div className="w-full max-w-md">
+                {/* Header */}
                 <div className="text-center mb-8">
-                    <h1 className="text-4xl font-bold font-display gradient-text mb-2">
-                        Navigo
+                    <div className="flex items-center justify-center mb-4">
+                        <div className="w-12 h-12 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-xl flex items-center justify-center">
+                            <span className="text-white font-bold text-xl font-departure">N</span>
+                        </div>
+                    </div>
+                    <h1 className="text-3xl font-bold text-gray-900 mb-2 font-departure">
+                        Create your account
                     </h1>
-                    <h2 className="text-2xl font-bold text-neutral-100 mb-2">
-                        Create Your Account
-                    </h2>
-                    <p className="text-neutral-300">
-                        Join our community and start your journey
+                    <p className="text-gray-600">
+                        Join Navigo and start your journey
                     </p>
                 </div>
                 
-                <div className="card backdrop-blur-md">
+                {/* Registration Form */}
+                <div className="bg-white/80 backdrop-blur-lg shadow-xl rounded-2xl p-8 border border-white/20">
                     <form className="space-y-6" onSubmit={handleSubmit}>
-                        <div className="space-y-4">
-                            <div className="input-group">
-                                <label htmlFor="email" className="label">
+                        <div className="space-y-5">
+                            <div>
+                                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
                                     Email address
                                 </label>
                                 <input
@@ -127,16 +131,20 @@ export default function RegisterPage() {
                                     name="email"
                                     type="email"
                                     required
-                                    className="input"
-                                    placeholder="you@example.com"
+                                    className="w-full px-4 py-3 border border-gray-200 rounded-xl 
+                                        focus:ring-2 focus:ring-blue-500 focus:border-transparent 
+                                        transition-all duration-200 bg-white/50 
+                                        placeholder-gray-400 text-gray-900
+                                        hover:border-gray-300 disabled:bg-gray-50 disabled:cursor-not-allowed"
+                                    placeholder="Enter your email"
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
                                     disabled={loading}
                                 />
                             </div>
                             
-                            <div className="input-group">
-                                <label htmlFor="password" className="label">
+                            <div>
+                                <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
                                     Password
                                 </label>
                                 <input
@@ -144,7 +152,11 @@ export default function RegisterPage() {
                                     name="password"
                                     type="password"
                                     required
-                                    className="input"
+                                    className="w-full px-4 py-3 border border-gray-200 rounded-xl 
+                                        focus:ring-2 focus:ring-blue-500 focus:border-transparent 
+                                        transition-all duration-200 bg-white/50 
+                                        placeholder-gray-400 text-gray-900
+                                        hover:border-gray-300 disabled:bg-gray-50 disabled:cursor-not-allowed"
                                     placeholder="Create a strong password"
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
@@ -152,8 +164,8 @@ export default function RegisterPage() {
                                 />
                             </div>
                             
-                            <div className="input-group">
-                                <label htmlFor="confirmPassword" className="label">
+                            <div>
+                                <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 mb-2">
                                     Confirm Password
                                 </label>
                                 <input
@@ -161,7 +173,11 @@ export default function RegisterPage() {
                                     name="confirmPassword"
                                     type="password"
                                     required
-                                    className="input"
+                                    className="w-full px-4 py-3 border border-gray-200 rounded-xl 
+                                        focus:ring-2 focus:ring-blue-500 focus:border-transparent 
+                                        transition-all duration-200 bg-white/50 
+                                        placeholder-gray-400 text-gray-900
+                                        hover:border-gray-300 disabled:bg-gray-50 disabled:cursor-not-allowed"
                                     placeholder="Confirm your password"
                                     value={confirmPassword}
                                     onChange={(e) => setConfirmPassword(e.target.value)}
@@ -171,43 +187,52 @@ export default function RegisterPage() {
                         </div>
 
                         {error && (
-                            <div className="text-accent-coral text-sm text-center py-3 px-4 bg-accent-coral/10 border border-accent-coral/20 rounded-lg">
+                            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl text-sm">
                                 {error}
                             </div>
                         )}
 
-                        <div>
-                            <button
-                                type="submit"
-                                className="btn btn-primary w-full"
-                                disabled={loading}
-                            >
-                                {loading ? (
-                                    <span className="flex items-center justify-center">
-                                        <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                                        </svg>
-                                        Creating account...
-                                    </span>
-                                ) : 'Create Account'}
-                            </button>
-                        </div>
+                        <button
+                            type="submit"
+                            className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 
+                                text-white font-semibold py-3 px-4 rounded-xl 
+                                hover:from-blue-700 hover:to-indigo-700 
+                                focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 
+                                transition-all duration-200 
+                                disabled:opacity-50 disabled:cursor-not-allowed 
+                                shadow-lg hover:shadow-xl"
+                            disabled={loading}
+                        >
+                            {loading ? (
+                                <span className="flex items-center justify-center">
+                                    <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                    </svg>
+                                    Creating account...
+                                </span>
+                            ) : 'Create Account'}
+                        </button>
                         
-                        <div className="text-center text-sm text-neutral-300 pt-4">
-                            Already have an account?{' '}
-                            <Link href="/login" className="text-primary-teal hover:text-primary-lilac transition-colors duration-300 font-medium">
-                                Sign in
-                            </Link>
+                        <div className="text-center pt-4">
+                            <p className="text-sm text-gray-600">
+                                Already have an account?{' '}
+                                <Link href="/login" className="text-blue-600 hover:text-blue-700 font-semibold transition-colors duration-200">
+                                    Sign in
+                                </Link>
+                            </p>
                         </div>
                     </form>
                 </div>
                 
-                <div className="mt-8 text-center text-xs text-neutral-400">
-                    By signing up, you agree to our
-                    <a href="#" className="text-primary-teal hover:text-primary-lilac mx-1">Terms of Service</a>
-                    and
-                    <a href="#" className="text-primary-teal hover:text-primary-lilac mx-1">Privacy Policy</a>
+                {/* Footer */}
+                <div className="mt-6 text-center">
+                    <p className="text-xs text-gray-500">
+                        By signing up, you agree to our{' '}
+                        <a href="#" className="text-blue-600 hover:text-blue-700 transition-colors">Terms of Service</a>
+                        {' '}and{' '}
+                        <a href="#" className="text-blue-600 hover:text-blue-700 transition-colors">Privacy Policy</a>
+                    </p>
                 </div>
             </div>
         </div>
