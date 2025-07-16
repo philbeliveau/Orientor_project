@@ -48,12 +48,51 @@ class OnboardingService {
   async getStatus(): Promise<OnboardingStatus> {
     try {
       console.log('Checking onboarding status...');
+      console.log('API URL:', api.defaults.baseURL);
+      console.log('Request URL:', `${this.baseURL}/status`);
+      console.log('Full URL:', `${api.defaults.baseURL}${this.baseURL}/status`);
+      
+      // Check if we have a valid token
+      const token = localStorage.getItem('access_token');
+      console.log('Auth token present:', !!token);
+      if (token) {
+        console.log('Token starts with:', token.substring(0, 10) + '...');
+      }
+      
       const response = await api.get(`${this.baseURL}/status`);
       console.log('Onboarding status response:', response.data);
-      return response.data;
-    } catch (error) {
+      
+      // Validate the response structure
+      const status = response.data;
+      if (typeof status.isComplete !== 'boolean' || typeof status.hasStarted !== 'boolean') {
+        console.warn('Invalid onboarding status response structure:', status);
+        // Return default status for new users
+        return {
+          isComplete: false,
+          hasStarted: false,
+          currentStep: null,
+          completedAt: null
+        };
+      }
+      
+      return status;
+    } catch (error: any) {
       console.error('Failed to get onboarding status:', error);
-      throw error;
+      
+      // Check if it's an authentication error
+      if (error.response?.status === 401 || error.response?.status === 403) {
+        console.error('Authentication error while checking onboarding status');
+        throw error; // Re-throw auth errors
+      }
+      
+      // For other errors, assume user is new and needs onboarding
+      console.warn('Assuming new user needs onboarding due to error:', error.message);
+      return {
+        isComplete: false,
+        hasStarted: false,
+        currentStep: null,
+        completedAt: null
+      };
     }
   }
 
@@ -150,10 +189,16 @@ class OnboardingService {
   async needsOnboarding(): Promise<boolean> {
     try {
       const status = await this.getStatus();
+      console.log('Onboarding status check result:', { isComplete: status.isComplete, hasStarted: status.hasStarted });
       return !status.isComplete;
-    } catch (error) {
-      // If we can't check status, assume they need onboarding
-      console.warn('Could not check onboarding status, assuming onboarding needed');
+    } catch (error: any) {
+      // If it's an auth error, re-throw it
+      if (error.response?.status === 401 || error.response?.status === 403) {
+        throw error;
+      }
+      
+      // For other errors, assume they need onboarding
+      console.warn('Could not check onboarding status, assuming onboarding needed:', error.message);
       return true;
     }
   }

@@ -48,21 +48,6 @@ export default function LandingPage() {
             <div className="paper-lines"></div>
             <div className="paper-content">
               
-              {/* 3D Notebook Animation */}
-              <div className="book mx-auto mb-12">
-                <div className="cover">
-                  <div className="book-title text-white font-bold">
-                    Navigo
-                  </div>
-                  <div className="book-subtitle text-white text-sm opacity-80">
-                    Guide d'Orientation
-                  </div>
-                </div>
-                <div className="book-content">
-                  <h3>Ton Guide Personnel</h3>
-                  <p>Où chaque page révèle de nouvelles possibilités de carrière</p>
-                </div>
-              </div>
               
               <div className="text-center space-y-8">
                 <h1 className="handwritten-title text-5xl lg:text-7xl text-gray-800 mb-6">

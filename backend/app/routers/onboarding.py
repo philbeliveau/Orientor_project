@@ -196,7 +196,7 @@ def complete_onboarding(
     try:
         logger.info(f"Completing onboarding for user ID: {current_user.id}")
         
-        # Get the assessment session
+        # Get the assessment session - first try in_progress, then any onboarding session
         assessment = db.query(PersonalityAssessment).filter(
             PersonalityAssessment.user_id == current_user.id,
             PersonalityAssessment.assessment_type == "onboarding",
@@ -204,7 +204,31 @@ def complete_onboarding(
         ).first()
         
         if not assessment:
-            raise HTTPException(status_code=404, detail="No active onboarding session found")
+            # Try to find any onboarding assessment for this user
+            assessment = db.query(PersonalityAssessment).filter(
+                PersonalityAssessment.user_id == current_user.id,
+                PersonalityAssessment.assessment_type == "onboarding"
+            ).first()
+            
+            if assessment:
+                # Update the found assessment to in_progress so we can complete it
+                assessment.status = "in_progress"
+                assessment.updated_at = datetime.utcnow()
+            else:
+                # Create a new assessment session if none exists
+                logger.info(f"Creating new assessment session for user {current_user.id} during completion")
+                assessment = PersonalityAssessment(
+                    user_id=current_user.id,
+                    assessment_type="onboarding",
+                    assessment_version="v1.0",
+                    session_id=uuid.uuid4(),
+                    status="in_progress",
+                    started_at=datetime.utcnow(),
+                    total_items=len(onboarding_data.responses) or 9,
+                    completed_items=len(onboarding_data.responses) or 9
+                )
+                db.add(assessment)
+                db.flush()  # Get the ID
         
         # Save any remaining responses
         for response_data in onboarding_data.responses:
@@ -226,8 +250,13 @@ def complete_onboarding(
                 )
                 db.add(personality_response)
         
-        # Create psychological profile
-        if onboarding_data.psychProfile:
+        # Create psychological profile if one doesn't already exist
+        existing_profile = db.query(PersonalityProfile).filter(
+            PersonalityProfile.user_id == current_user.id,
+            PersonalityProfile.assessment_id == assessment.id
+        ).first()
+        
+        if onboarding_data.psychProfile and not existing_profile:
             personality_profile = PersonalityProfile(
                 user_id=current_user.id,
                 assessment_id=assessment.id,
@@ -240,6 +269,11 @@ def complete_onboarding(
                 updated_at=datetime.utcnow()
             )
             db.add(personality_profile)
+        elif existing_profile and onboarding_data.psychProfile:
+            # Update existing profile
+            existing_profile.scores = onboarding_data.psychProfile
+            existing_profile.narrative_description = onboarding_data.psychProfile.get("description", "")
+            existing_profile.updated_at = datetime.utcnow()
         
         # Mark assessment as completed
         assessment.status = "completed"

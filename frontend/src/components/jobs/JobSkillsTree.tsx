@@ -11,7 +11,8 @@ import ReactFlow, {
   Edge as FlowEdge,
   useNodesState,
   useEdgesState,
-  Position
+  Position,
+  ReactFlowProvider
 } from 'reactflow';
 import 'reactflow/dist/style.css';
 import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/react';
@@ -61,10 +62,31 @@ const JobSkillsTree: React.FC<JobSkillsTreeProps> = ({ jobId, className = '', he
   const [nodesPerLevel, setNodesPerLevel] = useState<number>(5);
   const [isApplying, setIsApplying] = useState<boolean>(false);
   const [paramVersion, setParamVersion] = useState<number>(0); // Pour forcer le rechargement
+  const [debugMode, setDebugMode] = useState<boolean>(false);
   
   // États pour ReactFlow
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
+  
+  // Test nodes to verify ReactFlow works
+  const testNodes = [
+    {
+      id: 'test-1',
+      position: { x: 250, y: 250 },
+      data: { label: 'Test Node 1' },
+      style: { background: '#ff0072', color: 'white', padding: '10px', borderRadius: '5px' }
+    },
+    {
+      id: 'test-2',
+      position: { x: 100, y: 100 },
+      data: { label: 'Test Node 2' },
+      style: { background: '#00ff72', color: 'white', padding: '10px', borderRadius: '5px' }
+    }
+  ];
+  
+  const testEdges = [
+    { id: 'e1-2', source: 'test-1', target: 'test-2' }
+  ];
 
   // Fonction pour convertir les données de l'arbre de compétences en format ReactFlow
   const convertToReactFlowFormat = useCallback((data: SkillTreeData) => {
@@ -321,6 +343,8 @@ const JobSkillsTree: React.FC<JobSkillsTreeProps> = ({ jobId, className = '', he
     console.log("Nombre d'arêtes:", flowEdges.length);
     
     console.log("Setting ReactFlow nodes and edges...");
+    console.log("About to set nodes:", flowNodes.length, flowNodes);
+    console.log("About to set edges:", flowEdges.length, flowEdges);
     setNodes(flowNodes);
     setEdges(flowEdges);
     console.log("ReactFlow nodes and edges set successfully");
@@ -504,24 +528,38 @@ const JobSkillsTree: React.FC<JobSkillsTreeProps> = ({ jobId, className = '', he
           </div>
         </div>
         
-        {/* Visualisation ReactFlow */}
-        <div className="border rounded-lg overflow-hidden" style={{
-          height: height,
-          borderColor: 'var(--border-color)',
-          backgroundColor: 'var(--primary-color)'
-        }}>
-          <ReactFlow
-            nodes={nodes}
-            edges={edges}
-            onNodesChange={onNodesChange}
-            onEdgesChange={onEdgesChange}
-            fitView
-            attributionPosition="bottom-right"
+        {/* Debug Mode Toggle */}
+        <div className="mb-4">
+          <button 
+            onClick={() => setDebugMode(!debugMode)}
+            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
           >
-            <Controls />
-            <MiniMap />
-            <Background color="#aaa" gap={16} />
-          </ReactFlow>
+            {debugMode ? 'Mode Normal' : 'Mode Debug'}
+          </button>
+        </div>
+
+        {/* Visualisation ReactFlow */}
+        <div className="w-full" style={{ height: height || '600px' }}>
+          <div className="w-full h-full border rounded-lg" style={{ backgroundColor: '#f9f9f9' }}>
+            <ReactFlowProvider>
+              <ReactFlow
+                nodes={debugMode ? testNodes : nodes}
+                edges={debugMode ? testEdges : edges}
+                onNodesChange={onNodesChange}
+                onEdgesChange={onEdgesChange}
+                fitView={true}
+                fitViewOptions={{ padding: 0.2 }}
+                attributionPosition="bottom-right"
+                className="w-full h-full"
+                minZoom={0.5}
+                maxZoom={2}
+              >
+                <Controls />
+                <MiniMap />
+                <Background color="#ccc" gap={16} />
+              </ReactFlow>
+            </ReactFlowProvider>
+          </div>
         </div>
         
         <div className="mt-4 text-center">
@@ -529,7 +567,27 @@ const JobSkillsTree: React.FC<JobSkillsTreeProps> = ({ jobId, className = '', he
             Nombre total de nœuds: {Object.keys(skillTreeData.nodes).length} | 
             Nombre total de relations: {skillTreeData.edges.length}
           </p>
+          <p className="text-xs text-gray-500 mt-1">
+            ReactFlow - Nœuds: {nodes.length} | Arêtes: {edges.length}
+          </p>
+          {nodes.length === 0 && (
+            <p className="text-red-500 text-sm mt-2">⚠️ Aucun nœud ReactFlow détecté - Vérification en cours...</p>
+          )}
         </div>
+
+        {/* Debug: List nodes if ReactFlow doesn't show them */}
+        {nodes.length > 0 && (
+          <div className="mt-4 p-4 bg-gray-100 rounded text-sm">
+            <h4 className="font-semibold mb-2">Debug - Nœuds détectés:</h4>
+            <ul className="space-y-1">
+              {nodes.slice(0, 6).map(node => (
+                <li key={node.id} className="text-xs">
+                  <span className="font-mono bg-gray-200 px-1 rounded">{node.id}</span>: {node.data.label}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </div>
 
       {/* Dropdown pour les compétences et paramètres */}

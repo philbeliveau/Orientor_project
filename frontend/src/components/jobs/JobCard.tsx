@@ -123,44 +123,48 @@ const JobCard: React.FC<JobCardProps> = ({ job, isSelected, onClick, className =
         className={styles.glass}
         data-text={title}
       >
-        <div className="flex flex-col items-center justify-center p-4 h-full">
-          {/* Avatar */}
-          <div className="w-16 h-16 rounded-full overflow-hidden mb-4">
-            <Image
-              src={`/avatar/${getAvatarForJob(job.id, title)}`}
-              alt={title}
-              width={64}
-              height={64}
-              className="w-full h-full object-cover"
-            />
-          </div>
-
+        <div className="flex flex-col h-full pt-14 pb-4 px-4">
           {/* Match percentage */}
-          <div className="absolute top-4 right-4 bg-stitch-accent text-white text-xs font-bold px-2 py-1 rounded-full">
+          <div className="absolute top-2 right-2 bg-green-500 text-white text-xs font-bold px-3 py-1 rounded-full z-10">
             {matchPercentage}% match
           </div>
 
+          {/* Avatar */}
+          <div className="flex justify-center mb-4">
+            <div className="w-20 h-20 rounded-full overflow-hidden border-4 border-white shadow-lg">
+              <Image
+                src={`/avatar/${getAvatarForJob(job.id, title)}`}
+                alt={title}
+                width={80}
+                height={80}
+                className="w-full h-full object-cover"
+              />
+            </div>
+          </div>
+
           {/* Description */}
-          <p className="text-sm text-center mb-4 line-clamp-2" style={{ color: 'var(--text)' }}>
-            {description}
-          </p>
+          <div className="flex-1 mb-4">
+            <p className="text-sm text-gray-700 text-center leading-relaxed line-clamp-3">
+              {description.length > 120 ? `${description.substring(0, 120)}...` : description}
+            </p>
+          </div>
 
           {/* Skills */}
           {displayedSkills.length > 0 && (
-            <div className="mt-auto">
-              <div className="flex flex-wrap gap-2 justify-center">
+            <div className="mb-4">
+              <h4 className="text-xs font-semibold text-gray-600 mb-2 text-center">Key Skills</h4>
+              <div className="flex flex-wrap gap-1 justify-center">
                 {displayedSkills.map((skill, index) => (
                   <span 
                     key={index}
-                    className="bg-white/10 text-xs px-2 py-1 rounded-md"
-                    style={{ color: 'var(--text)' }}
+                    className="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-md font-medium"
                   >
-                    {skill}
+                    {skill.length > 15 ? `${skill.substring(0, 15)}...` : skill}
                   </span>
                 ))}
                 {skills.length > 3 && (
-                  <span className="text-xs px-2 py-1" style={{ color: 'var(--text)' }}>
-                    +{skills.length - 3}
+                  <span className="bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded-md">
+                    +{skills.length - 3} more
                   </span>
                 )}
               </div>
@@ -168,13 +172,13 @@ const JobCard: React.FC<JobCardProps> = ({ job, isSelected, onClick, className =
           )}
           
           {/* Career Goal Button */}
-          <div className="mt-4">
+          <div className="mt-auto">
             <SetCareerGoalButton 
               job={job} 
               size="sm" 
-              variant="secondary"
+              variant="primary"
               source="oasis"
-              className="w-full"
+              className="w-full text-xs py-2"
             />
           </div>
         </div>

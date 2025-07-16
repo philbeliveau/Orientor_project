@@ -60,19 +60,27 @@ export default function LoginPage() {
             // Check if user needs onboarding
             try {
                 const { onboardingService } = await import('../../services/onboardingService');
-                const needsOnboarding = await onboardingService.needsOnboarding();
+                console.log('🔍 About to check onboarding status...');
                 
-                if (needsOnboarding) {
-                    console.log('User needs onboarding, redirecting to onboarding page');
-                    router.push('/onboarding');
-                } else {
-                    console.log('User onboarding complete, redirecting to dashboard');
+                const status = await onboardingService.getStatus();
+                console.log('✅ Onboarding status received:', status);
+                
+                if (status.isComplete) {
+                    console.log('✅ User onboarding complete, redirecting to dashboard');
                     router.push('/dashboard');
+                } else {
+                    console.log('❌ User needs onboarding, redirecting to onboarding page');
+                    router.push('/onboarding');
                 }
             } catch (onboardingError) {
-                console.error('Error checking onboarding status:', onboardingError);
-                console.log('Could not check onboarding status, redirecting to dashboard');
-                router.push('/dashboard');
+                console.error('💥 Error checking onboarding status:', onboardingError);
+                console.error('Error details:', {
+                    message: onboardingError.message,
+                    status: onboardingError.response?.status,
+                    data: onboardingError.response?.data
+                });
+                console.log('🔄 Could not check onboarding status, assuming new user - redirecting to onboarding');
+                router.push('/onboarding');
             }
         } catch (err: any) {
             console.error('Login error details:', {

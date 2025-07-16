@@ -58,60 +58,69 @@ export default function CareerRecommendationsPage() {
 
   return (
     <MainLayout>
-      <style jsx>{`
-        .career-recommendations-card .glass {
-          transform: rotate(0deg) !important;
-          margin: 0 !important;
-        }
-        .career-recommendations-card:hover .glass {
-          transform: rotate(0deg) !important;
-          margin: 0 !important;
-        }
-      `}</style>
-      <div className="max-w-[3000px] mx-auto px-18 py-20">
-        <h1 className="text-4xl font-bold mb-3">Career Recommendations</h1>
-        <p className="text-gray-600 mb-10 text-lg">
-          Discover personalized career recommendations based on your profile
-        </p>
-
-        <div className="grid grid-cols-1 xl:grid-cols-12 gap-20">
-          {/* Left side: Job Cards - 6 columns */}
-          <div className="xl:col-span-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-12 max-h-[3000px] overflow-y-auto pr-6">
-            {recommendations.map((job) => (
-              <div
-                key={job.id}
-                className="career-recommendations-card"
-                style={{ '--r': '0' } as React.CSSProperties}
-              >
-                <JobCard
-                  job={job}
-                  isSelected={selectedJob?.id === job.id}
-                  onClick={() => setSelectedJob(job)}
-                  className="h-72"
-                />
-              </div>
-            ))}
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
+        <div className="max-w-7xl mx-auto px-6 py-8">
+          {/* Header */}
+          <div className="mb-8">
+            <h1 className="text-4xl font-bold text-gray-900 mb-3">Career Recommendations</h1>
+            <p className="text-gray-600 text-lg">
+              Discover personalized career recommendations based on your profile
+            </p>
           </div>
 
-          {/* Right side: Skills Tree - 6 columns */}
-          <div className="xl:col-span-6 bg-white rounded-lg shadow-lg p-10 min-h-[1400px]">
-            {selectedJob ? (
-              <div className="h-full">
-                <div className="flex justify-between items-start mb-6">
-                  <h2 className="text-3xl font-semibold">
-                    {selectedJob.metadata.preferred_label || selectedJob.metadata.title || selectedJob.id.replace('occupation::key_', '')}
-                  </h2>
-                  <SaveJobButton job={selectedJob} size="lg" />
-                </div>
-                <div className="h-[calc(100%-5rem)]">
-                  <JobSkillsTree jobId={selectedJob.id} height="1000px" />
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            {/* Left side: Job Cards */}
+            <div className="lg:col-span-5">
+              <div className="bg-white rounded-2xl shadow-lg p-6 h-[800px] overflow-hidden">
+                <h2 className="text-xl font-semibold text-gray-900 mb-4">Recommended Careers</h2>
+                <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 h-[calc(100%-3rem)] overflow-y-auto pr-2">
+                  {recommendations.map((job) => (
+                    <div key={job.id} className="h-80">
+                      <JobCard
+                        job={job}
+                        isSelected={selectedJob?.id === job.id}
+                        onClick={() => setSelectedJob(job)}
+                        className="h-full"
+                      />
+                    </div>
+                  ))}
                 </div>
               </div>
-            ) : (
-              <div className="flex items-center justify-center h-full">
-                <p className="text-gray-500 text-xl">Select a job to view its skills tree</p>
+            </div>
+
+            {/* Right side: Skills Tree */}
+            <div className="lg:col-span-7">
+              <div className="bg-white rounded-2xl shadow-lg p-6 h-[800px]">
+                {selectedJob ? (
+                  <div className="h-full flex flex-col">
+                    <div className="flex justify-between items-start mb-6 pb-4 border-b border-gray-200">
+                      <div>
+                        <h2 className="text-2xl font-semibold text-gray-900">
+                          {selectedJob.metadata.preferred_label || selectedJob.metadata.title || selectedJob.id.replace('occupation::key_', '')}
+                        </h2>
+                        <p className="text-sm text-gray-500 mt-1">Skills & Requirements Analysis</p>
+                      </div>
+                      <SaveJobButton job={selectedJob} size="lg" />
+                    </div>
+                    <div className="flex-1 min-h-0">
+                      <JobSkillsTree jobId={selectedJob.id} height="100%" />
+                    </div>
+                  </div>
+                ) : (
+                  <div className="flex flex-col items-center justify-center h-full text-center">
+                    <div className="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mb-4">
+                      <svg className="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                      </svg>
+                    </div>
+                    <h3 className="text-xl font-semibold text-gray-900 mb-2">Select a Career</h3>
+                    <p className="text-gray-500 max-w-md">
+                      Choose a career recommendation from the left to view its detailed skills tree and requirements analysis.
+                    </p>
+                  </div>
+                )}
               </div>
-            )}
+            </div>
           </div>
         </div>
       </div>
