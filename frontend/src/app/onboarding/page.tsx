@@ -4,11 +4,18 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import ChatOnboard from '../../components/onboarding/ChatOnboard';
 import { onboardingService } from '../../services/onboardingService';
+import { useAuth } from '@/hooks/useAuth';
 
 const OnboardingPage: React.FC = () => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
   const [needsOnboarding, setNeedsOnboarding] = useState(true);
+  
+  // Protect this route - redirect unauthenticated users to landing page
+  const { isAuthenticated, isLoading: authLoading } = useAuth({ 
+    redirectTo: '/', 
+    redirectIfFound: false 
+  });
 
   useEffect(() => {
     checkOnboardingStatus();
@@ -19,7 +26,8 @@ const OnboardingPage: React.FC = () => {
       const status = await onboardingService.getStatus();
       if (status.isComplete) {
         // User has already completed onboarding, redirect to dashboard
-        router.push('/');
+        console.log('Onboarding already complete, redirecting to dashboard');
+        router.push('/dashboard');
         return;
       }
       setNeedsOnboarding(true);
@@ -36,19 +44,24 @@ const OnboardingPage: React.FC = () => {
     try {
       console.log('Onboarding completed with responses:', responses);
       
-      // Show a success message briefly, then redirect
+      // Update state to show completion message
+      setNeedsOnboarding(false);
+      
+      // Show a success message briefly, then redirect to dashboard
       setTimeout(() => {
-        // Redirect to dashboard
-        router.push('/');
-      }, 1000);
+        console.log('Redirecting to dashboard after onboarding completion');
+        router.push('/dashboard');
+      }, 2000);
     } catch (error) {
       console.error('Error handling onboarding completion:', error);
       // Still redirect to dashboard even if there's an error
-      router.push('/');
+      console.log('Error occurred, but still redirecting to dashboard');
+      router.push('/dashboard');
     }
   };
 
-  if (isLoading) {
+  // Show loading while checking authentication or onboarding status
+  if (authLoading || isLoading) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
@@ -59,11 +72,18 @@ const OnboardingPage: React.FC = () => {
     );
   }
 
+  // Don't render if not authenticated (will be redirected)
+  if (!isAuthenticated) {
+    return null;
+  }
+
   if (!needsOnboarding) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
-          <p className="text-text-secondary">Redirecting to dashboard...</p>
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-green-500 mx-auto mb-4"></div>
+          <h2 className="text-xl font-semibold text-gray-800 mb-2">Welcome to Navigo!</h2>
+          <p className="text-text-secondary">Onboarding complete. Taking you to your dashboard...</p>
         </div>
       </div>
     );

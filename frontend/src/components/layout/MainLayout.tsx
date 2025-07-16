@@ -8,6 +8,7 @@ import ThemeToggle from '../ui/ThemeToggle';
 import styles from '@/styles/patterns.module.css';
 import LoadingScreen from '@/components/ui/LoadingScreen';
 import NewSidebar from './NewSidebar';
+import { useAuth } from '@/hooks/useAuth';
 
 // Composants pour les menus déroulants
 const ProfileDropdown = ({ pathname }: { pathname: string | null }) => {
@@ -164,10 +165,11 @@ export default function MainLayout({
     const workspaceMenuRef = useRef<HTMLDivElement>(null);
     const router = useRouter();
     const pathname = usePathname();
+    const { logout } = useAuth();
 
     // Navigation items for the sidebar
     const navItems = [
-        { name: 'Dashboard', icon: 'Dashboard', path: '/' },
+        { name: 'Dashboard', icon: 'Dashboard', path: '/dashboard' },
         { name: 'Education', icon: 'Education', path: '/education' },
         { name: 'Chat', icon: 'Chat', path: '/chat' },
         { name: 'Swipe', icon: 'Swipe', path: '/find-your-way' },
@@ -179,7 +181,7 @@ export default function MainLayout({
     ];
 
     // Public routes that don't require authentication
-    const publicRoutes = ['/login', '/register', '/test-page', '/'];
+    const publicRoutes = ['/', '/login', '/register', '/landing', '/test-page'];
     const isPublicRoute = pathname ? publicRoutes.includes(pathname) : false;
 
     useEffect(() => {
@@ -187,15 +189,15 @@ export default function MainLayout({
         const token = localStorage.getItem('access_token') || '';
         console.log('Auth check - Token:', token ? 'Found' : 'Not found', 'Pathname:', pathname);
         
-        // Désactivé temporairement pour le développement
-        // if (!token && !isPublicRoute && showNav) {
-        //     console.log('No token found, redirecting to login');
-        //     router.push('/login');
-        //     return;
-        // }
+        // Check authentication properly
+        if (!token && !isPublicRoute && showNav) {
+            console.log('No token found, redirecting to login');
+            router.push('/login');
+            return;
+        }
         
-        // Pour le développement, considérer l'utilisateur comme connecté
-        const loggedIn = true; // !!token;
+        // Set proper logged in state based on token
+        const loggedIn = !!token;
         console.log('Setting isLoggedIn to:', loggedIn);
         setIsLoggedIn(loggedIn);
         setIsLoading(false);
@@ -231,8 +233,7 @@ export default function MainLayout({
 
     const handleLogout = () => {
         console.log('Logging out user');
-        localStorage.removeItem('access_token');
-        router.push('/login');
+        logout();
     };
 
     const toggleCareerDropdown = () => {
@@ -280,7 +281,7 @@ export default function MainLayout({
                             {/* Left Side - Logo positioned at far left */}
                             <div className="flex items-center">
                                 {/* Logo */}
-                                <Link href="/landing" className="flex-shrink-0 flex items-center">
+                                <Link href="/dashboard" className="flex-shrink-0 flex items-center">
                                     <span className="text-xl font-bold tracking-tight text-stitch-accent font-departure">
                                         Navigo
                                     </span>

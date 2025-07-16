@@ -140,9 +140,13 @@ const ChatOnboard: React.FC<ChatOnboardProps> = ({ onComplete, className = '' })
 
   useEffect(() => {
     if (isComplete && psychProfile) {
+      console.log('ChatOnboard: Onboarding complete, calling onComplete callback');
       onComplete?.(responses);
       // Show swipe interface after profile generation
-      setTimeout(() => setShowSwipe(true), 2000);
+      setTimeout(() => {
+        console.log('ChatOnboard: Showing swipe recommendations');
+        setShowSwipe(true);
+      }, 2000);
     }
   }, [isComplete, psychProfile, responses, onComplete]);
 
@@ -254,6 +258,7 @@ const ChatOnboard: React.FC<ChatOnboardProps> = ({ onComplete, className = '' })
         <SwipeRecommendations 
           onComplete={() => {
             // Call the parent onComplete callback to finish onboarding
+            console.log('ChatOnboard: SwipeRecommendations completed, calling parent onComplete');
             onComplete?.(responses);
           }}
           psychProfile={psychProfile}

@@ -297,9 +297,10 @@ const SwipeRecommendations: React.FC<SwipeRecommendationsProps> = ({
               onClick={() => {
                 console.log('Completing onboarding and redirecting to dashboard...');
                 onComplete(); // Call the parent callback
-                // Direct redirect as backup
+                // Direct redirect to dashboard
                 setTimeout(() => {
-                  router.push('/');
+                  console.log('SwipeRecommendations: Redirecting to dashboard');
+                  router.push('/dashboard');
                 }, 500);
               }}
               className="w-full bg-blue-500 text-white py-3 px-6 rounded-xl hover:bg-blue-600 transition-colors font-medium"

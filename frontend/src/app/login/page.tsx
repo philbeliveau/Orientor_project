@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { endpoint, logApiDetails } from '@/utils/api';
+import { useAuth } from '@/hooks/useAuth';
 
 interface LoginResponse {
     access_token: string;
@@ -17,17 +18,17 @@ export default function LoginPage() {
     const [error, setError] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const router = useRouter();
+    
+    // Use auth hook to handle redirects for already authenticated users
+    const { login, isLoading: authLoading } = useAuth({ 
+        redirectTo: '/dashboard', 
+        redirectIfFound: true 
+    });
 
     useEffect(() => {
-        // Check if user is already logged in
-        const token = localStorage.getItem('access_token');
-        if (token) {
-            router.push('/dashboard');
-        }
-        
         // Log API details for debugging
         logApiDetails();
-    }, [router]);
+    }, []);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -53,9 +54,8 @@ export default function LoginPage() {
             
             console.log('Login successful, token received');
             
-            // Store the token and user ID in localStorage
-            localStorage.setItem('access_token', response.data.access_token);
-            localStorage.setItem('user_id', response.data.user_id.toString());
+            // Use the auth hook to handle login
+            login(response.data.access_token, response.data.user_id.toString());
             
             // Check if user needs onboarding
             try {

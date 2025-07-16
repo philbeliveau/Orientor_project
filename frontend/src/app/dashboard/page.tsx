@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import MainLayout from '@/components/layout/MainLayout';
 import { useRouter } from 'next/navigation';
+import { useAuth } from '@/hooks/useAuth';
 import Link from 'next/link';
 import UserCard from '@/components/ui/UserCard';
 import DailyQuestionCard from '@/components/ui/DailyQuestionCard';
@@ -46,6 +47,12 @@ interface EnhancedPeerProfile {
 
 export default function Dashboard() {
   const router = useRouter();
+  
+  // Protect this route - redirect unauthenticated users to landing page
+  const { isAuthenticated, isLoading: authLoading } = useAuth({ 
+    redirectTo: '/', 
+    redirectIfFound: false 
+  });
   
   // Define API URL with fallback and trim any trailing spaces
   const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
@@ -205,6 +212,21 @@ export default function Dashboard() {
   const handleSelectJob = (job: Job) => {
     setSelectedJob(job);
   };
+
+  // Show loading while checking authentication
+  if (authLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+        <p className="ml-3 text-gray-600">Loading dashboard...</p>
+      </div>
+    );
+  }
+
+  // Don't render dashboard if not authenticated (will be redirected)
+  if (!isAuthenticated) {
+    return null;
+  }
 
   return (
     <MainLayout>
