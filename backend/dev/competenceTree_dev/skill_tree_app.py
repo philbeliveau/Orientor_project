@@ -151,7 +151,7 @@ def display_plotly_graph(graph_data):
     for node_id, node_data in graph_data.get("nodes", {}).items():
         G.add_node(
             node_id,
-            label=node_data.get("label", ""),
+            label=node_data.get("preferredlabel", node_data.get("label", "")),
             type=node_data.get("type", "unknown"),
             is_anchor=node_data.get("is_anchor", False),
             depth=node_data.get("depth", 0)
@@ -198,7 +198,7 @@ def display_plotly_graph(graph_data):
         node_y.append(y)
         
         # Texte du nœud
-        label = G.nodes[node].get("label", "")
+        label = G.nodes[node].get("preferredlabel", G.nodes[node].get("label", ""))
         node_type = G.nodes[node].get("type", "unknown")
         is_anchor = G.nodes[node].get("is_anchor", False)
         depth = G.nodes[node].get("depth", 0)
@@ -283,7 +283,7 @@ def display_nodes_info(graph_data):
     for node_id, node_data in nodes.items():
         nodes_info.append({
             "ID": node_id,
-            "Label": node_data.get("label", ""),
+            "Label": node_data.get("preferredlabel", node_data.get("label", "")),
             "Type": node_data.get("type", "unknown"),
             "Ancrage": "Oui" if node_data.get("is_anchor", False) else "Non",
             "Profondeur": node_data.get("depth", 0)
@@ -433,7 +433,7 @@ def main():
                 anchors.append({
                     "id": node_id,
                     "metadata": {
-                        "label": node_info.get("label", ""),
+                        "label": node_info.get("preferredlabel", node_info.get("label", "")),
                         "type": node_info.get("type", "unknown")
                     },
                     "score": 1.0  # Score par défaut pour les IDs personnalisés
@@ -461,7 +461,7 @@ def main():
             anchors_df = pd.DataFrame([
                 {
                     "ID": anchor["id"],
-                    "Label": anchor["metadata"].get("label", ""),
+                    "Label": anchor["metadata"].get("preferredlabel", anchor["metadata"].get("label", "")),
                     "Type": anchor["metadata"].get("type", "unknown"),
                     "Score": anchor["score"]
                 }

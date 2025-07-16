@@ -285,7 +285,8 @@ async def get_skill_tree_for_job(
             logger.warning(f"Format d'ID d'emploi invalide: {job_id}")
             # Pour le débogage, corriger l'ID au lieu de lever une exception
             if job_id.startswith("dummy_job_"):
-                corrected_job_id = "occupation::key_12345"
+                # Use a real occupation ID from ESCO data
+                corrected_job_id = "occupation::key_15156"  # "technical director" - real ESCO occupation
                 logger.info(f"Correction de l'ID d'emploi factice: {job_id} -> {corrected_job_id}")
                 job_id = corrected_job_id
             else:

@@ -1,2 +1,107 @@
 INFO:     Will watch for changes in these directories: ['/Users/philippebeliveau/Desktop/Notebook/Orientor_project/Orientor_project/backend']
-ERROR:    [Errno 48] Address already in use
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+INFO:     Started reloader process [9815] using WatchFiles
+2025-07-16 19:06:17,631 - app.core.config - INFO - === Configuration Summary ===
+2025-07-16 19:06:17,631 - app.core.config - INFO - Environment: production
+2025-07-16 19:06:17,631 - app.core.config - INFO - Railway Environment: None
+2025-07-16 19:06:17,631 - app.core.config - INFO - Port: 8000
+2025-07-16 19:06:17,631 - app.core.config - INFO - Is Production: True
+2025-07-16 19:06:17,631 - app.core.config - INFO - Is Railway: False
+2025-07-16 19:06:17,631 - app.core.config - INFO - Using DATABASE_URL for local development
+2025-07-16 19:06:17,631 - app.core.config - INFO - Database URL configured: True
+2025-07-16 19:06:17,631 - app.core.config - INFO - OpenAI API Key configured: True
+2025-07-16 19:06:17,631 - app.core.config - INFO - =============================
+2025-07-16 19:06:17,631 - app.utils.database - INFO - 📌 Database initialization deferred to avoid environment variable caching
+/Users/philippebeliveau/miniforge3/envs/orientor/lib/python3.11/site-packages/pydantic/_internal/_fields.py:149: UserWarning: Field "model_used" has conflict with protected namespace "model_".
+
+You may be able to resolve this warning by setting `model_config['protected_namespaces'] = ()`.
+  warnings.warn(
+2025-07-16 19:06:18,042 - app.routers.chat - INFO - OpenAI API Key exists and starts with: sk-pr...
+2025-07-16 19:06:27,236 - datasets - INFO - PyTorch version 2.7.1 available.
+2025-07-16 19:06:27,236 - datasets - INFO - TensorFlow version 2.19.0 available.
+2025-07-16 19:06:28,114 - app.services.Oasisembedding_service - INFO - Module de formatage OaSIS importé avec succès
+/Users/philippebeliveau/miniforge3/envs/orientor/lib/python3.11/site-packages/pydantic/_internal/_config.py:318: UserWarning: Valid config keys have changed in V2:
+* 'orm_mode' has been renamed to 'from_attributes'
+  warnings.warn(message, UserWarning)
+2025-07-16 19:06:28,576 - app.services.esco_embedding_service384 - INFO - Module de formatage ESCO importé avec succès
+2025-07-16 19:06:28,576 - app.routers.profiles - INFO - Profiles router module loaded with get_current_user from app.routes.user
+2025-07-16 19:06:28,587 - app.routers.profiles - DEBUG - Initializing profiles router module
+2025-07-16 19:06:28,587 - app.routers.profiles - DEBUG - Created profiles router with routes: ['/profiles/test', '/profiles/me', '/profiles/update', '/profiles/{user_id}']
+/Users/philippebeliveau/miniforge3/envs/orientor/lib/python3.11/site-packages/pydantic/_internal/_config.py:318: UserWarning: Valid config keys have changed in V2:
+* 'orm_mode' has been renamed to 'from_attributes'
+  warnings.warn(message, UserWarning)
+2025-07-16 19:06:28,689 - app.services.Swipe_career_recommendation_service - WARNING - Career recommendation model not found at /Users/philippebeliveau/Desktop/Notebook/Orientor_project/Orientor_project/backend/app/models/career_recommender_model.pkl, using fallback method
+2025-07-16 19:06:28,706 - app.services.LLMskillsTree - INFO - TreeService initialized with OpenAI API key: sk-pr..._ekIA
+/Users/philippebeliveau/miniforge3/envs/orientor/lib/python3.11/site-packages/pydantic/_internal/_config.py:318: UserWarning: Valid config keys have changed in V2:
+* 'orm_mode' has been renamed to 'from_attributes'
+  warnings.warn(message, UserWarning)
+2025-07-16 19:06:28,914 - app.services.graphsage_llm_integration - ERROR - Error initializing GraphSage model: Error(s) in loading state_dict for CareerTreeModel:
+	size mismatch for encoder.conv1.lin_l.weight: copying a param with shape torch.Size([128, 384]) from checkpoint, the shape in current model is torch.Size([256, 384]).
+	size mismatch for encoder.conv1.lin_l.bias: copying a param with shape torch.Size([128]) from checkpoint, the shape in current model is torch.Size([256]).
+	size mismatch for encoder.conv1.lin_r.weight: copying a param with shape torch.Size([128, 384]) from checkpoint, the shape in current model is torch.Size([256, 384]).
+	size mismatch for encoder.norm1.weight: copying a param with shape torch.Size([128]) from checkpoint, the shape in current model is torch.Size([256]).
+	size mismatch for encoder.norm1.bias: copying a param with shape torch.Size([128]) from checkpoint, the shape in current model is torch.Size([256]).
+	size mismatch for encoder.norm1.running_mean: copying a param with shape torch.Size([128]) from checkpoint, the shape in current model is torch.Size([256]).
+	size mismatch for encoder.norm1.running_var: copying a param with shape torch.Size([128]) from checkpoint, the shape in current model is torch.Size([256]).
+	size mismatch for encoder.conv2.lin_l.weight: copying a param with shape torch.Size([128, 128]) from checkpoint, the shape in current model is torch.Size([128, 256]).
+	size mismatch for encoder.conv2.lin_r.weight: copying a param with shape torch.Size([128, 128]) from checkpoint, the shape in current model is torch.Size([128, 256]).
+2025-07-16 19:06:28,933 - app.services.socratic_chat_service - WARNING - Anthropic library not available. Claude mode will be disabled.
+2025-07-16 19:06:28,946 - app.services.LLMcompetence_service - INFO - OpenAI client initialized successfully
+2025-07-16 19:06:28,952 - app.services.esco_formatting_service - INFO - OpenAI client initialized successfully for ESCO formatting
+2025-07-16 19:06:29,221 - app.services.competenceTree - INFO - Connexion à l'index Pinecone 'esco-368' établie avec succès
+2025-07-16 19:06:29,221 - app.services.competenceTree - INFO - Pinecone initialized successfully
+2025-07-16 19:06:29,221 - app.services.competenceTree - INFO - Embedding model will be loaded on first use (lazy loading)
+2025-07-16 19:06:29,228 - app.services.competenceTree - INFO - GNN model loaded successfully
+2025-07-16 19:06:29,228 - app.services.competenceTree - INFO - CompetenceTreeService initialized successfully
+2025-07-16 19:06:29,229 - graph_traversal_service - INFO - GraphSAGE imported successfully from GNN directory
+2025-07-16 19:06:29,229 - graph_traversal_service - ERROR - Le fichier du modèle n'existe pas: /Users/philippebeliveau/Desktop/Notebook/Orientor_project/Orientor_project/backend/dev/app/services/GNN/best_model_20250520_022237.pt
+2025-07-16 19:06:29,234 - graph_traversal_service - INFO - Mappages idx2node chargés pour 18162 nœuds
+2025-07-16 19:06:29,239 - graph_traversal_service - INFO - Mappages node2idx chargés pour 18162 nœuds
+2025-07-16 19:06:29,307 - graph_traversal_service - INFO - Métadonnées chargées pour 18162 nœuds
+2025-07-16 19:06:29,308 - graph_traversal_service - INFO - Dictionnaire des types d'arêtes chargé avec 7 types
+2025-07-16 19:06:29,311 - graph_traversal_service - INFO - Index d'arêtes chargés avec forme torch.Size([2, 274732])
+2025-07-16 19:06:29,318 - graph_traversal_service - INFO - Caractéristiques des nœuds chargées avec forme torch.Size([18162, 384])
+2025-07-16 19:06:29,333 - graph_traversal_service - INFO - Types d'arêtes chargés
+2025-07-16 19:06:29,333 - graph_traversal_service - WARNING - Le fichier des indices des types d'arêtes n'existe pas: /Users/philippebeliveau/Desktop/Notebook/Orientor_project/Orientor_project/backend/dev/competenceTree_dev/data/edge_type_indices.json
+2025-07-16 19:06:29,372 - graph_traversal_service - INFO - Chargement du graphe prétraité depuis /Users/philippebeliveau/Desktop/Notebook/Orientor_project/Orientor_project/backend/dev/competenceTree_dev/data/networkx_graph.pkl...
+2025-07-16 19:06:29,447 - graph_traversal_service - INFO - Graphe NetworkX chargé avec 18162 nœuds et 150941 arêtes
+2025-07-16 19:06:29,449 - graph_traversal_service - INFO - Service de traversée du graphe initialisé avec 18162 nœuds et 150941 arêtes
+2025-07-16 19:06:29,449 - app.services.career_progression_service - INFO - GraphTraversalService initialized successfully for career progression
+/Users/philippebeliveau/miniforge3/envs/orientor/lib/python3.11/site-packages/pydantic/_internal/_config.py:318: UserWarning: Valid config keys have changed in V2:
+* 'schema_extra' has been renamed to 'json_schema_extra'
+  warnings.warn(message, UserWarning)
+2025-07-16 19:06:29,489 - app.services.tool_registry - INFO - Registered tool: esco_skills
+2025-07-16 19:06:29,489 - graph_traversal_service - ERROR - Le fichier du modèle n'existe pas: /Users/philippebeliveau/Desktop/Notebook/Orientor_project/Orientor_project/backend/dev/app/services/GNN/best_model_20250520_022237.pt
+2025-07-16 19:06:29,493 - graph_traversal_service - INFO - Mappages idx2node chargés pour 18162 nœuds
+2025-07-16 19:06:29,497 - graph_traversal_service - INFO - Mappages node2idx chargés pour 18162 nœuds
+2025-07-16 19:06:29,560 - graph_traversal_service - INFO - Métadonnées chargées pour 18162 nœuds
+2025-07-16 19:06:29,560 - graph_traversal_service - INFO - Dictionnaire des types d'arêtes chargé avec 7 types
+2025-07-16 19:06:29,562 - graph_traversal_service - INFO - Index d'arêtes chargés avec forme torch.Size([2, 274732])
+2025-07-16 19:06:29,567 - graph_traversal_service - INFO - Caractéristiques des nœuds chargées avec forme torch.Size([18162, 384])
+2025-07-16 19:06:29,579 - graph_traversal_service - INFO - Types d'arêtes chargés
+2025-07-16 19:06:29,579 - graph_traversal_service - WARNING - Le fichier des indices des types d'arêtes n'existe pas: /Users/philippebeliveau/Desktop/Notebook/Orientor_project/Orientor_project/backend/dev/competenceTree_dev/data/edge_type_indices.json
+2025-07-16 19:06:29,616 - graph_traversal_service - INFO - Chargement du graphe prétraité depuis /Users/philippebeliveau/Desktop/Notebook/Orientor_project/Orientor_project/backend/dev/competenceTree_dev/data/networkx_graph.pkl...
+2025-07-16 19:06:29,708 - graph_traversal_service - INFO - Graphe NetworkX chargé avec 18162 nœuds et 150941 arêtes
+2025-07-16 19:06:29,711 - graph_traversal_service - INFO - Service de traversée du graphe initialisé avec 18162 nœuds et 150941 arêtes
+2025-07-16 19:06:29,711 - app.services.career_progression_service - INFO - GraphTraversalService initialized successfully for career progression
+2025-07-16 19:06:29,711 - app.services.tool_registry - INFO - Registered tool: career_tree
+2025-07-16 19:06:29,711 - app.services.tool_registry - INFO - Registered tool: oasis_explorer
+2025-07-16 19:06:29,711 - app.services.tool_registry - INFO - Registered tool: peer_matching
+2025-07-16 19:06:29,711 - app.services.tool_registry - INFO - Registered tool: hexaco_test
+2025-07-16 19:06:29,711 - app.services.tool_registry - INFO - Registered tool: holland_test
+2025-07-16 19:06:29,711 - app.services.tool_registry - INFO - Registered tool: xp_challenges
+2025-07-16 19:06:29,719 - main_deploy - INFO - ✅ All routers imported successfully
+2025-07-16 19:06:29,719 - main_deploy - INFO - Static files mounted from /Users/philippebeliveau/Desktop/Notebook/Orientor_project/Orientor_project/backend/static
+2025-07-16 19:06:29,720 - main_deploy - INFO - 🔌 Including routers in the FastAPI app...
+2025-07-16 19:06:29,722 - main_deploy - INFO - ✅ Auth router included
+2025-07-16 19:06:29,724 - main_deploy - INFO - ✅ Profiles router included
+2025-07-16 19:06:29,765 - main_deploy - INFO - ✅ Holland test router included - /api/tests/holland endpoints now available
+2025-07-16 19:06:29,813 - main_deploy - INFO - ✅ All available routers included successfully
+INFO:     Started server process [9819]
+INFO:     Waiting for application startup.
+2025-07-16 19:06:29,815 - main_deploy - INFO - 🚀 Starting Orientor Backend on Railway
+2025-07-16 19:06:29,815 - main_deploy - INFO - Environment: development
+2025-07-16 19:06:29,815 - main_deploy - INFO - Port: 8000
+2025-07-16 19:06:29,815 - main_deploy - INFO - Railway Service ID: unknown
+2025-07-16 19:06:29,815 - main_deploy - INFO - ✅ Application startup completed successfully
+INFO:     Application startup complete.

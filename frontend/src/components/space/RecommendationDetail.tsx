@@ -30,23 +30,42 @@ export default function RecommendationDetail({ recommendation, onGenerate, gener
       {/* Career Fit Analyzer - For ESCO recommendations (home page) */}
       <CareerFitAnalyzer job={recommendation} jobSource="esco" />
       
-      {/* ESCO Competence Tree Graph with Skills Analysis - Only show for ESCO jobs */}
+      {/* ESCO Competence Tree Graph with Skills Analysis - Show for all saved recommendations from home page */}
       {(() => {
-        const shouldShow = recommendation.oasis_code && 
-          !recommendation.oasis_code.startsWith('oasis_') && 
-          !recommendation.oasis_code.startsWith('career_') && 
-          (recommendation.oasis_code.startsWith('occupation::key_') || !isNaN(Number(recommendation.id)));
+        // More inclusive condition for ESCO jobs from saved recommendations
+        const hasValidId = recommendation.oasis_code || recommendation.id;
+        const isEscoJob = hasValidId && 
+          !recommendation.oasis_code?.startsWith('oasis_') && 
+          !recommendation.oasis_code?.startsWith('career_');
+        
+        // Determine the job ID to use for the skill tree
+        let jobIdForTree = null;
+        if (recommendation.oasis_code?.startsWith('occupation::key_')) {
+          jobIdForTree = recommendation.oasis_code;
+        } else if (recommendation.oasis_code && !isNaN(Number(recommendation.oasis_code))) {
+          // If oasis_code is a number, convert to occupation::key_ format
+          jobIdForTree = `occupation::key_${recommendation.oasis_code}`;
+        } else if (!isNaN(Number(recommendation.id))) {
+          // If recommendation.id is a number, convert to occupation::key_ format
+          jobIdForTree = `occupation::key_${recommendation.id}`;
+        } else if (typeof recommendation.id === 'string' && (recommendation.id as string).startsWith('occupation::key_')) {
+          jobIdForTree = recommendation.id;
+        }
+        
+        const shouldShow = isEscoJob && jobIdForTree;
+        
         console.log("RecommendationDetail: Should show tree?", {
           shouldShow,
           oasisCode: recommendation.oasis_code,
           recommendationId: recommendation.id,
+          jobIdForTree,
           checks: {
-            hasOasisCode: !!recommendation.oasis_code,
-            notOasisPrefix: !recommendation.oasis_code?.startsWith('oasis_'),
-            notCareerPrefix: !recommendation.oasis_code?.startsWith('career_'),
-            validFormat: recommendation.oasis_code?.startsWith('occupation::key_') || !isNaN(Number(recommendation.id))
+            hasValidId,
+            isEscoJob,
+            hasJobIdForTree: !!jobIdForTree
           }
         });
+        
         return shouldShow;
       })() && (
         <div className="space-y-6">
@@ -67,7 +86,20 @@ export default function RecommendationDetail({ recommendation, onGenerate, gener
             {/* Full JobSkillsTree component with all features */}
             <div style={{ minHeight: '1000px' }}>
               <JobSkillsTree 
-                jobId={recommendation.oasis_code || `occupation::key_${recommendation.id}`} 
+                jobId={(() => {
+                  // Use the same logic as above to determine jobIdForTree
+                  let jobIdForTree = null;
+                  if (recommendation.oasis_code?.startsWith('occupation::key_')) {
+                    jobIdForTree = recommendation.oasis_code;
+                  } else if (recommendation.oasis_code && !isNaN(Number(recommendation.oasis_code))) {
+                    jobIdForTree = `occupation::key_${recommendation.oasis_code}`;
+                  } else if (!isNaN(Number(recommendation.id))) {
+                    jobIdForTree = `occupation::key_${recommendation.id}`;
+                  } else if (typeof recommendation.id === 'string' && (recommendation.id as string).startsWith('occupation::key_')) {
+                    jobIdForTree = recommendation.id;
+                  }
+                  return jobIdForTree || `occupation::key_${recommendation.id}`;
+                })()} 
                 height="100%" 
                 className="w-full"
               />

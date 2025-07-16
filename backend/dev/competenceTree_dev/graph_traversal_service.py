@@ -402,7 +402,7 @@ class GraphTraversalService:
         for node_id in valid_anchors:
             node_metadata = self.node_metadata.get(node_id, {})
             node_type = node_metadata.get("type", "unknown")
-            node_label = node_metadata.get("label", "")
+            node_label = node_metadata.get("preferredlabel", node_metadata.get("label", ""))
             
             result_graph["nodes"][node_id] = {
                 "id": node_id,
@@ -446,7 +446,7 @@ class GraphTraversalService:
                     # Ajouter le nœud
                     node_metadata = self.node_metadata.get(neighbor_id, {})
                     node_type = node_metadata.get("type", "unknown")
-                    node_label = node_metadata.get("label", "")
+                    node_label = node_metadata.get("preferredlabel", node_metadata.get("label", ""))
                     
                     result_graph["nodes"][neighbor_id] = {
                         "id": neighbor_id,
@@ -494,6 +494,6 @@ class GraphTraversalService:
         return {
             "id": node_id,
             "type": node_metadata.get("type", "unknown"),
-            "label": node_metadata.get("label", ""),
+            "label": node_metadata.get("preferredlabel", node_metadata.get("label", "")),
             "metadata": {**node_metadata, **node_data}
         }

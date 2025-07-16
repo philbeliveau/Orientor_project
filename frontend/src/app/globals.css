@@ -2,6 +2,40 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Font Face Declarations */
+@font-face {
+  font-family: 'DepartureMono';
+  src: url('/fonts/DepartureMono-1.422/DepartureMono-Regular.woff2') format('woff2'),
+       url('/fonts/DepartureMono-1.422/DepartureMono-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Technor';
+  src: url('/fonts/Technor_Complete/Fonts/WEB/fonts/Technor-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Technor';
+  src: url('/fonts/Technor_Complete/Fonts/WEB/fonts/Technor-Semibold.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Technor';
+  src: url('/fonts/Technor_Complete/Fonts/WEB/fonts/Technor-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 @layer utilities {
   .animate-spin-slow {
     animation: spin 8s linear infinite;

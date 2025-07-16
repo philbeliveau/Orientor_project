@@ -69,7 +69,7 @@ class SkillTreeVisualization:
         for node_id, node_data in graph_data.get("nodes", {}).items():
             G.add_node(
                 node_id,
-                label=node_data.get("label", ""),
+                label=node_data.get("preferredlabel", node_data.get("label", "")),
                 type=node_data.get("type", "unknown"),
                 is_anchor=node_data.get("is_anchor", False),
                 depth=node_data.get("depth", 0)
@@ -220,7 +220,7 @@ class SkillTreeVisualization:
                 node_y.append(y)
                 
                 # Texte du nœud
-                label = G.nodes[node].get("label", "")
+                label = G.nodes[node].get("preferredlabel", G.nodes[node].get("label", ""))
                 node_type = G.nodes[node].get("type", "unknown")
                 is_anchor = G.nodes[node].get("is_anchor", False)
                 depth = G.nodes[node].get("depth", 0)
@@ -372,7 +372,7 @@ class SkillTreeVisualization:
                 
                 nodes_data.append({
                     "id": node_id,
-                    "label": node_data.get("label", ""),
+                    "label": node_data.get("preferredlabel", node_data.get("label", "")),
                     "type": node_type,
                     "is_anchor": is_anchor,
                     "depth": node_data.get("depth", 0),
