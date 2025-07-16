@@ -5,7 +5,7 @@ from sqlalchemy import Column, Integer, String, Text, DateTime, ForeignKey, JSON
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.sql import func
 from sqlalchemy.orm import relationship
-from app.models.base import Base
+from ..utils.database import Base
 import uuid
 
 class PersonalityAssessment(Base):
@@ -28,6 +28,7 @@ class PersonalityAssessment(Base):
     updated_at = Column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now())
 
     # Relationships
+    user = relationship("User", back_populates="personality_assessments")
     responses = relationship("PersonalityResponse", back_populates="assessment", cascade="all, delete-orphan")
     profiles = relationship("PersonalityProfile", back_populates="assessment")
 
@@ -71,4 +72,5 @@ class PersonalityProfile(Base):
     updated_at = Column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now())
 
     # Relationships
+    user = relationship("User", back_populates="personality_profiles")
     assessment = relationship("PersonalityAssessment", back_populates="profiles")

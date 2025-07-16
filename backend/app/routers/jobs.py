@@ -32,6 +32,15 @@ class SaveJobRequest(BaseModel):
 class JobListResponse(BaseModel):
     jobs: List[SavedJobResponse]
     total: int
+
+class JobRecommendation(BaseModel):
+    id: str
+    score: float
+    metadata: Dict[str, Any]
+
+class JobRecommendationsResponse(BaseModel):
+    recommendations: List[JobRecommendation]
+    user_id: int
     
 @router.post("/save", response_model=SavedJobResponse)
 async def save_job(
@@ -315,3 +324,72 @@ async def get_job_details(
         "experience_years": "2-5 years",
         "industry": "Information Technology"
     }
+
+@router.get("/recommendations/me", response_model=JobRecommendationsResponse)
+async def get_job_recommendations(
+    top_k: int = 10,
+    embedding_type: str = "esco_embedding",
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    """
+    Get personalized job recommendations for the current user.
+    
+    Args:
+        top_k: Number of recommendations to return
+        embedding_type: Type of embedding to use for recommendations
+        current_user: Current authenticated user
+        db: Database session
+        
+    Returns:
+        List of job recommendations
+    """
+    try:
+        logger.info(f"Getting job recommendations for user {current_user.id}")
+        
+        # For now, return mock recommendations
+        # TODO: Implement actual recommendation algorithm using user profile and embeddings
+        mock_recommendations = []
+        
+        job_titles = [
+            "Software Developer",
+            "Data Scientist", 
+            "Product Manager",
+            "UX Designer",
+            "DevOps Engineer",
+            "Machine Learning Engineer",
+            "Frontend Developer",
+            "Backend Developer",
+            "Full Stack Developer",
+            "Systems Analyst"
+        ]
+        
+        for i in range(min(top_k, len(job_titles))):
+            mock_recommendations.append(JobRecommendation(
+                id=f"esco_job_{i}",
+                score=0.9 - (i * 0.05),  # Decreasing scores
+                metadata={
+                    "title": job_titles[i],
+                    "preferred_label": job_titles[i],
+                    "description": f"A {job_titles[i]} role with various responsibilities",
+                    "industry": "Technology",
+                    "education_level": "Bachelor's degree",
+                    "experience_years": "2-5 years",
+                    "skills": ["Python", "JavaScript", "SQL", "Git"],
+                    "embedding_type": embedding_type
+                }
+            ))
+        
+        logger.info(f"Returned {len(mock_recommendations)} job recommendations for user {current_user.id}")
+        
+        return JobRecommendationsResponse(
+            recommendations=mock_recommendations,
+            user_id=current_user.id
+        )
+        
+    except Exception as e:
+        logger.error(f"Error getting job recommendations: {str(e)}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to get job recommendations: {str(e)}"
+        )

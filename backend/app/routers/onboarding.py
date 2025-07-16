@@ -231,7 +231,7 @@ def complete_onboarding(
             personality_profile = PersonalityProfile(
                 user_id=current_user.id,
                 assessment_id=assessment.id,
-                profile_type="onboarding",
+                profile_type="hexaco",
                 scores=onboarding_data.psychProfile,
                 narrative_description=onboarding_data.psychProfile.get("description", ""),
                 assessment_version="v1.0",
@@ -282,8 +282,7 @@ def get_onboarding_profile(
         logger.info(f"Getting onboarding profile for user ID: {current_user.id}")
         
         personality_profile = db.query(PersonalityProfile).filter(
-            PersonalityProfile.user_id == current_user.id,
-            PersonalityProfile.profile_type == "onboarding"
+            PersonalityProfile.user_id == current_user.id
         ).first()
         
         if not personality_profile:
@@ -387,3 +386,87 @@ def reset_onboarding(
     except Exception as e:
         logger.error(f"Error resetting onboarding: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Failed to reset onboarding: {str(e)}")
+
+@router.post("/skip")
+def skip_onboarding(
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    """Skip onboarding for a user by creating a default profile"""
+    try:
+        logger.info(f"Skipping onboarding for user ID: {current_user.id}")
+        
+        # Check if user already has a profile
+        existing_profile = db.query(PersonalityProfile).filter(
+            PersonalityProfile.user_id == current_user.id
+        ).first()
+        
+        if existing_profile:
+            logger.info(f"User {current_user.id} already has a profile, skipping")
+            return {"message": "User already has a profile"}
+        
+        # Create a fake assessment for tracking
+        assessment = PersonalityAssessment(
+            user_id=current_user.id,
+            assessment_type="onboarding",
+            assessment_version="v1.0",
+            session_id=uuid.uuid4(),
+            status="completed",
+            started_at=datetime.utcnow(),
+            completed_at=datetime.utcnow(),
+            total_items=1,
+            completed_items=1
+        )
+        
+        db.add(assessment)
+        db.flush()
+        
+        # Create a default personality profile
+        default_profile = PersonalityProfile(
+            user_id=current_user.id,
+            assessment_id=assessment.id,
+            profile_type="hexaco",
+            scores={
+                "hexaco": {
+                    "honesty": 0.5,
+                    "emotionality": 0.5,
+                    "extraversion": 0.5,
+                    "agreeableness": 0.5,
+                    "conscientiousness": 0.5,
+                    "openness": 0.5
+                },
+                "riasec": {
+                    "realistic": 0.5,
+                    "investigative": 0.5,
+                    "artistic": 0.5,
+                    "social": 0.5,
+                    "enterprising": 0.5,
+                    "conventional": 0.5
+                },
+                "topTraits": ["Balanced", "Adaptable", "Versatile"]
+            },
+            narrative_description="This user chose to skip the onboarding assessment. Default balanced profile assigned.",
+            assessment_version="v1.0",
+            computed_at=datetime.utcnow(),
+            created_at=datetime.utcnow(),
+            updated_at=datetime.utcnow()
+        )
+        
+        db.add(default_profile)
+        db.commit()
+        
+        logger.info(f"Successfully skipped onboarding for user {current_user.id}")
+        
+        return {
+            "message": "Onboarding skipped successfully",
+            "profile_created": True,
+            "assessment_id": assessment.id
+        }
+        
+    except SQLAlchemyError as e:
+        logger.error(f"Database error skipping onboarding: {str(e)}")
+        db.rollback()
+        raise HTTPException(status_code=500, detail=f"Database error: {str(e)}")
+    except Exception as e:
+        logger.error(f"Error skipping onboarding: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Failed to skip onboarding: {str(e)}")

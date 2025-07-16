@@ -43,3 +43,7 @@ class User(Base):
     # Orientator AI relationships
     tool_invocations = relationship("ToolInvocation", back_populates="user")
     journey_milestones = relationship("UserJourneyMilestone", back_populates="user", cascade="all, delete-orphan")
+    
+    # Personality assessment relationships
+    personality_assessments = relationship("PersonalityAssessment", cascade="all, delete-orphan")
+    personality_profiles = relationship("PersonalityProfile", cascade="all, delete-orphan")

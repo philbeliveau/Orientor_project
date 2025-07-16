@@ -63,11 +63,14 @@ export default function LoginPage() {
                 const needsOnboarding = await onboardingService.needsOnboarding();
                 
                 if (needsOnboarding) {
+                    console.log('User needs onboarding, redirecting to onboarding page');
                     router.push('/onboarding');
                 } else {
+                    console.log('User onboarding complete, redirecting to dashboard');
                     router.push('/dashboard');
                 }
             } catch (onboardingError) {
+                console.error('Error checking onboarding status:', onboardingError);
                 console.log('Could not check onboarding status, redirecting to dashboard');
                 router.push('/dashboard');
             }

@@ -22,6 +22,7 @@ from .career_goal import CareerGoal, CareerMilestone
 from .message_component import MessageComponent
 from .tool_invocation import ToolInvocation
 from .user_journey_milestone import UserJourneyMilestone
+from .personality_profiles import PersonalityAssessment, PersonalityResponse, PersonalityProfile
 from ..utils.database import Base
 
 __all__ = [
@@ -33,5 +34,6 @@ __all__ = [
     'ConversationShare', 'UserChatAnalytics', 'Course',
     'PsychologicalInsight', 'CareerSignal', 'ConversationLog',
     'CareerProfileAggregate', 'CareerGoal', 'CareerMilestone',
-    'MessageComponent', 'ToolInvocation', 'UserJourneyMilestone', 'Base'
+    'MessageComponent', 'ToolInvocation', 'UserJourneyMilestone', 
+    'PersonalityAssessment', 'PersonalityResponse', 'PersonalityProfile', 'Base'
 ]

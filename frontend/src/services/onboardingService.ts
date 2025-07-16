@@ -171,6 +171,21 @@ class OnboardingService {
       return 0;
     }
   }
+
+  /**
+   * Skip onboarding for a user by creating a default profile
+   */
+  async skipOnboarding(): Promise<OnboardingCompleteResponse> {
+    try {
+      console.log('Skipping onboarding...');
+      const response = await api.post(`${this.baseURL}/skip`);
+      console.log('Skip onboarding response:', response.data);
+      return response.data;
+    } catch (error) {
+      console.error('Failed to skip onboarding:', error);
+      throw error;
+    }
+  }
 }
 
 export const onboardingService = new OnboardingService();

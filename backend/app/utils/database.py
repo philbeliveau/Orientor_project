@@ -159,6 +159,9 @@ def get_db():
         yield db
     except Exception as e:
         logger.error(f"Database session error: {str(e)}")
+        logger.error(f"Error type: {type(e)}")
+        import traceback
+        logger.error(f"Traceback: {traceback.format_exc()}")
         db.rollback()
         raise
     finally:
