@@ -366,7 +366,7 @@ async def get_job_recommendations(
         
         for i in range(min(top_k, len(job_titles))):
             mock_recommendations.append(JobRecommendation(
-                id=f"esco_job_{i}",
+                id=f"occupation::key_{1000 + i}",
                 score=0.9 - (i * 0.05),  # Decreasing scores
                 metadata={
                     "title": job_titles[i],

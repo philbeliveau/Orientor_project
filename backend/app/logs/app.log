@@ -23697,3 +23697,439 @@ fastapi.exceptions.HTTPException
 2025-07-16 18:50:01,507 - app.utils.database - INFO - Sample tables: ['alembic_version', 'gca_holland_questions', 'gca_personalities', 'gca_users_answers', 'node_notes']...
 2025-07-16 18:50:01,508 - app.utils.database - INFO - ✅ Database initialization completed successfully
 2025-07-16 18:50:01,508 - app - INFO - ✅ Application startup completed successfully
+2025-07-16 18:50:37,619 - app - INFO - ======= ROUTER REGISTRATION DETAILS =======
+2025-07-16 18:50:37,619 - app - INFO - auth_router import path: fastapi.routing
+2025-07-16 18:50:37,619 - app - INFO - get_current_user import path: app.routers.user
+2025-07-16 18:50:37,619 - app - INFO - profiles_router import path: fastapi.routing
+2025-07-16 18:50:37,619 - app - INFO - Registering auth_router routes: ["/auth/register [{'POST'}]", "/auth/login [{'POST'}]", "/auth/update [{'PUT'}]", "/auth/change-password [{'PUT'}]"]
+2025-07-16 18:50:37,619 - app - INFO - Registering profiles_router routes: ["/profiles/test [{'GET'}]", "/profiles/me [{'GET'}]", "/profiles/update [{'PUT'}]", "/profiles/{user_id} [{'GET'}]"]
+2025-07-16 18:50:37,619 - app - INFO - Registering chat_router routes: ["/chat/send [{'POST'}]", "/chat/clear [{'POST'}]"]
+2025-07-16 18:50:37,619 - app - INFO - Registering peers_router routes: ["/peers/suggested [{'GET'}]", "/peers/compatible [{'GET'}]", "/peers/homepage [{'GET'}]", "/peers/refresh [{'POST'}]"]
+2025-07-16 18:50:37,619 - app - INFO - Registering messages_router routes: ["/messages [{'POST'}]", "/messages/conversation/{peer_id} [{'GET'}]", "/messages/conversations [{'GET'}]", "/messages/suggested-peers [{'GET'}]"]
+2025-07-16 18:50:37,619 - app - INFO - Registering test_router routes: ["/test/hello [{'GET'}]"]
+2025-07-16 18:50:37,619 - app - INFO - Registering space_router routes: ["/space/recommendations [{'POST'}]", "/space/recommendations [{'GET'}]", "/space/recommendations/{identifier} [{'DELETE'}]", "/space/notes [{'POST'}]", "/space/notes [{'GET'}]", "/space/notes/{note_id} [{'PUT'}]", "/space/notes/{note_id} [{'DELETE'}]", "/space/skills [{'GET'}]", "/space/skills [{'PUT'}]", "/space/recommendations/{oasis_code}/skill-comparison [{'GET'}]", "/space/recommendations/{recommendation_id}/generate-analysis [{'POST'}]"]
+2025-07-16 18:50:37,619 - app - INFO - Registering vector_router routes: ["/vector/search [{'POST'}]", "/vector/search/save [{'POST'}]", "/vector/health [{'GET'}]", "/vector/suggested-peers [{'GET'}]", "/vector/debug [{'GET'}]"]
+2025-07-16 18:50:37,619 - app - INFO - Registering recommendations_router routes: ["/recommendations [{'GET'}]", "/recommendations/swipe [{'POST'}]"]
+2025-07-16 18:50:37,620 - app - INFO - Registering careers_router routes: ["/careers/recommendations [{'GET'}]", "/careers/save/{career_id} [{'POST'}]", "/careers/saved [{'GET'}]", "/careers/fit-analysis [{'POST'}]", "/careers/cleanup-test-jobs [{'DELETE'}]"]
+2025-07-16 18:50:37,620 - app - INFO - Registering tree_router routes: ["/tree [{'POST'}]", "/tree/skills [{'POST'}]"]
+2025-07-16 18:50:37,620 - app - INFO - Registering tree_paths_router routes: ["/tree-paths/ [{'POST'}]", "/tree-paths/ [{'GET'}]", "/tree-paths/{tree_path_id} [{'GET'}]", "/tree-paths/{tree_path_id} [{'DELETE'}]"]
+2025-07-16 18:50:37,620 - app - INFO - Registering node_notes_router routes: ["/node-notes/ [{'POST'}]", "/node-notes/ [{'GET'}]", "/node-notes/node/{node_id} [{'GET'}]", "/node-notes/{note_id} [{'GET'}]", "/node-notes/{note_id} [{'DELETE'}]"]
+2025-07-16 18:50:37,620 - app - INFO - Registering user_progress_router routes: ["/user-progress/ [{'GET'}]", "/user-progress/update [{'POST'}]"]
+2025-07-16 18:50:37,620 - app - INFO - Registering holland_test_router routes: ["/api/tests/holland/ [{'GET'}]", "/api/tests/holland/questions [{'GET'}]", "/api/tests/holland/answer [{'POST'}]", "/api/tests/holland/score/{attempt_id} [{'GET'}]", "/api/tests/holland/user-results [{'GET'}]", "/api/tests/holland/profile-description [{'GET'}]", "/api/tests/holland/profile-description/{user_id} [{'GET'}]"]
+2025-07-16 18:50:37,620 - app - INFO - Registering hexaco_test_router routes: ["/api/tests/hexaco/ [{'GET'}]", "/api/tests/hexaco/languages [{'GET'}]", "/api/tests/hexaco/versions [{'GET'}]", "/api/tests/hexaco/start [{'POST'}]", "/api/tests/hexaco/questions [{'GET'}]", "/api/tests/hexaco/answer [{'POST'}]", "/api/tests/hexaco/progress/{session_id} [{'GET'}]", "/api/tests/hexaco/score/{session_id} [{'GET'}]", "/api/tests/hexaco/profile/{user_id} [{'GET'}]", "/api/tests/hexaco/my-profile [{'GET'}]", "/api/tests/hexaco/analysis/{user_id} [{'GET'}]", "/api/tests/hexaco/my-analysis [{'GET'}]"]
+2025-07-16 18:50:37,620 - app - INFO - Registering insight_router routes: ["/insight/generate [{'POST'}]", "/insight/get [{'GET'}]", "/insight/regenerate [{'POST'}]", "/insight/save [{'PATCH'}]", "/insight/rewrite [{'POST'}]"]
+2025-07-16 18:50:37,620 - app - INFO - Registering orientator_router routes: ["/orientator/test-message [{'POST'}]", "/orientator/message [{'POST'}]", "/orientator/save-component [{'POST'}]", "/orientator/conversations/{conversation_id}/messages [{'GET'}]", "/orientator/journey/{user_id} [{'GET'}]", "/orientator/conversations [{'GET'}]", "/orientator/tool-analytics [{'GET'}]", "/orientator/feedback [{'POST'}]", "/orientator/health [{'GET'}]"]
+2025-07-16 18:50:37,620 - app - INFO - ============================================
+2025-07-16 18:50:37,620 - app - INFO - Including routers in the FastAPI app
+2025-07-16 18:50:37,622 - app - INFO - Auth router included successfully
+2025-07-16 18:50:37,625 - app - INFO - Profiles router included successfully
+2025-07-16 18:50:37,717 - app - INFO - All routers included successfully
+2025-07-16 18:50:37,717 - app - INFO - === Available Routes ===
+2025-07-16 18:50:37,717 - app - INFO - Route: /openapi.json, Methods: {'HEAD', 'GET'}
+2025-07-16 18:50:37,717 - app - INFO - Route: /docs, Methods: {'HEAD', 'GET'}
+2025-07-16 18:50:37,717 - app - INFO - Route: /docs/oauth2-redirect, Methods: {'HEAD', 'GET'}
+2025-07-16 18:50:37,717 - app - INFO - Route: /redoc, Methods: {'HEAD', 'GET'}
+2025-07-16 18:50:37,717 - app - INFO - Mount: /static
+2025-07-16 18:50:37,717 - app - INFO - Route: /auth/register, Methods: {'POST'}
+2025-07-16 18:50:37,717 - app - INFO - Route: /auth/login, Methods: {'POST'}
+2025-07-16 18:50:37,717 - app - INFO - Route: /auth/update, Methods: {'PUT'}
+2025-07-16 18:50:37,718 - app - INFO - Route: /auth/change-password, Methods: {'PUT'}
+2025-07-16 18:50:37,718 - app - INFO - Route: /profiles/test, Methods: {'GET'}
+2025-07-16 18:50:37,718 - app - INFO - Route: /profiles/me, Methods: {'GET'}
+2025-07-16 18:50:37,718 - app - INFO - Route: /profiles/update, Methods: {'PUT'}
+2025-07-16 18:50:37,718 - app - INFO - Route: /profiles/{user_id}, Methods: {'GET'}
+2025-07-16 18:50:37,718 - app - INFO - Route: /test/hello, Methods: {'GET'}
+2025-07-16 18:50:37,718 - app - INFO - Route: /chat/conversations, Methods: {'GET'}
+2025-07-16 18:50:37,718 - app - INFO - Route: /chat/conversations, Methods: {'POST'}
+2025-07-16 18:50:37,718 - app - INFO - Route: /chat/conversations/{conversation_id}, Methods: {'GET'}
+2025-07-16 18:50:37,718 - app - INFO - Route: /chat/conversations/{conversation_id}, Methods: {'PUT'}
+2025-07-16 18:50:37,718 - app - INFO - Route: /chat/conversations/{conversation_id}, Methods: {'DELETE'}
+2025-07-16 18:50:37,718 - app - INFO - Route: /chat/conversations/{conversation_id}/favorite, Methods: {'POST'}
+2025-07-16 18:50:37,718 - app - INFO - Route: /chat/conversations/{conversation_id}/archive, Methods: {'POST'}
+2025-07-16 18:50:37,718 - app - INFO - Route: /chat/conversations/{conversation_id}/generate-title, Methods: {'POST'}
+2025-07-16 18:50:37,718 - app - INFO - Route: /chat/conversations/{conversation_id}/messages, Methods: {'GET'}
+2025-07-16 18:50:37,718 - app - INFO - Route: /chat/conversations/{conversation_id}/statistics, Methods: {'GET'}
+2025-07-16 18:50:37,718 - app - INFO - Route: /chat/conversations/{conversation_id}/export, Methods: {'POST'}
+2025-07-16 18:50:37,718 - app - INFO - Route: /chat/conversations/send/{conversation_id}, Methods: {'POST'}
+2025-07-16 18:50:37,718 - app - INFO - Route: /chat/send, Methods: {'POST'}
+2025-07-16 18:50:37,718 - app - INFO - Route: /chat/clear, Methods: {'POST'}
+2025-07-16 18:50:37,718 - app - INFO - Route: /chat/share/conversations/{conversation_id}, Methods: {'POST'}
+2025-07-16 18:50:37,718 - app - INFO - Route: /chat/share/shared/{share_token}, Methods: {'GET'}
+2025-07-16 18:50:37,718 - app - INFO - Route: /chat/share/shares/{share_id}, Methods: {'PUT'}
+2025-07-16 18:50:37,718 - app - INFO - Route: /chat/share/shares/{share_id}, Methods: {'DELETE'}
+2025-07-16 18:50:37,718 - app - INFO - Route: /chat/share/user/shares, Methods: {'GET'}
+2025-07-16 18:50:37,718 - app - INFO - Route: /chat/share/shares/{share_id}/analytics, Methods: {'GET'}
+2025-07-16 18:50:37,718 - app - INFO - Route: /chat/analytics/usage, Methods: {'GET'}
+2025-07-16 18:50:37,719 - app - INFO - Route: /chat/analytics/trends, Methods: {'GET'}
+2025-07-16 18:50:37,719 - app - INFO - Route: /chat/analytics/topics, Methods: {'GET'}
+2025-07-16 18:50:37,719 - app - INFO - Route: /chat/analytics/summary, Methods: {'GET'}
+2025-07-16 18:50:37,719 - app - INFO - Route: /peers/suggested, Methods: {'GET'}
+2025-07-16 18:50:37,719 - app - INFO - Route: /peers/compatible, Methods: {'GET'}
+2025-07-16 18:50:37,719 - app - INFO - Route: /peers/homepage, Methods: {'GET'}
+2025-07-16 18:50:37,719 - app - INFO - Route: /peers/refresh, Methods: {'POST'}
+2025-07-16 18:50:37,719 - app - INFO - Route: /messages, Methods: {'POST'}
+2025-07-16 18:50:37,719 - app - INFO - Route: /messages/conversation/{peer_id}, Methods: {'GET'}
+2025-07-16 18:50:37,719 - app - INFO - Route: /messages/conversations, Methods: {'GET'}
+2025-07-16 18:50:37,719 - app - INFO - Route: /messages/suggested-peers, Methods: {'GET'}
+2025-07-16 18:50:37,719 - app - INFO - Route: /space/recommendations, Methods: {'POST'}
+2025-07-16 18:50:37,719 - app - INFO - Route: /space/recommendations, Methods: {'GET'}
+2025-07-16 18:50:37,719 - app - INFO - Route: /space/recommendations/{identifier}, Methods: {'DELETE'}
+2025-07-16 18:50:37,719 - app - INFO - Route: /space/notes, Methods: {'POST'}
+2025-07-16 18:50:37,719 - app - INFO - Route: /space/notes, Methods: {'GET'}
+2025-07-16 18:50:37,719 - app - INFO - Route: /space/notes/{note_id}, Methods: {'PUT'}
+2025-07-16 18:50:37,719 - app - INFO - Route: /space/notes/{note_id}, Methods: {'DELETE'}
+2025-07-16 18:50:37,719 - app - INFO - Route: /space/skills, Methods: {'GET'}
+2025-07-16 18:50:37,719 - app - INFO - Route: /space/skills, Methods: {'PUT'}
+2025-07-16 18:50:37,719 - app - INFO - Route: /space/recommendations/{oasis_code}/skill-comparison, Methods: {'GET'}
+2025-07-16 18:50:37,719 - app - INFO - Route: /space/recommendations/{recommendation_id}/generate-analysis, Methods: {'POST'}
+2025-07-16 18:50:37,719 - app - INFO - Route: /vector/search, Methods: {'POST'}
+2025-07-16 18:50:37,719 - app - INFO - Route: /vector/search/save, Methods: {'POST'}
+2025-07-16 18:50:37,719 - app - INFO - Route: /vector/health, Methods: {'GET'}
+2025-07-16 18:50:37,719 - app - INFO - Route: /vector/suggested-peers, Methods: {'GET'}
+2025-07-16 18:50:37,720 - app - INFO - Route: /vector/debug, Methods: {'GET'}
+2025-07-16 18:50:37,720 - app - INFO - Route: /recommendations, Methods: {'GET'}
+2025-07-16 18:50:37,720 - app - INFO - Route: /recommendations/swipe, Methods: {'POST'}
+2025-07-16 18:50:37,720 - app - INFO - Route: /careers/recommendations, Methods: {'GET'}
+2025-07-16 18:50:37,720 - app - INFO - Route: /careers/save/{career_id}, Methods: {'POST'}
+2025-07-16 18:50:37,720 - app - INFO - Route: /careers/saved, Methods: {'GET'}
+2025-07-16 18:50:37,720 - app - INFO - Route: /careers/fit-analysis, Methods: {'POST'}
+2025-07-16 18:50:37,720 - app - INFO - Route: /careers/cleanup-test-jobs, Methods: {'DELETE'}
+2025-07-16 18:50:37,720 - app - INFO - Route: /tree, Methods: {'POST'}
+2025-07-16 18:50:37,720 - app - INFO - Route: /tree/skills, Methods: {'POST'}
+2025-07-16 18:50:37,720 - app - INFO - Route: /tree-paths/, Methods: {'POST'}
+2025-07-16 18:50:37,720 - app - INFO - Route: /tree-paths/, Methods: {'GET'}
+2025-07-16 18:50:37,720 - app - INFO - Route: /tree-paths/{tree_path_id}, Methods: {'GET'}
+2025-07-16 18:50:37,720 - app - INFO - Route: /tree-paths/{tree_path_id}, Methods: {'DELETE'}
+2025-07-16 18:50:37,720 - app - INFO - Route: /node-notes/, Methods: {'POST'}
+2025-07-16 18:50:37,720 - app - INFO - Route: /node-notes/, Methods: {'GET'}
+2025-07-16 18:50:37,720 - app - INFO - Route: /node-notes/node/{node_id}, Methods: {'GET'}
+2025-07-16 18:50:37,720 - app - INFO - Route: /node-notes/{note_id}, Methods: {'GET'}
+2025-07-16 18:50:37,720 - app - INFO - Route: /node-notes/{note_id}, Methods: {'DELETE'}
+2025-07-16 18:50:37,720 - app - INFO - Route: /user-progress/, Methods: {'GET'}
+2025-07-16 18:50:37,720 - app - INFO - Route: /user-progress/update, Methods: {'POST'}
+2025-07-16 18:50:37,720 - app - INFO - Route: /api/v1/jobs/save, Methods: {'POST'}
+2025-07-16 18:50:37,720 - app - INFO - Route: /api/v1/jobs/saved, Methods: {'GET'}
+2025-07-16 18:50:37,720 - app - INFO - Route: /api/v1/jobs/{job_id}, Methods: {'DELETE'}
+2025-07-16 18:50:37,720 - app - INFO - Route: /api/v1/jobs/{esco_id}/details, Methods: {'GET'}
+2025-07-16 18:50:37,720 - app - INFO - Route: /api/v1/jobs/recommendations/me, Methods: {'GET'}
+2025-07-16 18:50:37,720 - app - INFO - Route: /api/v1/program-recommendations/career-goal/{goal_id}, Methods: {'GET'}
+2025-07-16 18:50:37,721 - app - INFO - Route: /api/v1/program-recommendations/career-goal/{goal_id}/save, Methods: {'POST'}
+2025-07-16 18:50:37,721 - app - INFO - Route: /api/v1/program-recommendations/career-goal/{goal_id}/saved, Methods: {'GET'}
+2025-07-16 18:50:37,721 - app - INFO - Route: /api/v1/program-recommendations/institutions, Methods: {'GET'}
+2025-07-16 18:50:37,721 - app - INFO - Route: /api/tests/holland/, Methods: {'GET'}
+2025-07-16 18:50:37,721 - app - INFO - Route: /api/tests/holland/questions, Methods: {'GET'}
+2025-07-16 18:50:37,721 - app - INFO - Route: /api/tests/holland/answer, Methods: {'POST'}
+2025-07-16 18:50:37,721 - app - INFO - Route: /api/tests/holland/score/{attempt_id}, Methods: {'GET'}
+2025-07-16 18:50:37,721 - app - INFO - Route: /api/tests/holland/user-results, Methods: {'GET'}
+2025-07-16 18:50:37,721 - app - INFO - Route: /api/tests/holland/profile-description, Methods: {'GET'}
+2025-07-16 18:50:37,721 - app - INFO - Route: /api/tests/holland/profile-description/{user_id}, Methods: {'GET'}
+2025-07-16 18:50:37,721 - app - INFO - Route: /api/tests/hexaco/, Methods: {'GET'}
+2025-07-16 18:50:37,721 - app - INFO - Route: /api/tests/hexaco/languages, Methods: {'GET'}
+2025-07-16 18:50:37,721 - app - INFO - Route: /api/tests/hexaco/versions, Methods: {'GET'}
+2025-07-16 18:50:37,721 - app - INFO - Route: /api/tests/hexaco/start, Methods: {'POST'}
+2025-07-16 18:50:37,721 - app - INFO - Route: /api/tests/hexaco/questions, Methods: {'GET'}
+2025-07-16 18:50:37,721 - app - INFO - Route: /api/tests/hexaco/answer, Methods: {'POST'}
+2025-07-16 18:50:37,721 - app - INFO - Route: /api/tests/hexaco/progress/{session_id}, Methods: {'GET'}
+2025-07-16 18:50:37,721 - app - INFO - Route: /api/tests/hexaco/score/{session_id}, Methods: {'GET'}
+2025-07-16 18:50:37,721 - app - INFO - Route: /api/tests/hexaco/profile/{user_id}, Methods: {'GET'}
+2025-07-16 18:50:37,721 - app - INFO - Route: /api/tests/hexaco/my-profile, Methods: {'GET'}
+2025-07-16 18:50:37,721 - app - INFO - Route: /api/tests/hexaco/analysis/{user_id}, Methods: {'GET'}
+2025-07-16 18:50:37,721 - app - INFO - Route: /api/tests/hexaco/my-analysis, Methods: {'GET'}
+2025-07-16 18:50:37,721 - app - INFO - Route: /insight/generate, Methods: {'POST'}
+2025-07-16 18:50:37,721 - app - INFO - Route: /insight/get, Methods: {'GET'}
+2025-07-16 18:50:37,721 - app - INFO - Route: /insight/regenerate, Methods: {'POST'}
+2025-07-16 18:50:37,722 - app - INFO - Route: /insight/save, Methods: {'PATCH'}
+2025-07-16 18:50:37,722 - app - INFO - Route: /insight/rewrite, Methods: {'POST'}
+2025-07-16 18:50:37,722 - app - INFO - Route: /api/v1/competence-tree/generate, Methods: {'POST'}
+2025-07-16 18:50:37,722 - app - INFO - Route: /api/v1/competence-tree/generate-from-anchors, Methods: {'POST'}
+2025-07-16 18:50:37,722 - app - INFO - Route: /api/v1/competence-tree/anchor-skills, Methods: {'GET'}
+2025-07-16 18:50:37,722 - app - INFO - Route: /api/v1/competence-tree/{graph_id}, Methods: {'GET'}
+2025-07-16 18:50:37,722 - app - INFO - Route: /api/v1/competence-tree/node/{node_id}/complete, Methods: {'PATCH'}
+2025-07-16 18:50:37,722 - app - INFO - Route: /api/v1/career-progression/{occupation_id}, Methods: {'GET'}
+2025-07-16 18:50:37,722 - app - INFO - Route: /api/v1/career-progression/{occupation_id}/personalized, Methods: {'GET'}
+2025-07-16 18:50:37,722 - app - INFO - Route: /api/v1/career-progression/{occupation_id}/analyze, Methods: {'GET'}
+2025-07-16 18:50:37,722 - app - INFO - Route: /api/v1/users/me, Methods: {'GET'}
+2025-07-16 18:50:37,722 - app - INFO - Route: /api/v1/users/{user_id}/profile, Methods: {'GET'}
+2025-07-16 18:50:37,722 - app - INFO - Route: /api/reflection/questions, Methods: {'GET'}
+2025-07-16 18:50:37,722 - app - INFO - Route: /api/reflection/responses/{user_id}, Methods: {'GET'}
+2025-07-16 18:50:37,722 - app - INFO - Route: /api/reflection/responses, Methods: {'GET'}
+2025-07-16 18:50:37,722 - app - INFO - Route: /api/reflection/responses, Methods: {'POST'}
+2025-07-16 18:50:37,722 - app - INFO - Route: /api/reflection/responses/{response_id}, Methods: {'PUT'}
+2025-07-16 18:50:37,723 - app - INFO - Route: /api/reflection/responses/batch, Methods: {'POST'}
+2025-07-16 18:50:37,723 - app - INFO - Route: /api/reflection/responses/{response_id}, Methods: {'DELETE'}
+2025-07-16 18:50:37,723 - app - INFO - Route: /api/v1/avatar/generate-avatar/me, Methods: {'POST'}
+2025-07-16 18:50:37,723 - app - INFO - Route: /api/v1/avatar/me, Methods: {'GET'}
+2025-07-16 18:50:37,723 - app - INFO - Route: /api/v1/avatar/generate-avatar-test/{user_id}, Methods: {'POST'}
+2025-07-16 18:50:37,723 - app - INFO - Route: /onboarding/status, Methods: {'GET'}
+2025-07-16 18:50:37,723 - app - INFO - Route: /onboarding/start, Methods: {'POST'}
+2025-07-16 18:50:37,723 - app - INFO - Route: /onboarding/response, Methods: {'POST'}
+2025-07-16 18:50:37,723 - app - INFO - Route: /onboarding/complete, Methods: {'POST'}
+2025-07-16 18:50:37,723 - app - INFO - Route: /onboarding/profile, Methods: {'GET'}
+2025-07-16 18:50:37,723 - app - INFO - Route: /onboarding/responses, Methods: {'GET'}
+2025-07-16 18:50:37,723 - app - INFO - Route: /onboarding/reset, Methods: {'DELETE'}
+2025-07-16 18:50:37,723 - app - INFO - Route: /onboarding/skip, Methods: {'POST'}
+2025-07-16 18:50:37,723 - app - INFO - Route: /api/v1/education/programs/search, Methods: {'POST'}
+2025-07-16 18:50:37,723 - app - INFO - Route: /api/v1/education/programs/{program_id}, Methods: {'GET'}
+2025-07-16 18:50:37,723 - app - INFO - Route: /api/v1/education/institutions, Methods: {'GET'}
+2025-07-16 18:50:37,723 - app - INFO - Route: /api/v1/education/metadata, Methods: {'GET'}
+2025-07-16 18:50:37,723 - app - INFO - Route: /api/v1/school-programs/search, Methods: {'POST'}
+2025-07-16 18:50:37,723 - app - INFO - Route: /api/v1/school-programs/search, Methods: {'GET'}
+2025-07-16 18:50:37,723 - app - INFO - Route: /api/v1/school-programs/programs/{program_id}, Methods: {'GET'}
+2025-07-16 18:50:37,723 - app - INFO - Route: /api/v1/school-programs/users/interactions, Methods: {'POST'}
+2025-07-16 18:50:37,724 - app - INFO - Route: /api/v1/school-programs/users/saved-programs, Methods: {'POST'}
+2025-07-16 18:50:37,724 - app - INFO - Route: /api/v1/school-programs/users/saved-programs, Methods: {'GET'}
+2025-07-16 18:50:37,724 - app - INFO - Route: /api/v1/school-programs/users/saved-programs/{program_id}, Methods: {'DELETE'}
+2025-07-16 18:50:37,724 - app - INFO - Route: /api/v1/school-programs/filters, Methods: {'GET'}
+2025-07-16 18:50:37,724 - app - INFO - Route: /api/v1/school-programs/health, Methods: {'GET'}
+2025-07-16 18:50:37,724 - app - INFO - Route: /api/v1/courses, Methods: {'POST'}
+2025-07-16 18:50:37,724 - app - INFO - Route: /api/v1/courses, Methods: {'GET'}
+2025-07-16 18:50:37,724 - app - INFO - Route: /api/v1/courses/{course_id}, Methods: {'GET'}
+2025-07-16 18:50:37,724 - app - INFO - Route: /api/v1/courses/{course_id}, Methods: {'PUT'}
+2025-07-16 18:50:37,724 - app - INFO - Route: /api/v1/courses/{course_id}, Methods: {'DELETE'}
+2025-07-16 18:50:37,724 - app - INFO - Route: /api/v1/courses/{course_id}/targeted-analysis, Methods: {'POST'}
+2025-07-16 18:50:37,724 - app - INFO - Route: /api/v1/conversations/{session_id}/respond, Methods: {'POST'}
+2025-07-16 18:50:37,724 - app - INFO - Route: /api/v1/psychological-profile/{user_id}, Methods: {'GET'}
+2025-07-16 18:50:37,724 - app - INFO - Route: /api/v1/career-signals/{user_id}, Methods: {'GET'}
+2025-07-16 18:50:37,724 - app - INFO - Route: /api/v1/courses/{course_id}/insights, Methods: {'GET'}
+2025-07-16 18:50:37,724 - app - INFO - Route: /api/v1/conversations/{session_id}/summary, Methods: {'GET'}
+2025-07-16 18:50:37,724 - app - INFO - Route: /api/v1/enhanced-chat/send, Methods: {'POST'}
+2025-07-16 18:50:37,724 - app - INFO - Route: /api/v1/enhanced-chat/skill-explanation, Methods: {'POST'}
+2025-07-16 18:50:37,724 - app - INFO - Route: /api/v1/enhanced-chat/learning-recommendations, Methods: {'GET'}
+2025-07-16 18:50:37,724 - app - INFO - Route: /api/v1/enhanced-chat/career-path-analysis, Methods: {'POST'}
+2025-07-16 18:50:37,724 - app - INFO - Route: /api/v1/enhanced-chat/graphsage-insights, Methods: {'GET'}
+2025-07-16 18:50:37,724 - app - INFO - Route: /api/v1/enhanced-chat/status, Methods: {'GET'}
+2025-07-16 18:50:37,724 - app - INFO - Route: /api/v1/socratic-chat/send, Methods: {'POST'}
+2025-07-16 18:50:37,724 - app - INFO - Route: /api/v1/socratic-chat/introduction, Methods: {'POST'}
+2025-07-16 18:50:37,724 - app - INFO - Route: /api/v1/socratic-chat/modes, Methods: {'GET'}
+2025-07-16 18:50:37,724 - app - INFO - Route: /api/v1/socratic-chat/status, Methods: {'GET'}
+2025-07-16 18:50:37,724 - app - INFO - Route: /api/v1/career-goals/, Methods: {'POST'}
+2025-07-16 18:50:37,724 - app - INFO - Route: /api/v1/career-goals/active, Methods: {'GET'}
+2025-07-16 18:50:37,725 - app - INFO - Route: /api/v1/career-goals/, Methods: {'GET'}
+2025-07-16 18:50:37,725 - app - INFO - Route: /api/v1/career-goals/{goal_id}, Methods: {'PUT'}
+2025-07-16 18:50:37,725 - app - INFO - Route: /api/v1/career-goals/{goal_id}, Methods: {'DELETE'}
+2025-07-16 18:50:37,725 - app - INFO - Route: /api/v1/career-goals/{goal_id}/milestones/{milestone_id}/complete, Methods: {'POST'}
+2025-07-16 18:50:37,725 - app - INFO - Route: /api/v1/career-goals/{goal_id}/milestones, Methods: {'GET'}
+2025-07-16 18:50:37,725 - app - INFO - Route: /api/v1/jobs/recommendations/me, Methods: {'GET'}
+2025-07-16 18:50:37,725 - app - INFO - Route: /api/v1/jobs/recommendations/{user_id}, Methods: {'GET'}
+2025-07-16 18:50:37,725 - app - INFO - Route: /api/v1/jobs/recommendations/{user_id}, Methods: {'POST'}
+2025-07-16 18:50:37,725 - app - INFO - Route: /api/v1/jobs/skill-tree/{job_id}, Methods: {'GET'}
+2025-07-16 18:50:37,725 - app - INFO - Route: /api/careers/llm-query, Methods: {'POST'}
+2025-07-16 18:50:37,725 - app - INFO - Route: /api/orientator/test-message, Methods: {'POST'}
+2025-07-16 18:50:37,725 - app - INFO - Route: /api/orientator/message, Methods: {'POST'}
+2025-07-16 18:50:37,725 - app - INFO - Route: /api/orientator/save-component, Methods: {'POST'}
+2025-07-16 18:50:37,725 - app - INFO - Route: /api/orientator/conversations/{conversation_id}/messages, Methods: {'GET'}
+2025-07-16 18:50:37,725 - app - INFO - Route: /api/orientator/journey/{user_id}, Methods: {'GET'}
+2025-07-16 18:50:37,725 - app - INFO - Route: /api/orientator/conversations, Methods: {'GET'}
+2025-07-16 18:50:37,725 - app - INFO - Route: /api/orientator/tool-analytics, Methods: {'GET'}
+2025-07-16 18:50:37,725 - app - INFO - Route: /api/orientator/feedback, Methods: {'POST'}
+2025-07-16 18:50:37,725 - app - INFO - Route: /api/orientator/health, Methods: {'GET'}
+2025-07-16 18:50:37,725 - app - INFO - ======================
+2025-07-16 18:50:37,726 - app - INFO - 🚀 Application startup initiated
+2025-07-16 18:50:37,726 - app - INFO - Loading models...
+2025-07-16 18:50:37,727 - scripts.model_loader - INFO - Starting model loading...
+2025-07-16 18:50:37,727 - scripts.model_loader - INFO - Loading SentenceTransformer models...
+2025-07-16 18:50:37,727 - scripts.model_loader - WARNING - SentenceTransformer model directory not found, skipping...
+2025-07-16 18:50:37,727 - scripts.model_loader - INFO - Loading PCA, OHE, and Scaler models...
+2025-07-16 18:50:37,727 - scripts.model_loader - WARNING - Model files not found, skipping...
+2025-07-16 18:50:37,727 - scripts.model_loader - INFO - Model loading process completed!
+2025-07-16 18:50:37,727 - app - INFO - Models loaded from scripts
+2025-07-16 18:50:37,727 - app - INFO - Model loading process completed
+2025-07-16 18:50:37,727 - app - INFO - ✅ Models loaded successfully
+2025-07-16 18:50:37,727 - app - INFO - 🔌 Attempting database initialization...
+2025-07-16 18:50:37,727 - app.core.config - INFO - Using DATABASE_URL for local development
+2025-07-16 18:50:37,727 - app.utils.database - INFO - Attempting to connect to database...
+2025-07-16 18:50:37,759 - app.utils.database - INFO - ✅ Database engine created successfully
+2025-07-16 18:50:37,845 - app.utils.database - INFO - ✅ Database connection test successful
+2025-07-16 18:50:37,846 - app.utils.database - INFO - Database: navigo_local
+2025-07-16 18:50:37,846 - app.utils.database - INFO - User: postgres
+2025-07-16 18:50:37,846 - app.utils.database - INFO - PostgreSQL version: PostgreSQL 17.3 on x86_64-apple-darwin23.6.0, comp...
+2025-07-16 18:50:37,848 - app.utils.database - INFO - Sample tables: ['alembic_version', 'gca_holland_questions', 'gca_personalities', 'gca_users_answers', 'node_notes']...
+2025-07-16 18:50:37,849 - app.utils.database - INFO - ✅ Database initialization completed successfully
+2025-07-16 18:50:37,849 - app - INFO - ✅ Application startup completed successfully
+2025-07-16 18:50:37,911 - app.routers.onboarding - INFO - Getting onboarding status for user ID: 12
+2025-07-16 18:50:37,912 - app.routers.onboarding - INFO - Getting onboarding status for user ID: 12
+2025-07-16 18:50:37,944 - app.routers.onboarding - INFO - Getting onboarding status for user ID: 12
+2025-07-16 18:50:37,953 - app.routers.onboarding - INFO - Getting onboarding status for user ID: 12
+2025-07-16 18:50:38,002 - app.routers.onboarding - INFO - Starting onboarding for user ID: 12
+2025-07-16 18:50:38,003 - app.routers.onboarding - INFO - Starting onboarding for user ID: 12
+2025-07-16 18:50:38,004 - app.routers.onboarding - INFO - User 12 already has active onboarding session
+2025-07-16 18:50:38,005 - app.routers.onboarding - INFO - User 12 already has active onboarding session
+2025-07-16 18:50:46,035 - app.routers.jobs - INFO - Getting job recommendations for user 12
+2025-07-16 18:50:46,036 - app.routers.jobs - INFO - Returned 3 job recommendations for user 12
+2025-07-16 18:50:46,061 - app.routers.holland_test - INFO - Récupération des résultats RIASEC pour l'utilisateur: 12
+2025-07-16 18:50:46,093 - app.routers.holland_test - WARNING - No Holland test results found for user 12
+2025-07-16 18:50:46,104 - app.routers.user_progress - INFO - Retrieved user progress for user 12: {}
+2025-07-16 18:50:46,120 - app.routers.holland_test - INFO - Récupération des résultats RIASEC pour l'utilisateur: 12
+2025-07-16 18:50:46,139 - app.routers.holland_test - WARNING - No Holland test results found for user 12
+2025-07-16 18:50:46,142 - app.routers.user_progress - INFO - Retrieved user progress for user 12: {}
+2025-07-16 18:50:46,156 - app.routers.jobs - INFO - Getting job recommendations for user 12
+2025-07-16 18:50:46,156 - app.routers.jobs - INFO - Returned 3 job recommendations for user 12
+2025-07-16 18:50:51,925 - app.routers.profiles - INFO - Attempting to get profile for user ID: 12
+2025-07-16 18:50:51,928 - app.routers.user_progress - INFO - Retrieved user progress for user 12: {}
+2025-07-16 18:50:51,932 - app.routers.user_progress - INFO - Retrieved user progress for user 12: {}
+2025-07-16 18:50:51,939 - app.routers.profiles - INFO - Attempting to get profile for user ID: 12
+2025-07-16 18:50:55,381 - app.routers.holland_test - INFO - Récupération des résultats RIASEC pour l'utilisateur: 12
+2025-07-16 18:50:55,383 - app.routers.holland_test - WARNING - No Holland test results found for user 12
+2025-07-16 18:50:55,392 - app.routers.jobs - INFO - Getting job recommendations for user 12
+2025-07-16 18:50:55,393 - app.routers.jobs - INFO - Returned 3 job recommendations for user 12
+2025-07-16 18:50:55,414 - app.routers.jobs - INFO - Getting job recommendations for user 12
+2025-07-16 18:50:55,415 - app.routers.jobs - INFO - Returned 3 job recommendations for user 12
+2025-07-16 18:50:55,418 - app.routers.holland_test - INFO - Récupération des résultats RIASEC pour l'utilisateur: 12
+2025-07-16 18:50:55,420 - app.routers.holland_test - WARNING - No Holland test results found for user 12
+2025-07-16 18:50:55,422 - app.routers.user_progress - INFO - Retrieved user progress for user 12: {}
+2025-07-16 18:50:55,429 - app.routers.user_progress - INFO - Retrieved user progress for user 12: {}
+2025-07-16 18:51:05,303 - app.routers.jobs - INFO - Getting job recommendations for user 12
+2025-07-16 18:51:05,303 - app.routers.jobs - INFO - Returned 10 job recommendations for user 12
+2025-07-16 18:51:05,305 - app.routers.user_progress - INFO - Retrieved user progress for user 12: {}
+2025-07-16 18:51:05,309 - app.routers.jobs - INFO - Getting job recommendations for user 12
+2025-07-16 18:51:05,310 - app.routers.jobs - INFO - Returned 10 job recommendations for user 12
+2025-07-16 18:51:05,311 - app.routers.user_progress - INFO - Retrieved user progress for user 12: {}
+2025-07-16 18:51:05,336 - app.api.endpoints.job_recommendations - INFO - Récupération de l'arbre de compétences pour l'emploi: occupation::key_1000
+2025-07-16 18:51:05,336 - app.api.endpoints.job_recommendations - INFO - Paramètres: depth=1, max_nodes=5
+2025-07-16 18:51:05,339 - competenceTree_dev.graph_traversal_service - INFO - GraphSAGE imported successfully from GNN directory
+2025-07-16 18:51:05,353 - competenceTree_dev.graph_traversal_service - ERROR - Le fichier du modèle n'existe pas: /Users/philippebeliveau/Desktop/Notebook/Orientor_project/Orientor_project/backend/dev/app/services/GNN/best_model_20250520_022237.pt
+2025-07-16 18:51:05,358 - competenceTree_dev.graph_traversal_service - INFO - Mappages idx2node chargés pour 18162 nœuds
+2025-07-16 18:51:05,364 - competenceTree_dev.graph_traversal_service - INFO - Mappages node2idx chargés pour 18162 nœuds
+2025-07-16 18:51:05,452 - competenceTree_dev.graph_traversal_service - INFO - Métadonnées chargées pour 18162 nœuds
+2025-07-16 18:51:05,452 - competenceTree_dev.graph_traversal_service - INFO - Dictionnaire des types d'arêtes chargé avec 7 types
+2025-07-16 18:51:05,455 - competenceTree_dev.graph_traversal_service - INFO - Index d'arêtes chargés avec forme torch.Size([2, 274732])
+2025-07-16 18:51:05,466 - competenceTree_dev.graph_traversal_service - INFO - Caractéristiques des nœuds chargées avec forme torch.Size([18162, 384])
+2025-07-16 18:51:05,482 - competenceTree_dev.graph_traversal_service - INFO - Types d'arêtes chargés
+2025-07-16 18:51:05,482 - competenceTree_dev.graph_traversal_service - WARNING - Le fichier des indices des types d'arêtes n'existe pas: /Users/philippebeliveau/Desktop/Notebook/Orientor_project/Orientor_project/backend/dev/competenceTree_dev/data/edge_type_indices.json
+2025-07-16 18:51:05,519 - competenceTree_dev.graph_traversal_service - INFO - Chargement du graphe prétraité depuis /Users/philippebeliveau/Desktop/Notebook/Orientor_project/Orientor_project/backend/dev/competenceTree_dev/data/networkx_graph.pkl...
+2025-07-16 18:51:05,607 - competenceTree_dev.graph_traversal_service - INFO - Graphe NetworkX chargé avec 18162 nœuds et 150941 arêtes
+2025-07-16 18:51:05,610 - competenceTree_dev.graph_traversal_service - INFO - Service de traversée du graphe initialisé avec 18162 nœuds et 150941 arêtes
+2025-07-16 18:51:05,610 - competenceTree_dev.skill_tree_visualization - INFO - Service de visualisation initialisé
+2025-07-16 18:51:05,610 - app.services.occupationTree - ERROR - L'ID d'emploi occupation::key_1000 n'existe pas dans le graphe
+2025-07-16 18:51:05,622 - app.api.endpoints.job_recommendations - INFO - Arbre de compétences généré: {}
+2025-07-16 18:51:05,622 - app.api.endpoints.job_recommendations - WARNING - Aucun arbre de compétences trouvé pour l'emploi occupation::key_1000, création d'un arbre factice
+2025-07-16 18:51:05,622 - app.api.endpoints.job_recommendations - INFO - === DÉTAILS DE L'ARBRE DE COMPÉTENCES ===
+2025-07-16 18:51:05,622 - app.api.endpoints.job_recommendations - INFO - Type de skill_tree: <class 'dict'>
+2025-07-16 18:51:05,622 - app.api.endpoints.job_recommendations - INFO - Type de nodes: <class 'dict'>
+2025-07-16 18:51:05,622 - app.api.endpoints.job_recommendations - INFO - Type de edges: <class 'list'>
+2025-07-16 18:51:05,622 - app.api.endpoints.job_recommendations - INFO - Nombre de nœuds: 6
+2025-07-16 18:51:05,622 - app.api.endpoints.job_recommendations - INFO - Nombre d'arêtes: 5
+2025-07-16 18:51:05,622 - app.api.endpoints.job_recommendations - INFO - === FIN DES DÉTAILS ===
+2025-07-16 18:51:05,622 - app.api.endpoints.job_recommendations - INFO - Validation Pydantic de l'arbre réussie!
+2025-07-16 18:51:05,626 - app.api.endpoints.job_recommendations - INFO - Récupération de l'arbre de compétences pour l'emploi: occupation::key_1000
+2025-07-16 18:51:05,627 - app.api.endpoints.job_recommendations - INFO - Paramètres: depth=1, max_nodes=5
+2025-07-16 18:51:05,627 - competenceTree_dev.graph_traversal_service - ERROR - Le fichier du modèle n'existe pas: /Users/philippebeliveau/Desktop/Notebook/Orientor_project/Orientor_project/backend/dev/app/services/GNN/best_model_20250520_022237.pt
+2025-07-16 18:51:05,630 - competenceTree_dev.graph_traversal_service - INFO - Mappages idx2node chargés pour 18162 nœuds
+2025-07-16 18:51:05,634 - competenceTree_dev.graph_traversal_service - INFO - Mappages node2idx chargés pour 18162 nœuds
+2025-07-16 18:51:06,266 - competenceTree_dev.graph_traversal_service - INFO - Métadonnées chargées pour 18162 nœuds
+2025-07-16 18:51:06,267 - competenceTree_dev.graph_traversal_service - INFO - Dictionnaire des types d'arêtes chargé avec 7 types
+2025-07-16 18:51:06,268 - competenceTree_dev.graph_traversal_service - INFO - Index d'arêtes chargés avec forme torch.Size([2, 274732])
+2025-07-16 18:51:06,273 - competenceTree_dev.graph_traversal_service - INFO - Caractéristiques des nœuds chargées avec forme torch.Size([18162, 384])
+2025-07-16 18:51:06,285 - competenceTree_dev.graph_traversal_service - INFO - Types d'arêtes chargés
+2025-07-16 18:51:06,285 - competenceTree_dev.graph_traversal_service - WARNING - Le fichier des indices des types d'arêtes n'existe pas: /Users/philippebeliveau/Desktop/Notebook/Orientor_project/Orientor_project/backend/dev/competenceTree_dev/data/edge_type_indices.json
+2025-07-16 18:51:06,325 - competenceTree_dev.graph_traversal_service - INFO - Chargement du graphe prétraité depuis /Users/philippebeliveau/Desktop/Notebook/Orientor_project/Orientor_project/backend/dev/competenceTree_dev/data/networkx_graph.pkl...
+2025-07-16 18:51:06,409 - competenceTree_dev.graph_traversal_service - INFO - Graphe NetworkX chargé avec 18162 nœuds et 150941 arêtes
+2025-07-16 18:51:06,413 - competenceTree_dev.graph_traversal_service - INFO - Service de traversée du graphe initialisé avec 18162 nœuds et 150941 arêtes
+2025-07-16 18:51:06,413 - competenceTree_dev.skill_tree_visualization - INFO - Service de visualisation initialisé
+2025-07-16 18:51:06,413 - app.services.occupationTree - ERROR - L'ID d'emploi occupation::key_1000 n'existe pas dans le graphe
+2025-07-16 18:51:06,424 - app.api.endpoints.job_recommendations - INFO - Arbre de compétences généré: {}
+2025-07-16 18:51:06,425 - app.api.endpoints.job_recommendations - WARNING - Aucun arbre de compétences trouvé pour l'emploi occupation::key_1000, création d'un arbre factice
+2025-07-16 18:51:06,425 - app.api.endpoints.job_recommendations - INFO - === DÉTAILS DE L'ARBRE DE COMPÉTENCES ===
+2025-07-16 18:51:06,425 - app.api.endpoints.job_recommendations - INFO - Type de skill_tree: <class 'dict'>
+2025-07-16 18:51:06,425 - app.api.endpoints.job_recommendations - INFO - Type de nodes: <class 'dict'>
+2025-07-16 18:51:06,425 - app.api.endpoints.job_recommendations - INFO - Type de edges: <class 'list'>
+2025-07-16 18:51:06,425 - app.api.endpoints.job_recommendations - INFO - Nombre de nœuds: 6
+2025-07-16 18:51:06,425 - app.api.endpoints.job_recommendations - INFO - Nombre d'arêtes: 5
+2025-07-16 18:51:06,426 - app.api.endpoints.job_recommendations - INFO - === FIN DES DÉTAILS ===
+2025-07-16 18:51:06,426 - app.api.endpoints.job_recommendations - INFO - Validation Pydantic de l'arbre réussie!
+2025-07-16 18:51:07,490 - app.api.endpoints.job_recommendations - INFO - Récupération de l'arbre de compétences pour l'emploi: occupation::key_1005
+2025-07-16 18:51:07,491 - app.api.endpoints.job_recommendations - INFO - Paramètres: depth=1, max_nodes=5
+2025-07-16 18:51:07,492 - competenceTree_dev.graph_traversal_service - ERROR - Le fichier du modèle n'existe pas: /Users/philippebeliveau/Desktop/Notebook/Orientor_project/Orientor_project/backend/dev/app/services/GNN/best_model_20250520_022237.pt
+2025-07-16 18:51:07,497 - competenceTree_dev.graph_traversal_service - INFO - Mappages idx2node chargés pour 18162 nœuds
+2025-07-16 18:51:07,502 - competenceTree_dev.graph_traversal_service - INFO - Mappages node2idx chargés pour 18162 nœuds
+2025-07-16 18:51:07,575 - competenceTree_dev.graph_traversal_service - INFO - Métadonnées chargées pour 18162 nœuds
+2025-07-16 18:51:07,576 - competenceTree_dev.graph_traversal_service - INFO - Dictionnaire des types d'arêtes chargé avec 7 types
+2025-07-16 18:51:07,577 - competenceTree_dev.graph_traversal_service - INFO - Index d'arêtes chargés avec forme torch.Size([2, 274732])
+2025-07-16 18:51:07,582 - competenceTree_dev.graph_traversal_service - INFO - Caractéristiques des nœuds chargées avec forme torch.Size([18162, 384])
+2025-07-16 18:51:07,594 - competenceTree_dev.graph_traversal_service - INFO - Types d'arêtes chargés
+2025-07-16 18:51:07,594 - competenceTree_dev.graph_traversal_service - WARNING - Le fichier des indices des types d'arêtes n'existe pas: /Users/philippebeliveau/Desktop/Notebook/Orientor_project/Orientor_project/backend/dev/competenceTree_dev/data/edge_type_indices.json
+2025-07-16 18:51:07,632 - competenceTree_dev.graph_traversal_service - INFO - Chargement du graphe prétraité depuis /Users/philippebeliveau/Desktop/Notebook/Orientor_project/Orientor_project/backend/dev/competenceTree_dev/data/networkx_graph.pkl...
+2025-07-16 18:51:07,715 - competenceTree_dev.graph_traversal_service - INFO - Graphe NetworkX chargé avec 18162 nœuds et 150941 arêtes
+2025-07-16 18:51:07,718 - competenceTree_dev.graph_traversal_service - INFO - Service de traversée du graphe initialisé avec 18162 nœuds et 150941 arêtes
+2025-07-16 18:51:07,719 - competenceTree_dev.skill_tree_visualization - INFO - Service de visualisation initialisé
+2025-07-16 18:51:07,719 - app.services.occupationTree - ERROR - L'ID d'emploi occupation::key_1005 n'existe pas dans le graphe
+2025-07-16 18:51:07,728 - app.api.endpoints.job_recommendations - INFO - Arbre de compétences généré: {}
+2025-07-16 18:51:07,729 - app.api.endpoints.job_recommendations - WARNING - Aucun arbre de compétences trouvé pour l'emploi occupation::key_1005, création d'un arbre factice
+2025-07-16 18:51:07,729 - app.api.endpoints.job_recommendations - INFO - === DÉTAILS DE L'ARBRE DE COMPÉTENCES ===
+2025-07-16 18:51:07,729 - app.api.endpoints.job_recommendations - INFO - Type de skill_tree: <class 'dict'>
+2025-07-16 18:51:07,729 - app.api.endpoints.job_recommendations - INFO - Type de nodes: <class 'dict'>
+2025-07-16 18:51:07,729 - app.api.endpoints.job_recommendations - INFO - Type de edges: <class 'list'>
+2025-07-16 18:51:07,729 - app.api.endpoints.job_recommendations - INFO - Nombre de nœuds: 6
+2025-07-16 18:51:07,729 - app.api.endpoints.job_recommendations - INFO - Nombre d'arêtes: 5
+2025-07-16 18:51:07,729 - app.api.endpoints.job_recommendations - INFO - === FIN DES DÉTAILS ===
+2025-07-16 18:51:07,729 - app.api.endpoints.job_recommendations - INFO - Validation Pydantic de l'arbre réussie!
+2025-07-16 18:51:09,126 - app.api.endpoints.job_recommendations - INFO - Récupération de l'arbre de compétences pour l'emploi: occupation::key_1004
+2025-07-16 18:51:09,126 - app.api.endpoints.job_recommendations - INFO - Paramètres: depth=1, max_nodes=5
+2025-07-16 18:51:09,126 - competenceTree_dev.graph_traversal_service - ERROR - Le fichier du modèle n'existe pas: /Users/philippebeliveau/Desktop/Notebook/Orientor_project/Orientor_project/backend/dev/app/services/GNN/best_model_20250520_022237.pt
+2025-07-16 18:51:09,132 - competenceTree_dev.graph_traversal_service - INFO - Mappages idx2node chargés pour 18162 nœuds
+2025-07-16 18:51:09,137 - competenceTree_dev.graph_traversal_service - INFO - Mappages node2idx chargés pour 18162 nœuds
+2025-07-16 18:51:09,210 - competenceTree_dev.graph_traversal_service - INFO - Métadonnées chargées pour 18162 nœuds
+2025-07-16 18:51:09,211 - competenceTree_dev.graph_traversal_service - INFO - Dictionnaire des types d'arêtes chargé avec 7 types
+2025-07-16 18:51:09,212 - competenceTree_dev.graph_traversal_service - INFO - Index d'arêtes chargés avec forme torch.Size([2, 274732])
+2025-07-16 18:51:09,218 - competenceTree_dev.graph_traversal_service - INFO - Caractéristiques des nœuds chargées avec forme torch.Size([18162, 384])
+2025-07-16 18:51:09,231 - competenceTree_dev.graph_traversal_service - INFO - Types d'arêtes chargés
+2025-07-16 18:51:09,231 - competenceTree_dev.graph_traversal_service - WARNING - Le fichier des indices des types d'arêtes n'existe pas: /Users/philippebeliveau/Desktop/Notebook/Orientor_project/Orientor_project/backend/dev/competenceTree_dev/data/edge_type_indices.json
+2025-07-16 18:51:09,268 - competenceTree_dev.graph_traversal_service - INFO - Chargement du graphe prétraité depuis /Users/philippebeliveau/Desktop/Notebook/Orientor_project/Orientor_project/backend/dev/competenceTree_dev/data/networkx_graph.pkl...
+2025-07-16 18:51:09,353 - competenceTree_dev.graph_traversal_service - INFO - Graphe NetworkX chargé avec 18162 nœuds et 150941 arêtes
+2025-07-16 18:51:09,356 - competenceTree_dev.graph_traversal_service - INFO - Service de traversée du graphe initialisé avec 18162 nœuds et 150941 arêtes
+2025-07-16 18:51:09,356 - competenceTree_dev.skill_tree_visualization - INFO - Service de visualisation initialisé
+2025-07-16 18:51:09,356 - app.services.occupationTree - ERROR - L'ID d'emploi occupation::key_1004 n'existe pas dans le graphe
+2025-07-16 18:51:09,367 - app.api.endpoints.job_recommendations - INFO - Arbre de compétences généré: {}
+2025-07-16 18:51:09,367 - app.api.endpoints.job_recommendations - WARNING - Aucun arbre de compétences trouvé pour l'emploi occupation::key_1004, création d'un arbre factice
+2025-07-16 18:51:09,367 - app.api.endpoints.job_recommendations - INFO - === DÉTAILS DE L'ARBRE DE COMPÉTENCES ===
+2025-07-16 18:51:09,367 - app.api.endpoints.job_recommendations - INFO - Type de skill_tree: <class 'dict'>
+2025-07-16 18:51:09,367 - app.api.endpoints.job_recommendations - INFO - Type de nodes: <class 'dict'>
+2025-07-16 18:51:09,367 - app.api.endpoints.job_recommendations - INFO - Type de edges: <class 'list'>
+2025-07-16 18:51:09,368 - app.api.endpoints.job_recommendations - INFO - Nombre de nœuds: 6
+2025-07-16 18:51:09,368 - app.api.endpoints.job_recommendations - INFO - Nombre d'arêtes: 5
+2025-07-16 18:51:09,368 - app.api.endpoints.job_recommendations - INFO - === FIN DES DÉTAILS ===
+2025-07-16 18:51:09,368 - app.api.endpoints.job_recommendations - INFO - Validation Pydantic de l'arbre réussie!
+2025-07-16 18:51:18,307 - app.routers.holland_test - INFO - Récupération des résultats RIASEC pour l'utilisateur: 12
+2025-07-16 18:51:18,314 - app.routers.holland_test - WARNING - No Holland test results found for user 12
+2025-07-16 18:51:18,343 - app.routers.jobs - INFO - Getting job recommendations for user 12
+2025-07-16 18:51:18,344 - app.routers.jobs - INFO - Returned 3 job recommendations for user 12
+2025-07-16 18:51:18,346 - app.routers.user_progress - INFO - Retrieved user progress for user 12: {}
+2025-07-16 18:51:18,352 - app.routers.holland_test - INFO - Récupération des résultats RIASEC pour l'utilisateur: 12
+2025-07-16 18:51:18,353 - app.routers.holland_test - WARNING - No Holland test results found for user 12
+2025-07-16 18:51:18,361 - app.routers.jobs - INFO - Getting job recommendations for user 12
+2025-07-16 18:51:18,362 - app.routers.jobs - INFO - Returned 3 job recommendations for user 12
+2025-07-16 18:51:18,364 - app.routers.user_progress - INFO - Retrieved user progress for user 12: {}
+2025-07-16 18:51:24,515 - app.routers.user_progress - INFO - Retrieved user progress for user 12: {}
+2025-07-16 18:51:24,522 - app.routers.jobs - INFO - Retrieved 0 saved jobs for user 12
+2025-07-16 18:51:24,526 - app.services.Swipe_career_recommendation_service - INFO - Retrieved career: Horticulturists with fields: {'id': 25, 'oasis_code': '22114.03', 'title': 'Horticulturists', 'description': '', 'main_duties': 'Plan and coordinate the growth and use of plants for landscaping, ornamental uses and other purposes', 'role_creativity': 3.0, 'role_leadership': 3.0, 'role_digital_literacy': 2.0, 'role_critical_thinking': 3.0, 'role_problem_solving': 3.0, 'analytical_thinking': 3.0, 'attention_to_detail': 4.0, 'collaboration': 3.0, 'adaptability': 4.0, 'independence': 4.0, 'evaluation': 0.0, 'decision_making': 0.0, 'stress_tolerance': 3.0, 'all_fields': {'oasis_code': '22114', 'oasis_label__final_x': 'Horticulturists', 'active_learning': '3', 'adaptability': '4', 'analytical_thinking': '3', 'attention_to_detail': '4', 'creativity': '3', 'concern_for_others': '2', 'collaboration': '3', 'independence': '4', 'innovativeness': '3', 'leadership': '3', 'social_orientation': '3', 'service_orientation': '2', 'stress_tolerance': '3', 'concordance_number': '2', 'job_title_type': 'Example | Index', 'job_title_text': 'horticultural technician | horticulture technician | horticultural technologist | horticulture technologist | horticulturist | horticulture specialist | landscape horticulturist', 'main_duties': 'Plan and coordinate the growth and use of plants for landscaping, ornamental uses and other purposes', 'oasis_label__final_y': 'Horticulturists', 'reading_comprehension': '2', 'writing': '2', 'numeracy': '2', 'digital_literacy': '2', 'oral_communication:_active_listening': '3', 'oral_communication:_oral_comprehension': '3', 'oral_communication:_oral_expression': '3', 'critical_thinking': '3', 'decision_making': '2', 'evaluation': '3', 'learning_and_teaching_strategies': '3', 'problem_solving': '3', 'systems_analysis': '3', 'digital_production': '0', 'preventative_maintenance': '2', 'equipment_and_tool_selection': '2', 'operation_and_control': '2', 'operation_monitoring_of_machinery_and_equipment': '2', 'quality_control_testing': '3', 'repairing': '2', 'setting_up': '1', 'product_design': '1', 'troubleshooting': '2', 'management_of_financial_resources': '2', 'management_of_material_resources': '4', 'management_of_personnel_resources': '2', 'monitoring': '2', 'time_management': '3', 'coordinating': '3', 'instructing': '3', 'negotiating': '3', 'persuading': '2', 'social_perceptiveness': '2', 'label': 'Horticulturists', 'employment_requirement': 'An apprenticeship program is available for horticulturists, arboriculturists and landscape gardeners'}, 'saved_at': datetime.datetime(2025, 4, 22, 13, 29, 16, 642587, tzinfo=datetime.timezone.utc), 'source': 'recommendation'}
+2025-07-16 18:51:24,526 - app.routers.user_progress - INFO - Retrieved user progress for user 12: {}
+2025-07-16 18:51:24,526 - app.services.Swipe_career_recommendation_service - INFO - Retrieved career: Conference and event planners with fields: {'id': 21, 'oasis_code': '12103.0', 'title': 'Conference and event planners', 'description': '', 'main_duties': "Meet with trade and professional associations and other groups to promote and discuss conference, convention and trade show services | Meet with sponsors and organizing committees to plan the scope and format of events, to establish and monitor budgets and to review administrative procedures and progress of events | Coordinate services for events, such as accommodation and transportation for participants, conference and other facilities, catering, signage, displays, translation, special needs requirements, audio-visual equipment, printing and security | Organize registration of participants, prepare programs and promotional material, and publicize events | Plan entertainment and social gatherings for participants | Hire, train and supervise support staff required for events | Ensure compliance with required by-laws | Negotiate contracts for services, approve suppliers' invoices, maintain financial records, review final billing submitted to clients for events and prepare reports", 'role_creativity': 4.0, 'role_leadership': 4.0, 'role_digital_literacy': 3.0, 'role_critical_thinking': 3.0, 'role_problem_solving': 3.0, 'analytical_thinking': 3.0, 'attention_to_detail': 5.0, 'collaboration': 5.0, 'adaptability': 4.0, 'independence': 3.0, 'evaluation': 0.0, 'decision_making': 0.0, 'stress_tolerance': 4.0, 'all_fields': {'oasis_code': '12103', 'oasis_label__final_x': 'Conference and event planners', 'active_learning': '3', 'adaptability': '4', 'analytical_thinking': '3', 'attention_to_detail': '5', 'creativity': '4', 'concern_for_others': '4', 'collaboration': '5', 'independence': '3', 'innovativeness': '4', 'leadership': '4', 'social_orientation': '4', 'service_orientation': '5', 'stress_tolerance': '4', 'concordance_number': '11', 'job_title_type': 'Index | Example', 'job_title_text': 'conference coordinator | convention coordinator | conference and meeting planner | conference planner | conference services officer | event coordinator | event planner | festival organizer | meeting planner | special events organizer | special events program planner | trade show planner | conference organizer | convention planner | convention and special events planner | convention planning services officer | social events coordinator | special events planner | trade show organizer | special events coordinator | exhibition coordinator | meeting coordinator', 'main_duties': "Meet with trade and professional associations and other groups to promote and discuss conference, convention and trade show services | Meet with sponsors and organizing committees to plan the scope and format of events, to establish and monitor budgets and to review administrative procedures and progress of events | Coordinate services for events, such as accommodation and transportation for participants, conference and other facilities, catering, signage, displays, translation, special needs requirements, audio-visual equipment, printing and security | Organize registration of participants, prepare programs and promotional material, and publicize events | Plan entertainment and social gatherings for participants | Hire, train and supervise support staff required for events | Ensure compliance with required by-laws | Negotiate contracts for services, approve suppliers' invoices, maintain financial records, review final billing submitted to clients for events and prepare reports", 'oasis_label__final_y': 'Conference and event planners', 'reading_comprehension': '3', 'writing': '3', 'numeracy': '3', 'digital_literacy': '3', 'oral_communication:_active_listening': '3', 'oral_communication:_oral_comprehension': '3', 'oral_communication:_oral_expression': '4', 'critical_thinking': '3', 'decision_making': '3', 'evaluation': '3', 'learning_and_teaching_strategies': '3', 'problem_solving': '3', 'systems_analysis': '3', 'digital_production': '0', 'preventative_maintenance': '0', 'equipment_and_tool_selection': '0', 'operation_and_control': '0', 'operation_monitoring_of_machinery_and_equipment': '0', 'quality_control_testing': '2', 'repairing': '0', 'setting_up': '0', 'product_design': '0', 'troubleshooting': '0', 'management_of_financial_resources': '4', 'management_of_material_resources': '4', 'management_of_personnel_resources': '3', 'monitoring': '3', 'time_management': '4', 'coordinating': '4', 'instructing': '3', 'negotiating': '4', 'persuading': '4', 'social_perceptiveness': '3', 'label': 'Conference and event planners', 'employment_requirement': 'A university degree or college diploma in business, tourism or hospitality administration is usually required'}, 'saved_at': datetime.datetime(2025, 4, 18, 18, 16, 59, 1674, tzinfo=datetime.timezone.utc), 'source': 'recommendation'}
+2025-07-16 18:51:24,528 - app.services.Swipe_career_recommendation_service - INFO - Retrieved career: Lawyers and Quebec notaries with fields: {'id': 20, 'oasis_code': '41101.0', 'title': 'Lawyers and Quebec notaries', 'description': '', 'main_duties': "Advise clients of their legal rights and all matters related to law | Research legal precedents and gather evidence | Plead clients' cases before courts of law, tribunals and boards (lawyers only) | Draw up legal documents such as real estate transactions, wills, divorces and contracts, and prepare statements of legal opinions | Negotiate settlements of civil disputes (lawyers only) | Perform administrative and management functions related to the practice of law | May act as mediator, conciliator or arbitrator | May act as executor, trustee or guardian in estate and family law matters", 'role_creativity': 4.0, 'role_leadership': 4.0, 'role_digital_literacy': 3.0, 'role_critical_thinking': 5.0, 'role_problem_solving': 5.0, 'analytical_thinking': 5.0, 'attention_to_detail': 5.0, 'collaboration': 4.0, 'adaptability': 5.0, 'independence': 4.0, 'evaluation': 0.0, 'decision_making': 0.0, 'stress_tolerance': 5.0, 'all_fields': {'oasis_code': '41101', 'oasis_label__final_x': 'Lawyers and Quebec notaries', 'active_learning': '5', 'adaptability': '5', 'analytical_thinking': '5', 'attention_to_detail': '5', 'creativity': '4', 'concern_for_others': '4', 'collaboration': '4', 'independence': '4', 'innovativeness': '3', 'leadership': '4', 'social_orientation': '4', 'service_orientation': '4', 'stress_tolerance': '5', 'concordance_number': '30', 'job_title_type': 'Index | Example | Inclusion', 'job_title_text': "administrative lawyer | law and corporate affairs adviser | counsellor-at-law | legal advisor | counsellor-lawyer | advisory counsel | articling law student | student-at-law | assistant Crown attorney | assistant legal advisor | assistant regional counsel | associate legal counsel | associate counsel | associate lawyer | legal advocate | lawyer | barrister | attorney-at-law | attorney | barrister and solicitor | city attorney | city solicitor | civil lawyer | claim attorney | commercial lawyer | contract counsel | corporate counsel | corporation lawyer | corporate notary (Quebec) | counsel | legal counsel | county attorney | criminal lawyer | Crown attorney | Crown corporation counsel | Crown counsel | Crown prosecutor | departmental solicitor | deputy city solicitor | family and estates lawyer | general solicitor | immigration lawyer | staff counsel | in-house legal counsel | staff solicitor | staff lawyer | industrial lawyer | insurance lawyer | intellectual-property lawyer | labour lawyer | judicial assistant - Supreme Court | law partner | prosecuting attorney | prosecutor | legislative adviser | legislative counsel | litigator | municipal solicitor | notary (Quebec) | Quebec notary | patent counsel | patent solicitor | patent lawyer | Queen's Counsel | real estate lawyer | regional attorney | regional Crown prosecutor | review lawyer | solicitor | special prosecutor | tariff counsel | tax attorney | tax lawyer | title lawyer | trademark lawyer | attorney's assistant chief agent | legal attaché | associate legal advisor | assistant corporate counsel | commercial law notary | assistant general solicitor | defence counsel | legal aid lawyer | general counsel | legal officer | legal officer - Canadian armed forces", 'main_duties': "Advise clients of their legal rights and all matters related to law | Research legal precedents and gather evidence | Plead clients' cases before courts of law, tribunals and boards (lawyers only) | Draw up legal documents such as real estate transactions, wills, divorces and contracts, and prepare statements of legal opinions | Negotiate settlements of civil disputes (lawyers only) | Perform administrative and management functions related to the practice of law | May act as mediator, conciliator or arbitrator | May act as executor, trustee or guardian in estate and family law matters", 'oasis_label__final_y': 'Lawyers and Quebec notaries', 'reading_comprehension': '5', 'writing': '5', 'numeracy': '3', 'digital_literacy': '3', 'oral_communication:_active_listening': '5', 'oral_communication:_oral_comprehension': '5', 'oral_communication:_oral_expression': '5', 'critical_thinking': '5', 'decision_making': '4', 'evaluation': '4', 'learning_and_teaching_strategies': '3', 'problem_solving': '5', 'systems_analysis': '4', 'digital_production': '0', 'preventative_maintenance': '0', 'equipment_and_tool_selection': '0', 'operation_and_control': '0', 'operation_monitoring_of_machinery_and_equipment': '0', 'quality_control_testing': '1', 'repairing': '0', 'setting_up': '0', 'product_design': '0', 'troubleshooting': '0', 'management_of_financial_resources': '3', 'management_of_material_resources': '2', 'management_of_personnel_resources': '3', 'monitoring': '3', 'time_management': '5', 'coordinating': '3', 'instructing': '3', 'negotiating': '5', 'persuading': '5', 'social_perceptiveness': '5', 'label': 'Lawyers and Quebec notaries', 'employment_requirement': "Lawyers | Two to three years of undergraduate studies or, in Quebec, completion of a college program, a bachelor's degree from a recognized law school, successful completion of the bar examination and completion of a period of articling are required"}, 'saved_at': datetime.datetime(2025, 4, 18, 14, 49, 2, 966622, tzinfo=datetime.timezone.utc), 'source': 'recommendation'}
+2025-07-16 18:51:24,528 - app.services.Swipe_career_recommendation_service - INFO - Retrieved 3 saved careers for user 12
+2025-07-16 18:51:24,535 - app.routers.careers - INFO - Retrieved 3 ESCO and 0 OaSIS careers for user 12
+2025-07-16 18:51:24,540 - app.services.Swipe_career_recommendation_service - INFO - Retrieved career: Horticulturists with fields: {'id': 25, 'oasis_code': '22114.03', 'title': 'Horticulturists', 'description': '', 'main_duties': 'Plan and coordinate the growth and use of plants for landscaping, ornamental uses and other purposes', 'role_creativity': 3.0, 'role_leadership': 3.0, 'role_digital_literacy': 2.0, 'role_critical_thinking': 3.0, 'role_problem_solving': 3.0, 'analytical_thinking': 3.0, 'attention_to_detail': 4.0, 'collaboration': 3.0, 'adaptability': 4.0, 'independence': 4.0, 'evaluation': 0.0, 'decision_making': 0.0, 'stress_tolerance': 3.0, 'all_fields': {'oasis_code': '22114', 'oasis_label__final_x': 'Horticulturists', 'active_learning': '3', 'adaptability': '4', 'analytical_thinking': '3', 'attention_to_detail': '4', 'creativity': '3', 'concern_for_others': '2', 'collaboration': '3', 'independence': '4', 'innovativeness': '3', 'leadership': '3', 'social_orientation': '3', 'service_orientation': '2', 'stress_tolerance': '3', 'concordance_number': '2', 'job_title_type': 'Example | Index', 'job_title_text': 'horticultural technician | horticulture technician | horticultural technologist | horticulture technologist | horticulturist | horticulture specialist | landscape horticulturist', 'main_duties': 'Plan and coordinate the growth and use of plants for landscaping, ornamental uses and other purposes', 'oasis_label__final_y': 'Horticulturists', 'reading_comprehension': '2', 'writing': '2', 'numeracy': '2', 'digital_literacy': '2', 'oral_communication:_active_listening': '3', 'oral_communication:_oral_comprehension': '3', 'oral_communication:_oral_expression': '3', 'critical_thinking': '3', 'decision_making': '2', 'evaluation': '3', 'learning_and_teaching_strategies': '3', 'problem_solving': '3', 'systems_analysis': '3', 'digital_production': '0', 'preventative_maintenance': '2', 'equipment_and_tool_selection': '2', 'operation_and_control': '2', 'operation_monitoring_of_machinery_and_equipment': '2', 'quality_control_testing': '3', 'repairing': '2', 'setting_up': '1', 'product_design': '1', 'troubleshooting': '2', 'management_of_financial_resources': '2', 'management_of_material_resources': '4', 'management_of_personnel_resources': '2', 'monitoring': '2', 'time_management': '3', 'coordinating': '3', 'instructing': '3', 'negotiating': '3', 'persuading': '2', 'social_perceptiveness': '2', 'label': 'Horticulturists', 'employment_requirement': 'An apprenticeship program is available for horticulturists, arboriculturists and landscape gardeners'}, 'saved_at': datetime.datetime(2025, 4, 22, 13, 29, 16, 642587, tzinfo=datetime.timezone.utc), 'source': 'recommendation'}
+2025-07-16 18:51:24,540 - app.services.Swipe_career_recommendation_service - INFO - Retrieved career: Conference and event planners with fields: {'id': 21, 'oasis_code': '12103.0', 'title': 'Conference and event planners', 'description': '', 'main_duties': "Meet with trade and professional associations and other groups to promote and discuss conference, convention and trade show services | Meet with sponsors and organizing committees to plan the scope and format of events, to establish and monitor budgets and to review administrative procedures and progress of events | Coordinate services for events, such as accommodation and transportation for participants, conference and other facilities, catering, signage, displays, translation, special needs requirements, audio-visual equipment, printing and security | Organize registration of participants, prepare programs and promotional material, and publicize events | Plan entertainment and social gatherings for participants | Hire, train and supervise support staff required for events | Ensure compliance with required by-laws | Negotiate contracts for services, approve suppliers' invoices, maintain financial records, review final billing submitted to clients for events and prepare reports", 'role_creativity': 4.0, 'role_leadership': 4.0, 'role_digital_literacy': 3.0, 'role_critical_thinking': 3.0, 'role_problem_solving': 3.0, 'analytical_thinking': 3.0, 'attention_to_detail': 5.0, 'collaboration': 5.0, 'adaptability': 4.0, 'independence': 3.0, 'evaluation': 0.0, 'decision_making': 0.0, 'stress_tolerance': 4.0, 'all_fields': {'oasis_code': '12103', 'oasis_label__final_x': 'Conference and event planners', 'active_learning': '3', 'adaptability': '4', 'analytical_thinking': '3', 'attention_to_detail': '5', 'creativity': '4', 'concern_for_others': '4', 'collaboration': '5', 'independence': '3', 'innovativeness': '4', 'leadership': '4', 'social_orientation': '4', 'service_orientation': '5', 'stress_tolerance': '4', 'concordance_number': '11', 'job_title_type': 'Index | Example', 'job_title_text': 'conference coordinator | convention coordinator | conference and meeting planner | conference planner | conference services officer | event coordinator | event planner | festival organizer | meeting planner | special events organizer | special events program planner | trade show planner | conference organizer | convention planner | convention and special events planner | convention planning services officer | social events coordinator | special events planner | trade show organizer | special events coordinator | exhibition coordinator | meeting coordinator', 'main_duties': "Meet with trade and professional associations and other groups to promote and discuss conference, convention and trade show services | Meet with sponsors and organizing committees to plan the scope and format of events, to establish and monitor budgets and to review administrative procedures and progress of events | Coordinate services for events, such as accommodation and transportation for participants, conference and other facilities, catering, signage, displays, translation, special needs requirements, audio-visual equipment, printing and security | Organize registration of participants, prepare programs and promotional material, and publicize events | Plan entertainment and social gatherings for participants | Hire, train and supervise support staff required for events | Ensure compliance with required by-laws | Negotiate contracts for services, approve suppliers' invoices, maintain financial records, review final billing submitted to clients for events and prepare reports", 'oasis_label__final_y': 'Conference and event planners', 'reading_comprehension': '3', 'writing': '3', 'numeracy': '3', 'digital_literacy': '3', 'oral_communication:_active_listening': '3', 'oral_communication:_oral_comprehension': '3', 'oral_communication:_oral_expression': '4', 'critical_thinking': '3', 'decision_making': '3', 'evaluation': '3', 'learning_and_teaching_strategies': '3', 'problem_solving': '3', 'systems_analysis': '3', 'digital_production': '0', 'preventative_maintenance': '0', 'equipment_and_tool_selection': '0', 'operation_and_control': '0', 'operation_monitoring_of_machinery_and_equipment': '0', 'quality_control_testing': '2', 'repairing': '0', 'setting_up': '0', 'product_design': '0', 'troubleshooting': '0', 'management_of_financial_resources': '4', 'management_of_material_resources': '4', 'management_of_personnel_resources': '3', 'monitoring': '3', 'time_management': '4', 'coordinating': '4', 'instructing': '3', 'negotiating': '4', 'persuading': '4', 'social_perceptiveness': '3', 'label': 'Conference and event planners', 'employment_requirement': 'A university degree or college diploma in business, tourism or hospitality administration is usually required'}, 'saved_at': datetime.datetime(2025, 4, 18, 18, 16, 59, 1674, tzinfo=datetime.timezone.utc), 'source': 'recommendation'}
+2025-07-16 18:51:24,541 - app.services.Swipe_career_recommendation_service - INFO - Retrieved career: Lawyers and Quebec notaries with fields: {'id': 20, 'oasis_code': '41101.0', 'title': 'Lawyers and Quebec notaries', 'description': '', 'main_duties': "Advise clients of their legal rights and all matters related to law | Research legal precedents and gather evidence | Plead clients' cases before courts of law, tribunals and boards (lawyers only) | Draw up legal documents such as real estate transactions, wills, divorces and contracts, and prepare statements of legal opinions | Negotiate settlements of civil disputes (lawyers only) | Perform administrative and management functions related to the practice of law | May act as mediator, conciliator or arbitrator | May act as executor, trustee or guardian in estate and family law matters", 'role_creativity': 4.0, 'role_leadership': 4.0, 'role_digital_literacy': 3.0, 'role_critical_thinking': 5.0, 'role_problem_solving': 5.0, 'analytical_thinking': 5.0, 'attention_to_detail': 5.0, 'collaboration': 4.0, 'adaptability': 5.0, 'independence': 4.0, 'evaluation': 0.0, 'decision_making': 0.0, 'stress_tolerance': 5.0, 'all_fields': {'oasis_code': '41101', 'oasis_label__final_x': 'Lawyers and Quebec notaries', 'active_learning': '5', 'adaptability': '5', 'analytical_thinking': '5', 'attention_to_detail': '5', 'creativity': '4', 'concern_for_others': '4', 'collaboration': '4', 'independence': '4', 'innovativeness': '3', 'leadership': '4', 'social_orientation': '4', 'service_orientation': '4', 'stress_tolerance': '5', 'concordance_number': '30', 'job_title_type': 'Index | Example | Inclusion', 'job_title_text': "administrative lawyer | law and corporate affairs adviser | counsellor-at-law | legal advisor | counsellor-lawyer | advisory counsel | articling law student | student-at-law | assistant Crown attorney | assistant legal advisor | assistant regional counsel | associate legal counsel | associate counsel | associate lawyer | legal advocate | lawyer | barrister | attorney-at-law | attorney | barrister and solicitor | city attorney | city solicitor | civil lawyer | claim attorney | commercial lawyer | contract counsel | corporate counsel | corporation lawyer | corporate notary (Quebec) | counsel | legal counsel | county attorney | criminal lawyer | Crown attorney | Crown corporation counsel | Crown counsel | Crown prosecutor | departmental solicitor | deputy city solicitor | family and estates lawyer | general solicitor | immigration lawyer | staff counsel | in-house legal counsel | staff solicitor | staff lawyer | industrial lawyer | insurance lawyer | intellectual-property lawyer | labour lawyer | judicial assistant - Supreme Court | law partner | prosecuting attorney | prosecutor | legislative adviser | legislative counsel | litigator | municipal solicitor | notary (Quebec) | Quebec notary | patent counsel | patent solicitor | patent lawyer | Queen's Counsel | real estate lawyer | regional attorney | regional Crown prosecutor | review lawyer | solicitor | special prosecutor | tariff counsel | tax attorney | tax lawyer | title lawyer | trademark lawyer | attorney's assistant chief agent | legal attaché | associate legal advisor | assistant corporate counsel | commercial law notary | assistant general solicitor | defence counsel | legal aid lawyer | general counsel | legal officer | legal officer - Canadian armed forces", 'main_duties': "Advise clients of their legal rights and all matters related to law | Research legal precedents and gather evidence | Plead clients' cases before courts of law, tribunals and boards (lawyers only) | Draw up legal documents such as real estate transactions, wills, divorces and contracts, and prepare statements of legal opinions | Negotiate settlements of civil disputes (lawyers only) | Perform administrative and management functions related to the practice of law | May act as mediator, conciliator or arbitrator | May act as executor, trustee or guardian in estate and family law matters", 'oasis_label__final_y': 'Lawyers and Quebec notaries', 'reading_comprehension': '5', 'writing': '5', 'numeracy': '3', 'digital_literacy': '3', 'oral_communication:_active_listening': '5', 'oral_communication:_oral_comprehension': '5', 'oral_communication:_oral_expression': '5', 'critical_thinking': '5', 'decision_making': '4', 'evaluation': '4', 'learning_and_teaching_strategies': '3', 'problem_solving': '5', 'systems_analysis': '4', 'digital_production': '0', 'preventative_maintenance': '0', 'equipment_and_tool_selection': '0', 'operation_and_control': '0', 'operation_monitoring_of_machinery_and_equipment': '0', 'quality_control_testing': '1', 'repairing': '0', 'setting_up': '0', 'product_design': '0', 'troubleshooting': '0', 'management_of_financial_resources': '3', 'management_of_material_resources': '2', 'management_of_personnel_resources': '3', 'monitoring': '3', 'time_management': '5', 'coordinating': '3', 'instructing': '3', 'negotiating': '5', 'persuading': '5', 'social_perceptiveness': '5', 'label': 'Lawyers and Quebec notaries', 'employment_requirement': "Lawyers | Two to three years of undergraduate studies or, in Quebec, completion of a college program, a bachelor's degree from a recognized law school, successful completion of the bar examination and completion of a period of articling are required"}, 'saved_at': datetime.datetime(2025, 4, 18, 14, 49, 2, 966622, tzinfo=datetime.timezone.utc), 'source': 'recommendation'}
+2025-07-16 18:51:24,541 - app.services.Swipe_career_recommendation_service - INFO - Retrieved 3 saved careers for user 12
+2025-07-16 18:51:24,542 - app.routers.careers - INFO - Retrieved 3 ESCO and 0 OaSIS careers for user 12
+2025-07-16 18:51:24,544 - app.routers.jobs - INFO - Retrieved 0 saved jobs for user 12
+2025-07-16 18:51:27,197 - app.api.endpoints.job_recommendations - INFO - Récupération de l'arbre de compétences pour l'emploi: 22114.03
+2025-07-16 18:51:27,198 - app.api.endpoints.job_recommendations - INFO - Paramètres: depth=1, max_nodes=5
+2025-07-16 18:51:27,198 - app.api.endpoints.job_recommendations - WARNING - Format d'ID d'emploi invalide: 22114.03
+2025-07-16 18:51:27,198 - app.utils.database - ERROR - Database session error: 
+2025-07-16 18:51:27,199 - app.utils.database - ERROR - Error type: <class 'fastapi.exceptions.HTTPException'>
+2025-07-16 18:51:27,200 - app.utils.database - ERROR - Traceback: Traceback (most recent call last):
+  File "/Users/philippebeliveau/Desktop/Notebook/Orientor_project/Orientor_project/backend/app/utils/database.py", line 163, in get_db
+    yield db
+fastapi.exceptions.HTTPException
+
+2025-07-16 18:51:27,208 - app.api.endpoints.job_recommendations - INFO - Récupération de l'arbre de compétences pour l'emploi: 22114.03
+2025-07-16 18:51:27,208 - app.api.endpoints.job_recommendations - INFO - Paramètres: depth=1, max_nodes=5
+2025-07-16 18:51:27,208 - app.api.endpoints.job_recommendations - WARNING - Format d'ID d'emploi invalide: 22114.03
+2025-07-16 18:51:27,208 - app.utils.database - ERROR - Database session error: 
+2025-07-16 18:51:27,208 - app.utils.database - ERROR - Error type: <class 'fastapi.exceptions.HTTPException'>
+2025-07-16 18:51:27,209 - app.utils.database - ERROR - Traceback: Traceback (most recent call last):
+  File "/Users/philippebeliveau/Desktop/Notebook/Orientor_project/Orientor_project/backend/app/utils/database.py", line 163, in get_db
+    yield db
+fastapi.exceptions.HTTPException
+
