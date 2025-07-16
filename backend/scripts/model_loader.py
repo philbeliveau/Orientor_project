@@ -9,43 +9,80 @@ logger = logging.getLogger(__name__)
 def load_models():
     """Load all required models and mark completion."""
     try:
-        # Create loading flag
-        loading_flag = Path("/app/.model_loading")
+        # Create loading flag - adjust path for local development
+        loading_flag_path = "/app/.model_loading" if os.path.exists("/app") else "./.model_loading"
+        loading_flag = Path(loading_flag_path)
         loading_flag.touch()
         
         logger.info("Starting model loading...")
         
-        # Load SentenceTransformer models
-        from sentence_transformers import SentenceTransformer
-        logger.info("Loading SentenceTransformer models...")
-        model_path = Path("/app/models/sentence_transformer")
-        if not model_path.exists():
-            logger.error("Model directory not found!")
-            return False
+        # Check if we're in production or development
+        model_base_path = Path("/app/models") if os.path.exists("/app") else Path("./models")
+        
+        # Load SentenceTransformer models if available
+        try:
+            from sentence_transformers import SentenceTransformer
+            logger.info("Loading SentenceTransformer models...")
+            model_path = model_base_path / "sentence_transformer"
             
-        # Load quantized model
-        quantized_model = SentenceTransformer(str(model_path / "quantized"))
-        logger.info("Loaded quantized model")
+            if model_path.exists():
+                # Load quantized model if available
+                quantized_path = model_path / "quantized"
+                if quantized_path.exists():
+                    quantized_model = SentenceTransformer(str(quantized_path))
+                    logger.info("Loaded quantized model")
+                
+                # Load normal model if available  
+                normal_path = model_path / "normal"
+                if normal_path.exists():
+                    normal_model = SentenceTransformer(str(normal_path))
+                    logger.info("Loaded normal model")
+            else:
+                logger.warning("SentenceTransformer model directory not found, skipping...")
+                
+        except Exception as e:
+            logger.warning(f"Could not load SentenceTransformer models: {e}")
         
-        # Load normal model
-        normal_model = SentenceTransformer(str(model_path / "normal"))
-        logger.info("Loaded normal model")
+        # Load other models if available
+        try:
+            import joblib
+            logger.info("Loading PCA, OHE, and Scaler models...")
+            model_path = model_base_path / "sentence_transformer"
+            
+            if model_path.exists():
+                pca_path = model_path / "pca.pkl"
+                ohe_path = model_path / "ohe.pkl"
+                scaler_path = model_path / "scaler.pkl"
+                
+                if pca_path.exists():
+                    pca = joblib.load(str(pca_path))
+                    logger.info("Loaded PCA model")
+                    
+                if ohe_path.exists():
+                    ohe = joblib.load(str(ohe_path))
+                    logger.info("Loaded OHE model")
+                    
+                if scaler_path.exists():
+                    scaler = joblib.load(str(scaler_path))
+                    logger.info("Loaded Scaler model")
+            else:
+                logger.warning("Model files not found, skipping...")
+                
+        except Exception as e:
+            logger.warning(f"Could not load joblib models: {e}")
         
-        # Load other models
-        import joblib
-        logger.info("Loading PCA, OHE, and Scaler models...")
-        pca = joblib.load(str(model_path / "pca.pkl"))
-        ohe = joblib.load(str(model_path / "ohe.pkl"))
-        scaler = joblib.load(str(model_path / "scaler.pkl"))
-        
-        logger.info("All models loaded successfully!")
+        logger.info("Model loading process completed!")
         
         # Remove loading flag
-        loading_flag.unlink()
+        if loading_flag.exists():
+            loading_flag.unlink()
         return True
         
     except Exception as e:
         logger.error(f"Error loading models: {str(e)}")
+        # Clean up loading flag on error
+        if 'loading_flag' in locals() and loading_flag.exists():
+            loading_flag.unlink()
         return False
 
 if __name__ == "__main__":

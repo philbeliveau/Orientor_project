@@ -73,12 +73,17 @@ MODEL_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file_
 CAREER_MODEL_PATH = os.path.join(MODEL_DIR, "career_recommender_model.pkl")
 
 # Load models if they exist
+CAREER_MODEL = None
+MODEL_LOADED = False
 try:
-    with open(CAREER_MODEL_PATH, 'rb') as f:
-        CAREER_MODEL = pickle.load(f)
-    
-    logger.info("Career recommendation model loaded successfully")
-    MODEL_LOADED = True
+    if os.path.exists(CAREER_MODEL_PATH):
+        with open(CAREER_MODEL_PATH, 'rb') as f:
+            CAREER_MODEL = pickle.load(f)
+        logger.info("Career recommendation model loaded successfully")
+        MODEL_LOADED = True
+    else:
+        logger.warning(f"Career recommendation model not found at {CAREER_MODEL_PATH}, using fallback method")
+        MODEL_LOADED = False
 except Exception as e:
     logger.error(f"Error loading career recommendation model: {str(e)}")
     MODEL_LOADED = False

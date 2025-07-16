@@ -68,6 +68,10 @@ class GraphSageLLMIntegration:
                 self.gnn_model.load_state_dict(checkpoint['model_state_dict'])
                 self.gnn_model.eval()
                 logger.info("GraphSage model loaded successfully")
+            else:
+                logger.warning(f"GraphSage model not found at {model_path}, using fallback method")
+                self.gnn_model = None
+                return
                 
             # Load graph data
             self._load_graph_data(data_path)
