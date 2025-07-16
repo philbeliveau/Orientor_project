@@ -60,8 +60,30 @@ export default function RegisterPage() {
             
             console.log('Registration successful:', response.data);
             
-            // Redirect to onboarding for new users
-            router.push('/onboarding');
+            // Now login the user automatically
+            try {
+                const loginResponse = await axios.post(
+                    endpoint('/auth/login'),
+                    { email, password },
+                    { 
+                        headers: { 'Content-Type': 'application/json' },
+                        timeout: 10000 
+                    }
+                );
+                
+                // Store the token and user ID in localStorage
+                localStorage.setItem('access_token', loginResponse.data.access_token);
+                localStorage.setItem('user_id', loginResponse.data.user_id.toString());
+                
+                console.log('Auto-login successful after registration');
+                
+                // Redirect to onboarding for new users
+                router.push('/onboarding');
+            } catch (loginError) {
+                console.error('Auto-login failed after registration:', loginError);
+                // Still redirect to login if auto-login fails
+                router.push('/login');
+            }
         } catch (err) {
             const error = err as ApiError;
             console.error('Registration error:', error);

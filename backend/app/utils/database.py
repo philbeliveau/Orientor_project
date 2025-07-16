@@ -143,6 +143,13 @@ def initialize_database():
 
 def get_db():
     """Get database session with error handling"""
+    global SessionLocal, engine
+    
+    # Initialize database on first access if not already done
+    if not SessionLocal or not engine:
+        logger.info("🔌 Initializing database on first access...")
+        initialize_database()
+    
     if not SessionLocal:
         logger.error("Database session factory not initialized")
         raise Exception("Database not available")
@@ -172,13 +179,6 @@ def check_database_health():
         database_connected = False
         return False
 
-# Initialize database on module import (but don't fail if it doesn't work)
-try:
-    if not settings.is_railway or settings.get_database_url:
-        logger.info("🔌 Initializing database connection...")
-        initialize_database()
-    else:
-        logger.info("⚠️ Skipping database initialization (no URL configured)")
-except Exception as e:
-    logger.error(f"❌ Database initialization failed on import: {str(e)}")
-    # Don't raise - allow app to start without database
+# Database initialization is now deferred to avoid caching issues
+# The database will be initialized when first accessed
+logger.info("📌 Database initialization deferred to avoid environment variable caching")
