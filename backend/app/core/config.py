@@ -96,4 +96,4 @@ settings = Settings()
 try:
     settings.log_config()
 except Exception as e:
-    logger.error(f"Error logging configuration: {e}")) 
+    logger.error(f"Error logging configuration: {e}") 
