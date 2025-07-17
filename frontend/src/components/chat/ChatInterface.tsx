@@ -363,7 +363,9 @@ export default function ChatInterface({ currentUserId, enableOrientator = false 
       console.log('handleSend - currentConversation:', currentConversation);
       console.log('handleSend - conversationId:', conversationId);
       
-      if (!conversationId) {
+      if (!conversationId && (chatMode === 'default' || (enableOrientator && chatMode === 'default'))) {
+        // Create conversation for default mode or when Orientator is enabled for default mode
+        // For Socratic/Claude modes, conversation creation is handled by the service
         console.log('No conversation ID found, creating new conversation');
         const createResponse = await axios.post(
           `${process.env.NEXT_PUBLIC_API_URL}/chat/conversations`,
@@ -391,36 +393,57 @@ export default function ChatInterface({ currentUserId, enableOrientator = false 
         await new Promise(resolve => setTimeout(resolve, 100));
       }
 
-      // Send message to existing conversation
-      const endpoint = enableOrientator 
-        ? `${process.env.NEXT_PUBLIC_API_URL}/api/orientator/test-message`
-        : `${process.env.NEXT_PUBLIC_API_URL}/chat/conversations/send/${conversationId}`;
+      // Send message to appropriate endpoint based on chat mode
+      let endpoint: string;
+      let requestBody: any;
+      let headers: any;
+      
+      console.log('🔍 DEBUGGING ROUTING:');
+      console.log('   enableOrientator:', enableOrientator);
+      console.log('   chatMode:', chatMode);
+      console.log('   chatMode === "socratic":', chatMode === 'socratic');
+      console.log('   chatMode === "claude":', chatMode === 'claude');
+      console.log('   enableOrientator && chatMode === "default":', enableOrientator && chatMode === 'default');
+      
+      if (enableOrientator && chatMode === 'default') {
+        console.log('🟡 TAKING ORIENTATOR PATH (default mode)');
+        // Use Orientator endpoint only for default mode when enabled
+        endpoint = `${process.env.NEXT_PUBLIC_API_URL}/api/orientator/test-message`;
+        requestBody = { message: userMessage };
+        headers = { 'Content-Type': 'application/json' };
+      } else if (chatMode === 'socratic' || chatMode === 'claude') {
+        console.log('🟢 TAKING SOCRATIC CHAT PATH (socratic/claude mode)');
+        // Use Socratic Chat Service for Socratic and Claude modes
+        endpoint = `${process.env.NEXT_PUBLIC_API_URL}/api/v1/socratic-chat/send`;
+        requestBody = {
+          text: userMessage,
+          mode: chatMode,
+          conversation_id: conversationId
+        };
+        headers = {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        };
+      } else {
+        console.log('🔵 TAKING REGULAR CHAT PATH (fallback default mode)');
+        // Use regular chat endpoint for default mode
+        endpoint = `${process.env.NEXT_PUBLIC_API_URL}/chat/conversations/send/${conversationId}`;
+        requestBody = {
+          message: userMessage,
+          mode: chatMode
+        };
+        headers = {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        };
+      }
       
       console.log('🚀 Sending message to endpoint:', endpoint);
       console.log('🤖 Orientator enabled:', enableOrientator);
-      console.log('💬 Message payload:', enableOrientator ? {
-        message: userMessage,
-        conversation_id: conversationId,
-        mode: chatMode
-      } : { message: userMessage, mode: chatMode });
+      console.log('💬 Chat mode:', chatMode);
+      console.log('💬 Message payload:', requestBody);
         
-      const response = await axios.post(
-        endpoint,
-        enableOrientator ? {
-          message: userMessage
-        } : {
-          message: userMessage,
-          mode: chatMode
-        },
-        {
-          headers: enableOrientator ? {
-            'Content-Type': 'application/json'
-          } : {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json'
-          }
-        }
-      );
+      const response = await axios.post(endpoint, requestBody, { headers });
       
       console.log('📨 Response received:', response.data);
       console.log('🔍 Response has message_id:', !!response.data.message_id);
@@ -429,12 +452,13 @@ export default function ChatInterface({ currentUserId, enableOrientator = false 
       // Add both user and assistant messages
       let newMessages: Message[] = [];
       
-      console.log('🔍 Checking Orientator conditions:');
+      console.log('🔍 Checking response format:');
       console.log('   enableOrientator:', enableOrientator);
+      console.log('   chatMode:', chatMode);
       console.log('   response.data.message_id:', response.data.message_id);
-      console.log('   Both conditions met:', enableOrientator && response.data.message_id);
+      console.log('   response.data.success:', response.data.success);
       
-      if (enableOrientator && response.data.message_id) {
+      if (enableOrientator && chatMode === 'default' && response.data.message_id) {
         // Orientator format with components - single message response
         console.log('✅ Using Orientator format!');
         newMessages = [
@@ -462,18 +486,48 @@ export default function ChatInterface({ currentUserId, enableOrientator = false 
             console.log(`   ${i+1}. ${comp.type} component with ${comp.actions?.length || 0} actions`);
           });
         }
-      } else {
-        // Standard chat format
-        console.log('❌ Using standard chat format!');
+      } else if ((chatMode === 'socratic' || chatMode === 'claude') && response.data.success) {
+        // Socratic Chat Service format
+        console.log('✅ Using Socratic Chat format!');
         newMessages = [
           {
-            id: response.data.user_message_id,
+            id: Date.now(), // User message ID
             role: 'user',
             content: userMessage,
             created_at: new Date().toISOString()
           },
           {
-            id: response.data.assistant_message_id,
+            id: response.data.message_id,
+            role: 'assistant',
+            content: response.data.response,
+            created_at: new Date().toISOString(),
+            tokens_used: response.data.tokens_used
+          }
+        ];
+        
+        // Update conversationId if it's a new conversation
+        if (!conversationId && response.data.conversation_id) {
+          // Update the conversation in state
+          conversationToUse = { 
+            ...conversationToUse,
+            id: response.data.conversation_id 
+          } as Conversation;
+          setCurrentConversation(conversationToUse);
+        }
+        
+        console.log('✅ Created Socratic Chat messages:', newMessages.length);
+      } else {
+        // Standard chat format
+        console.log('✅ Using standard chat format!');
+        newMessages = [
+          {
+            id: response.data.user_message_id || Date.now(),
+            role: 'user',
+            content: userMessage,
+            created_at: new Date().toISOString()
+          },
+          {
+            id: response.data.assistant_message_id || response.data.message_id,
             role: 'assistant',
             content: response.data.response,
             created_at: new Date().toISOString(),

@@ -53,6 +53,18 @@ const SaveJobButton: React.FC<SaveJobButtonProps> = ({ job, className = '', size
         skillValues[`role_${skillName}`] = parseFloat(match[2]);
       }
 
+      // Convert all arrays in metadata to strings (backend expects Dict[str, str])
+      const processedMetadata = { ...job.metadata };
+      Object.keys(processedMetadata).forEach(key => {
+        if (Array.isArray(processedMetadata[key])) {
+          processedMetadata[key] = processedMetadata[key].join(', ');
+        } else if (typeof processedMetadata[key] === 'object' && processedMetadata[key] !== null) {
+          processedMetadata[key] = JSON.stringify(processedMetadata[key]);
+        } else if (typeof processedMetadata[key] !== 'string') {
+          processedMetadata[key] = String(processedMetadata[key]);
+        }
+      });
+
       const jobData = {
         oasis_code: job.id, // ESCO jobs from home page use their ID as oasis_code
         label: job.metadata.preferred_label || job.metadata.title || 'Untitled Job',
@@ -73,7 +85,7 @@ const SaveJobButton: React.FC<SaveJobButtonProps> = ({ job, className = '', size
         evaluation: 3.5,
         decision_making: 3.5,
         stress_tolerance: 3.5,
-        all_fields: job.metadata
+        all_fields: processedMetadata
       };
 
       const response = await axios.post(

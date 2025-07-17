@@ -6,6 +6,7 @@ import { getAllJobRecommendations } from '@/services/api';
 import JobSkillsTree from '@/components/jobs/JobSkillsTree';
 import JobCard, { Job } from '@/components/jobs/JobCard';
 import LoadingScreen from '@/components/ui/LoadingScreen';
+import SetCareerGoalButton from '@/components/common/SetCareerGoalButton';
 import SaveJobButton from '@/components/common/SaveJobButton';
 
 export default function CareerRecommendationsPage() {
@@ -101,7 +102,15 @@ export default function CareerRecommendationsPage() {
                         </h2>
                         <p className="text-xs text-gray-500 mt-1">Skills & Requirements Analysis</p>
                       </div>
-                      <SaveJobButton job={selectedJob} size="md" />
+                      <div className="flex gap-2">
+                        <SaveJobButton job={selectedJob} size="md" />
+                        <SetCareerGoalButton 
+                          job={selectedJob} 
+                          size="md" 
+                          variant="primary"
+                          source="recommendations"
+                        />
+                      </div>
                     </div>
                     <div className="w-full">
                       <JobSkillsTree jobId={selectedJob.id} height="900px" />
