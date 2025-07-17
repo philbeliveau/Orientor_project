@@ -110,46 +110,41 @@ async def get_current_user_job_recommendations(
             logger.info(f"✅ Generated {len(recommendations) if recommendations else 0} recommendations")
         
         if not recommendations:
-            logger.warning(f"⚠️ No recommendations found for user {user_id}, creating dummy data")
-            # Créer des recommandations factices pour le débogage
-            recommendations = [
-                {
-                    "id": f"dummy_job_{i}",
-                    "score": 0.5,
-                    "metadata": {
-                        "title": f"Example Job {i+1}",
-                        "description": "This is an example job for debugging",
-                        "preferred_label": f"Example Job {i+1}",
-                        "skills": ["Skill 1", "Skill 2", "Skill 3"]
-                    }
-                } for i in range(3)
-            ]
+            logger.warning(f"⚠️ No recommendations found for user {user_id}")
+            return {
+                "recommendations": [],
+                "user_id": int(user_id),
+                "message": "No recommendations available. Please complete your profile to get personalized job recommendations."
+            }
         
-        # Vérifier la structure des recommandations et les corriger si nécessaire
+        # Vérifier la structure des recommandations et s'assurer qu'elles contiennent les vraies données
         valid_recommendations = []
         for i, rec in enumerate(recommendations):
             try:
-                # Créer une nouvelle recommandation correctement formatée
+                # Extraire les métadonnées de Pinecone
+                metadata = rec.get('metadata', {})
+                
+                # Créer une recommandation avec les vraies données
                 valid_rec = {
                     "id": str(rec.get('id', f"unknown_job_{i}")),
-                    "score": float(rec.get('score', 0.5)),
-                    "metadata": rec.get('metadata', {
-                        "title": f"Job {i+1}",
-                        "description": "No description available",
-                        "preferred_label": f"Job {i+1}"
-                    })
+                    "score": float(rec.get('score', 0.0)),
+                    "metadata": {
+                        # Utiliser les vraies données de ESCO depuis Pinecone
+                        "title": metadata.get('title', metadata.get('preferred_label', 'Unknown Position')),
+                        "preferred_label": metadata.get('preferred_label', metadata.get('title', 'Unknown Position')),
+                        "description": metadata.get('description', 'No description available'),
+                        "skills": metadata.get('skills', []),
+                        "alt_labels": metadata.get('alt_labels', []),
+                        "isco_group": metadata.get('isco_group', ''),
+                        "match_percentage": round(float(rec.get('score', 0.0)) * 100, 1),
+                        # Préserver toutes les métadonnées additionnelles
+                        **{k: v for k, v in metadata.items() if k not in ['title', 'preferred_label', 'description', 'skills', 'alt_labels', 'isco_group']}
+                    }
                 }
                 
-                # S'assurer que metadata est un dictionnaire
-                if not isinstance(valid_rec['metadata'], dict):
-                    valid_rec['metadata'] = {
-                        "title": f"Job {i+1}",
-                        "description": "No description available",
-                        "preferred_label": f"Job {i+1}"
-                    }
-                
                 valid_recommendations.append(valid_rec)
-                logger.info(f"✅ Recommendation {i+1}: {valid_rec['metadata'].get('title', valid_rec['metadata'].get('preferred_label', 'Unknown'))} (score: {valid_rec['score']:.2f})")
+                job_title = valid_rec['metadata'].get('preferred_label', valid_rec['metadata'].get('title', 'Unknown'))
+                logger.info(f"✅ Recommendation {i+1}: {job_title} (score: {valid_rec['score']:.3f})")
             except Exception as e:
                 logger.error(f"❌ Error processing recommendation {i}: {str(e)}")
                 continue
@@ -328,37 +323,11 @@ async def get_skill_tree_for_job(
         
         # Vérifier si l'arbre de compétences est valide
         if not skill_tree or not skill_tree.get("nodes"):
-            logger.warning(f"Aucun arbre de compétences trouvé pour l'emploi {job_id}, création d'un arbre factice")
-            
-            # Créer un arbre de compétences factice pour le débogage
-            dummy_nodes = {
-                f"skill_{i}": {
-                    "id": f"skill_{i}",
-                    "label": f"Compétence {i}",
-                    "type": "skill",
-                    "level": 1,
-                    "score": 0.8 - (i * 0.1)
-                } for i in range(1, 6)
-            }
-            
-            # Ajouter le nœud d'emploi
-            dummy_nodes[job_id] = {
-                "id": job_id,
-                "label": "Emploi exemple",
-                "type": "occupation",
-                "level": 0
-            }
-            
-            # Créer des arêtes
-            dummy_edges = [
-                {"source": job_id, "target": f"skill_{i}", "weight": 0.8 - (i * 0.1)}
-                for i in range(1, 6)
-            ]
-            
-            skill_tree = {
-                "nodes": dummy_nodes,
-                "edges": dummy_edges
-            }
+            logger.warning(f"Aucun arbre de compétences trouvé pour l'emploi {job_id}")
+            raise HTTPException(
+                status_code=404, 
+                detail=f"No skill tree found for job ID {job_id}. The job may not exist in the ESCO database or the graph service may be unavailable."
+            )
         
         # Log détaillé pour le débogage
         logger.info("=== DÉTAILS DE L'ARBRE DE COMPÉTENCES ===")

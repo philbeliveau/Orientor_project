@@ -90,24 +90,25 @@ export default function CareerRecommendationsPage() {
 
             {/* Right side: Skills Tree */}
             <div className="lg:col-span-7">
-              <div className="bg-white rounded-2xl shadow-lg p-6 h-[800px]">
+              <div className="bg-white rounded-2xl shadow-lg p-6">
                 {selectedJob ? (
-                  <div className="h-full flex flex-col">
+                  <div>
                     <div className="flex justify-between items-start mb-6 pb-4 border-b border-gray-200">
                       <div>
                         <h2 className="text-2xl font-semibold text-gray-900">
-                          {selectedJob.metadata.preferred_label || selectedJob.metadata.title || selectedJob.id.replace('occupation::key_', '')}
+                          {selectedJob.metadata.preferred_label || selectedJob.metadata.title || 
+                           (selectedJob.id.startsWith('occupation::key_') ? `Position ${selectedJob.id.replace('occupation::key_', '')}` : selectedJob.id)}
                         </h2>
                         <p className="text-sm text-gray-500 mt-1">Skills & Requirements Analysis</p>
                       </div>
                       <SaveJobButton job={selectedJob} size="lg" />
                     </div>
-                    <div className="flex-1 min-h-0">
-                      <JobSkillsTree jobId={selectedJob.id} height="100%" />
+                    <div className="w-full">
+                      <JobSkillsTree jobId={selectedJob.id} height="700px" />
                     </div>
                   </div>
                 ) : (
-                  <div className="flex flex-col items-center justify-center h-full text-center">
+                  <div className="flex flex-col items-center justify-center text-center" style={{height: "700px"}}>
                     <div className="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mb-4">
                       <svg className="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />

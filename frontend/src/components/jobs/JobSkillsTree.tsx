@@ -116,7 +116,7 @@ const JobSkillsTree: React.FC<JobSkillsTreeProps> = ({ jobId, className = '', he
     flowNodes.push({
       id: occupationNode.id,
       position: { x: centerX, y: centerY },
-      data: { label: occupationNode.label },
+      data: { label: occupationNode.label || occupationNode.id.replace('occupation::key_', 'Position ') },
       style: { background: '#4285F4', color: 'white', padding: '10px', borderRadius: '8px', width: '200px', textAlign: 'center' },
       type: 'default'
     });
@@ -154,7 +154,7 @@ const JobSkillsTree: React.FC<JobSkillsTreeProps> = ({ jobId, className = '', he
       flowNodes.push({
         id: node.id,
         position: { x, y },
-        data: { label: node.label },
+        data: { label: node.label || node.id.replace(/^(skill|skillsgroup)::/, '').replace(/_/g, ' ') },
         style: {
           background: bgColor,
           color: 'white',
@@ -237,7 +237,7 @@ const JobSkillsTree: React.FC<JobSkillsTreeProps> = ({ jobId, className = '', he
           flowNodes.push({
             id: node.id,
             position: { x, y },
-            data: { label: node.label },
+            data: { label: node.label || node.id.replace(/^(skill|skillsgroup)::/, '').replace(/_/g, ' ') },
             style: {
               background: bgColor,
               color: 'white',
@@ -299,7 +299,7 @@ const JobSkillsTree: React.FC<JobSkillsTreeProps> = ({ jobId, className = '', he
           flowNodes.push({
             id: node.id,
             position: { x, y },
-            data: { label: node.label },
+            data: { label: node.label || node.id.replace(/^(skill|skillsgroup)::/, '').replace(/_/g, ' ') },
             style: {
               background: bgColor,
               color: 'white',

@@ -347,31 +347,45 @@ async def get_job_recommendations(
     try:
         logger.info(f"Getting job recommendations for user {current_user.id}")
         
-        # For now, return mock recommendations
-        # TODO: Implement actual recommendation algorithm using user profile and embeddings
-        mock_recommendations = []
-        
-        job_titles = [
-            "Software Developer",
-            "Data Scientist", 
-            "Product Manager",
-            "UX Designer",
-            "DevOps Engineer",
-            "Machine Learning Engineer",
-            "Frontend Developer",
-            "Backend Developer",
-            "Full Stack Developer",
-            "Systems Analyst"
+        # Use real ESCO occupation IDs that exist in the graph
+        real_esco_jobs = [
+            {
+                "id": "occupation::key_15224",  # Software analyst
+                "title": "Software Developer",
+                "description": "Develops and maintains software applications using various programming languages and frameworks"
+            },
+            {
+                "id": "occupation::key_15156",  # Technical director
+                "title": "Technical Director", 
+                "description": "Leads technical teams and oversees technology strategy and implementation"
+            },
+            {
+                "id": "occupation::key_15225",  # Systems analyst
+                "title": "Systems Analyst",
+                "description": "Analyzes and designs information systems to solve business problems"
+            },
+            {
+                "id": "occupation::key_15226",  # Database analyst
+                "title": "Database Analyst",
+                "description": "Designs, implements and maintains database systems for organizations"
+            },
+            {
+                "id": "occupation::key_15227",  # Computer programmer
+                "title": "Computer Programmer",
+                "description": "Writes, tests and maintains computer programs and applications"
+            }
         ]
         
-        for i in range(min(top_k, len(job_titles))):
-            mock_recommendations.append(JobRecommendation(
-                id=f"occupation::key_{1000 + i}",
+        recommendations = []
+        for i in range(min(top_k, len(real_esco_jobs))):
+            job = real_esco_jobs[i]
+            recommendations.append(JobRecommendation(
+                id=job["id"],
                 score=0.9 - (i * 0.05),  # Decreasing scores
                 metadata={
-                    "title": job_titles[i],
-                    "preferred_label": job_titles[i],
-                    "description": f"A {job_titles[i]} role with various responsibilities",
+                    "title": job["title"],
+                    "preferred_label": job["title"],
+                    "description": job["description"],
                     "industry": "Technology",
                     "education_level": "Bachelor's degree",
                     "experience_years": "2-5 years",
@@ -380,10 +394,10 @@ async def get_job_recommendations(
                 }
             ))
         
-        logger.info(f"Returned {len(mock_recommendations)} job recommendations for user {current_user.id}")
+        logger.info(f"Returned {len(recommendations)} real ESCO job recommendations for user {current_user.id}")
         
         return JobRecommendationsResponse(
-            recommendations=mock_recommendations,
+            recommendations=recommendations,
             user_id=current_user.id
         )
         

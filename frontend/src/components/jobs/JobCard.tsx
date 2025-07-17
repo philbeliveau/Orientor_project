@@ -102,7 +102,9 @@ const getAvatarForJob = (jobId: string, title: string): string => {
 };
 
 const JobCard: React.FC<JobCardProps> = ({ job, isSelected, onClick, className = '' }) => {
-  const rawTitle = job.metadata.preferred_label || job.metadata.title || job.id.replace('occupation::key_', '') || 'Emploi sans titre';
+  // Use real job data from ESCO/Pinecone, with better fallback handling
+  const rawTitle = job.metadata.preferred_label || job.metadata.title || 
+    (job.id.startsWith('occupation::key_') ? `Position ${job.id.replace('occupation::key_', '')}` : job.id);
   const title = rawTitle.length > 40 ? `${rawTitle.substring(0, 40)}...` : rawTitle;
   const description = job.metadata.description || 'Aucune description disponible';
   const matchPercentage = job.metadata.match_percentage || Math.round(job.score * 100);
@@ -123,21 +125,21 @@ const JobCard: React.FC<JobCardProps> = ({ job, isSelected, onClick, className =
         className={styles.glass}
         data-text={title}
       >
-        <div className="flex flex-col h-full pt-14 pb-4 px-4">
-          {/* Match percentage */}
-          <div className="absolute top-2 right-2 bg-green-500 text-white text-xs font-bold px-3 py-1 rounded-full z-10">
+        <div className="flex flex-col h-full pt-16 pb-4 px-4">
+          {/* Match percentage - positioned below the header */}
+          <div className="absolute top-12 right-2 bg-green-500 text-white text-xs font-bold px-3 py-1 rounded-full z-10">
             {matchPercentage}% match
           </div>
 
           {/* Avatar */}
-          <div className="flex justify-center mb-4">
+          <div className="flex justify-center mb-4 mt-2">
             <div className="w-20 h-20 rounded-full overflow-hidden border-4 border-white shadow-lg">
               <Image
                 src={`/avatar/${getAvatarForJob(job.id, title)}`}
                 alt={title}
                 width={80}
                 height={80}
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover object-center"
               />
             </div>
           </div>
