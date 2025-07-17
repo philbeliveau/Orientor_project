@@ -234,39 +234,39 @@ export default function Dashboard() {
         
         <div className="relative z-10 w-full">
           <div className="flex-1 w-full px-4 sm:px-6 md:px-12 lg:px-16 xl:px-24 max-w-none">
-            {/* Mobile-First Layout Stack */}
+            {/* Mobile-First Layout Stack - Progress and Focus in one row */}
             <div className="flex flex-col gap-6 mb-8">
               
-              {/* Mobile: Progress Section */}
+              {/* Single Row: All cards with same dimensions */}
               <div className="w-full">
-                <h2 className="text-lg sm:text-xl font-semibold mb-4 px-2" style={{ color: '#000000' }}>My Progress</h2>
-                <div className="w-full">
-                  <UserCard
-                    name={userData.name}
-                    role={userData.role}
-                    skills={userData.skills}
-                    hollandResults={hollandResults}
-                    loading={loading}
-                    error={error}
-                    className="w-full max-w-sm mx-auto sm:max-w-none"
-                    style={{
-                      width: '100%',
-                      maxWidth: '320px',
-                      height: '280px',
-                      borderRadius: '24px',
-                      background: '#e0e0e0',
-                      boxShadow: '10px 10px 20px #bebebe, -10px -10px 20px #ffffff'
-                    }}
-                  />
-                </div>
-              </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                  
+                  {/* My Progress Section */}
+                  <div className="w-full">
+                    <h2 className="text-lg sm:text-xl font-semibold mb-4 px-2" style={{ color: '#000000' }}>My Progress</h2>
+                    <div className="w-full">
+                      <UserCard
+                        name={userData.name}
+                        role={userData.role}
+                        skills={userData.skills}
+                        hollandResults={hollandResults}
+                        loading={loading}
+                        error={error}
+                        className="w-full"
+                        style={{
+                          width: '100%',
+                          height: '220px',
+                          borderRadius: '24px',
+                          background: '#e0e0e0',
+                          boxShadow: '10px 10px 20px #bebebe, -10px -10px 20px #ffffff'
+                        }}
+                      />
+                    </div>
+                  </div>
 
-              {/* Mobile: Action Cards - Stacked on mobile, grid on larger screens */}
-              <div className="w-full">
-                <h2 className="text-lg sm:text-xl font-semibold mb-4 px-2" style={{ color: '#000000' }}>Today's Focus</h2>
-                <div className="flex flex-col sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
                   {/* Daily Question Card */}
                   <div className="w-full">
+                    <h2 className="text-lg sm:text-xl font-semibold mb-4 px-2" style={{ color: '#000000' }}>Today's Focus</h2>
                     <ColorfulDailyQuestionCard 
                       userId={currentUserId}
                       style={{ height: '220px' }}
@@ -275,18 +275,21 @@ export default function Dashboard() {
 
                   {/* Career Goal Card */}
                   <div className="w-full">
+                    <h2 className="text-lg sm:text-xl font-semibold mb-4 px-2 opacity-0" style={{ color: '#000000' }}>Hidden</h2>
                     <ColorfulCareerGoalCard
                       style={{ height: '220px' }}
                     />
                   </div>
 
                   {/* Classes Card */}
-                  <div className="w-full sm:col-span-2 lg:col-span-1">
+                  <div className="w-full">
+                    <h2 className="text-lg sm:text-xl font-semibold mb-4 px-2 opacity-0" style={{ color: '#000000' }}>Hidden</h2>
                     <EnhancedClassesCard
                       userId={currentUserId}
                       style={{ height: '220px' }}
                     />
                   </div>
+                  
                 </div>
               </div>
 

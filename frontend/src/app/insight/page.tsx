@@ -6,6 +6,7 @@ import MainLayout from '@/components/layout/MainLayout';
 import { getInsight, generateInsight, regenerateInsight, saveInsight, rewriteInsight, InsightData, mockInsightData } from '@/services/insightService';
 import PersonalityCard from '@/components/ui/PersonalityCard';
 import SkillShowcase from '@/components/ui/SkillShowcase';
+import AvatarPanel from '@/components/avatar/AvatarPanel';
 import hollandTestService, { ScoreResponse } from '@/services/hollandTestService';
 import Link from 'next/link';
 import styles from './insight.module.css';
@@ -240,6 +241,15 @@ const InsightPage: React.FC = () => {
                 <div className="premium-card p-6">
                   <h2 className="premium-section-title mb-6">Your Skills</h2>
                   <SkillShowcase userId={userId || undefined} />
+                </div>
+                
+                {/* Avatar Profile Section */}
+                <div className="premium-card p-6">
+                  <h2 className="premium-section-title mb-6">Your Avatar Profile</h2>
+                  <p className="premium-text-secondary mb-6">
+                    Generate your personalized avatar based on your psychological profile and personality traits.
+                  </p>
+                  <AvatarPanel className="w-full" />
                 </div>
                 
                 {/* Personality Tests Section */}

@@ -70,9 +70,9 @@ class SocraticChatService:
                 if not conversation:
                     raise ValueError("Conversation not found")
             else:
-                # Create conversation with mode tag
+                # Create conversation with a clean title (mode can be inferred from context)
                 conversation = await ConversationService.create_conversation(
-                    db, user_id, f"[{mode.upper()}] {message_text[:50]}..."
+                    db, user_id, f"{message_text[:50]}..."
                 )
                 
             # Add user message to conversation
@@ -84,6 +84,11 @@ class SocraticChatService:
             recent_messages = await ChatMessageService.get_conversation_messages(
                 db, conversation.id, limit=20
             )
+            
+            # Debug logging
+            logger.info(f"Conversation {conversation.id} has {len(recent_messages)} messages")
+            for i, msg in enumerate(recent_messages[-5:]):  # Log last 5 messages
+                logger.info(f"  Message {i}: {msg.role} - {msg.content[:50]}...")
             
             # Get user profile for context
             user_profile = db.query(UserProfile).filter(UserProfile.user_id == user_id).first()
@@ -169,22 +174,33 @@ Remember: Your goal is not to lead students to predetermined answers, but to hel
             context = f"\n\nSTUDENT CONTEXT:\n"
             if profile.career_goals:
                 context += f"- Career interests: {profile.career_goals}\n"
+                logger.info(f"Adding career goals to context: {profile.career_goals}")
             if profile.interests:
                 context += f"- General interests: {profile.interests}\n"
             if profile.major:
                 context += f"- Field of study: {profile.major}\n"
             system_prompt += context
+            logger.info(f"User profile context added: {context}")
+        else:
+            logger.info("No user profile found, using generic context")
             
         # Prepare messages for OpenAI
         messages = [{"role": "system", "content": system_prompt}]
         
-        # Add conversation history
+        # Add conversation history (exclude ALL system messages to avoid conflicts)
+        logger.info(f"Adding {len(history)} messages to conversation context")
         for msg in reversed(history[-10:]):  # Last 10 messages
-            if msg.role != "system":
+            if msg.role in ["user", "assistant"]:  # Only include user and assistant messages
                 messages.append({
                     "role": msg.role,
                     "content": msg.content
                 })
+                logger.info(f"  Added to OpenAI: {msg.role} - {msg.content[:50]}...")
+            elif msg.role == "system":
+                logger.info(f"  Skipped system message: {msg.content[:50]}...")
+        
+        logger.info(f"Final OpenAI messages count: {len(messages)}")
+        logger.info(f"Full message payload being sent to OpenAI: {messages}")
                 
         response = await self.openai_client.chat.completions.create(
             model="gpt-4",
@@ -194,6 +210,8 @@ Remember: Your goal is not to lead students to predetermined answers, but to hel
             presence_penalty=0.7,
             frequency_penalty=0.5
         )
+        
+        logger.info(f"OpenAI response: {response.choices[0].message.content[:100]}...")
         
         return response.choices[0].message.content
         

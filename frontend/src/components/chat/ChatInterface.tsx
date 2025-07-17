@@ -10,6 +10,9 @@ import SearchInterface from './SearchInterface';
 import CategoryManager from './CategoryManager';
 import AnalyticsDashboard from './AnalyticsDashboard';
 import { Menu, Search, Folder, BarChart3, Plus } from 'lucide-react';
+import ChatHeader from './ChatHeader';
+import InitialChatView from './InitialChatView';
+import { ChatMode } from './ChatModeSelector';
 import styles from './ChatBot.module.css';
 import { MessageComponentRenderer, MessageComponent, ComponentAction, MessageComponentType } from './MessageComponent';
 
@@ -77,12 +80,12 @@ const PaperChatMessage: React.FC<PaperChatMessageProps> = ({ message, isLast, ch
       {/* AI/System message with mode-specific accent */}
       {!isUser && (
         <div>
-          <div className={`border-l-3 pl-8 py-2 ${
+          <div className={`border-l-3 pl-4 sm:pl-6 lg:pl-8 py-2 ${
             chatMode === 'claude' 
               ? 'border-purple-500' 
               : 'border-blue-500'
           }`}>
-            <p className={`text-xl leading-relaxed font-light tracking-wide ${
+            <p className={`text-lg sm:text-xl leading-relaxed font-light tracking-wide ${
               chatMode === 'claude' 
                 ? 'text-purple-600' 
                 : 'text-blue-600'
@@ -92,7 +95,7 @@ const PaperChatMessage: React.FC<PaperChatMessageProps> = ({ message, isLast, ch
           </div>
           {/* Render message components if present */}
           {message.components && message.components.length > 0 && (
-            <div className="mt-4 space-y-3 pl-8">
+            <div className="mt-4 space-y-3 pl-4 sm:pl-6 lg:pl-8">
               {message.components.map((component, index) => (
                 <MessageComponentRenderer
                   key={component.id || index}
@@ -107,8 +110,8 @@ const PaperChatMessage: React.FC<PaperChatMessageProps> = ({ message, isLast, ch
       
       {/* User message as elegant plain text */}
       {isUser && (
-        <div className="pl-4 py-1">
-          <p className="text-xl leading-relaxed text-gray-800 font-light tracking-wide">
+        <div className="pl-2 sm:pl-4 py-1">
+          <p className="text-lg sm:text-xl leading-relaxed text-gray-800 font-light tracking-wide">
             {message.content}
           </p>
         </div>
@@ -117,7 +120,6 @@ const PaperChatMessage: React.FC<PaperChatMessageProps> = ({ message, isLast, ch
   );
 };
 
-type ChatMode = 'default' | 'socratic' | 'claude';
 
 export default function ChatInterface({ currentUserId, enableOrientator = false }: ChatInterfaceProps) {
   
@@ -487,35 +489,104 @@ export default function ChatInterface({ currentUserId, enableOrientator = false 
           });
         }
       } else if ((chatMode === 'socratic' || chatMode === 'claude') && response.data.success) {
-        // Socratic Chat Service format
+        // Socratic Chat Service format - reload messages from database
         console.log('✅ Using Socratic Chat format!');
-        newMessages = [
-          {
-            id: Date.now(), // User message ID
-            role: 'user',
-            content: userMessage,
-            created_at: new Date().toISOString()
-          },
-          {
-            id: response.data.message_id,
-            role: 'assistant',
-            content: response.data.response,
-            created_at: new Date().toISOString(),
-            tokens_used: response.data.tokens_used
-          }
-        ];
         
         // Update conversationId if it's a new conversation
         if (!conversationId && response.data.conversation_id) {
           // Update the conversation in state
           conversationToUse = { 
             ...conversationToUse,
-            id: response.data.conversation_id 
+            id: response.data.conversation_id,
+            title: response.data.conversation_title || conversationToUse?.title || 'New Chat'
           } as Conversation;
           setCurrentConversation(conversationToUse);
+          
+          // Update local variable for current request
+          conversationId = response.data.conversation_id;
+          
+          // Trigger conversation list refresh to show new conversation
+          setRefreshConversationList(prev => prev + 1);
         }
         
-        console.log('✅ Created Socratic Chat messages:', newMessages.length);
+        // Instead of manually adding messages, reload from database to ensure proper order
+        if (conversationId || response.data.conversation_id) {
+          const reloadConversationId = conversationId || response.data.conversation_id;
+          try {
+            // Small delay to ensure database transaction is complete
+            await new Promise(resolve => setTimeout(resolve, 100));
+            
+            const messagesResponse = await axios.get(
+              `${process.env.NEXT_PUBLIC_API_URL}/chat/conversations/${reloadConversationId}/messages`,
+              {
+                headers: {
+                  'Authorization': `Bearer ${token}`
+                }
+              }
+            );
+            
+            // Update messages from database response
+            const messagesData = messagesResponse.data.messages || messagesResponse.data;
+            
+            // Filter out system messages and ensure proper ordering
+            const filteredMessages = messagesData
+              .filter((msg: any) => msg.role !== 'system')
+              .sort((a: any, b: any) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime());
+            
+            // Only update if we got a different set of messages to prevent flicker
+            setMessages(prev => {
+              if (prev.length !== filteredMessages.length) {
+                return filteredMessages;
+              }
+              // Check if the last message is different (new message added)
+              const lastPrev = prev[prev.length - 1];
+              const lastNew = filteredMessages[filteredMessages.length - 1];
+              if (!lastPrev || !lastNew || lastPrev.id !== lastNew.id) {
+                return filteredMessages;
+              }
+              return prev; // No change needed
+            });
+            console.log('✅ Reloaded conversation messages:', filteredMessages.length);
+            
+            // Don't add newMessages since we reloaded from database
+            newMessages = [];
+          } catch (reloadError) {
+            console.error('Failed to reload messages, falling back to manual addition:', reloadError);
+            // Fallback to manual addition if reload fails
+            newMessages = [
+              {
+                id: Date.now(),
+                role: 'user',
+                content: userMessage,
+                created_at: new Date().toISOString()
+              },
+              {
+                id: response.data.message_id,
+                role: 'assistant',
+                content: response.data.response,
+                created_at: new Date().toISOString(),
+                tokens_used: response.data.tokens_used
+              }
+            ];
+          }
+        } else {
+          // No conversation ID available, fall back to manual addition
+          newMessages = [
+            {
+              id: Date.now(),
+              role: 'user',
+              content: userMessage,
+              created_at: new Date().toISOString()
+            },
+            {
+              id: response.data.message_id,
+              role: 'assistant',
+              content: response.data.response,
+              created_at: new Date().toISOString(),
+              tokens_used: response.data.tokens_used
+            }
+          ];
+        }
       } else {
         // Standard chat format
         console.log('✅ Using standard chat format!');
@@ -536,7 +607,10 @@ export default function ChatInterface({ currentUserId, enableOrientator = false 
         ];
       }
       
-      setMessages(prev => [...prev, ...newMessages]);
+      // Only add messages if we didn't reload from database
+      if (newMessages.length > 0) {
+        setMessages(prev => [...prev, ...newMessages]);
+      }
       setChatStarted(true); // Transition to full chat interface after sending first message
     } catch (error: any) {
       console.error('Failed to send message:', error);
@@ -725,267 +799,47 @@ export default function ChatInterface({ currentUserId, enableOrientator = false 
   };
 
   if (!chatStarted && !currentConversation) {
-    // Paper-like initial state
     return (
-      <div className="min-h-screen bg-white flex flex-col">
-        {/* Header with conversations history icon */}
-        <div className="sticky top-0 bg-white/95 backdrop-blur-sm border-b border-gray-100 p-6">
-          <div className="flex items-center justify-between max-w-4xl mx-auto">
-            <div className="flex-1">
-              <h1 className="text-2xl font-light text-gray-800 tracking-wide">Chat</h1>
-            </div>
-            <button
-              onClick={() => setShowConversations(true)}
-              className="p-2 text-gray-400 hover:text-blue-500 transition-colors rounded-full hover:bg-blue-50"
-              title="View conversation history"
-            >
-              <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                <path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
-              </svg>
-            </button>
-          </div>
-        </div>
-
-        {/* Paper-like Chat Interface */}
-        <div className="flex-1 overflow-y-auto px-8 py-12">
-          <div className="max-w-4xl mx-auto">
-            <div className="space-y-8">
-              {/* Welcome prompt with mode selection */}
-              <div className="border-l-3 border-blue-500 pl-8 py-2">
-                <p className="text-xl leading-relaxed text-blue-600 font-light tracking-wide">
-                  What would you like to talk about today?
-                </p>
-                
-                {/* Mode Selection */}
-                <div className="mt-6 flex gap-3">
-                  <button
-                    onClick={() => setChatMode('default')}
-                    className={`px-4 py-2 rounded-lg transition-all ${
-                      chatMode === 'default' 
-                        ? 'bg-blue-100 text-blue-700 ring-2 ring-blue-300' 
-                        : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                    }`}
-                  >
-                    <span className="font-medium">Default</span>
-                    <span className="block text-xs mt-1">Helpful assistant</span>
-                  </button>
-                  
-                  <button
-                    onClick={() => setChatMode('socratic')}
-                    className={`px-4 py-2 rounded-lg transition-all ${
-                      chatMode === 'socratic' 
-                        ? 'bg-blue-100 text-blue-700 ring-2 ring-blue-300' 
-                        : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                    }`}
-                  >
-                    <span className="font-medium">Socratic</span>
-                    <span className="block text-xs mt-1">Discover through questions</span>
-                  </button>
-                  
-                  <button
-                    onClick={() => setChatMode('claude')}
-                    className={`px-4 py-2 rounded-lg transition-all ${
-                      chatMode === 'claude' 
-                        ? 'bg-purple-100 text-purple-700 ring-2 ring-purple-300' 
-                        : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                    }`}
-                  >
-                    <span className="font-medium">Claude</span>
-                    <span className="block text-xs mt-1">Bold challenges</span>
-                  </button>
-                </div>
-              </div>
-              
-              {/* Paper-like input area */}
-              <div className="pl-4 py-2">
-                <form onSubmit={(e) => { e.preventDefault(); handleSend(); }} className="w-full">
-                  <textarea
-                    ref={inputRef}
-                    value={inputText}
-                    onChange={(e) => setInputText(e.target.value)}
-                    placeholder="Write here.."
-                    className="w-full text-xl leading-relaxed text-gray-800 placeholder-gray-300 
-                      bg-transparent border-none outline-none resize-none font-light tracking-wide
-                      focus:text-gray-900 transition-all duration-300 min-h-[2.5rem]
-                      focus:placeholder-gray-200 focus:outline-none focus:ring-0 focus:border-none"
-                    rows={1}
-                    onKeyDown={(e) => {
-                      if (e.key === 'Enter' && !e.shiftKey) {
-                        e.preventDefault();
-                        handleSend();
-                      }
-                      // Auto-resize textarea
-                      const target = e.target as HTMLTextAreaElement;
-                      target.style.height = 'auto';
-                      target.style.height = `${target.scrollHeight}px`;
-                    }}
-                    onInput={(e) => {
-                      // Auto-resize textarea
-                      const target = e.target as HTMLTextAreaElement;
-                      target.style.height = 'auto';
-                      target.style.height = `${target.scrollHeight}px`;
-                    }}
-                    disabled={isTyping}
-                    autoFocus
-                    style={{ minHeight: '2.5rem' }}
-                  />
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Conversations History Popup */}
-        {showConversations && (
-          <>
-            <div 
-              className="fixed inset-0 bg-black bg-opacity-50 z-40"
-              onClick={() => setShowConversations(false)}
-            />
-            <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 max-w-90vw max-h-80vh bg-white rounded-lg shadow-xl z-50 overflow-hidden">
-              <div className="p-4 border-b border-gray-200">
-                <div className="flex items-center justify-between">
-                  <h3 className="text-lg font-medium text-gray-800">Conversation History</h3>
-                  <button
-                    onClick={() => setShowConversations(false)}
-                    className="p-1 text-gray-400 hover:text-gray-600 rounded"
-                  >
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                  </button>
-                </div>
-              </div>
-              <div className="p-4 max-h-96 overflow-y-auto">
-                <ConversationList
-                  selectedConversationId={(currentConversation as Conversation | null)?.id}
-                  onSelectConversation={(conversation) => {
-                    handleSelectConversation(conversation);
-                    setShowConversations(false);
-                  }}
-                  onCreateNew={() => {
-                    handleCreateNewConversation();
-                    setShowConversations(false);
-                  }}
-                  refreshTrigger={refreshConversationList}
-                />
-              </div>
-            </div>
-          </>
-        )}
-      </div>
+      <InitialChatView
+        inputText={inputText}
+        setInputText={setInputText}
+        handleSend={handleSend}
+        isTyping={isTyping}
+        chatMode={chatMode}
+        setChatMode={setChatMode}
+        showConversations={showConversations}
+        setShowConversations={setShowConversations}
+        handleSelectConversation={handleSelectConversation}
+        handleCreateNewConversation={handleCreateNewConversation}
+        currentConversation={currentConversation}
+        refreshConversationList={refreshConversationList}
+        inputRef={inputRef}
+      />
     );
   }
 
   // Paper-like full chat interface
   return (
     <div className="min-h-screen bg-white flex flex-col">
-      {/* Header with conversations history icon */}
-      <div className="sticky top-0 bg-white/95 backdrop-blur-sm border-b border-gray-100 p-6">
-        <div className="flex items-center justify-between max-w-4xl mx-auto">
-          <div className="flex-1">
-            {isEditingTitle ? (
-              <input
-                type="text"
-                value={editingTitleValue}
-                onChange={(e) => setEditingTitleValue(e.target.value)}
-                onBlur={handleTitleSave}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter') {
-                    handleTitleSave();
-                  } else if (e.key === 'Escape') {
-                    setIsEditingTitle(false);
-                    setEditingTitleValue('');
-                  }
-                }}
-                className="text-2xl font-light text-gray-800 tracking-wide bg-transparent border-none outline-none focus:outline-none focus:ring-0 focus:border-none w-full"
-                autoFocus
-              />
-            ) : (
-              <h1 
-                className="text-2xl font-light text-gray-800 tracking-wide cursor-pointer hover:text-blue-600 hover:bg-blue-50 px-2 py-1 rounded transition-all duration-200"
-                onClick={handleTitleEdit}
-                title="Click to edit conversation name"
-              >
-                {currentConversation?.title || 'Chat'}
-                <span className="ml-2 text-gray-400 opacity-0 hover:opacity-100 transition-opacity text-sm">✏️</span>
-              </h1>
-            )}
-          </div>
-          <div className="flex items-center gap-2">
-            {/* Orientator Mode Indicator */}
-            {enableOrientator && (
-              <div className="px-2 py-1 bg-green-100 text-green-700 text-xs font-medium rounded-full border border-green-200">
-                🤖 Orientator AI
-              </div>
-            )}
-            
-            {/* Mode Indicator/Selector */}
-            <div className="relative">
-              <button
-                onClick={() => setShowModeSelector(!showModeSelector)}
-                className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all ${
-                  chatMode === 'claude' 
-                    ? 'bg-purple-100 text-purple-700' 
-                    : 'bg-blue-100 text-blue-700'
-                }`}
-              >
-                {chatMode === 'default' && 'Default'}
-                {chatMode === 'socratic' && 'Socratic'}
-                {chatMode === 'claude' && 'Claude'}
-              </button>
-              
-              {showModeSelector && (
-                <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 z-10">
-                  <button
-                    onClick={() => { setChatMode('default'); setShowModeSelector(false); }}
-                    className="w-full text-left px-4 py-2 hover:bg-gray-100 rounded-t-lg"
-                  >
-                    <div className="font-medium">Default</div>
-                    <div className="text-xs text-gray-600">Helpful assistant</div>
-                  </button>
-                  <button
-                    onClick={() => { setChatMode('socratic'); setShowModeSelector(false); }}
-                    className="w-full text-left px-4 py-2 hover:bg-gray-100"
-                  >
-                    <div className="font-medium">Socratic</div>
-                    <div className="text-xs text-gray-600">Discover through questions</div>
-                  </button>
-                  <button
-                    onClick={() => { setChatMode('claude'); setShowModeSelector(false); }}
-                    className="w-full text-left px-4 py-2 hover:bg-gray-100 rounded-b-lg"
-                  >
-                    <div className="font-medium">Claude</div>
-                    <div className="text-xs text-gray-600">Bold challenges</div>
-                  </button>
-                </div>
-              )}
-            </div>
-            
-            <button
-              onClick={() => setShowConversations(true)}
-              className="p-2 text-gray-400 hover:text-blue-500 transition-colors rounded-full hover:bg-blue-50"
-              title="View conversation history"
-            >
-              <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                <path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
-              </svg>
-            </button>
-            <button
-              onClick={handleCreateNewConversation}
-              className="p-2 text-gray-400 hover:text-blue-500 transition-colors rounded-full hover:bg-blue-50"
-              title="New conversation"
-            >
-              <Plus className="w-5 h-5" />
-            </button>
-          </div>
-        </div>
-      </div>
+      <ChatHeader
+        currentConversation={currentConversation}
+        isEditingTitle={isEditingTitle}
+        editingTitleValue={editingTitleValue}
+        setEditingTitleValue={setEditingTitleValue}
+        handleTitleEdit={handleTitleEdit}
+        handleTitleSave={handleTitleSave}
+        setIsEditingTitle={setIsEditingTitle}
+        setShowConversations={setShowConversations}
+        handleCreateNewConversation={handleCreateNewConversation}
+        chatMode={chatMode}
+        setChatMode={setChatMode}
+        showModeSelector={showModeSelector}
+        setShowModeSelector={setShowModeSelector}
+        enableOrientator={enableOrientator}
+      />
 
       {/* Paper-like Messages Area */}
-      <div className="flex-1 overflow-y-auto px-8 py-12">
+      <div className="flex-1 overflow-y-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 lg:py-12">
         <div className="max-w-4xl mx-auto">
           <div className="space-y-8">
             {(messages || [])
@@ -1001,7 +855,7 @@ export default function ChatInterface({ currentUserId, enableOrientator = false 
               ))}
             
             {isTyping && (
-              <div className="border-l-3 border-blue-500 pl-8 py-2">
+              <div className="border-l-3 border-blue-500 pl-4 sm:pl-6 lg:pl-8 py-2">
                 <div className="flex items-center space-x-2">
                   <div className="flex space-x-1">
                     <div className="w-2 h-2 bg-blue-400 rounded-full animate-bounce"></div>
@@ -1014,17 +868,18 @@ export default function ChatInterface({ currentUserId, enableOrientator = false 
             )}
 
             {/* Inline input for continuing conversation */}
-            <div className="pl-4 py-2">
+            <div className="pl-2 sm:pl-4 py-2">
               <form onSubmit={(e) => { e.preventDefault(); handleSend(); }} className="w-full">
                 <textarea
                   ref={inputRef}
                   value={inputText}
                   onChange={(e) => setInputText(e.target.value)}
                   placeholder="Continue writing.."
-                  className="w-full text-xl leading-relaxed text-gray-800 placeholder-gray-300 
+                  className="w-full text-lg sm:text-xl leading-relaxed text-gray-800 placeholder-gray-300 
                     bg-transparent border-none outline-none resize-none font-light tracking-wide
                     focus:text-gray-900 transition-all duration-300 min-h-[2.5rem]
-                    focus:placeholder-gray-200 focus:outline-none focus:ring-0 focus:border-none"
+                    focus:placeholder-gray-200 focus:outline-none focus:ring-0 focus:border-none
+                    touch-manipulation"
                   rows={1}
                   onKeyDown={(e) => {
                     if (e.key === 'Enter' && !e.shiftKey) {
@@ -1044,6 +899,8 @@ export default function ChatInterface({ currentUserId, enableOrientator = false 
                   }}
                   disabled={isTyping}
                   style={{ minHeight: '2.5rem' }}
+                  aria-label="Type your message to continue the conversation"
+                  aria-describedby="chat-input-help"
                 />
               </form>
             </div>
@@ -1057,14 +914,27 @@ export default function ChatInterface({ currentUserId, enableOrientator = false 
           <div 
             className="fixed inset-0 bg-black bg-opacity-50 z-40"
             onClick={() => setShowConversations(false)}
+            role="backdrop"
+            aria-label="Close conversation history"
           />
-          <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 max-w-90vw max-h-80vh bg-white rounded-lg shadow-xl z-50 overflow-hidden">
+          <div 
+            className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 max-w-90vw max-h-80vh bg-white rounded-lg shadow-xl z-50 overflow-hidden"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="conversation-history-title"
+          >
             <div className="p-4 border-b border-gray-200">
               <div className="flex items-center justify-between">
-                <h3 className="text-lg font-medium text-gray-800">Conversation History</h3>
+                <h3 
+                  id="conversation-history-title"
+                  className="text-lg font-medium text-gray-800"
+                >
+                  Conversation History
+                </h3>
                 <button
                   onClick={() => setShowConversations(false)}
-                  className="p-1 text-gray-400 hover:text-gray-600 rounded"
+                  className="p-1 text-gray-400 hover:text-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  aria-label="Close conversation history"
                 >
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
