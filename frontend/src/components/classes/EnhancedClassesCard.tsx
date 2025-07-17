@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { BookOpen, Clock, Users, Brain, TrendingUp, MessageCircle } from 'lucide-react';
+import { courseAnalysisService } from '@/services/courseAnalysisService';
 
 interface Course {
   id: number;
@@ -45,24 +46,7 @@ const EnhancedClassesCard: React.FC<EnhancedClassesCardProps> = ({
     const fetchCourses = async () => {
       try {
         setLoading(true);
-        const token = localStorage.getItem('access_token');
-        if (!token) {
-          setError('Please log in to view your courses');
-          return;
-        }
-
-        const response = await fetch('/api/v1/courses', {
-          headers: {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json'
-          }
-        });
-
-        if (!response.ok) {
-          throw new Error('Failed to fetch courses');
-        }
-
-        const coursesData = await response.json();
+        const coursesData = await courseAnalysisService.getCourses();
         setCourses(coursesData.slice(0, 3)); // Show top 3 most recent courses
 
         // Check if any courses need analysis
