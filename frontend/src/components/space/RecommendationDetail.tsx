@@ -70,21 +70,21 @@ export default function RecommendationDetail({ recommendation, onGenerate, gener
       })() && (
         <div className="space-y-6">
           {/* Skills Tree Visualization */}
-          <div className="p-6 rounded-lg" style={{
+          <div className="p-4 rounded-lg" style={{
             backgroundColor: 'var(--card)',
             border: '1px solid var(--border)'
           }}>
-            <div className="mb-4">
-              <h3 className="text-xl font-semibold" style={{ color: 'var(--text)' }}>
+            <div className="mb-3">
+              <h3 className="text-lg font-semibold" style={{ color: 'var(--text)' }}>
                 Analyse des compétences ESCO
               </h3>
-              <p className="text-sm mt-1" style={{ color: 'var(--text-secondary)' }}>
+              <p className="text-xs mt-1" style={{ color: 'var(--text-secondary)' }}>
                 Explorez l'arbre de compétences et identifiez les compétences clés pour ce poste
               </p>
             </div>
             
             {/* Full JobSkillsTree component with all features */}
-            <div style={{ minHeight: '1000px' }}>
+            <div className="w-full">
               <JobSkillsTree 
                 jobId={(() => {
                   // Use the same logic as above to determine jobIdForTree
@@ -100,7 +100,7 @@ export default function RecommendationDetail({ recommendation, onGenerate, gener
                   }
                   return jobIdForTree || `occupation::key_${recommendation.id}`;
                 })()} 
-                height="100%" 
+                height="1200px" 
                 className="w-full"
               />
             </div>
