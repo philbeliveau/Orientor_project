@@ -234,6 +234,25 @@ const InsightPage: React.FC = () => {
             {/* Main Content Container */}
             <div className="flex-1 w-full px-4 md:px-8 lg:px-12 xl:px-16 max-w-[2000px] mx-auto">
               
+              {/* Profile Avatar Section */}
+              <div className="premium-card p-6 mb-8">
+                <h2 className="premium-section-title mb-6">Profile Avatar</h2>
+                <div className="flex items-center gap-6">
+                  <div className="w-24 h-24 rounded-full bg-gray-200 flex items-center justify-center">
+                    <span className="text-gray-500">Avatar</span>
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-bold">Your Profile</h3>
+                    <p className="text-gray-600">
+                      This avatar represents your unique personality traits and skills
+                    </p>
+                    <button className="mt-3 premium-button-primary px-4 py-2 text-sm">
+                      Customize Avatar
+                    </button>
+                  </div>
+                </div>
+              </div>
+              
               {/* Personality Content Section */}
               <div className="space-y-8 mb-12">
                 
