@@ -50,53 +50,61 @@ export default function Sidebar({ items, selectedId, onSelect, onDelete, loading
           <div onClick={() => onSelect(item)}>
             <h3 className="font-medium text-sm" style={{ color: 'var(--text)' }}>
               {(() => {
-                // Debug: Log the item structure
-                console.log('Job item data:', {
-                  label: item.label,
-                  oasis_code: item.oasis_code,
-                  all_fields: item.all_fields,
-                  description: item.description
-                });
+                // Debug: Log the item structure with all available fields
+                console.log('=== JOB ITEM DEBUG ===');
+                console.log('Label:', item.label);
+                console.log('OASIS Code:', item.oasis_code);
+                console.log('Description:', item.description);
+                console.log('All Fields Keys:', item.all_fields ? Object.keys(item.all_fields) : 'No all_fields');
+                console.log('All Fields Full Object:', item.all_fields);
                 
-                // Handle OASIS jobs (occupation::key_ or career_ prefixes)
-                if (item.oasis_code?.startsWith('occupation::key_') || item.label?.startsWith('career_')) {
-                  // Look for "Oasis Label Final X" pattern in all_fields
-                  const allFields = item.all_fields;
-                  if (allFields) {
-                    // Check for Oasis Label Final X (where X is a number)
-                    for (const [key, value] of Object.entries(allFields)) {
-                      if (key.match(/^Oasis Label Final \d+$/) && value) {
-                        return value as string;
-                      }
+                // Log specific searches
+                if (item.all_fields) {
+                  console.log('Looking for OASIS labels...');
+                  Object.keys(item.all_fields || {}).forEach(key => {
+                    if (key.toLowerCase().includes('oasis') || key.toLowerCase().includes('label')) {
+                      console.log(`  Found: ${key} = ${item.all_fields?.[key]}`);
                     }
-                    // Also check for exact "Oasis Label Final X" patterns
-                    if (allFields['Oasis Label Final 1']) return allFields['Oasis Label Final 1'];
-                    if (allFields['Oasis Label Final 2']) return allFields['Oasis Label Final 2'];
-                    if (allFields['Oasis Label Final 3']) return allFields['Oasis Label Final 3'];
-                    if (allFields['Oasis Label Final 4']) return allFields['Oasis Label Final 4'];
-                    if (allFields['Oasis Label Final 5']) return allFields['Oasis Label Final 5'];
+                  });
+                  
+                  console.log('Looking for ESCO titles...');
+                  Object.keys(item.all_fields || {}).forEach(key => {
+                    if (key.toLowerCase().includes('title') || key.toLowerCase().includes('preferred')) {
+                      console.log(`  Found: ${key} = ${item.all_fields?.[key]}`);
+                    }
+                  });
+                }
+                console.log('========================');
+                
+                // Fixed logic based on actual data structure
+                if (item.all_fields) {
+                  // For OASIS jobs (detected by career_ prefix OR having oasis_label__final_x field)
+                  if (item.oasis_code?.startsWith('career_') || item.all_fields.oasis_label__final_x) {
+                    console.log('This is an OASIS job');
+                    // Use oasis_label__final_x field for OASIS jobs
+                    if (item.all_fields.oasis_label__final_x) {
+                      console.log(`Using OASIS title: ${item.all_fields.oasis_label__final_x}`);
+                      return item.all_fields.oasis_label__final_x;
+                    }
+                  } 
+                  
+                  // For ESCO jobs - use job_title_text or other title fields
+                  if (item.all_fields.job_title_text) {
+                    console.log('This is an ESCO job');
+                    console.log(`Using ESCO title: ${item.all_fields.job_title_text}`);
+                    // Extract first title from pipe-separated list
+                    const titles = item.all_fields.job_title_text.split(' | ');
+                    return titles[0];
                   }
-                  return item.label || 'OASIS Career';
                 }
                 
-                // Handle ESCO jobs - look for title field (case variations)
-                const allFields = item.all_fields;
-                if (allFields) {
-                  // Try different case variations of title
-                  if (allFields.title) return allFields.title;
-                  if (allFields.Title) return allFields.Title;
-                  if (allFields.TITLE) return allFields.TITLE;
-                  if (allFields.preferredLabel) return allFields.preferredLabel;
-                  if (allFields.PreferredLabel) return allFields.PreferredLabel;
-                }
-                
-                // Fallback to label for other cases
-                return item.label || 'Career';
+                console.log('Using fallback label:', item.label);
+                return item.label || 'No Title Found';
               })()}
             </h3>
             <p className="text-xs" style={{ color: 'var(--text-secondary)' }}>
-              {item.oasis_code?.startsWith('occupation::key_') ? 'OASIS Career' : 
-               item.all_fields?.Title ? 'ESCO Career' : item.oasis_code}
+              {item.oasis_code?.startsWith('career_') || item.all_fields?.oasis_label__final_x ? 'OASIS Career' : 
+               item.all_fields?.job_title_text ? 'ESCO Career' : item.oasis_code}
             </p>
           </div>
           <button

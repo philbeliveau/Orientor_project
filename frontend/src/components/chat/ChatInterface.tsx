@@ -168,6 +168,7 @@ export default function ChatInterface({ currentUserId, enableOrientator = false 
   const [showModeSelector, setShowModeSelector] = useState(false);
   const [streamingMessageId, setStreamingMessageId] = useState<number | null>(null);
   const [isSending, setIsSending] = useState(false);
+  const [newlyCreatedConversationId, setNewlyCreatedConversationId] = useState<number | null>(null);
   
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -252,13 +253,13 @@ export default function ChatInterface({ currentUserId, enableOrientator = false 
     }
   }, [currentConversation, router]);
 
-  // Load conversation when selected (but not during send process)
+  // Load conversation when selected (but not during send process or for newly created conversations)
   useEffect(() => {
-    if (currentConversation && !isSending) {
+    if (currentConversation && !isSending && currentConversation.id !== newlyCreatedConversationId) {
       loadConversationMessages();
       setChatStarted(true); // Show full chat interface when conversation is loaded
     }
-  }, [currentConversation?.id, isSending]);
+  }, [currentConversation?.id, isSending, newlyCreatedConversationId]);
 
   // Check if chat should be started based on messages
   useEffect(() => {
@@ -337,7 +338,18 @@ export default function ChatInterface({ currentUserId, enableOrientator = false 
         messagesData = [];
       }
       
-      setMessages(messagesData);
+      // Sort messages by creation time to ensure proper order
+      const sortedMessages = messagesData
+        .filter((msg: any) => msg.role !== 'system') // Filter out system messages
+        .sort((a: any, b: any) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime());
+      
+      console.log('📅 Sorted messages by creation time:', sortedMessages.length);
+      if (sortedMessages.length > 0) {
+        console.log('📅 First message:', sortedMessages[0].role, '-', sortedMessages[0].content?.substring(0, 50));
+        console.log('📅 Last message:', sortedMessages[sortedMessages.length - 1].role, '-', sortedMessages[sortedMessages.length - 1].content?.substring(0, 50));
+      }
+      
+      setMessages(sortedMessages);
     } catch (error) {
       console.error('Failed to load conversation messages:', error);
       // Fallback to regular chat endpoint if Orientator endpoint fails
@@ -433,6 +445,7 @@ export default function ChatInterface({ currentUserId, enableOrientator = false 
           
           // Update state but don't wait for it to propagate
           setCurrentConversation(conversationToUse);
+          setNewlyCreatedConversationId(conversationId || null);
           setRefreshConversationList(prev => prev + 1);
           
           console.log('✅ Created conversation:', conversationId);
@@ -467,9 +480,17 @@ export default function ChatInterface({ currentUserId, enableOrientator = false 
         endpoint = `${process.env.NEXT_PUBLIC_API_URL}/api/v1/socratic-chat/send`;
         requestBody = {
           text: userMessage,
-          mode: chatMode,
-          conversation_id: conversationId
+          mode: chatMode
         };
+        
+        // Only include conversation_id if we have one (not undefined)
+        if (conversationId) {
+          requestBody.conversation_id = conversationId;
+          console.log('🔗 Including existing conversation_id:', conversationId);
+        } else {
+          console.log('🆕 New conversation - letting service create it');
+        }
+        
         headers = {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
@@ -541,6 +562,7 @@ export default function ChatInterface({ currentUserId, enableOrientator = false 
             title: response.data.conversation_title || conversationToUse?.title || 'New Chat'
           } as Conversation;
           setCurrentConversation(conversationToUse);
+          setNewlyCreatedConversationId(response.data.conversation_id);
           
           // Update local variable for current request
           conversationId = response.data.conversation_id;
@@ -603,6 +625,10 @@ export default function ChatInterface({ currentUserId, enableOrientator = false 
     } finally {
       setIsTyping(false);
       setIsSending(false);
+      // Clear the newly created conversation tracking after a delay
+      setTimeout(() => {
+        setNewlyCreatedConversationId(null);
+      }, 1000);
       // Keep focus on input after sending message
       setTimeout(() => {
         inputRef.current?.focus();
