@@ -365,7 +365,8 @@ export default function ChatInterface({ currentUserId, enableOrientator = false 
       console.log('handleSend - currentConversation:', currentConversation);
       console.log('handleSend - conversationId:', conversationId);
       
-      if (!conversationId && (chatMode === 'default' || (enableOrientator && chatMode === 'default'))) {
+      const isDefaultMode = (chatMode as ChatMode) === 'default';
+      if (!conversationId && (isDefaultMode || (enableOrientator && isDefaultMode))) {
         // Create conversation for default mode or when Orientator is enabled for default mode
         // For Socratic/Claude modes, conversation creation is handled by the service
         console.log('No conversation ID found, creating new conversation');
@@ -405,9 +406,9 @@ export default function ChatInterface({ currentUserId, enableOrientator = false 
       console.log('   chatMode:', chatMode);
       console.log('   chatMode === "socratic":', chatMode === 'socratic');
       console.log('   chatMode === "claude":', chatMode === 'claude');
-      console.log('   enableOrientator && chatMode === "default":', enableOrientator && chatMode === 'default');
+      console.log('   enableOrientator && chatMode === "default":', enableOrientator && isDefaultMode);
       
-      if (enableOrientator && chatMode === 'default') {
+      if (enableOrientator && isDefaultMode) {
         console.log('🟡 TAKING ORIENTATOR PATH (default mode)');
         // Use Orientator endpoint only for default mode when enabled
         endpoint = `${process.env.NEXT_PUBLIC_API_URL}/api/orientator/test-message`;
@@ -460,7 +461,7 @@ export default function ChatInterface({ currentUserId, enableOrientator = false 
       console.log('   response.data.message_id:', response.data.message_id);
       console.log('   response.data.success:', response.data.success);
       
-      if (enableOrientator && chatMode === 'default' && response.data.message_id) {
+      if (enableOrientator && isDefaultMode && response.data.message_id) {
         // Orientator format with components - single message response
         console.log('✅ Using Orientator format!');
         newMessages = [

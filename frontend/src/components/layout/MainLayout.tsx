@@ -9,6 +9,8 @@ import styles from '@/styles/patterns.module.css';
 import LoadingScreen from '@/components/ui/LoadingScreen';
 import NewSidebar from './NewSidebar';
 import { useAuth } from '@/hooks/useAuth';
+import { useAuthCheck } from '@/hooks/useAuthCheck';
+import { logger } from '@/utils/logger';
 
 // Composants pour les menus déroulants
 const ProfileDropdown = ({ pathname }: { pathname: string | null }) => {
@@ -155,8 +157,7 @@ export default function MainLayout({
     children: React.ReactNode, 
     showNav?: boolean 
 }) {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [isLoading, setIsLoading] = useState(true);
+    const { isLoggedIn, isLoading, isPublicRoute } = useAuthCheck(showNav);
     const [moreMenuOpen, setMoreMenuOpen] = useState(false);
     const [careerMenuOpen, setCareerMenuOpen] = useState(false);
     const [workspaceMenuOpen, setWorkspaceMenuOpen] = useState(false);
@@ -180,28 +181,7 @@ export default function MainLayout({
         { name: 'Competence Tree', icon: 'Tree', path: '/competence-tree' },
     ];
 
-    // Public routes that don't require authentication
-    const publicRoutes = ['/', '/login', '/register', '/landing', '/test-page'];
-    const isPublicRoute = pathname ? publicRoutes.includes(pathname) : false;
-
-    useEffect(() => {
-        // Check if user is logged in
-        const token = localStorage.getItem('access_token') || '';
-        console.log('Auth check - Token:', token ? 'Found' : 'Not found', 'Pathname:', pathname);
-        
-        // Check authentication properly
-        if (!token && !isPublicRoute && showNav) {
-            console.log('No token found, redirecting to login');
-            router.push('/login');
-            return;
-        }
-        
-        // Set proper logged in state based on token
-        const loggedIn = !!token;
-        console.log('Setting isLoggedIn to:', loggedIn);
-        setIsLoggedIn(loggedIn);
-        setIsLoading(false);
-    }, [router, isPublicRoute, showNav, pathname]);
+    // Authentication logic moved to useAuthCheck hook
 
     // Close menus when clicking outside
     useEffect(() => {
@@ -225,25 +205,25 @@ export default function MainLayout({
 
     // Close mobile menus when route changes
     useEffect(() => {
-        console.log('Route changed to:', pathname);
+        logger.debug('Route changed to:', pathname);
         setMoreMenuOpen(false);
         setCareerMenuOpen(false);
         setWorkspaceMenuOpen(false);
     }, [pathname]);
 
     const handleLogout = () => {
-        console.log('Logging out user');
+        logger.debug('Logging out user');
         logout();
     };
 
     const toggleCareerDropdown = () => {
-        console.log('Toggling career dropdown');
+        logger.debug('Toggling career dropdown');
         setCareerMenuOpen(!careerMenuOpen);
         if (workspaceMenuOpen) setWorkspaceMenuOpen(false);
     };
 
     const toggleWorkspaceDropdown = () => {
-        console.log('Toggling workspace dropdown, current state:', workspaceMenuOpen);
+        logger.debug('Toggling workspace dropdown, current state:', workspaceMenuOpen);
         setWorkspaceMenuOpen(!workspaceMenuOpen);
         if (careerMenuOpen) setCareerMenuOpen(false);
     };
@@ -267,7 +247,7 @@ export default function MainLayout({
     // Check if current path is in career path section
     const isCareerPath = ['/vector-search', '/find-your-way', '/cv', '/tree'].includes(pathname || '');
 
-    console.log('Rendering layout with isLoggedIn:', isLoggedIn);
+    logger.debug('Rendering layout with isLoggedIn:', isLoggedIn);
 
     return (
         <div className="min-h-screen flex flex-col" style={{ backgroundColor: '#ffffff' }}>

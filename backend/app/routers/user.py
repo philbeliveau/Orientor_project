@@ -200,9 +200,38 @@ def change_password(password_update: PasswordUpdate, db: Session = Depends(get_d
         raise HTTPException(status_code=500, detail=f"Password change failed: {str(e)}")
 
 @router.get("/onboarding-status", response_model=dict)
-def get_onboarding_status(current_user: User = Depends(get_current_user)):
+def get_onboarding_status(
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
     """
     Check if the user has completed the onboarding process.
+    Uses both the database field and personality profile as fallback.
     """
     logger.info(f"Checking onboarding status for user ID: {current_user.id}")
-    return {"onboarding_completed": current_user.onboarding_completed}
+    
+    # Check if onboarding_completed field exists and is True
+    if hasattr(current_user, 'onboarding_completed') and current_user.onboarding_completed:
+        return {"onboarding_completed": True}
+    
+    # Fallback: Check if user has a personality profile
+    try:
+        from ..models.personality_profiles import PersonalityProfile
+        personality_profile = db.query(PersonalityProfile).filter(
+            PersonalityProfile.user_id == current_user.id
+        ).first()
+        
+        has_profile = personality_profile is not None
+        
+        # If they have a profile but onboarding_completed is False, update it
+        if has_profile and hasattr(current_user, 'onboarding_completed') and not current_user.onboarding_completed:
+            current_user.onboarding_completed = True
+            db.commit()
+            logger.info(f"Updated onboarding_completed for user {current_user.id} based on personality profile")
+        
+        return {"onboarding_completed": has_profile}
+        
+    except Exception as e:
+        logger.error(f"Error checking personality profile: {e}")
+        # If we can't check, return False for safety
+        return {"onboarding_completed": False}
