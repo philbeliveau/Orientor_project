@@ -1,4 +1,5 @@
 import React, { useState, useCallback, lazy, Suspense } from 'react';
+import LoadingSpinner from '../ui/LoadingSpinner';
 import { useCompetenceTree } from './useCompetenceTree';
 import { TreeVisualization } from './TreeVisualization';
 import { PositionedNode } from './types';
@@ -60,7 +61,7 @@ const CompetenceTreeView: React.FC<CompetenceTreeViewProps> = ({ graphId }) => {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-full">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+        <LoadingSpinner size="lg" />
       </div>
     );
   }

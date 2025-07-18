@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from '@/styles/loading.module.css';
+import LoadingSpinner from './LoadingSpinner';
 
 interface LoadingScreenProps {
   message?: string;
@@ -11,31 +11,8 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({
   className = ''
 }) => {
   return (
-    <div className={`min-h-screen flex items-center justify-center ${className}`}>
-      <div className={styles.loader}>
-        <div className={styles.bar}></div>
-        <div className={styles.bar}></div>
-        <div className={styles.bar}></div>
-        <div className={styles.bar}></div>
-        <div className={styles.bar}></div>
-        <div className={styles.bar}></div>
-        <div className={styles.bar}></div>
-        <div className={styles.bar}></div>
-        <div className={styles.bar}></div>
-        <div className={styles.bar}></div>
-        <div className={styles['loader--reflect']}>
-          <div className={styles.bar}></div>
-          <div className={styles.bar}></div>
-          <div className={styles.bar}></div>
-          <div className={styles.bar}></div>
-          <div className={styles.bar}></div>
-          <div className={styles.bar}></div>
-          <div className={styles.bar}></div>
-          <div className={styles.bar}></div>
-          <div className={styles.bar}></div>
-          <div className={styles.bar}></div>
-        </div>
-      </div>
+    <div className={`min-h-screen flex flex-col items-center justify-center ${className}`}>
+      <LoadingSpinner size="lg" />
       {message && (
         <p className="mt-8 text-lg text-gray-600 dark:text-gray-400">{message}</p>
       )}

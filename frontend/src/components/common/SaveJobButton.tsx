@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { toast } from 'react-hot-toast';
 import axios from 'axios';
+import LoadingSpinner from '@/components/ui/LoadingSpinner';
 
 interface SaveJobButtonProps {
   job: {
@@ -139,7 +140,7 @@ const SaveJobButton: React.FC<SaveJobButtonProps> = ({ job, className = '', size
     >
       {saving ? (
         <>
-          <span className="animate-spin h-3 w-3 border-t-2 border-b-2 border-current rounded-full"></span>
+          <LoadingSpinner size="sm" />
           Saving...
         </>
       ) : saved ? (

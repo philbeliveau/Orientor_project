@@ -1,27 +1,12 @@
 'use client';
 
 import React from 'react';
-import { motion } from 'framer-motion';
+import LoadingSpinner from '@/components/ui/LoadingSpinner';
 
 const TypingIndicator: React.FC = () => {
   return (
-    <div className="typing-indicator" data-testid="typing-indicator">
-      {[0, 1, 2].map((i) => (
-        <motion.div
-          key={i}
-          className="typing-dot"
-          animate={{
-            opacity: [0.4, 1, 0.4],
-            scale: [0.8, 1, 0.8]
-          }}
-          transition={{
-            duration: 1.2,
-            repeat: Infinity,
-            delay: i * 0.2,
-            ease: "easeInOut"
-          }}
-        />
-      ))}
+    <div className="typing-indicator flex items-center justify-center p-2" data-testid="typing-indicator">
+      <LoadingSpinner size="sm" color="#6366f1" />
     </div>
   );
 };

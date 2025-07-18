@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import LoadingSpinner from './LoadingSpinner';
 import { getUserProgress } from '../../utils/treeStorage';
 
 interface XPProgressProps {
@@ -52,7 +53,7 @@ export default function XPProgress({ className = '' }: XPProgressProps) {
   if (loading) {
     return (
       <div className={`flex items-center space-x-2 ${className}`}>
-        <div className="h-2 w-24 bg-stitch-track rounded-full animate-pulse"></div>
+        <LoadingSpinner size="sm" />
         <span className="text-xs text-stitch-sage font-departure">Loading...</span>
       </div>
     );

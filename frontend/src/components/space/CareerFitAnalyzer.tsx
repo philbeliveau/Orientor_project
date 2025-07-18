@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, Legend, ResponsiveContainer } from 'recharts';
+import LoadingSpinner from '@/components/ui/LoadingSpinner';
 import { analyzeCareerFit } from '@/services/spaceService';
 import type { Recommendation, SavedJob, CareerFitResponse } from '@/services/spaceService';
 
@@ -125,7 +126,7 @@ const CareerFitAnalyzer: React.FC<CareerFitAnalyzerProps> = ({ job, jobSource })
   if (loading) {
     return (
       <div className="flex justify-center items-center h-64">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2" style={{ borderColor: 'var(--accent)' }}></div>
+        <LoadingSpinner size="lg" />
       </div>
     );
   }

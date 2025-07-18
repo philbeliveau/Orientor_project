@@ -152,7 +152,7 @@ def save_onboarding_response(
         personality_response = PersonalityResponse(
             assessment_id=assessment.id,
             item_id=response_data.questionId,
-            item_type="onboarding_question",
+            item_type="open_ended",  # Use valid constraint value
             response_value={
                 "question": response_data.question,
                 "response": response_data.response
@@ -241,7 +241,7 @@ def complete_onboarding(
                 personality_response = PersonalityResponse(
                     assessment_id=assessment.id,
                     item_id=response_data.questionId,
-                    item_type="onboarding_question",
+                    item_type="open_ended",  # Use valid constraint value
                     response_value={
                         "question": response_data.question,
                         "response": response_data.response

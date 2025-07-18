@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, useMotionValue, useTransform, PanInfo, animate } from 'framer-motion';
 import { Heart, X, ArrowLeft, CheckCircle, RefreshCw } from 'lucide-react';
+import LoadingSpinner from '@/components/ui/LoadingSpinner';
 import { PsychProfile, CareerRecommendation } from '../../types/onboarding';
 import { getAllJobRecommendations } from '../../services/api';
 import axios from 'axios';
@@ -228,7 +229,7 @@ const SwipeRecommendations: React.FC<SwipeRecommendationsProps> = ({
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500 mx-auto mb-4"></div>
+          <LoadingSpinner size="lg" />
           <p className="text-gray-600">Loading career recommendations...</p>
         </div>
       </div>

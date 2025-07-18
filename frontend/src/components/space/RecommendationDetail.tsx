@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, Legend } from 'recharts';
+import LoadingSpinner from '@/components/ui/LoadingSpinner';
 import { Recommendation } from '@/services/spaceService';
 import { extractChartData } from '@/utils/chartUtils';
 import NotesSection from './NotesSection';
@@ -208,7 +209,7 @@ export default function RecommendationDetail({ recommendation, onGenerate, gener
           >
             {generating ? (
               <span className="flex items-center">
-                <span className="animate-spin mr-2 h-4 w-4 border-t-2 border-b-2 border-white rounded-full"></span>
+                <LoadingSpinner size="sm" color="white" />
                 Generating...
               </span>
             ) : (

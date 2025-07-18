@@ -11,6 +11,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import LoadingSpinner from '@/components/ui/LoadingSpinner';
 
 interface SkillRelevanceInfo {
   name: string;
@@ -300,7 +301,7 @@ const EnhancedChat: React.FC = () => {
             <div className="flex justify-start">
               <div className="bg-white border rounded-lg p-4 shadow-sm">
                 <div className="flex items-center space-x-2">
-                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-500"></div>
+                  <LoadingSpinner size="sm" />
                   <span className="text-sm text-gray-600">Analyzing with GraphSage...</span>
                 </div>
               </div>

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Bookmark, BookmarkCheck, Loader2 } from 'lucide-react';
+import { Bookmark, BookmarkCheck } from 'lucide-react';
+import LoadingSpinner from '@/components/ui/LoadingSpinner';
 
 interface SaveActionButtonProps {
   onSave: () => Promise<void>;
@@ -74,7 +75,7 @@ export const SaveActionButton: React.FC<SaveActionButtonProps> = ({
       `}
     >
       {isSaving ? (
-        <Loader2 className={`${iconSize[size]} animate-spin`} />
+        <LoadingSpinner size="sm" />
       ) : saved ? (
         <BookmarkCheck className={iconSize[size]} />
       ) : (

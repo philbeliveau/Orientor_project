@@ -13,6 +13,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/hooks/use-toast';
+import LoadingSpinner from '@/components/ui/LoadingSpinner';
 
 import SearchFilters from './SearchFilters';
 import ProgramCard from './ProgramCard';
@@ -190,7 +191,7 @@ const SchoolProgramsSearch: React.FC = () => {
           {isLoading && (
             <div className="flex justify-center items-center py-12">
               <div className="text-center">
-                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
+                <LoadingSpinner size="lg" />
                 <p className="text-muted-foreground">Searching for programs...</p>
               </div>
             </div>

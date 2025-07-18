@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { BookOpen, Clock, Users, Brain, TrendingUp, MessageCircle } from 'lucide-react';
+import LoadingSpinner from '@/components/ui/LoadingSpinner';
 import { courseAnalysisService } from '@/services/courseAnalysisService';
 
 interface Course {
@@ -148,8 +149,8 @@ const EnhancedClassesCard: React.FC<EnhancedClassesCardProps> = ({
         style={style}
       >
         <div className="text-white text-center">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white mx-auto mb-2"></div>
-          <p className="text-sm">Loading courses...</p>
+          <LoadingSpinner size="md" color="white" />
+          <p className="text-sm mt-2">Loading courses...</p>
         </div>
       </div>
     );

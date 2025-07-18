@@ -7,6 +7,7 @@ import '../tree/treestyles.css';
 // Composant pour afficher un défi
 import ChallengeCard from '../ui/ChallengeCard';
 import NodeDetailModal from './NodeDetailModal';
+import LoadingSpinner from '../ui/LoadingSpinner';
 import { getCompetenceTree, completeChallenge } from '../../services/competenceTreeService';
 
 // Types personnalisés
@@ -1063,7 +1064,8 @@ const CompetenceTreeView: React.FC<CompetenceTreeViewProps> = ({ graphId }) => {
   if (loading) {
     return (
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '400px' }}>
-        <div>Chargement de l'arbre de compétences...</div>
+        <LoadingSpinner size="lg" />
+        <div style={{ marginLeft: '16px' }}>Chargement de l'arbre de compétences...</div>
       </div>
     );
   }

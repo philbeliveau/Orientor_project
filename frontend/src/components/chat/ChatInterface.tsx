@@ -15,6 +15,7 @@ import InitialChatView from './InitialChatView';
 import { ChatMode } from './ChatModeSelector';
 import styles from './ChatBot.module.css';
 import { MessageComponentRenderer, MessageComponent, ComponentAction, MessageComponentType } from './MessageComponent';
+import LoadingSpinner from '@/components/ui/LoadingSpinner';
 
 interface Message {
   id: number;
@@ -366,8 +367,8 @@ export default function ChatInterface({ currentUserId, enableOrientator = false 
       console.log('handleSend - conversationId:', conversationId);
       
       const isDefaultMode = (chatMode as ChatMode) === 'default';
-      if (!conversationId && (isDefaultMode || (enableOrientator && isDefaultMode))) {
-        // Create conversation for default mode or when Orientator is enabled for default mode
+      if (!conversationId && isDefaultMode) {
+        // Create conversation for default mode only
         // For Socratic/Claude modes, conversation creation is handled by the service
         console.log('No conversation ID found, creating new conversation');
         const createResponse = await axios.post(
@@ -858,11 +859,7 @@ export default function ChatInterface({ currentUserId, enableOrientator = false 
             {isTyping && (
               <div className="border-l-3 border-blue-500 pl-4 sm:pl-6 lg:pl-8 py-2">
                 <div className="flex items-center space-x-2">
-                  <div className="flex space-x-1">
-                    <div className="w-2 h-2 bg-blue-400 rounded-full animate-bounce"></div>
-                    <div className="w-2 h-2 bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
-                    <div className="w-2 h-2 bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
-                  </div>
+                  <LoadingSpinner size="sm" color="#60a5fa" />
                   <span className="text-blue-500 text-sm font-light">Thinking...</span>
                 </div>
               </div>

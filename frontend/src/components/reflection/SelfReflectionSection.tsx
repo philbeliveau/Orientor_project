@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import LoadingSpinner from '@/components/ui/LoadingSpinner';
 import reflectionService, { ReflectionQuestion, ReflectionResponse } from '@/services/reflectionService';
 
 interface QuestionWithResponse extends ReflectionQuestion {
@@ -169,7 +170,7 @@ const SelfReflectionSection: React.FC<SelfReflectionSectionProps> = ({ className
         >
           {saving.size > 0 ? (
             <>
-              <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+              <LoadingSpinner size="sm" color="white" />
               Sauvegarde...
             </>
           ) : (
@@ -277,7 +278,7 @@ const SelfReflectionSection: React.FC<SelfReflectionSectionProps> = ({ className
                       >
                         {isSaving ? (
                           <>
-                            <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                            <LoadingSpinner size="sm" color="white" />
                             Sauvegarde...
                           </>
                         ) : (

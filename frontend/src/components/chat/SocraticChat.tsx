@@ -12,8 +12,9 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Brain, Zap, Send, Loader2 } from 'lucide-react';
+import { Brain, Zap, Send } from 'lucide-react';
 import axios from 'axios';
+import LoadingSpinner from '@/components/ui/LoadingSpinner';
 
 type ChatMode = 'socratic' | 'claude';
 
@@ -348,7 +349,7 @@ const SocraticChat: React.FC = () => {
               <div className="flex justify-start">
                 <div className="bg-white border rounded-lg p-4 shadow-sm">
                   <div className="flex items-center space-x-2">
-                    <Loader2 className="w-4 h-4 animate-spin text-gray-600" />
+                    <LoadingSpinner size="sm" />
                     <span className="text-sm text-gray-600">
                       {selectedMode === 'socratic' ? 'Thinking deeply...' : 'Preparing challenge...'}
                     </span>

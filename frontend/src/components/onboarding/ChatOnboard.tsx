@@ -7,7 +7,6 @@ import { useOnboardingStore } from '../../stores/onboardingStore';
 import { ChatMessage as ChatMessageType } from '../../types/onboarding';
 import TypingIndicator from './TypingIndicator';
 import PsychProfile from './PsychProfile';
-import SwipeRecommendations from './SwipeRecommendations';
 
 interface ChatOnboardProps {
   onComplete?: (responses: any[]) => void;
@@ -16,7 +15,6 @@ interface ChatOnboardProps {
 
 const ChatOnboard: React.FC<ChatOnboardProps> = ({ onComplete, className = '' }) => {
   const [inputValue, setInputValue] = useState('');
-  const [showSwipe, setShowSwipe] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
@@ -162,11 +160,6 @@ const ChatOnboard: React.FC<ChatOnboardProps> = ({ onComplete, className = '' })
     if (isComplete && psychProfile) {
       console.log('ChatOnboard: Onboarding complete, calling onComplete callback');
       onComplete?.(responses);
-      // Show swipe interface after profile generation
-      setTimeout(() => {
-        console.log('ChatOnboard: Showing swipe recommendations');
-        setShowSwipe(true);
-      }, 2000);
     }
   }, [isComplete, psychProfile, responses, onComplete]);
 
@@ -268,24 +261,9 @@ const ChatOnboard: React.FC<ChatOnboardProps> = ({ onComplete, className = '' })
   const handleRefresh = () => {
     if (window.confirm('Are you sure you want to start over? This will clear all your responses.')) {
       reset();
-      setShowSwipe(false);
     }
   };
 
-  if (showSwipe) {
-    return (
-      <div className={`min-h-screen bg-background ${className}`}>
-        <SwipeRecommendations 
-          onComplete={() => {
-            // Call the parent onComplete callback to finish onboarding
-            console.log('ChatOnboard: SwipeRecommendations completed, calling parent onComplete');
-            onComplete?.(responses);
-          }}
-          psychProfile={psychProfile}
-        />
-      </div>
-    );
-  }
 
   return (
     <div className={`min-h-screen bg-white flex flex-col ${className}`}>
@@ -365,12 +343,12 @@ const ChatOnboard: React.FC<ChatOnboardProps> = ({ onComplete, className = '' })
         <div className="sticky bottom-0 bg-white/95 backdrop-blur-sm border-t border-gray-200 p-4">
           <div className="max-w-4xl mx-auto">
             <button
-              onClick={() => setShowSwipe(true)}
+              onClick={() => onComplete?.(responses)}
               className="w-full bg-blue-500 text-white py-3 px-6 rounded-2xl 
                 hover:bg-blue-600 transition-colors flex items-center justify-center space-x-2"
             >
               <Check size={20} />
-              <span>Finish entry</span>
+              <span>Complete Onboarding</span>
             </button>
           </div>
         </div>

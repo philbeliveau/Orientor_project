@@ -1,6 +1,7 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import LoadingSpinner from './LoadingSpinner';
 import styles from './philosophical-card.module.css';
 
 interface DailyQuestionCardProps {
@@ -56,9 +57,7 @@ const DailyQuestionCard: React.FC<DailyQuestionCardProps> = ({ userId = 1 }) => 
         </p>
         {loading && (
           <div className={styles.loadingIndicator}>
-            <span className={styles.dot}></span>
-            <span className={styles.dot}></span>
-            <span className={styles.dot}></span>
+            <LoadingSpinner size="sm" />
           </div>
         )}
         {!loading && (

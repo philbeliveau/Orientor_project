@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import LoadingSpinner from '../ui/LoadingSpinner';
 import { saveJobFromTree, SaveJobRequest } from '../../services/competenceTreeService';
 
 interface CompetenceNode {
@@ -186,9 +187,16 @@ const NodeDetailModal: React.FC<NodeDetailModalProps> = ({
                   isLoading 
                     ? 'bg-gray-400 cursor-not-allowed' 
                     : 'bg-blue-600 hover:bg-blue-700'
-                } text-white`}
+                } text-white flex items-center justify-center`}
               >
-                {isLoading ? 'Saving...' : '💾 Save to My Space'}
+                {isLoading ? (
+                  <>
+                    <LoadingSpinner size="sm" color="white" />
+                    <span className="ml-2">Saving...</span>
+                  </>
+                ) : (
+                  '💾 Save to My Space'
+                )}
               </button>
             </div>
           )}

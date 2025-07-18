@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import LoadingSpinner from './LoadingSpinner';
 import styles from '@/styles/card.module.css';
 import { ScoreResponse } from '@/services/hollandTestService';
 import AvatarService, { AvatarData } from '@/services/avatarService';
@@ -92,7 +93,7 @@ const UserCard: React.FC<UserCardProps> = ({
       <div className={styles.card__avatar}>
         {avatarLoading ? (
           <div className={styles.avatar__loading}>
-            <div className={styles.avatar__spinner}></div>
+            <LoadingSpinner size="md" />
           </div>
         ) : avatarImageUrl ? (
           <Image
@@ -130,7 +131,10 @@ const UserCard: React.FC<UserCardProps> = ({
           
           {/* RIASEC Profile Section - will unfold on hover */}
           {loading ? (
-            <span className={styles.card__subtitle}>Chargement du profil RIASEC...</span>
+            <div className={styles.card__subtitle} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <LoadingSpinner size="sm" />
+              <span>Chargement du profil RIASEC...</span>
+            </div>
           ) : error ? (
             <span className={styles.card__subtitle} style={{ color: 'rgba(255, 255, 255, 0.8)' }}>{error}</span>
           ) : hollandResults ? (

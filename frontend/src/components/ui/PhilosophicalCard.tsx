@@ -1,6 +1,7 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import LoadingSpinner from './LoadingSpinner';
 import styles from './philosophical-card.module.css';
 import { getInsight, generateInsight, mockInsightData } from '@/services/insightService';
 
@@ -65,9 +66,7 @@ const PhilosophicalCard: React.FC<PhilosophicalCardProps> = ({ previewText, user
         </p>
         {loading && (
           <div className={styles.loadingIndicator}>
-            <span className={styles.dot}></span>
-            <span className={styles.dot}></span>
-            <span className={styles.dot}></span>
+            <LoadingSpinner size="sm" />
           </div>
         )}
       </div>

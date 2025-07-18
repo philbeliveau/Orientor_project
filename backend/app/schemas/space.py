@@ -1,7 +1,6 @@
 from pydantic import BaseModel, Field
-from typing import Optional, List, Dict
+from typing import Optional, List, Dict, Any, Union
 from datetime import datetime
-from typing import Optional, Dict
 
 # ===== SavedRecommendation Schemas =====
 class SavedRecommendationBase(BaseModel):
@@ -30,7 +29,7 @@ class SavedRecommendationBase(BaseModel):
     user_evaluation: Optional[float] = None
     user_decision_making: Optional[float] = None
     user_stress_tolerance: Optional[float] = None
-    all_fields: Optional[Dict[str, str]] = None
+    all_fields: Optional[Dict[str, Any]] = None
 
 class SavedRecommendationCreate(SavedRecommendationBase):
     pass
@@ -39,7 +38,7 @@ class SavedRecommendation(SavedRecommendationBase):
     id: int
     user_id: int
     saved_at: datetime
-    all_fields: Optional[Dict[str, str]] = None
+    all_fields: Optional[Dict[str, Any]] = None
     personal_analysis: Optional[str] = None
     entry_qualifications: Optional[str] = None
     suggested_improvements: Optional[str] = None
