@@ -205,7 +205,7 @@ def read_saved_careers(
                 "esco_id": row.esco_id,  # OaSIS jobs use ESCO IDs
                 "oasis_code": row.esco_id,  # Use ESCO ID as OaSIS code for consistency
                 "title": row.job_title,
-                "label": row.job_title,  # Add label for consistency
+                "label": row.job_title if row.job_title else f"OaSIS Job {row.id}",  # Ensure label is never empty
                 "description": row.metadata.get("description", "") if row.metadata else "",
                 "main_duties": row.metadata.get("main_duties", "") if row.metadata else "",
                 "skills_required": row.skills_required or [],
@@ -518,4 +518,4 @@ async def cleanup_test_jobs(
         raise HTTPException(
             status_code=500,
             detail=f"Failed to cleanup test jobs: {str(e)}"
-        ) 
+        )
