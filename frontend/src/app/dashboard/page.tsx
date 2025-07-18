@@ -391,27 +391,24 @@ export default function Dashboard() {
 
               {/* Job Recommendations - Full width on mobile, larger on desktop */}
               <div className="w-full lg:col-span-5 xl:col-span-6">
-                <div className="flex justify-between items-center mb-6">
-                  <h2 className="text-lg font-semibold" style={{ color: '#000000' }}>Recommended Jobs</h2>
-                  <Link
-                    href="/career/recommendations"
-                    className="text-sm text-blue-600 hover:text-blue-800 flex items-center gap-1"
-                  >
-                    <span>See all</span>
-                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 256 256">
-                      <path d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z"></path>
-                    </svg>
-                  </Link>
-                </div>
-
-                {/* Vector Search Integration */}
                 <div className="mb-6">
-                  <VectorSearchCard />
+                  <h2 className="text-lg font-semibold" style={{ color: '#000000' }}>Recommended Jobs</h2>
                 </div>
                 
                 {/* Original Recommendations */}
-                <div className="mb-4">
-                  <h3 className="text-sm font-medium text-gray-700 mb-3">Your Personalized Recommendations</h3>
+                <div className="mb-6">
+                  <div className="flex justify-between items-center mb-3">
+                    <h3 className="text-sm font-medium text-gray-700">Your Personalized Recommendations</h3>
+                    <Link
+                      href="/career/recommendations"
+                      className="text-sm text-blue-600 hover:text-blue-800 flex items-center gap-1 font-medium px-3 py-1.5 rounded-lg hover:bg-blue-50 transition-colors"
+                    >
+                      <span>See all</span>
+                      <svg width="16" height="16" fill="currentColor" viewBox="0 0 256 256">
+                        <path d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z"></path>
+                      </svg>
+                    </Link>
+                  </div>
                   {jobsLoading ? (
                     <div className="text-center py-6">
                       <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600 mx-auto"></div>
@@ -480,6 +477,11 @@ export default function Dashboard() {
                       ))}
                     </div>
                   )}
+                </div>
+
+                {/* Vector Search Integration - Moved below recommendations */}
+                <div className="mb-4">
+                  <VectorSearchCard />
                 </div>
               </div>
 

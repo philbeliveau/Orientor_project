@@ -139,9 +139,12 @@ const PaperChatMessage: React.FC<PaperChatMessageProps> = ({
 
 export default function ChatInterface({ currentUserId, enableOrientator = false }: ChatInterfaceProps) {
   
-  console.log('🔧 ChatInterface initialized with:');
-  console.log('   currentUserId:', currentUserId);
-  console.log('   enableOrientator:', enableOrientator);
+  // Only log initialization once per component mount, not on every render
+  const initRef = useRef(false);
+  if (!initRef.current) {
+    console.log('🔧 ChatInterface initialized with currentUserId:', currentUserId, 'enableOrientator:', enableOrientator);
+    initRef.current = true;
+  }
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputText, setInputText] = useState('');
   const [isTyping, setIsTyping] = useState(false);
@@ -169,6 +172,7 @@ export default function ChatInterface({ currentUserId, enableOrientator = false 
   const [streamingMessageId, setStreamingMessageId] = useState<number | null>(null);
   const [isSending, setIsSending] = useState(false);
   const [newlyCreatedConversationId, setNewlyCreatedConversationId] = useState<number | null>(null);
+  const [justSentMessage, setJustSentMessage] = useState(false);
   
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -253,13 +257,6 @@ export default function ChatInterface({ currentUserId, enableOrientator = false 
     }
   }, [currentConversation, router]);
 
-  // Load conversation when selected (but not during send process or for newly created conversations)
-  useEffect(() => {
-    if (currentConversation && !isSending && currentConversation.id !== newlyCreatedConversationId) {
-      loadConversationMessages();
-      setChatStarted(true); // Show full chat interface when conversation is loaded
-    }
-  }, [currentConversation?.id, isSending, newlyCreatedConversationId]);
 
   // Check if chat should be started based on messages
   useEffect(() => {
@@ -288,7 +285,7 @@ export default function ChatInterface({ currentUserId, enableOrientator = false 
     }
   }, [searchParams, currentConversation, messages.length]);
 
-  const loadConversationMessages = async () => {
+  const loadConversationMessages = useCallback(async () => {
     if (!currentConversation) {
       console.log('No current conversation to load messages for');
       return;
@@ -378,10 +375,29 @@ export default function ChatInterface({ currentUserId, enableOrientator = false 
         setMessages([]);
       }
     }
-  };
+  }, [currentConversation, chatMode, enableOrientator, isSending]);
 
+  // Load conversation when selected (but not during send process or for newly created conversations)
+  useEffect(() => {
+    if (currentConversation && 
+        !isSending && 
+        currentConversation.id !== newlyCreatedConversationId &&
+        !isTyping &&
+        !justSentMessage) { // Don't reload after just sending a message
+      console.log('🔄 Loading conversation messages for:', currentConversation.id);
+      loadConversationMessages();
+      setChatStarted(true); // Show full chat interface when conversation is loaded
+    }
+  }, [currentConversation?.id, isSending, newlyCreatedConversationId, isTyping, justSentMessage, loadConversationMessages]);
+
+  const sendLockRef = useRef(false);
+  
   const handleSend = async () => {
-    if (!inputText.trim() || isTyping || isSending) return;
+    if (!inputText.trim() || isTyping || isSending || sendLockRef.current) return;
+    
+    // Set send lock to prevent duplicate sends
+    sendLockRef.current = true;
+    setJustSentMessage(true);
 
     const token = localStorage.getItem('access_token');
     if (!token) {
@@ -404,8 +420,17 @@ export default function ChatInterface({ currentUserId, enableOrientator = false 
     };
     
     setMessages(prev => {
+      // Check if this message already exists to prevent duplicates
+      const existingMessage = prev.find(msg => msg.id === userMessageObj.id);
+      if (existingMessage) {
+        console.log('🚫 User message already exists, skipping duplicate');
+        return prev;
+      }
+      
       console.log('📝 Adding user message to state. Current messages:', prev.length);
-      return [...prev, userMessageObj];
+      const newMessages = [...prev, userMessageObj];
+      // Sort to ensure proper ordering
+      return newMessages.sort((a, b) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime());
     });
     setIsTyping(true);
     
@@ -574,10 +599,10 @@ export default function ChatInterface({ currentUserId, enableOrientator = false 
         // For better performance, use the response data directly instead of reloading
         // This avoids the database roundtrip and prevents message flickering
         assistantMessage = {
-          id: response.data.message_id || Date.now(),
+          id: response.data.message_id || Date.now() + 1, // Ensure unique ID
           role: 'assistant',
           content: response.data.response || response.data.content,
-          created_at: new Date().toISOString(),
+          created_at: new Date(Date.now() + 1).toISOString(), // Ensure assistant message comes after user message
           tokens_used: response.data.tokens_used
         };
         
@@ -586,10 +611,10 @@ export default function ChatInterface({ currentUserId, enableOrientator = false 
         // Standard chat format (user message already added)
         console.log('✅ Using standard chat format!');
         assistantMessage = {
-          id: response.data.assistant_message_id || response.data.message_id,
+          id: response.data.assistant_message_id || response.data.message_id || Date.now() + 1,
           role: 'assistant',
           content: response.data.response,
-          created_at: new Date().toISOString(),
+          created_at: new Date(Date.now() + 1).toISOString(), // Ensure assistant message comes after user message
           tokens_used: response.data.tokens_used
         };
       }
@@ -597,8 +622,17 @@ export default function ChatInterface({ currentUserId, enableOrientator = false 
       // Add assistant message if we have one
       if (assistantMessage) {
         setMessages(prev => {
+          // Check if this message already exists to prevent duplicates
+          const existingMessage = prev.find(msg => msg.id === assistantMessage!.id);
+          if (existingMessage) {
+            console.log('🚫 Assistant message already exists, skipping duplicate');
+            return prev;
+          }
+          
           console.log('🤖 Adding assistant message to state. Current messages:', prev.length);
-          return [...prev, assistantMessage as Message];
+          const newMessages = [...prev, assistantMessage as Message];
+          // Sort to ensure proper chronological ordering
+          return newMessages.sort((a, b) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime());
         });
         // Start streaming animation for the new message
         setStreamingMessageId(assistantMessage.id);
@@ -625,6 +659,12 @@ export default function ChatInterface({ currentUserId, enableOrientator = false 
     } finally {
       setIsTyping(false);
       setIsSending(false);
+      // Release send lock to allow next message
+      sendLockRef.current = false;
+      // Clear the just sent message flag after a delay to allow state to settle
+      setTimeout(() => {
+        setJustSentMessage(false);
+      }, 500);
       // Clear the newly created conversation tracking after a delay
       setTimeout(() => {
         setNewlyCreatedConversationId(null);
