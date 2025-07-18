@@ -280,11 +280,8 @@ def complete_onboarding(
         assessment.completed_at = datetime.utcnow()
         assessment.updated_at = datetime.utcnow()
         
-        # Update user profile with basic onboarding completion flag
-        user_profile = db.query(UserProfile).filter(UserProfile.user_id == current_user.id).first()
-        if user_profile:
-            # You can add a field to track onboarding completion
-            user_profile.updated_at = datetime.utcnow()
+        # Mark the user as having completed onboarding
+        current_user.onboarding_completed = True
         
         db.commit()
         
@@ -486,6 +483,7 @@ def skip_onboarding(
             updated_at=datetime.utcnow()
         )
         
+        current_user.onboarding_completed = True
         db.add(default_profile)
         db.commit()
         

@@ -54,8 +54,9 @@ export default function LoginPage() {
             
             console.log('Login successful, token received');
             
-            // Use the auth hook to handle login
-            login(response.data.access_token, response.data.user_id.toString());
+            // Manually set auth info to avoid triggering useAuth redirect
+            localStorage.setItem('access_token', response.data.access_token);
+            localStorage.setItem('user_id', response.data.user_id.toString());
             
             // Check if user needs onboarding
             try {
@@ -72,7 +73,7 @@ export default function LoginPage() {
                     console.log('❌ User needs onboarding, redirecting to onboarding page');
                     router.push('/onboarding');
                 }
-            } catch (onboardingError) {
+            } catch (onboardingError: any) {
                 console.error('💥 Error checking onboarding status:', onboardingError);
                 console.error('Error details:', {
                     message: onboardingError.message,

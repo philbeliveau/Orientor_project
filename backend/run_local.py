@@ -24,7 +24,7 @@ for key in list(os.environ.keys()):
         print(f"🗑️  Removed {key}")
 
 # Set correct local database configuration
-os.environ['DATABASE_URL'] = 'postgresql://postgres:Mac.phil.007@localhost:5432/navigo_local'
+os.environ['DATABASE_URL'] = os.environ['DATABASE_URL'] = 'postgresql://postgres:Supabase.phil.007@db.tyhcruhmrfvtcinofupn.supabase.co:5432/postgres'
 os.environ['LOCAL_DATABASE_URL'] = 'postgresql://postgres:Mac.phil.007@localhost:5432/navigo_local'
 os.environ['ENV'] = 'development'
 

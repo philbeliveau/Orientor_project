@@ -83,6 +83,7 @@ def register_user(user: UserCreate, db: Session = Depends(get_db)):
         db_user = User(
             email=user.email,
             hashed_password=hashed_password,
+            onboarding_completed=False,
             created_at=datetime.utcnow()
         )
         
@@ -197,3 +198,11 @@ def change_password(password_update: PasswordUpdate, db: Session = Depends(get_d
         logger.error(f"Error changing password: {str(e)}")
         db.rollback()
         raise HTTPException(status_code=500, detail=f"Password change failed: {str(e)}")
+
+@router.get("/onboarding-status", response_model=dict)
+def get_onboarding_status(current_user: User = Depends(get_current_user)):
+    """
+    Check if the user has completed the onboarding process.
+    """
+    logger.info(f"Checking onboarding status for user ID: {current_user.id}")
+    return {"onboarding_completed": current_user.onboarding_completed}
