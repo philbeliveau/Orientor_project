@@ -50,61 +50,39 @@ export default function Sidebar({ items, selectedId, onSelect, onDelete, loading
           <div onClick={() => onSelect(item)}>
             <h3 className="font-medium text-sm" style={{ color: 'var(--text)' }}>
               {(() => {
-                // Debug: Log the item structure with all available fields
-                console.log('=== JOB ITEM DEBUG ===');
-                console.log('Label:', item.label);
-                console.log('OASIS Code:', item.oasis_code);
-                console.log('Description:', item.description);
-                console.log('All Fields Keys:', item.all_fields ? Object.keys(item.all_fields) : 'No all_fields');
-                console.log('All Fields Full Object:', item.all_fields);
-                
-                // Log specific searches
-                if (item.all_fields) {
-                  console.log('Looking for OASIS labels...');
-                  Object.keys(item.all_fields || {}).forEach(key => {
-                    if (key.toLowerCase().includes('oasis') || key.toLowerCase().includes('label')) {
-                      console.log(`  Found: ${key} = ${item.all_fields?.[key]}`);
-                    }
-                  });
-                  
-                  console.log('Looking for ESCO titles...');
-                  Object.keys(item.all_fields || {}).forEach(key => {
-                    if (key.toLowerCase().includes('title') || key.toLowerCase().includes('preferred')) {
-                      console.log(`  Found: ${key} = ${item.all_fields?.[key]}`);
-                    }
-                  });
-                }
-                console.log('========================');
-                
-                // Fixed logic based on actual data structure
+                // Extract proper job titles from data structure
                 if (item.all_fields) {
                   // For OASIS jobs (detected by career_ prefix OR having oasis_label__final_x field)
                   if (item.oasis_code?.startsWith('career_') || item.all_fields.oasis_label__final_x) {
-                    console.log('This is an OASIS job');
                     // Use oasis_label__final_x field for OASIS jobs
                     if (item.all_fields.oasis_label__final_x) {
-                      console.log(`Using OASIS title: ${item.all_fields.oasis_label__final_x}`);
                       return item.all_fields.oasis_label__final_x;
                     }
                   } 
                   
-                  // For ESCO jobs - use job_title_text or other title fields
-                  if (item.all_fields.job_title_text) {
-                    console.log('This is an ESCO job');
-                    console.log(`Using ESCO title: ${item.all_fields.job_title_text}`);
-                    // Extract first title from pipe-separated list
-                    const titles = item.all_fields.job_title_text.split(' | ');
-                    return titles[0];
+                  // For ESCO jobs (detected by occupation::key_ prefix OR having title/preferred_label fields)
+                  if (item.oasis_code?.startsWith('occupation::key_') || item.all_fields.title || item.all_fields.preferred_label) {
+                    // Try title first, then preferred_label, then job_title_text
+                    if (item.all_fields.title) {
+                      return item.all_fields.title;
+                    }
+                    if (item.all_fields.preferred_label) {
+                      return item.all_fields.preferred_label;
+                    }
+                    if (item.all_fields.job_title_text) {
+                      // Extract first title from pipe-separated list
+                      const titles = item.all_fields.job_title_text.split(' | ');
+                      return titles[0];
+                    }
                   }
                 }
                 
-                console.log('Using fallback label:', item.label);
                 return item.label || 'No Title Found';
               })()}
             </h3>
             <p className="text-xs" style={{ color: 'var(--text-secondary)' }}>
               {item.oasis_code?.startsWith('career_') || item.all_fields?.oasis_label__final_x ? 'OASIS Career' : 
-               item.all_fields?.job_title_text ? 'ESCO Career' : item.oasis_code}
+               (item.oasis_code?.startsWith('occupation::key_') || item.all_fields?.title || item.all_fields?.preferred_label) ? 'ESCO Career' : item.oasis_code}
             </p>
           </div>
           <button

@@ -9,32 +9,6 @@ interface CareerFitAnalyzerProps {
   jobSource: 'esco' | 'oasis';
 }
 
-interface FeasibilityBoxProps {
-  title: string;
-  icon: string;
-  value: string | number;
-  subtext?: string;
-  severity?: 'low' | 'medium' | 'high';
-}
-
-const FeasibilityBox: React.FC<FeasibilityBoxProps> = ({ title, icon, value, subtext, severity = 'low' }) => {
-  const severityColors = {
-    low: 'bg-green-100 text-green-800 border-green-200',
-    medium: 'bg-yellow-100 text-yellow-800 border-yellow-200',
-    high: 'bg-red-100 text-red-800 border-red-200'
-  };
-
-  return (
-    <div className={`p-4 rounded-lg border ${severityColors[severity]}`}>
-      <div className="flex items-center gap-2 mb-2">
-        <span className="text-xl">{icon}</span>
-        <h4 className="font-medium">{title}</h4>
-      </div>
-      <p className="text-2xl font-bold">{value}</p>
-      {subtext && <p className="text-sm mt-1 opacity-80">{subtext}</p>}
-    </div>
-  );
-};
 
 const CareerFitAnalyzer: React.FC<CareerFitAnalyzerProps> = ({ job, jobSource }) => {
   const [fitAnalysis, setFitAnalysis] = useState<CareerFitResponse | null>(null);
@@ -179,37 +153,8 @@ const CareerFitAnalyzer: React.FC<CareerFitAnalyzerProps> = ({ job, jobSource })
         </p>
       </div>
 
-      {/* Feasibility Summary for ESCO jobs, GraphSAGE Skills for OaSIS jobs */}
-      {jobSource === 'esco' ? (
-        <div>
-          <h3 className="text-lg font-semibold mb-4" style={{ color: 'var(--text)' }}>
-            Feasibility Analysis
-          </h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <FeasibilityBox
-              title="Entry Timeline"
-              icon="⏱️"
-              value="2-3 years"
-              subtext="Including education"
-              severity="medium"
-            />
-            <FeasibilityBox
-              title="Education Required"
-              icon="🎓"
-              value="Bachelor's"
-              subtext="Computer Science preferred"
-              severity="low"
-            />
-            <FeasibilityBox
-              title="Income Gap"
-              icon="💰"
-              value="18 months"
-              subtext="Until first salary"
-              severity="high"
-            />
-          </div>
-        </div>
-      ) : (
+      {/* GraphSAGE Skills for OaSIS jobs */}
+      {jobSource === 'oasis' && (
         <div className="p-6 rounded-lg" style={{ backgroundColor: 'var(--card)', border: '1px solid var(--border)' }}>
           <h3 className="text-lg font-semibold mb-4" style={{ color: 'var(--text)' }}>
             Top 5 High-Relevance Skills (GraphSAGE Analysis)

@@ -198,16 +198,6 @@ export default function SpacePage() {
                 🌳 From Tree
               </button>
             </div>
-            
-            {/* Cleanup button - only show for recommendations tab */}
-            {activeTab === 'recommendations' && (
-              <button
-                onClick={handleCleanupTestJobs}
-                className="w-full mt-2 px-3 py-2 text-xs bg-red-100 text-red-700 rounded-md hover:bg-red-200 transition-colors"
-              >
-                🧹 Remove Test Jobs
-              </button>
-            )}
           </div>
 
           {/* Tab Content */}
