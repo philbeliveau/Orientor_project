@@ -48,8 +48,56 @@ export default function Sidebar({ items, selectedId, onSelect, onDelete, loading
           }}
         >
           <div onClick={() => onSelect(item)}>
-            <h3 className="font-medium text-sm" style={{ color: 'var(--text)' }}>{item.label}</h3>
-            <p className="text-xs" style={{ color: 'var(--text-secondary)' }}>{item.oasis_code}</p>
+            <h3 className="font-medium text-sm" style={{ color: 'var(--text)' }}>
+              {(() => {
+                // Debug: Log the item structure
+                console.log('Job item data:', {
+                  label: item.label,
+                  oasis_code: item.oasis_code,
+                  all_fields: item.all_fields,
+                  description: item.description
+                });
+                
+                // Handle OASIS jobs (occupation::key_ or career_ prefixes)
+                if (item.oasis_code?.startsWith('occupation::key_') || item.label?.startsWith('career_')) {
+                  // Look for "Oasis Label Final X" pattern in all_fields
+                  const allFields = item.all_fields;
+                  if (allFields) {
+                    // Check for Oasis Label Final X (where X is a number)
+                    for (const [key, value] of Object.entries(allFields)) {
+                      if (key.match(/^Oasis Label Final \d+$/) && value) {
+                        return value as string;
+                      }
+                    }
+                    // Also check for exact "Oasis Label Final X" patterns
+                    if (allFields['Oasis Label Final 1']) return allFields['Oasis Label Final 1'];
+                    if (allFields['Oasis Label Final 2']) return allFields['Oasis Label Final 2'];
+                    if (allFields['Oasis Label Final 3']) return allFields['Oasis Label Final 3'];
+                    if (allFields['Oasis Label Final 4']) return allFields['Oasis Label Final 4'];
+                    if (allFields['Oasis Label Final 5']) return allFields['Oasis Label Final 5'];
+                  }
+                  return item.label || 'OASIS Career';
+                }
+                
+                // Handle ESCO jobs - look for title field (case variations)
+                const allFields = item.all_fields;
+                if (allFields) {
+                  // Try different case variations of title
+                  if (allFields.title) return allFields.title;
+                  if (allFields.Title) return allFields.Title;
+                  if (allFields.TITLE) return allFields.TITLE;
+                  if (allFields.preferredLabel) return allFields.preferredLabel;
+                  if (allFields.PreferredLabel) return allFields.PreferredLabel;
+                }
+                
+                // Fallback to label for other cases
+                return item.label || 'Career';
+              })()}
+            </h3>
+            <p className="text-xs" style={{ color: 'var(--text-secondary)' }}>
+              {item.oasis_code?.startsWith('occupation::key_') ? 'OASIS Career' : 
+               item.all_fields?.Title ? 'ESCO Career' : item.oasis_code}
+            </p>
           </div>
           <button
             onClick={() => onDelete(item)}

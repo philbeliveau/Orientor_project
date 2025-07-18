@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import OptimizedCompetenceTreeView from '../../components/tree/optimized/OptimizedCompetenceTreeView';
+import ExtremeCompetenceTreeView from '../../components/tree/extreme/ExtremeCompetenceTreeView';
 import MainLayout from '../../components/layout/MainLayout';
 import { generateCompetenceTree } from '../../services/competenceTreeService';
 import axios from 'axios';
@@ -132,7 +132,7 @@ const CompetenceTreePage: React.FC = () => {
             {error && <p style={{ color: 'red', marginTop: '10px' }}>{error}</p>}
           </div>
         ) : (
-          <OptimizedCompetenceTreeView graphId={currentGraphId} />
+          <ExtremeCompetenceTreeView graphId={currentGraphId} />
         )}
       </div>
     </MainLayout>

@@ -167,6 +167,7 @@ export default function ChatInterface({ currentUserId, enableOrientator = false 
   });
   const [showModeSelector, setShowModeSelector] = useState(false);
   const [streamingMessageId, setStreamingMessageId] = useState<number | null>(null);
+  const [isSending, setIsSending] = useState(false);
   
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -251,13 +252,13 @@ export default function ChatInterface({ currentUserId, enableOrientator = false 
     }
   }, [currentConversation, router]);
 
-  // Load conversation when selected
+  // Load conversation when selected (but not during send process)
   useEffect(() => {
-    if (currentConversation) {
+    if (currentConversation && !isSending) {
       loadConversationMessages();
       setChatStarted(true); // Show full chat interface when conversation is loaded
     }
-  }, [currentConversation?.id]);
+  }, [currentConversation?.id, isSending]);
 
   // Check if chat should be started based on messages
   useEffect(() => {
@@ -292,13 +293,18 @@ export default function ChatInterface({ currentUserId, enableOrientator = false 
       return;
     }
     
-    console.log('Loading messages for conversation:', currentConversation.id);
+    console.log('🔄 Loading messages for conversation:', currentConversation.id, 'isSending:', isSending);
     
     try {
-      // Use Orientator endpoint if enabled to get messages with components
-      const endpoint = enableOrientator 
+      // Use Orientator endpoint only for default mode when enabled
+      // Socratic/Claude modes should always use the regular chat endpoint
+      const isDefaultMode = (chatMode as ChatMode) === 'default';
+      const endpoint = (enableOrientator && isDefaultMode)
         ? `${process.env.NEXT_PUBLIC_API_URL}/orientator/conversations/${currentConversation.id}/messages`
         : `${process.env.NEXT_PUBLIC_API_URL}/chat/conversations/${currentConversation.id}/messages`;
+        
+      console.log('🔍 Loading messages from endpoint:', endpoint);
+      console.log('🔍 Chat mode:', chatMode, '| Default mode:', isDefaultMode, '| Orientator enabled:', enableOrientator);
         
       const response = await axios.get(endpoint, {
         headers: {
@@ -335,7 +341,8 @@ export default function ChatInterface({ currentUserId, enableOrientator = false 
     } catch (error) {
       console.error('Failed to load conversation messages:', error);
       // Fallback to regular chat endpoint if Orientator endpoint fails
-      if (enableOrientator) {
+      const isDefaultMode = (chatMode as ChatMode) === 'default';
+      if (enableOrientator && isDefaultMode) {
         try {
           const fallbackResponse = await axios.get(
             `${process.env.NEXT_PUBLIC_API_URL}/chat/conversations/${currentConversation.id}/messages`,
@@ -362,7 +369,7 @@ export default function ChatInterface({ currentUserId, enableOrientator = false 
   };
 
   const handleSend = async () => {
-    if (!inputText.trim() || isTyping) return;
+    if (!inputText.trim() || isTyping || isSending) return;
 
     const token = localStorage.getItem('access_token');
     if (!token) {
@@ -370,6 +377,9 @@ export default function ChatInterface({ currentUserId, enableOrientator = false 
       return;
     }
 
+    // Prevent duplicate sends
+    setIsSending(true);
+    
     const userMessage = inputText;
     setInputText('');
     
@@ -381,8 +391,13 @@ export default function ChatInterface({ currentUserId, enableOrientator = false 
       created_at: new Date().toISOString()
     };
     
-    setMessages(prev => [...prev, userMessageObj]);
+    setMessages(prev => {
+      console.log('📝 Adding user message to state. Current messages:', prev.length);
+      return [...prev, userMessageObj];
+    });
     setIsTyping(true);
+    
+    console.log('🚀 handleSend called with message:', userMessage);
 
     try {
       // If no conversation exists, create one and wait for completion
@@ -421,6 +436,7 @@ export default function ChatInterface({ currentUserId, enableOrientator = false 
           setRefreshConversationList(prev => prev + 1);
           
           console.log('✅ Created conversation:', conversationId);
+          console.log('🔄 Updated currentConversation state during send process');
         } catch (createError) {
           console.error('Failed to create conversation:', createError);
           // Continue anyway - the service might handle it
@@ -558,9 +574,13 @@ export default function ChatInterface({ currentUserId, enableOrientator = false 
       
       // Add assistant message if we have one
       if (assistantMessage) {
-        setMessages(prev => [...prev, assistantMessage as Message]);
+        setMessages(prev => {
+          console.log('🤖 Adding assistant message to state. Current messages:', prev.length);
+          return [...prev, assistantMessage as Message];
+        });
         // Start streaming animation for the new message
         setStreamingMessageId(assistantMessage.id);
+        console.log('✅ Assistant message added with streaming animation');
       }
       setChatStarted(true); // Transition to full chat interface after sending first message
     } catch (error: any) {
@@ -582,6 +602,7 @@ export default function ChatInterface({ currentUserId, enableOrientator = false 
       setMessages(prev => [...prev, errorMsg]);
     } finally {
       setIsTyping(false);
+      setIsSending(false);
       // Keep focus on input after sending message
       setTimeout(() => {
         inputRef.current?.focus();
@@ -826,7 +847,12 @@ export default function ChatInterface({ currentUserId, enableOrientator = false 
 
             {/* Inline input for continuing conversation */}
             <div className="pl-2 sm:pl-4 py-2">
-              <form onSubmit={(e) => { e.preventDefault(); handleSend(); }} className="w-full">
+              <form onSubmit={(e) => { 
+                e.preventDefault(); 
+                if (!isSending && !isTyping) {
+                  handleSend(); 
+                }
+              }} className="w-full">
                 <textarea
                   ref={inputRef}
                   value={inputText}
@@ -841,7 +867,9 @@ export default function ChatInterface({ currentUserId, enableOrientator = false 
                   onKeyDown={(e) => {
                     if (e.key === 'Enter' && !e.shiftKey) {
                       e.preventDefault();
-                      handleSend();
+                      if (!isSending && !isTyping) {
+                        handleSend();
+                      }
                     }
                     // Auto-resize textarea
                     const target = e.target as HTMLTextAreaElement;
