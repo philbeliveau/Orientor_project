@@ -393,34 +393,38 @@ export default function ChatInterface({ currentUserId, enableOrientator = false 
       console.log('handleSend - conversationId:', conversationId);
       
       const isDefaultMode = (chatMode as ChatMode) === 'default';
+      
+      // For non-default modes (Socratic/Claude), don't create conversation upfront
+      // Let the service handle it for better performance
       if (!conversationId && isDefaultMode) {
-        // Create conversation for default mode only
-        // For Socratic/Claude modes, conversation creation is handled by the service
-        console.log('No conversation ID found, creating new conversation');
-        const createResponse = await axios.post(
-          `${process.env.NEXT_PUBLIC_API_URL}/chat/conversations`,
-          {
-            initial_message: userMessage,
-            category_id: selectedCategory?.id
-          },
-          {
-            headers: {
-              'Authorization': `Bearer ${token}`,
-              'Content-Type': 'application/json'
+        console.log('No conversation ID found, creating new conversation for default mode');
+        try {
+          const createResponse = await axios.post(
+            `${process.env.NEXT_PUBLIC_API_URL}/chat/conversations`,
+            {
+              initial_message: userMessage,
+              category_id: selectedCategory?.id
+            },
+            {
+              headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+              }
             }
-          }
-        );
-        
-        conversationId = createResponse.data.id;
-        conversationToUse = createResponse.data;
-        
-        // Update state and wait for it to propagate  
-        setCurrentConversation(conversationToUse);
-        // Trigger conversation list refresh
-        setRefreshConversationList(prev => prev + 1);
-        
-        // Small delay to ensure state has propagated
-        await new Promise(resolve => setTimeout(resolve, 100));
+          );
+          
+          conversationId = createResponse.data.id;
+          conversationToUse = createResponse.data;
+          
+          // Update state but don't wait for it to propagate
+          setCurrentConversation(conversationToUse);
+          setRefreshConversationList(prev => prev + 1);
+          
+          console.log('✅ Created conversation:', conversationId);
+        } catch (createError) {
+          console.error('Failed to create conversation:', createError);
+          // Continue anyway - the service might handle it
+        }
       }
 
       // Send message to appropriate endpoint based on chat mode
@@ -529,68 +533,17 @@ export default function ChatInterface({ currentUserId, enableOrientator = false 
           setRefreshConversationList(prev => prev + 1);
         }
         
-        // Instead of manually adding messages, reload from database to ensure proper order
-        if (conversationId || response.data.conversation_id) {
-          const reloadConversationId = conversationId || response.data.conversation_id;
-          try {
-            // Small delay to ensure database transaction is complete
-            await new Promise(resolve => setTimeout(resolve, 100));
-            
-            const messagesResponse = await axios.get(
-              `${process.env.NEXT_PUBLIC_API_URL}/chat/conversations/${reloadConversationId}/messages`,
-              {
-                headers: {
-                  'Authorization': `Bearer ${token}`
-                }
-              }
-            );
-            
-            // Update messages from database response
-            const messagesData = messagesResponse.data.messages || messagesResponse.data;
-            
-            // Filter out system messages and ensure proper ordering
-            const filteredMessages = messagesData
-              .filter((msg: any) => msg.role !== 'system')
-              .sort((a: any, b: any) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime());
-            
-            // Only update if we got a different set of messages to prevent flicker
-            setMessages(prev => {
-              if (prev.length !== filteredMessages.length) {
-                return filteredMessages;
-              }
-              // Check if the last message is different (new message added)
-              const lastPrev = prev[prev.length - 1];
-              const lastNew = filteredMessages[filteredMessages.length - 1];
-              if (!lastPrev || !lastNew || lastPrev.id !== lastNew.id) {
-                return filteredMessages;
-              }
-              return prev; // No change needed
-            });
-            console.log('✅ Reloaded conversation messages:', filteredMessages.length);
-            
-            // Don't add assistant message since we reloaded from database
-            assistantMessage = null;
-          } catch (reloadError) {
-            console.error('Failed to reload messages, falling back to manual addition:', reloadError);
-            // Fallback to manual addition if reload fails (user message already added)
-            assistantMessage = {
-              id: response.data.message_id,
-              role: 'assistant',
-              content: response.data.response,
-              created_at: new Date().toISOString(),
-              tokens_used: response.data.tokens_used
-            };
-          }
-        } else {
-          // No conversation ID available, fall back to manual addition (user message already added)
-          assistantMessage = {
-            id: response.data.message_id,
-            role: 'assistant',
-            content: response.data.response,
-            created_at: new Date().toISOString(),
-            tokens_used: response.data.tokens_used
-          };
-        }
+        // For better performance, use the response data directly instead of reloading
+        // This avoids the database roundtrip and prevents message flickering
+        assistantMessage = {
+          id: response.data.message_id || Date.now(),
+          role: 'assistant',
+          content: response.data.response || response.data.content,
+          created_at: new Date().toISOString(),
+          tokens_used: response.data.tokens_used
+        };
+        
+        console.log('✅ Created assistant message directly from response');
       } else {
         // Standard chat format (user message already added)
         console.log('✅ Using standard chat format!');
@@ -618,7 +571,7 @@ export default function ChatInterface({ currentUserId, enableOrientator = false 
         return;
       }
       
-      // Show error message
+      // Show error message (user message is already displayed, so just add error)
       const errorMsg: Message = {
         id: Date.now(),
         role: 'system',

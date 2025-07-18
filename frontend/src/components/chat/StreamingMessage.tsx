@@ -23,7 +23,7 @@ export const StreamingMessage: React.FC<StreamingMessageProps> = ({
       const timer = setTimeout(() => {
         setDisplayedText(content.slice(0, currentIndex + 1));
         setCurrentIndex(prev => prev + 1);
-      }, 20); // Adjust speed here (lower = faster)
+      }, 15); // Faster typing speed for better UX
 
       return () => clearTimeout(timer);
     } else if (currentIndex >= content.length && onComplete) {
