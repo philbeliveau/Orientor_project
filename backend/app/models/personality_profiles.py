@@ -12,7 +12,7 @@ class PersonalityAssessment(Base):
     """Model for personality assessment sessions."""
     __tablename__ = "personality_assessments"
 
-    id = Column(Integer, primary_key=True, index=True)
+    id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     user_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
     assessment_type = Column(String(50), nullable=False)
     assessment_version = Column(String(20), nullable=False)

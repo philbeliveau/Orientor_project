@@ -189,6 +189,12 @@ def get_db():
             status_code=500,
             detail="Database query error"
         )
+    except HTTPException as e:
+        # Re-raise HTTPExceptions from endpoints without wrapping them
+        logger.info(f"HTTPException from endpoint: {e.detail}")
+        if db:
+            db.rollback()
+        raise e
     except Exception as e:
         logger.error(f"Database session error: {str(e)}")
         logger.error(f"Error type: {type(e)}")

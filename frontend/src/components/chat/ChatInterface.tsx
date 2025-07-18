@@ -16,6 +16,8 @@ import { ChatMode } from './ChatModeSelector';
 import styles from './ChatBot.module.css';
 import { MessageComponentRenderer, MessageComponent, ComponentAction, MessageComponentType } from './MessageComponent';
 import LoadingSpinner from '@/components/ui/LoadingSpinner';
+import StreamingMessage from './StreamingMessage';
+import './ChatAnimations.css';
 
 interface Message {
   id: number;
@@ -65,9 +67,18 @@ interface PaperChatMessageProps {
   isLast: boolean;
   chatMode: ChatMode;
   onComponentAction?: (action: ComponentAction, componentId: string) => void;
+  isStreaming?: boolean;
+  onStreamingComplete?: () => void;
 }
 
-const PaperChatMessage: React.FC<PaperChatMessageProps> = ({ message, isLast, chatMode, onComponentAction }) => {
+const PaperChatMessage: React.FC<PaperChatMessageProps> = ({ 
+  message, 
+  isLast, 
+  chatMode, 
+  onComponentAction, 
+  isStreaming = false, 
+  onStreamingComplete 
+}) => {
   const isUser = message.role === 'user';
   
   // Debug logging for message rendering
@@ -77,7 +88,7 @@ const PaperChatMessage: React.FC<PaperChatMessageProps> = ({ message, isLast, ch
   }
   
   return (
-    <div className="space-y-4">
+    <div className={`space-y-4 ${isUser ? 'user-message-enter' : 'assistant-message-enter'}`}>
       {/* AI/System message with mode-specific accent */}
       {!isUser && (
         <div>
@@ -86,13 +97,17 @@ const PaperChatMessage: React.FC<PaperChatMessageProps> = ({ message, isLast, ch
               ? 'border-purple-500' 
               : 'border-blue-500'
           }`}>
-            <p className={`text-lg sm:text-xl leading-relaxed font-light tracking-wide ${
+            <div className={`text-lg sm:text-xl leading-relaxed font-light tracking-wide ${
               chatMode === 'claude' 
                 ? 'text-purple-600' 
                 : 'text-blue-600'
             }`}>
-              {message.content}
-            </p>
+              <StreamingMessage
+                content={message.content}
+                isTyping={isStreaming}
+                onComplete={onStreamingComplete}
+              />
+            </div>
           </div>
           {/* Render message components if present */}
           {message.components && message.components.length > 0 && (
@@ -151,6 +166,7 @@ export default function ChatInterface({ currentUserId, enableOrientator = false 
     return 'default';
   });
   const [showModeSelector, setShowModeSelector] = useState(false);
+  const [streamingMessageId, setStreamingMessageId] = useState<number | null>(null);
   
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -354,9 +370,19 @@ export default function ChatInterface({ currentUserId, enableOrientator = false 
       return;
     }
 
-    setIsTyping(true);
     const userMessage = inputText;
     setInputText('');
+    
+    // Immediately add user message to display for smooth UX
+    const userMessageObj: Message = {
+      id: Date.now(),
+      role: 'user',
+      content: userMessage,
+      created_at: new Date().toISOString()
+    };
+    
+    setMessages(prev => [...prev, userMessageObj]);
+    setIsTyping(true);
 
     try {
       // If no conversation exists, create one and wait for completion
@@ -453,8 +479,8 @@ export default function ChatInterface({ currentUserId, enableOrientator = false 
       console.log('🔍 Response has message_id:', !!response.data.message_id);
       console.log('🧩 Response has components:', !!response.data.components, response.data.components?.length || 0);
       
-      // Add both user and assistant messages
-      let newMessages: Message[] = [];
+      // Add only assistant message (user message already added above)
+      let assistantMessage: Message | null = null;
       
       console.log('🔍 Checking response format:');
       console.log('   enableOrientator:', enableOrientator);
@@ -465,28 +491,20 @@ export default function ChatInterface({ currentUserId, enableOrientator = false 
       if (enableOrientator && isDefaultMode && response.data.message_id) {
         // Orientator format with components - single message response
         console.log('✅ Using Orientator format!');
-        newMessages = [
-          {
-            id: Date.now(), // User message ID
-            role: 'user',
-            content: userMessage,
-            created_at: new Date().toISOString()
-          },
-          {
-            id: response.data.message_id,
-            role: response.data.role,
-            content: response.data.content,
-            created_at: response.data.created_at,
-            components: response.data.components,
-            metadata: response.data.metadata,
-            tokens_used: response.data.tokens_used
-          }
-        ];
+        assistantMessage = {
+          id: response.data.message_id,
+          role: response.data.role,
+          content: response.data.content,
+          created_at: response.data.created_at,
+          components: response.data.components,
+          metadata: response.data.metadata,
+          tokens_used: response.data.tokens_used
+        };
         
-        console.log('✅ Created Orientator messages:', newMessages.length);
-        console.log('🎨 Assistant message components:', newMessages[1]?.components?.length || 0);
-        if (newMessages[1]?.components && newMessages[1].components.length > 0) {
-          newMessages[1].components.forEach((comp, i) => {
+        console.log('✅ Created Orientator message');
+        console.log('🎨 Assistant message components:', assistantMessage?.components?.length || 0);
+        if (assistantMessage?.components && assistantMessage.components.length > 0) {
+          assistantMessage.components.forEach((comp, i) => {
             console.log(`   ${i+1}. ${comp.type} component with ${comp.actions?.length || 0} actions`);
           });
         }
@@ -550,68 +568,46 @@ export default function ChatInterface({ currentUserId, enableOrientator = false 
             });
             console.log('✅ Reloaded conversation messages:', filteredMessages.length);
             
-            // Don't add newMessages since we reloaded from database
-            newMessages = [];
+            // Don't add assistant message since we reloaded from database
+            assistantMessage = null;
           } catch (reloadError) {
             console.error('Failed to reload messages, falling back to manual addition:', reloadError);
-            // Fallback to manual addition if reload fails
-            newMessages = [
-              {
-                id: Date.now(),
-                role: 'user',
-                content: userMessage,
-                created_at: new Date().toISOString()
-              },
-              {
-                id: response.data.message_id,
-                role: 'assistant',
-                content: response.data.response,
-                created_at: new Date().toISOString(),
-                tokens_used: response.data.tokens_used
-              }
-            ];
-          }
-        } else {
-          // No conversation ID available, fall back to manual addition
-          newMessages = [
-            {
-              id: Date.now(),
-              role: 'user',
-              content: userMessage,
-              created_at: new Date().toISOString()
-            },
-            {
+            // Fallback to manual addition if reload fails (user message already added)
+            assistantMessage = {
               id: response.data.message_id,
               role: 'assistant',
               content: response.data.response,
               created_at: new Date().toISOString(),
               tokens_used: response.data.tokens_used
-            }
-          ];
-        }
-      } else {
-        // Standard chat format
-        console.log('✅ Using standard chat format!');
-        newMessages = [
-          {
-            id: response.data.user_message_id || Date.now(),
-            role: 'user',
-            content: userMessage,
-            created_at: new Date().toISOString()
-          },
-          {
-            id: response.data.assistant_message_id || response.data.message_id,
+            };
+          }
+        } else {
+          // No conversation ID available, fall back to manual addition (user message already added)
+          assistantMessage = {
+            id: response.data.message_id,
             role: 'assistant',
             content: response.data.response,
             created_at: new Date().toISOString(),
             tokens_used: response.data.tokens_used
-          }
-        ];
+          };
+        }
+      } else {
+        // Standard chat format (user message already added)
+        console.log('✅ Using standard chat format!');
+        assistantMessage = {
+          id: response.data.assistant_message_id || response.data.message_id,
+          role: 'assistant',
+          content: response.data.response,
+          created_at: new Date().toISOString(),
+          tokens_used: response.data.tokens_used
+        };
       }
       
-      // Only add messages if we didn't reload from database
-      if (newMessages.length > 0) {
-        setMessages(prev => [...prev, ...newMessages]);
+      // Add assistant message if we have one
+      if (assistantMessage) {
+        setMessages(prev => [...prev, assistantMessage as Message]);
+        // Start streaming animation for the new message
+        setStreamingMessageId(assistantMessage.id);
       }
       setChatStarted(true); // Transition to full chat interface after sending first message
     } catch (error: any) {
@@ -740,6 +736,10 @@ export default function ChatInterface({ currentUserId, enableOrientator = false 
     }
   };
 
+  const handleStreamingComplete = useCallback((messageId: number) => {
+    setStreamingMessageId(null);
+  }, []);
+
   const handleTitleSave = async () => {
     if (!currentConversation || !editingTitleValue.trim()) {
       setIsEditingTitle(false);
@@ -853,13 +853,19 @@ export default function ChatInterface({ currentUserId, enableOrientator = false 
                   isLast={index === messages.length - 1}
                   chatMode={chatMode}
                   onComponentAction={enableOrientator ? handleComponentAction : undefined}
+                  isStreaming={streamingMessageId === message.id}
+                  onStreamingComplete={() => handleStreamingComplete(message.id)}
                 />
               ))}
             
             {isTyping && (
-              <div className="border-l-3 border-blue-500 pl-4 sm:pl-6 lg:pl-8 py-2">
-                <div className="flex items-center space-x-2">
-                  <LoadingSpinner size="sm" color="#60a5fa" />
+              <div className="border-l-3 border-blue-500 pl-4 sm:pl-6 lg:pl-8 py-2 animate-fade-in">
+                <div className="flex items-center space-x-3">
+                  <div className="flex space-x-1">
+                    <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
+                    <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
+                    <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
+                  </div>
                   <span className="text-blue-500 text-sm font-light">Thinking...</span>
                 </div>
               </div>
@@ -877,7 +883,7 @@ export default function ChatInterface({ currentUserId, enableOrientator = false 
                     bg-transparent border-none outline-none resize-none font-light tracking-wide
                     focus:text-gray-900 transition-all duration-300 min-h-[2.5rem]
                     focus:placeholder-gray-200 focus:outline-none focus:ring-0 focus:border-none
-                    touch-manipulation"
+                    touch-manipulation transform transition-transform duration-200"
                   rows={1}
                   onKeyDown={(e) => {
                     if (e.key === 'Enter' && !e.shiftKey) {

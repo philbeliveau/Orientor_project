@@ -1119,3 +1119,1558 @@ STUDENT CONTEXT:
 2025-07-18 12:32:34,532 - app.routers.jobs - INFO - Returned 3 real ESCO job recommendations for user 22
 2025-07-18 12:32:34,620 - app.routers.user_progress - INFO - Retrieved user progress for user 22: {}
 2025-07-18 12:32:34,620 - app.routers.holland_test - INFO - Récupération des résultats RIASEC pour l'utilisateur: 22
+2025-07-18 12:35:31,175 - app.routers.user - INFO - Attempting to register user with email: beli6@example.com
+2025-07-18 12:35:31,222 - app.routers.user - WARNING - Registration attempt with existing email: beli6@example.com
+2025-07-18 12:35:31,222 - app.routers.user - ERROR - Unexpected error during user registration: 
+2025-07-18 12:35:31,260 - app.utils.database - ERROR - Database session error: 
+2025-07-18 12:35:31,260 - app.utils.database - ERROR - Error type: <class 'fastapi.exceptions.HTTPException'>
+2025-07-18 12:35:31,263 - app.utils.database - ERROR - Traceback: Traceback (most recent call last):
+  File "/Users/philippebeliveau/Desktop/Notebook/Orientor_project/Orientor_project/backend/app/routers/user.py", line 77, in register_user
+    raise HTTPException(status_code=400, detail="Email already registered")
+fastapi.exceptions.HTTPException
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/philippebeliveau/Desktop/Notebook/Orientor_project/Orientor_project/backend/app/utils/database.py", line 163, in get_db
+    yield db
+fastapi.exceptions.HTTPException
+
+2025-07-18 12:35:44,635 - app.routers.user - INFO - Attempting to register user with email: beli6@example.com
+2025-07-18 12:35:44,680 - app.routers.user - WARNING - Registration attempt with existing email: beli6@example.com
+2025-07-18 12:35:44,680 - app.routers.user - ERROR - Unexpected error during user registration: 
+2025-07-18 12:35:44,726 - app.utils.database - ERROR - Database session error: 
+2025-07-18 12:35:44,731 - app.utils.database - ERROR - Error type: <class 'fastapi.exceptions.HTTPException'>
+2025-07-18 12:35:44,733 - app.utils.database - ERROR - Traceback: Traceback (most recent call last):
+  File "/Users/philippebeliveau/Desktop/Notebook/Orientor_project/Orientor_project/backend/app/routers/user.py", line 77, in register_user
+    raise HTTPException(status_code=400, detail="Email already registered")
+fastapi.exceptions.HTTPException
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/philippebeliveau/Desktop/Notebook/Orientor_project/Orientor_project/backend/app/utils/database.py", line 163, in get_db
+    yield db
+fastapi.exceptions.HTTPException
+
+2025-07-18 12:36:04,296 - app.routers.user - INFO - Attempting to register user with email: beli7@example.com
+2025-07-18 12:36:04,338 - app.routers.user - WARNING - Registration attempt with existing email: beli7@example.com
+2025-07-18 12:36:04,338 - app.routers.user - ERROR - Unexpected error during user registration: 
+2025-07-18 12:36:04,373 - app.utils.database - ERROR - Database session error: 
+2025-07-18 12:36:04,373 - app.utils.database - ERROR - Error type: <class 'fastapi.exceptions.HTTPException'>
+2025-07-18 12:36:04,374 - app.utils.database - ERROR - Traceback: Traceback (most recent call last):
+  File "/Users/philippebeliveau/Desktop/Notebook/Orientor_project/Orientor_project/backend/app/routers/user.py", line 77, in register_user
+    raise HTTPException(status_code=400, detail="Email already registered")
+fastapi.exceptions.HTTPException
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/philippebeliveau/Desktop/Notebook/Orientor_project/Orientor_project/backend/app/utils/database.py", line 163, in get_db
+    yield db
+fastapi.exceptions.HTTPException
+
+2025-07-18 12:36:21,615 - app.routers.user - INFO - Attempting to register user with email: test7@example.com
+2025-07-18 12:36:21,953 - app.routers.user - INFO - Created user with ID: 47
+2025-07-18 12:36:22,172 - app.routers.user - INFO - Created profile for user ID: 47
+2025-07-18 12:36:22,351 - app.routers.user - INFO - Login attempt for email: test7@example.com
+2025-07-18 12:36:22,660 - app.routers.user - INFO - Successful login for user ID: 47
+2025-07-18 12:36:23,892 - app.routers.onboarding - INFO - Getting onboarding status for user ID: 47
+2025-07-18 12:36:24,140 - app.routers.onboarding - INFO - Getting onboarding status for user ID: 47
+2025-07-18 12:36:24,377 - app.routers.onboarding - INFO - Getting onboarding status for user ID: 47
+2025-07-18 12:36:24,649 - app.routers.onboarding - INFO - Getting onboarding status for user ID: 47
+2025-07-18 12:36:24,653 - app.routers.onboarding - INFO - Starting onboarding for user ID: 47
+2025-07-18 12:36:24,783 - app.routers.onboarding - ERROR - Database error starting onboarding: (psycopg2.errors.NotNullViolation) null value in column "id" of relation "personality_assessments" violates not-null constraint
+DETAIL:  Failing row contains (null, 47, onboarding, v1.0, 43adc85e-ed40-44c3-b420-43596a07fae7, in_progress, 2025-07-18 16:36:24.703681+00, null, 9, 0, {}, {}, 2025-07-18 16:36:24.575062+00, 2025-07-18 16:36:24.575062+00).
+
+[SQL: INSERT INTO personality_assessments (user_id, assessment_type, assessment_version, session_id, status, started_at, completed_at, total_items, completed_items, validity_flags, metadata) VALUES (%(user_id)s, %(assessment_type)s, %(assessment_version)s, %(session_id)s::UUID, %(status)s, %(started_at)s, %(completed_at)s, %(total_items)s, %(completed_items)s, %(validity_flags)s, %(metadata)s) RETURNING personality_assessments.id, personality_assessments.created_at, personality_assessments.updated_at]
+[parameters: {'user_id': 47, 'assessment_type': 'onboarding', 'assessment_version': 'v1.0', 'session_id': UUID('43adc85e-ed40-44c3-b420-43596a07fae7'), 'status': 'in_progress', 'started_at': datetime.datetime(2025, 7, 18, 16, 36, 24, 703681), 'completed_at': None, 'total_items': 9, 'completed_items': 0, 'validity_flags': '{}', 'metadata': '{}'}]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2025-07-18 12:36:24,783 - app.utils.database - ERROR - Database session error: 
+2025-07-18 12:36:24,783 - app.utils.database - ERROR - Error type: <class 'fastapi.exceptions.HTTPException'>
+2025-07-18 12:36:24,792 - app.utils.database - ERROR - Traceback: Traceback (most recent call last):
+  File "/Users/philippebeliveau/miniforge3/envs/orientor/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1969, in _exec_single_context
+    self.dialect.do_execute(
+  File "/Users/philippebeliveau/miniforge3/envs/orientor/lib/python3.11/site-packages/sqlalchemy/engine/default.py", line 922, in do_execute
+    cursor.execute(statement, parameters)
+psycopg2.errors.NotNullViolation: null value in column "id" of relation "personality_assessments" violates not-null constraint
+DETAIL:  Failing row contains (null, 47, onboarding, v1.0, 43adc85e-ed40-44c3-b420-43596a07fae7, in_progress, 2025-07-18 16:36:24.703681+00, null, 9, 0, {}, {}, 2025-07-18 16:36:24.575062+00, 2025-07-18 16:36:24.575062+00).
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/philippebeliveau/Desktop/Notebook/Orientor_project/Orientor_project/backend/app/routers/onboarding.py", line 114, in start_onboarding
+    db.commit()
+  File "/Users/philippebeliveau/miniforge3/envs/orientor/lib/python3.11/site-packages/sqlalchemy/orm/session.py", line 1969, in commit
+    trans.commit(_to_root=True)
+  File "<string>", line 2, in commit
+  File "/Users/philippebeliveau/miniforge3/envs/orientor/lib/python3.11/site-packages/sqlalchemy/orm/state_changes.py", line 139, in _go
+    ret_value = fn(self, *arg, **kw)
+                ^^^^^^^^^^^^^^^^^^^^
+  File "/Users/philippebeliveau/miniforge3/envs/orientor/lib/python3.11/site-packages/sqlalchemy/orm/session.py", line 1256, in commit
+    self._prepare_impl()
+  File "<string>", line 2, in _prepare_impl
+  File "/Users/philippebeliveau/miniforge3/envs/orientor/lib/python3.11/site-packages/sqlalchemy/orm/state_changes.py", line 139, in _go
+    ret_value = fn(self, *arg, **kw)
+                ^^^^^^^^^^^^^^^^^^^^
+  File "/Users/philippebeliveau/miniforge3/envs/orientor/lib/python3.11/site-packages/sqlalchemy/orm/session.py", line 1231, in _prepare_impl
+    self.session.flush()
+  File "/Users/philippebeliveau/miniforge3/envs/orientor/lib/python3.11/site-packages/sqlalchemy/orm/session.py", line 4312, in flush
+    self._flush(objects)
+  File "/Users/philippebeliveau/miniforge3/envs/orientor/lib/python3.11/site-packages/sqlalchemy/orm/session.py", line 4447, in _flush
+    with util.safe_reraise():
+  File "/Users/philippebeliveau/miniforge3/envs/orientor/lib/python3.11/site-packages/sqlalchemy/util/langhelpers.py", line 146, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/Users/philippebeliveau/miniforge3/envs/orientor/lib/python3.11/site-packages/sqlalchemy/orm/session.py", line 4408, in _flush
+    flush_context.execute()
+  File "/Users/philippebeliveau/miniforge3/envs/orientor/lib/python3.11/site-packages/sqlalchemy/orm/unitofwork.py", line 466, in execute
+    rec.execute(self)
+  File "/Users/philippebeliveau/miniforge3/envs/orientor/lib/python3.11/site-packages/sqlalchemy/orm/unitofwork.py", line 642, in execute
+    util.preloaded.orm_persistence.save_obj(
+  File "/Users/philippebeliveau/miniforge3/envs/orientor/lib/python3.11/site-packages/sqlalchemy/orm/persistence.py", line 93, in save_obj
+    _emit_insert_statements(
+  File "/Users/philippebeliveau/miniforge3/envs/orientor/lib/python3.11/site-packages/sqlalchemy/orm/persistence.py", line 1226, in _emit_insert_statements
+    result = connection.execute(
+             ^^^^^^^^^^^^^^^^^^^
+  File "/Users/philippebeliveau/miniforge3/envs/orientor/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1416, in execute
+    return meth(
+           ^^^^^
+  File "/Users/philippebeliveau/miniforge3/envs/orientor/lib/python3.11/site-packages/sqlalchemy/sql/elements.py", line 516, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/philippebeliveau/miniforge3/envs/orientor/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1639, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/philippebeliveau/miniforge3/envs/orientor/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1848, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/philippebeliveau/miniforge3/envs/orientor/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1988, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "/Users/philippebeliveau/miniforge3/envs/orientor/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 2343, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "/Users/philippebeliveau/miniforge3/envs/orientor/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1969, in _exec_single_context
+    self.dialect.do_execute(
+  File "/Users/philippebeliveau/miniforge3/envs/orientor/lib/python3.11/site-packages/sqlalchemy/engine/default.py", line 922, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.IntegrityError: (psycopg2.errors.NotNullViolation) null value in column "id" of relation "personality_assessments" violates not-null constraint
+DETAIL:  Failing row contains (null, 47, onboarding, v1.0, 43adc85e-ed40-44c3-b420-43596a07fae7, in_progress, 2025-07-18 16:36:24.703681+00, null, 9, 0, {}, {}, 2025-07-18 16:36:24.575062+00, 2025-07-18 16:36:24.575062+00).
+
+[SQL: INSERT INTO personality_assessments (user_id, assessment_type, assessment_version, session_id, status, started_at, completed_at, total_items, completed_items, validity_flags, metadata) VALUES (%(user_id)s, %(assessment_type)s, %(assessment_version)s, %(session_id)s::UUID, %(status)s, %(started_at)s, %(completed_at)s, %(total_items)s, %(completed_items)s, %(validity_flags)s, %(metadata)s) RETURNING personality_assessments.id, personality_assessments.created_at, personality_assessments.updated_at]
+[parameters: {'user_id': 47, 'assessment_type': 'onboarding', 'assessment_version': 'v1.0', 'session_id': UUID('43adc85e-ed40-44c3-b420-43596a07fae7'), 'status': 'in_progress', 'started_at': datetime.datetime(2025, 7, 18, 16, 36, 24, 703681), 'completed_at': None, 'total_items': 9, 'completed_items': 0, 'validity_flags': '{}', 'metadata': '{}'}]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/philippebeliveau/Desktop/Notebook/Orientor_project/Orientor_project/backend/app/utils/database.py", line 163, in get_db
+    yield db
+fastapi.exceptions.HTTPException
+
+2025-07-18 12:36:24,908 - app.routers.onboarding - INFO - Starting onboarding for user ID: 47
+2025-07-18 12:36:25,035 - app.routers.onboarding - ERROR - Database error starting onboarding: (psycopg2.errors.NotNullViolation) null value in column "id" of relation "personality_assessments" violates not-null constraint
+DETAIL:  Failing row contains (null, 47, onboarding, v1.0, ec4df608-7487-48f1-968d-c3514f0b74ca, in_progress, 2025-07-18 16:36:24.949505+00, null, 9, 0, {}, {}, 2025-07-18 16:36:24.839037+00, 2025-07-18 16:36:24.839037+00).
+
+[SQL: INSERT INTO personality_assessments (user_id, assessment_type, assessment_version, session_id, status, started_at, completed_at, total_items, completed_items, validity_flags, metadata) VALUES (%(user_id)s, %(assessment_type)s, %(assessment_version)s, %(session_id)s::UUID, %(status)s, %(started_at)s, %(completed_at)s, %(total_items)s, %(completed_items)s, %(validity_flags)s, %(metadata)s) RETURNING personality_assessments.id, personality_assessments.created_at, personality_assessments.updated_at]
+[parameters: {'user_id': 47, 'assessment_type': 'onboarding', 'assessment_version': 'v1.0', 'session_id': UUID('ec4df608-7487-48f1-968d-c3514f0b74ca'), 'status': 'in_progress', 'started_at': datetime.datetime(2025, 7, 18, 16, 36, 24, 949505), 'completed_at': None, 'total_items': 9, 'completed_items': 0, 'validity_flags': '{}', 'metadata': '{}'}]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2025-07-18 12:36:25,036 - app.utils.database - ERROR - Database session error: 
+2025-07-18 12:36:25,036 - app.utils.database - ERROR - Error type: <class 'fastapi.exceptions.HTTPException'>
+2025-07-18 12:36:25,038 - app.utils.database - ERROR - Traceback: Traceback (most recent call last):
+  File "/Users/philippebeliveau/miniforge3/envs/orientor/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1969, in _exec_single_context
+    self.dialect.do_execute(
+  File "/Users/philippebeliveau/miniforge3/envs/orientor/lib/python3.11/site-packages/sqlalchemy/engine/default.py", line 922, in do_execute
+    cursor.execute(statement, parameters)
+psycopg2.errors.NotNullViolation: null value in column "id" of relation "personality_assessments" violates not-null constraint
+DETAIL:  Failing row contains (null, 47, onboarding, v1.0, ec4df608-7487-48f1-968d-c3514f0b74ca, in_progress, 2025-07-18 16:36:24.949505+00, null, 9, 0, {}, {}, 2025-07-18 16:36:24.839037+00, 2025-07-18 16:36:24.839037+00).
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/philippebeliveau/Desktop/Notebook/Orientor_project/Orientor_project/backend/app/routers/onboarding.py", line 114, in start_onboarding
+    db.commit()
+  File "/Users/philippebeliveau/miniforge3/envs/orientor/lib/python3.11/site-packages/sqlalchemy/orm/session.py", line 1969, in commit
+    trans.commit(_to_root=True)
+  File "<string>", line 2, in commit
+  File "/Users/philippebeliveau/miniforge3/envs/orientor/lib/python3.11/site-packages/sqlalchemy/orm/state_changes.py", line 139, in _go
+    ret_value = fn(self, *arg, **kw)
+                ^^^^^^^^^^^^^^^^^^^^
+  File "/Users/philippebeliveau/miniforge3/envs/orientor/lib/python3.11/site-packages/sqlalchemy/orm/session.py", line 1256, in commit
+    self._prepare_impl()
+  File "<string>", line 2, in _prepare_impl
+  File "/Users/philippebeliveau/miniforge3/envs/orientor/lib/python3.11/site-packages/sqlalchemy/orm/state_changes.py", line 139, in _go
+    ret_value = fn(self, *arg, **kw)
+                ^^^^^^^^^^^^^^^^^^^^
+  File "/Users/philippebeliveau/miniforge3/envs/orientor/lib/python3.11/site-packages/sqlalchemy/orm/session.py", line 1231, in _prepare_impl
+    self.session.flush()
+  File "/Users/philippebeliveau/miniforge3/envs/orientor/lib/python3.11/site-packages/sqlalchemy/orm/session.py", line 4312, in flush
+    self._flush(objects)
+  File "/Users/philippebeliveau/miniforge3/envs/orientor/lib/python3.11/site-packages/sqlalchemy/orm/session.py", line 4447, in _flush
+    with util.safe_reraise():
+  File "/Users/philippebeliveau/miniforge3/envs/orientor/lib/python3.11/site-packages/sqlalchemy/util/langhelpers.py", line 146, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/Users/philippebeliveau/miniforge3/envs/orientor/lib/python3.11/site-packages/sqlalchemy/orm/session.py", line 4408, in _flush
+    flush_context.execute()
+  File "/Users/philippebeliveau/miniforge3/envs/orientor/lib/python3.11/site-packages/sqlalchemy/orm/unitofwork.py", line 466, in execute
+    rec.execute(self)
+  File "/Users/philippebeliveau/miniforge3/envs/orientor/lib/python3.11/site-packages/sqlalchemy/orm/unitofwork.py", line 642, in execute
+    util.preloaded.orm_persistence.save_obj(
+  File "/Users/philippebeliveau/miniforge3/envs/orientor/lib/python3.11/site-packages/sqlalchemy/orm/persistence.py", line 93, in save_obj
+    _emit_insert_statements(
+  File "/Users/philippebeliveau/miniforge3/envs/orientor/lib/python3.11/site-packages/sqlalchemy/orm/persistence.py", line 1226, in _emit_insert_statements
+    result = connection.execute(
+             ^^^^^^^^^^^^^^^^^^^
+  File "/Users/philippebeliveau/miniforge3/envs/orientor/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1416, in execute
+    return meth(
+           ^^^^^
+  File "/Users/philippebeliveau/miniforge3/envs/orientor/lib/python3.11/site-packages/sqlalchemy/sql/elements.py", line 516, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/philippebeliveau/miniforge3/envs/orientor/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1639, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/philippebeliveau/miniforge3/envs/orientor/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1848, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/philippebeliveau/miniforge3/envs/orientor/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1988, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "/Users/philippebeliveau/miniforge3/envs/orientor/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 2343, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "/Users/philippebeliveau/miniforge3/envs/orientor/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1969, in _exec_single_context
+    self.dialect.do_execute(
+  File "/Users/philippebeliveau/miniforge3/envs/orientor/lib/python3.11/site-packages/sqlalchemy/engine/default.py", line 922, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.IntegrityError: (psycopg2.errors.NotNullViolation) null value in column "id" of relation "personality_assessments" violates not-null constraint
+DETAIL:  Failing row contains (null, 47, onboarding, v1.0, ec4df608-7487-48f1-968d-c3514f0b74ca, in_progress, 2025-07-18 16:36:24.949505+00, null, 9, 0, {}, {}, 2025-07-18 16:36:24.839037+00, 2025-07-18 16:36:24.839037+00).
+
+[SQL: INSERT INTO personality_assessments (user_id, assessment_type, assessment_version, session_id, status, started_at, completed_at, total_items, completed_items, validity_flags, metadata) VALUES (%(user_id)s, %(assessment_type)s, %(assessment_version)s, %(session_id)s::UUID, %(status)s, %(started_at)s, %(completed_at)s, %(total_items)s, %(completed_items)s, %(validity_flags)s, %(metadata)s) RETURNING personality_assessments.id, personality_assessments.created_at, personality_assessments.updated_at]
+[parameters: {'user_id': 47, 'assessment_type': 'onboarding', 'assessment_version': 'v1.0', 'session_id': UUID('ec4df608-7487-48f1-968d-c3514f0b74ca'), 'status': 'in_progress', 'started_at': datetime.datetime(2025, 7, 18, 16, 36, 24, 949505), 'completed_at': None, 'total_items': 9, 'completed_items': 0, 'validity_flags': '{}', 'metadata': '{}'}]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/philippebeliveau/Desktop/Notebook/Orientor_project/Orientor_project/backend/app/utils/database.py", line 163, in get_db
+    yield db
+fastapi.exceptions.HTTPException
+
+2025-07-18 12:36:29,885 - app.routers.onboarding - INFO - Saving onboarding response for user ID: 47
+2025-07-18 12:36:29,928 - app.utils.database - ERROR - Database session error: 
+2025-07-18 12:36:29,928 - app.utils.database - ERROR - Error type: <class 'fastapi.exceptions.HTTPException'>
+2025-07-18 12:36:29,928 - app.utils.database - ERROR - Traceback: Traceback (most recent call last):
+  File "/Users/philippebeliveau/Desktop/Notebook/Orientor_project/Orientor_project/backend/app/utils/database.py", line 163, in get_db
+    yield db
+fastapi.exceptions.HTTPException
+
+2025-07-18 12:36:35,490 - app.routers.onboarding - INFO - Saving onboarding response for user ID: 47
+2025-07-18 12:36:35,536 - app.utils.database - ERROR - Database session error: 
+2025-07-18 12:36:35,536 - app.utils.database - ERROR - Error type: <class 'fastapi.exceptions.HTTPException'>
+2025-07-18 12:36:35,536 - app.utils.database - ERROR - Traceback: Traceback (most recent call last):
+  File "/Users/philippebeliveau/Desktop/Notebook/Orientor_project/Orientor_project/backend/app/utils/database.py", line 163, in get_db
+    yield db
+fastapi.exceptions.HTTPException
+
+2025-07-18 12:37:27,383 - app.routers.holland_test - INFO - Récupération des résultats RIASEC pour l'utilisateur: 47
+2025-07-18 12:37:27,420 - app.routers.holland_test - WARNING - No Holland test results found for user 47
+2025-07-18 12:37:27,804 - app.utils.database - ERROR - Database SQLAlchemy error: (psycopg2.errors.UndefinedFunction) operator does not exist: character varying = uuid
+LINE 3: WHERE user_progress.id = '1aaeacf7-0bbc-4063-8948-2142b3ae48...
+                               ^
+HINT:  No operator matches the given name and argument types. You might need to add explicit type casts.
+
+[SQL: SELECT user_progress.id, user_progress.user_id, user_progress.total_xp, user_progress.level, user_progress.last_completed_node, user_progress.completed_actions, user_progress.last_updated 
+FROM user_progress 
+WHERE user_progress.id = %(pk_1)s::UUID]
+[parameters: {'pk_1': UUID('1aaeacf7-0bbc-4063-8948-2142b3ae4843')}]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2025-07-18 12:37:27,928 - app.routers.jobs - INFO - Getting job recommendations for user 47
+2025-07-18 12:37:27,928 - app.routers.jobs - INFO - Returned 3 real ESCO job recommendations for user 47
+2025-07-18 12:37:27,928 - app.routers.holland_test - INFO - Récupération des résultats RIASEC pour l'utilisateur: 47
+2025-07-18 12:37:27,971 - app.routers.holland_test - WARNING - No Holland test results found for user 47
+2025-07-18 12:37:28,225 - app.routers.user_progress - INFO - Retrieved user progress for user 47: {}
+2025-07-18 12:37:28,268 - app.routers.jobs - INFO - Getting job recommendations for user 47
+2025-07-18 12:37:28,268 - app.routers.jobs - INFO - Returned 3 real ESCO job recommendations for user 47
+2025-07-18 12:37:31,944 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-07-18 12:37:31,947 - app.services.LLMcompatibility_service - INFO - Extracted compatibility vector for user 47
+2025-07-18 12:37:32,039 - app.services.peer_matching_service - INFO - Generated and stored compatibility vector for user 47
+2025-07-18 12:37:34,851 - app.routers.user - INFO - Attempting to register user with email: newuser@example.com
+2025-07-18 12:37:34,863 - app.routers.user - INFO - Login attempt for email: beli5@example.com
+2025-07-18 12:37:34,901 - app.routers.user - WARNING - Registration attempt with existing email: newuser@example.com
+2025-07-18 12:37:34,902 - app.routers.user - ERROR - Unexpected error during user registration: 
+2025-07-18 12:37:34,947 - app.utils.database - ERROR - Database session error: 
+2025-07-18 12:37:34,947 - app.utils.database - ERROR - Error type: <class 'fastapi.exceptions.HTTPException'>
+2025-07-18 12:37:34,948 - app.utils.database - ERROR - Traceback: Traceback (most recent call last):
+  File "/Users/philippebeliveau/Desktop/Notebook/Orientor_project/Orientor_project/backend/app/routers/user.py", line 77, in register_user
+    raise HTTPException(status_code=400, detail="Email already registered")
+fastapi.exceptions.HTTPException
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/philippebeliveau/Desktop/Notebook/Orientor_project/Orientor_project/backend/app/utils/database.py", line 163, in get_db
+    yield db
+fastapi.exceptions.HTTPException
+
+2025-07-18 12:37:35,154 - app.routers.user - INFO - Successful login for user ID: 22
+2025-07-18 12:37:35,334 - app.routers.onboarding - INFO - Getting onboarding status for user ID: 22
+2025-07-18 12:37:36,131 - app.routers.user_progress - INFO - Retrieved user progress for user 22: {}
+2025-07-18 12:37:36,132 - app.routers.jobs - INFO - Getting job recommendations for user 22
+2025-07-18 12:37:36,132 - app.routers.jobs - INFO - Returned 3 real ESCO job recommendations for user 22
+2025-07-18 12:37:36,231 - app.routers.holland_test - INFO - Récupération des résultats RIASEC pour l'utilisateur: 22
+2025-07-18 12:37:37,096 - app.routers.user_progress - INFO - Retrieved user progress for user 22: {}
+2025-07-18 12:37:37,663 - app.routers.holland_test - INFO - Récupération des résultats RIASEC pour l'utilisateur: 22
+2025-07-18 12:37:37,843 - app.routers.jobs - INFO - Getting job recommendations for user 22
+2025-07-18 12:37:37,843 - app.routers.jobs - INFO - Returned 3 real ESCO job recommendations for user 22
+2025-07-18 12:37:51,224 - app.routers.user_progress - INFO - Retrieved user progress for user 22: {}
+2025-07-18 12:37:51,437 - app.routers.user_progress - INFO - Retrieved user progress for user 22: {}
+2025-07-18 12:38:18,786 - app - INFO - ======= ROUTER REGISTRATION DETAILS =======
+2025-07-18 12:38:18,786 - app - INFO - auth_router import path: fastapi.routing
+2025-07-18 12:38:18,786 - app - INFO - get_current_user import path: app.routers.user
+2025-07-18 12:38:18,786 - app - INFO - profiles_router import path: fastapi.routing
+2025-07-18 12:38:18,786 - app - INFO - Registering auth_router routes: ["/auth/register [{'POST'}]", "/auth/login [{'POST'}]", "/auth/update [{'PUT'}]", "/auth/change-password [{'PUT'}]", "/auth/onboarding-status [{'GET'}]"]
+2025-07-18 12:38:18,787 - app - INFO - Registering profiles_router routes: ["/profiles/test [{'GET'}]", "/profiles/me [{'GET'}]", "/profiles/update [{'PUT'}]", "/profiles/{user_id} [{'GET'}]"]
+2025-07-18 12:38:18,787 - app - INFO - Registering chat_router routes: ["/chat/send [{'POST'}]", "/chat/clear [{'POST'}]"]
+2025-07-18 12:38:18,787 - app - INFO - Registering peers_router routes: ["/peers/suggested [{'GET'}]", "/peers/compatible [{'GET'}]", "/peers/homepage [{'GET'}]", "/peers/refresh [{'POST'}]"]
+2025-07-18 12:38:18,787 - app - INFO - Registering messages_router routes: ["/messages [{'POST'}]", "/messages/conversation/{peer_id} [{'GET'}]", "/messages/conversations [{'GET'}]", "/messages/suggested-peers [{'GET'}]"]
+2025-07-18 12:38:18,787 - app - INFO - Registering test_router routes: ["/test/hello [{'GET'}]"]
+2025-07-18 12:38:18,787 - app - INFO - Registering space_router routes: ["/space/recommendations [{'POST'}]", "/space/recommendations [{'GET'}]", "/space/recommendations/{identifier} [{'DELETE'}]", "/space/notes [{'POST'}]", "/space/notes [{'GET'}]", "/space/notes/{note_id} [{'PUT'}]", "/space/notes/{note_id} [{'DELETE'}]", "/space/skills [{'GET'}]", "/space/skills [{'PUT'}]", "/space/recommendations/{oasis_code}/skill-comparison [{'GET'}]", "/space/recommendations/{recommendation_id}/generate-analysis [{'POST'}]"]
+2025-07-18 12:38:18,788 - app - INFO - Registering vector_router routes: ["/vector/search [{'POST'}]", "/vector/search/save [{'POST'}]", "/vector/health [{'GET'}]", "/vector/suggested-peers [{'GET'}]", "/vector/debug [{'GET'}]"]
+2025-07-18 12:38:18,788 - app - INFO - Registering recommendations_router routes: ["/recommendations [{'GET'}]", "/recommendations/swipe [{'POST'}]"]
+2025-07-18 12:38:18,788 - app - INFO - Registering careers_router routes: ["/careers/recommendations [{'GET'}]", "/careers/save/{career_id} [{'POST'}]", "/careers/saved [{'GET'}]", "/careers/fit-analysis [{'POST'}]", "/careers/cleanup-test-jobs [{'DELETE'}]"]
+2025-07-18 12:38:18,788 - app - INFO - Registering tree_router routes: ["/tree [{'POST'}]", "/tree/skills [{'POST'}]"]
+2025-07-18 12:38:18,788 - app - INFO - Registering tree_paths_router routes: ["/tree-paths/ [{'POST'}]", "/tree-paths/ [{'GET'}]", "/tree-paths/{tree_path_id} [{'GET'}]", "/tree-paths/{tree_path_id} [{'DELETE'}]"]
+2025-07-18 12:38:18,789 - app - INFO - Registering node_notes_router routes: ["/node-notes/ [{'POST'}]", "/node-notes/ [{'GET'}]", "/node-notes/node/{node_id} [{'GET'}]", "/node-notes/{note_id} [{'GET'}]", "/node-notes/{note_id} [{'DELETE'}]"]
+2025-07-18 12:38:18,789 - app - INFO - Registering user_progress_router routes: ["/user-progress/ [{'GET'}]", "/user-progress/update [{'POST'}]"]
+2025-07-18 12:38:18,789 - app - INFO - Registering holland_test_router routes: ["/api/tests/holland/ [{'GET'}]", "/api/tests/holland/questions [{'GET'}]", "/api/tests/holland/answer [{'POST'}]", "/api/tests/holland/score/{attempt_id} [{'GET'}]", "/api/tests/holland/user-results [{'GET'}]", "/api/tests/holland/profile-description [{'GET'}]", "/api/tests/holland/profile-description/{user_id} [{'GET'}]"]
+2025-07-18 12:38:18,789 - app - INFO - Registering hexaco_test_router routes: ["/api/tests/hexaco/ [{'GET'}]", "/api/tests/hexaco/languages [{'GET'}]", "/api/tests/hexaco/versions [{'GET'}]", "/api/tests/hexaco/start [{'POST'}]", "/api/tests/hexaco/questions [{'GET'}]", "/api/tests/hexaco/answer [{'POST'}]", "/api/tests/hexaco/progress/{session_id} [{'GET'}]", "/api/tests/hexaco/score/{session_id} [{'GET'}]", "/api/tests/hexaco/profile/{user_id} [{'GET'}]", "/api/tests/hexaco/my-profile [{'GET'}]", "/api/tests/hexaco/analysis/{user_id} [{'GET'}]", "/api/tests/hexaco/my-analysis [{'GET'}]"]
+2025-07-18 12:38:18,789 - app - INFO - Registering insight_router routes: ["/insight/generate [{'POST'}]", "/insight/get [{'GET'}]", "/insight/regenerate [{'POST'}]", "/insight/save [{'PATCH'}]", "/insight/rewrite [{'POST'}]"]
+2025-07-18 12:38:18,789 - app - INFO - Registering orientator_router routes: ["/orientator/test-message [{'POST'}]", "/orientator/message [{'POST'}]", "/orientator/save-component [{'POST'}]", "/orientator/conversations/{conversation_id}/messages [{'GET'}]", "/orientator/journey/{user_id} [{'GET'}]", "/orientator/conversations [{'GET'}]", "/orientator/tool-analytics [{'GET'}]", "/orientator/feedback [{'POST'}]", "/orientator/health [{'GET'}]"]
+2025-07-18 12:38:18,789 - app - INFO - ============================================
+2025-07-18 12:38:18,789 - app - INFO - Including routers in the FastAPI app
+2025-07-18 12:38:18,792 - app - INFO - Auth router included successfully
+2025-07-18 12:38:18,795 - app - INFO - Profiles router included successfully
+2025-07-18 12:38:18,913 - app - INFO - All routers included successfully
+2025-07-18 12:38:18,914 - app - INFO - === Available Routes ===
+2025-07-18 12:38:18,914 - app - INFO - Route: /openapi.json, Methods: {'HEAD', 'GET'}
+2025-07-18 12:38:18,914 - app - INFO - Route: /docs, Methods: {'HEAD', 'GET'}
+2025-07-18 12:38:18,914 - app - INFO - Route: /docs/oauth2-redirect, Methods: {'HEAD', 'GET'}
+2025-07-18 12:38:18,914 - app - INFO - Route: /redoc, Methods: {'HEAD', 'GET'}
+2025-07-18 12:38:18,914 - app - INFO - Mount: /static
+2025-07-18 12:38:18,914 - app - INFO - Route: /auth/register, Methods: {'POST'}
+2025-07-18 12:38:18,914 - app - INFO - Route: /auth/login, Methods: {'POST'}
+2025-07-18 12:38:18,914 - app - INFO - Route: /auth/update, Methods: {'PUT'}
+2025-07-18 12:38:18,914 - app - INFO - Route: /auth/change-password, Methods: {'PUT'}
+2025-07-18 12:38:18,914 - app - INFO - Route: /auth/onboarding-status, Methods: {'GET'}
+2025-07-18 12:38:18,914 - app - INFO - Route: /profiles/test, Methods: {'GET'}
+2025-07-18 12:38:18,914 - app - INFO - Route: /profiles/me, Methods: {'GET'}
+2025-07-18 12:38:18,918 - app - INFO - Route: /profiles/update, Methods: {'PUT'}
+2025-07-18 12:38:18,919 - app - INFO - Route: /profiles/{user_id}, Methods: {'GET'}
+2025-07-18 12:38:18,919 - app - INFO - Route: /test/hello, Methods: {'GET'}
+2025-07-18 12:38:18,920 - app - INFO - Route: /chat/conversations, Methods: {'GET'}
+2025-07-18 12:38:18,920 - app - INFO - Route: /chat/conversations, Methods: {'POST'}
+2025-07-18 12:38:18,920 - app - INFO - Route: /chat/conversations/{conversation_id}, Methods: {'GET'}
+2025-07-18 12:38:18,920 - app - INFO - Route: /chat/conversations/{conversation_id}, Methods: {'PUT'}
+2025-07-18 12:38:18,920 - app - INFO - Route: /chat/conversations/{conversation_id}, Methods: {'DELETE'}
+2025-07-18 12:38:18,920 - app - INFO - Route: /chat/conversations/{conversation_id}/favorite, Methods: {'POST'}
+2025-07-18 12:38:18,920 - app - INFO - Route: /chat/conversations/{conversation_id}/archive, Methods: {'POST'}
+2025-07-18 12:38:18,920 - app - INFO - Route: /chat/conversations/{conversation_id}/generate-title, Methods: {'POST'}
+2025-07-18 12:38:18,921 - app - INFO - Route: /chat/conversations/{conversation_id}/messages, Methods: {'GET'}
+2025-07-18 12:38:18,921 - app - INFO - Route: /chat/conversations/{conversation_id}/statistics, Methods: {'GET'}
+2025-07-18 12:38:18,921 - app - INFO - Route: /chat/conversations/{conversation_id}/export, Methods: {'POST'}
+2025-07-18 12:38:18,921 - app - INFO - Route: /chat/conversations/send/{conversation_id}, Methods: {'POST'}
+2025-07-18 12:38:18,921 - app - INFO - Route: /chat/send, Methods: {'POST'}
+2025-07-18 12:38:18,921 - app - INFO - Route: /chat/clear, Methods: {'POST'}
+2025-07-18 12:38:18,921 - app - INFO - Route: /chat/share/conversations/{conversation_id}, Methods: {'POST'}
+2025-07-18 12:38:18,921 - app - INFO - Route: /chat/share/shared/{share_token}, Methods: {'GET'}
+2025-07-18 12:38:18,921 - app - INFO - Route: /chat/share/shares/{share_id}, Methods: {'PUT'}
+2025-07-18 12:38:18,921 - app - INFO - Route: /chat/share/shares/{share_id}, Methods: {'DELETE'}
+2025-07-18 12:38:18,921 - app - INFO - Route: /chat/share/user/shares, Methods: {'GET'}
+2025-07-18 12:38:18,921 - app - INFO - Route: /chat/share/shares/{share_id}/analytics, Methods: {'GET'}
+2025-07-18 12:38:18,921 - app - INFO - Route: /chat/analytics/usage, Methods: {'GET'}
+2025-07-18 12:38:18,921 - app - INFO - Route: /chat/analytics/trends, Methods: {'GET'}
+2025-07-18 12:38:18,921 - app - INFO - Route: /chat/analytics/topics, Methods: {'GET'}
+2025-07-18 12:38:18,921 - app - INFO - Route: /chat/analytics/summary, Methods: {'GET'}
+2025-07-18 12:38:18,922 - app - INFO - Route: /peers/suggested, Methods: {'GET'}
+2025-07-18 12:38:18,922 - app - INFO - Route: /peers/compatible, Methods: {'GET'}
+2025-07-18 12:38:18,922 - app - INFO - Route: /peers/homepage, Methods: {'GET'}
+2025-07-18 12:38:18,922 - app - INFO - Route: /peers/refresh, Methods: {'POST'}
+2025-07-18 12:38:18,922 - app - INFO - Route: /messages, Methods: {'POST'}
+2025-07-18 12:38:18,922 - app - INFO - Route: /messages/conversation/{peer_id}, Methods: {'GET'}
+2025-07-18 12:38:18,922 - app - INFO - Route: /messages/conversations, Methods: {'GET'}
+2025-07-18 12:38:18,922 - app - INFO - Route: /messages/suggested-peers, Methods: {'GET'}
+2025-07-18 12:38:18,922 - app - INFO - Route: /space/recommendations, Methods: {'POST'}
+2025-07-18 12:38:18,922 - app - INFO - Route: /space/recommendations, Methods: {'GET'}
+2025-07-18 12:38:18,922 - app - INFO - Route: /space/recommendations/{identifier}, Methods: {'DELETE'}
+2025-07-18 12:38:18,922 - app - INFO - Route: /space/notes, Methods: {'POST'}
+2025-07-18 12:38:18,922 - app - INFO - Route: /space/notes, Methods: {'GET'}
+2025-07-18 12:38:18,922 - app - INFO - Route: /space/notes/{note_id}, Methods: {'PUT'}
+2025-07-18 12:38:18,922 - app - INFO - Route: /space/notes/{note_id}, Methods: {'DELETE'}
+2025-07-18 12:38:18,922 - app - INFO - Route: /space/skills, Methods: {'GET'}
+2025-07-18 12:38:18,922 - app - INFO - Route: /space/skills, Methods: {'PUT'}
+2025-07-18 12:38:18,922 - app - INFO - Route: /space/recommendations/{oasis_code}/skill-comparison, Methods: {'GET'}
+2025-07-18 12:38:18,922 - app - INFO - Route: /space/recommendations/{recommendation_id}/generate-analysis, Methods: {'POST'}
+2025-07-18 12:38:18,922 - app - INFO - Route: /vector/search, Methods: {'POST'}
+2025-07-18 12:38:18,922 - app - INFO - Route: /vector/search/save, Methods: {'POST'}
+2025-07-18 12:38:18,922 - app - INFO - Route: /vector/health, Methods: {'GET'}
+2025-07-18 12:38:18,922 - app - INFO - Route: /vector/suggested-peers, Methods: {'GET'}
+2025-07-18 12:38:18,922 - app - INFO - Route: /vector/debug, Methods: {'GET'}
+2025-07-18 12:38:18,922 - app - INFO - Route: /recommendations, Methods: {'GET'}
+2025-07-18 12:38:18,922 - app - INFO - Route: /recommendations/swipe, Methods: {'POST'}
+2025-07-18 12:38:18,922 - app - INFO - Route: /careers/recommendations, Methods: {'GET'}
+2025-07-18 12:38:18,923 - app - INFO - Route: /careers/save/{career_id}, Methods: {'POST'}
+2025-07-18 12:38:18,923 - app - INFO - Route: /careers/saved, Methods: {'GET'}
+2025-07-18 12:38:18,923 - app - INFO - Route: /careers/fit-analysis, Methods: {'POST'}
+2025-07-18 12:38:18,923 - app - INFO - Route: /careers/cleanup-test-jobs, Methods: {'DELETE'}
+2025-07-18 12:38:18,923 - app - INFO - Route: /tree, Methods: {'POST'}
+2025-07-18 12:38:18,923 - app - INFO - Route: /tree/skills, Methods: {'POST'}
+2025-07-18 12:38:18,923 - app - INFO - Route: /tree-paths/, Methods: {'POST'}
+2025-07-18 12:38:18,923 - app - INFO - Route: /tree-paths/, Methods: {'GET'}
+2025-07-18 12:38:18,923 - app - INFO - Route: /tree-paths/{tree_path_id}, Methods: {'GET'}
+2025-07-18 12:38:18,923 - app - INFO - Route: /tree-paths/{tree_path_id}, Methods: {'DELETE'}
+2025-07-18 12:38:18,923 - app - INFO - Route: /node-notes/, Methods: {'POST'}
+2025-07-18 12:38:18,923 - app - INFO - Route: /node-notes/, Methods: {'GET'}
+2025-07-18 12:38:18,923 - app - INFO - Route: /node-notes/node/{node_id}, Methods: {'GET'}
+2025-07-18 12:38:18,923 - app - INFO - Route: /node-notes/{note_id}, Methods: {'GET'}
+2025-07-18 12:38:18,923 - app - INFO - Route: /node-notes/{note_id}, Methods: {'DELETE'}
+2025-07-18 12:38:18,923 - app - INFO - Route: /user-progress/, Methods: {'GET'}
+2025-07-18 12:38:18,923 - app - INFO - Route: /user-progress/update, Methods: {'POST'}
+2025-07-18 12:38:18,923 - app - INFO - Route: /api/v1/jobs/save, Methods: {'POST'}
+2025-07-18 12:38:18,923 - app - INFO - Route: /api/v1/jobs/saved, Methods: {'GET'}
+2025-07-18 12:38:18,923 - app - INFO - Route: /api/v1/jobs/{job_id}, Methods: {'DELETE'}
+2025-07-18 12:38:18,923 - app - INFO - Route: /api/v1/jobs/{esco_id}/details, Methods: {'GET'}
+2025-07-18 12:38:18,923 - app - INFO - Route: /api/v1/jobs/recommendations/me, Methods: {'GET'}
+2025-07-18 12:38:18,923 - app - INFO - Route: /api/v1/program-recommendations/career-goal/{goal_id}, Methods: {'GET'}
+2025-07-18 12:38:18,923 - app - INFO - Route: /api/v1/program-recommendations/career-goal/{goal_id}/save, Methods: {'POST'}
+2025-07-18 12:38:18,923 - app - INFO - Route: /api/v1/program-recommendations/career-goal/{goal_id}/saved, Methods: {'GET'}
+2025-07-18 12:38:18,923 - app - INFO - Route: /api/v1/program-recommendations/institutions, Methods: {'GET'}
+2025-07-18 12:38:18,923 - app - INFO - Route: /api/tests/holland/, Methods: {'GET'}
+2025-07-18 12:38:18,923 - app - INFO - Route: /api/tests/holland/questions, Methods: {'GET'}
+2025-07-18 12:38:18,924 - app - INFO - Route: /api/tests/holland/answer, Methods: {'POST'}
+2025-07-18 12:38:18,924 - app - INFO - Route: /api/tests/holland/score/{attempt_id}, Methods: {'GET'}
+2025-07-18 12:38:18,924 - app - INFO - Route: /api/tests/holland/user-results, Methods: {'GET'}
+2025-07-18 12:38:18,924 - app - INFO - Route: /api/tests/holland/profile-description, Methods: {'GET'}
+2025-07-18 12:38:18,924 - app - INFO - Route: /api/tests/holland/profile-description/{user_id}, Methods: {'GET'}
+2025-07-18 12:38:18,924 - app - INFO - Route: /api/tests/hexaco/, Methods: {'GET'}
+2025-07-18 12:38:18,924 - app - INFO - Route: /api/tests/hexaco/languages, Methods: {'GET'}
+2025-07-18 12:38:18,924 - app - INFO - Route: /api/tests/hexaco/versions, Methods: {'GET'}
+2025-07-18 12:38:18,924 - app - INFO - Route: /api/tests/hexaco/start, Methods: {'POST'}
+2025-07-18 12:38:18,924 - app - INFO - Route: /api/tests/hexaco/questions, Methods: {'GET'}
+2025-07-18 12:38:18,924 - app - INFO - Route: /api/tests/hexaco/answer, Methods: {'POST'}
+2025-07-18 12:38:18,924 - app - INFO - Route: /api/tests/hexaco/progress/{session_id}, Methods: {'GET'}
+2025-07-18 12:38:18,924 - app - INFO - Route: /api/tests/hexaco/score/{session_id}, Methods: {'GET'}
+2025-07-18 12:38:18,924 - app - INFO - Route: /api/tests/hexaco/profile/{user_id}, Methods: {'GET'}
+2025-07-18 12:38:18,924 - app - INFO - Route: /api/tests/hexaco/my-profile, Methods: {'GET'}
+2025-07-18 12:38:18,924 - app - INFO - Route: /api/tests/hexaco/analysis/{user_id}, Methods: {'GET'}
+2025-07-18 12:38:18,924 - app - INFO - Route: /api/tests/hexaco/my-analysis, Methods: {'GET'}
+2025-07-18 12:38:18,924 - app - INFO - Route: /insight/generate, Methods: {'POST'}
+2025-07-18 12:38:18,924 - app - INFO - Route: /insight/get, Methods: {'GET'}
+2025-07-18 12:38:18,924 - app - INFO - Route: /insight/regenerate, Methods: {'POST'}
+2025-07-18 12:38:18,924 - app - INFO - Route: /insight/save, Methods: {'PATCH'}
+2025-07-18 12:38:18,924 - app - INFO - Route: /insight/rewrite, Methods: {'POST'}
+2025-07-18 12:38:18,924 - app - INFO - Route: /api/v1/competence-tree/generate, Methods: {'POST'}
+2025-07-18 12:38:18,925 - app - INFO - Route: /api/v1/competence-tree/generate-from-anchors, Methods: {'POST'}
+2025-07-18 12:38:18,926 - app - INFO - Route: /api/v1/competence-tree/anchor-skills, Methods: {'GET'}
+2025-07-18 12:38:18,926 - app - INFO - Route: /api/v1/competence-tree/{graph_id}, Methods: {'GET'}
+2025-07-18 12:38:18,926 - app - INFO - Route: /api/v1/competence-tree/node/{node_id}/complete, Methods: {'PATCH'}
+2025-07-18 12:38:18,926 - app - INFO - Route: /api/v1/career-progression/{occupation_id}, Methods: {'GET'}
+2025-07-18 12:38:18,926 - app - INFO - Route: /api/v1/career-progression/{occupation_id}/personalized, Methods: {'GET'}
+2025-07-18 12:38:18,926 - app - INFO - Route: /api/v1/career-progression/{occupation_id}/analyze, Methods: {'GET'}
+2025-07-18 12:38:18,927 - app - INFO - Route: /api/v1/users/me, Methods: {'GET'}
+2025-07-18 12:38:18,927 - app - INFO - Route: /api/v1/users/{user_id}/profile, Methods: {'GET'}
+2025-07-18 12:38:18,927 - app - INFO - Route: /api/reflection/questions, Methods: {'GET'}
+2025-07-18 12:38:18,927 - app - INFO - Route: /api/reflection/responses/{user_id}, Methods: {'GET'}
+2025-07-18 12:38:18,927 - app - INFO - Route: /api/reflection/responses, Methods: {'GET'}
+2025-07-18 12:38:18,934 - app - INFO - Route: /api/reflection/responses, Methods: {'POST'}
+2025-07-18 12:38:18,934 - app - INFO - Route: /api/reflection/responses/{response_id}, Methods: {'PUT'}
+2025-07-18 12:38:18,934 - app - INFO - Route: /api/reflection/responses/batch, Methods: {'POST'}
+2025-07-18 12:38:18,935 - app - INFO - Route: /api/reflection/responses/{response_id}, Methods: {'DELETE'}
+2025-07-18 12:38:18,936 - app - INFO - Route: /api/v1/avatar/generate-avatar/me, Methods: {'POST'}
+2025-07-18 12:38:18,936 - app - INFO - Route: /api/v1/avatar/me, Methods: {'GET'}
+2025-07-18 12:38:18,936 - app - INFO - Route: /api/v1/avatar/generate-avatar-test/{user_id}, Methods: {'POST'}
+2025-07-18 12:38:18,936 - app - INFO - Route: /onboarding/status, Methods: {'GET'}
+2025-07-18 12:38:18,936 - app - INFO - Route: /onboarding/start, Methods: {'POST'}
+2025-07-18 12:38:18,936 - app - INFO - Route: /onboarding/response, Methods: {'POST'}
+2025-07-18 12:38:18,937 - app - INFO - Route: /onboarding/complete, Methods: {'POST'}
+2025-07-18 12:38:18,937 - app - INFO - Route: /onboarding/profile, Methods: {'GET'}
+2025-07-18 12:38:18,937 - app - INFO - Route: /onboarding/responses, Methods: {'GET'}
+2025-07-18 12:38:18,937 - app - INFO - Route: /onboarding/reset, Methods: {'DELETE'}
+2025-07-18 12:38:18,937 - app - INFO - Route: /onboarding/skip, Methods: {'POST'}
+2025-07-18 12:38:18,937 - app - INFO - Route: /api/v1/education/programs/search, Methods: {'POST'}
+2025-07-18 12:38:18,937 - app - INFO - Route: /api/v1/education/programs/{program_id}, Methods: {'GET'}
+2025-07-18 12:38:18,937 - app - INFO - Route: /api/v1/education/institutions, Methods: {'GET'}
+2025-07-18 12:38:18,937 - app - INFO - Route: /api/v1/education/metadata, Methods: {'GET'}
+2025-07-18 12:38:18,937 - app - INFO - Route: /api/v1/school-programs/search, Methods: {'POST'}
+2025-07-18 12:38:18,937 - app - INFO - Route: /api/v1/school-programs/search, Methods: {'GET'}
+2025-07-18 12:38:18,937 - app - INFO - Route: /api/v1/school-programs/programs/{program_id}, Methods: {'GET'}
+2025-07-18 12:38:18,937 - app - INFO - Route: /api/v1/school-programs/users/interactions, Methods: {'POST'}
+2025-07-18 12:38:18,937 - app - INFO - Route: /api/v1/school-programs/users/saved-programs, Methods: {'POST'}
+2025-07-18 12:38:18,937 - app - INFO - Route: /api/v1/school-programs/users/saved-programs, Methods: {'GET'}
+2025-07-18 12:38:18,937 - app - INFO - Route: /api/v1/school-programs/users/saved-programs/{program_id}, Methods: {'DELETE'}
+2025-07-18 12:38:18,937 - app - INFO - Route: /api/v1/school-programs/filters, Methods: {'GET'}
+2025-07-18 12:38:18,938 - app - INFO - Route: /api/v1/school-programs/health, Methods: {'GET'}
+2025-07-18 12:38:18,938 - app - INFO - Route: /api/v1/courses, Methods: {'POST'}
+2025-07-18 12:38:18,938 - app - INFO - Route: /api/v1/courses, Methods: {'GET'}
+2025-07-18 12:38:18,938 - app - INFO - Route: /api/v1/courses/{course_id}, Methods: {'GET'}
+2025-07-18 12:38:18,938 - app - INFO - Route: /api/v1/courses/{course_id}, Methods: {'PUT'}
+2025-07-18 12:38:18,938 - app - INFO - Route: /api/v1/courses/{course_id}, Methods: {'DELETE'}
+2025-07-18 12:38:18,938 - app - INFO - Route: /api/v1/courses/{course_id}/targeted-analysis, Methods: {'POST'}
+2025-07-18 12:38:18,938 - app - INFO - Route: /api/v1/conversations/{session_id}/respond, Methods: {'POST'}
+2025-07-18 12:38:18,938 - app - INFO - Route: /api/v1/psychological-profile/{user_id}, Methods: {'GET'}
+2025-07-18 12:38:18,938 - app - INFO - Route: /api/v1/career-signals/{user_id}, Methods: {'GET'}
+2025-07-18 12:38:18,938 - app - INFO - Route: /api/v1/courses/{course_id}/insights, Methods: {'GET'}
+2025-07-18 12:38:18,938 - app - INFO - Route: /api/v1/conversations/{session_id}/summary, Methods: {'GET'}
+2025-07-18 12:38:18,938 - app - INFO - Route: /api/v1/enhanced-chat/send, Methods: {'POST'}
+2025-07-18 12:38:18,939 - app - INFO - Route: /api/v1/enhanced-chat/skill-explanation, Methods: {'POST'}
+2025-07-18 12:38:18,939 - app - INFO - Route: /api/v1/enhanced-chat/learning-recommendations, Methods: {'GET'}
+2025-07-18 12:38:18,939 - app - INFO - Route: /api/v1/enhanced-chat/career-path-analysis, Methods: {'POST'}
+2025-07-18 12:38:18,939 - app - INFO - Route: /api/v1/enhanced-chat/graphsage-insights, Methods: {'GET'}
+2025-07-18 12:38:18,939 - app - INFO - Route: /api/v1/enhanced-chat/status, Methods: {'GET'}
+2025-07-18 12:38:18,939 - app - INFO - Route: /api/v1/socratic-chat/send, Methods: {'POST'}
+2025-07-18 12:38:18,939 - app - INFO - Route: /api/v1/socratic-chat/introduction, Methods: {'POST'}
+2025-07-18 12:38:18,939 - app - INFO - Route: /api/v1/socratic-chat/modes, Methods: {'GET'}
+2025-07-18 12:38:18,939 - app - INFO - Route: /api/v1/socratic-chat/status, Methods: {'GET'}
+2025-07-18 12:38:18,939 - app - INFO - Route: /api/v1/career-goals/, Methods: {'POST'}
+2025-07-18 12:38:18,939 - app - INFO - Route: /api/v1/career-goals/active, Methods: {'GET'}
+2025-07-18 12:38:18,939 - app - INFO - Route: /api/v1/career-goals/, Methods: {'GET'}
+2025-07-18 12:38:18,939 - app - INFO - Route: /api/v1/career-goals/{goal_id}, Methods: {'PUT'}
+2025-07-18 12:38:18,939 - app - INFO - Route: /api/v1/career-goals/{goal_id}, Methods: {'DELETE'}
+2025-07-18 12:38:18,939 - app - INFO - Route: /api/v1/career-goals/{goal_id}/milestones/{milestone_id}/complete, Methods: {'POST'}
+2025-07-18 12:38:18,939 - app - INFO - Route: /api/v1/career-goals/{goal_id}/milestones, Methods: {'GET'}
+2025-07-18 12:38:18,939 - app - INFO - Route: /api/v1/jobs/recommendations/me, Methods: {'GET'}
+2025-07-18 12:38:18,940 - app - INFO - Route: /api/v1/jobs/recommendations/{user_id}, Methods: {'GET'}
+2025-07-18 12:38:18,940 - app - INFO - Route: /api/v1/jobs/recommendations/{user_id}, Methods: {'POST'}
+2025-07-18 12:38:18,940 - app - INFO - Route: /api/v1/jobs/skill-tree/{job_id}, Methods: {'GET'}
+2025-07-18 12:38:18,941 - app - INFO - Route: /api/careers/llm-query, Methods: {'POST'}
+2025-07-18 12:38:18,941 - app - INFO - Route: /api/orientator/test-message, Methods: {'POST'}
+2025-07-18 12:38:18,941 - app - INFO - Route: /api/orientator/message, Methods: {'POST'}
+2025-07-18 12:38:18,941 - app - INFO - Route: /api/orientator/save-component, Methods: {'POST'}
+2025-07-18 12:38:18,941 - app - INFO - Route: /api/orientator/conversations/{conversation_id}/messages, Methods: {'GET'}
+2025-07-18 12:38:18,941 - app - INFO - Route: /api/orientator/journey/{user_id}, Methods: {'GET'}
+2025-07-18 12:38:18,941 - app - INFO - Route: /api/orientator/conversations, Methods: {'GET'}
+2025-07-18 12:38:18,941 - app - INFO - Route: /api/orientator/tool-analytics, Methods: {'GET'}
+2025-07-18 12:38:18,941 - app - INFO - Route: /api/orientator/feedback, Methods: {'POST'}
+2025-07-18 12:38:18,941 - app - INFO - Route: /api/orientator/health, Methods: {'GET'}
+2025-07-18 12:38:18,941 - app - INFO - ======================
+2025-07-18 12:38:18,951 - app - INFO - 🚀 Application startup initiated
+2025-07-18 12:38:18,952 - app - INFO - Loading models...
+2025-07-18 12:38:18,955 - scripts.model_loader - INFO - Starting model loading...
+2025-07-18 12:38:18,955 - scripts.model_loader - INFO - Loading SentenceTransformer models...
+2025-07-18 12:38:18,955 - scripts.model_loader - WARNING - SentenceTransformer model directory not found, skipping...
+2025-07-18 12:38:18,955 - scripts.model_loader - INFO - Loading PCA, OHE, and Scaler models...
+2025-07-18 12:38:18,955 - scripts.model_loader - WARNING - Model files not found, skipping...
+2025-07-18 12:38:18,955 - scripts.model_loader - INFO - Model loading process completed!
+2025-07-18 12:38:18,956 - app - INFO - Models loaded from scripts
+2025-07-18 12:38:18,956 - app - INFO - Model loading process completed
+2025-07-18 12:38:18,956 - app - INFO - ✅ Models loaded successfully
+2025-07-18 12:38:18,956 - app - INFO - 🔌 Attempting database initialization...
+2025-07-18 12:38:18,956 - app.core.config - INFO - Using DATABASE_URL for local development
+2025-07-18 12:38:18,957 - app.utils.database - INFO - Attempting to connect to database...
+2025-07-18 12:38:19,019 - app.utils.database - INFO - ✅ Database engine created successfully
+2025-07-18 12:38:19,948 - app.utils.database - INFO - ✅ Database connection test successful
+2025-07-18 12:38:19,995 - app.utils.database - INFO - Database: postgres
+2025-07-18 12:38:19,996 - app.utils.database - INFO - User: postgres
+2025-07-18 12:38:19,996 - app.utils.database - INFO - PostgreSQL version: PostgreSQL 17.4 on aarch64-unknown-linux-gnu, comp...
+2025-07-18 12:38:20,039 - app.utils.database - INFO - Sample tables: ['messages', 'user_journey_milestones', 'user_profiles', 'user_skills', 'alembic_version']...
+2025-07-18 12:38:20,084 - app.utils.database - INFO - ✅ Database initialization completed successfully
+2025-07-18 12:38:20,085 - app - INFO - ✅ Application startup completed successfully
+2025-07-18 12:38:20,221 - app.routers.user - INFO - Attempting to register user with email: newuser@example.com
+2025-07-18 12:38:20,302 - app.routers.user - WARNING - Registration attempt with existing email: newuser@example.com
+2025-07-18 12:38:20,302 - app.routers.user - ERROR - Unexpected error during user registration: 
+2025-07-18 12:38:20,340 - app.utils.database - ERROR - Database session error: 
+2025-07-18 12:38:20,340 - app.utils.database - ERROR - Error type: <class 'fastapi.exceptions.HTTPException'>
+2025-07-18 12:38:20,342 - app.utils.database - ERROR - Traceback: Traceback (most recent call last):
+  File "/Users/philippebeliveau/Desktop/Notebook/Orientor_project/Orientor_project/backend/app/routers/user.py", line 77, in register_user
+    raise HTTPException(status_code=400, detail="Email already registered")
+fastapi.exceptions.HTTPException
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/philippebeliveau/Desktop/Notebook/Orientor_project/Orientor_project/backend/app/utils/database.py", line 163, in get_db
+    yield db
+fastapi.exceptions.HTTPException
+
+2025-07-18 12:38:38,102 - app.routers.user - INFO - Login attempt for email: beli5@example.com
+2025-07-18 12:38:38,423 - app.routers.user - INFO - Successful login for user ID: 22
+2025-07-18 12:38:38,901 - app.routers.onboarding - INFO - Resetting onboarding for user ID: 22
+2025-07-18 12:38:39,604 - app.routers.onboarding - INFO - Reset onboarding for user 22
+2025-07-18 12:38:39,813 - app.routers.user - INFO - Checking onboarding status for user ID: 22
+2025-07-18 12:38:39,982 - app.routers.onboarding - INFO - Saving onboarding response for user ID: 22
+2025-07-18 12:38:40,026 - app.routers.onboarding - INFO - Creating new onboarding session for user 22
+2025-07-18 12:38:40,107 - app.routers.onboarding - ERROR - Database error saving response: (psycopg2.errors.NotNullViolation) null value in column "id" of relation "personality_assessments" violates not-null constraint
+DETAIL:  Failing row contains (null, 22, onboarding, v1.0, c350afcd-69db-426a-98c4-ddd2bd14e93b, in_progress, 2025-07-18 16:38:40.026458+00, null, 9, 0, {}, {}, 2025-07-18 16:38:39.90685+00, 2025-07-18 16:38:39.90685+00).
+
+[SQL: INSERT INTO personality_assessments (user_id, assessment_type, assessment_version, session_id, status, started_at, completed_at, total_items, completed_items, validity_flags, metadata) VALUES (%(user_id)s, %(assessment_type)s, %(assessment_version)s, %(session_id)s::UUID, %(status)s, %(started_at)s, %(completed_at)s, %(total_items)s, %(completed_items)s, %(validity_flags)s, %(metadata)s) RETURNING personality_assessments.id, personality_assessments.created_at, personality_assessments.updated_at]
+[parameters: {'user_id': 22, 'assessment_type': 'onboarding', 'assessment_version': 'v1.0', 'session_id': UUID('c350afcd-69db-426a-98c4-ddd2bd14e93b'), 'status': 'in_progress', 'started_at': datetime.datetime(2025, 7, 18, 16, 38, 40, 26458), 'completed_at': None, 'total_items': 9, 'completed_items': 0, 'validity_flags': '{}', 'metadata': '{}'}]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2025-07-18 12:38:40,108 - app.utils.database - ERROR - Database session error: 
+2025-07-18 12:38:40,108 - app.utils.database - ERROR - Error type: <class 'fastapi.exceptions.HTTPException'>
+2025-07-18 12:38:40,129 - app.utils.database - ERROR - Traceback: Traceback (most recent call last):
+  File "/Users/philippebeliveau/miniforge3/envs/orientor/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1969, in _exec_single_context
+    self.dialect.do_execute(
+  File "/Users/philippebeliveau/miniforge3/envs/orientor/lib/python3.11/site-packages/sqlalchemy/engine/default.py", line 922, in do_execute
+    cursor.execute(statement, parameters)
+psycopg2.errors.NotNullViolation: null value in column "id" of relation "personality_assessments" violates not-null constraint
+DETAIL:  Failing row contains (null, 22, onboarding, v1.0, c350afcd-69db-426a-98c4-ddd2bd14e93b, in_progress, 2025-07-18 16:38:40.026458+00, null, 9, 0, {}, {}, 2025-07-18 16:38:39.90685+00, 2025-07-18 16:38:39.90685+00).
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/philippebeliveau/Desktop/Notebook/Orientor_project/Orientor_project/backend/app/routers/onboarding.py", line 162, in save_onboarding_response
+    db.flush()  # Get the ID
+    ^^^^^^^^^^
+  File "/Users/philippebeliveau/miniforge3/envs/orientor/lib/python3.11/site-packages/sqlalchemy/orm/session.py", line 4312, in flush
+    self._flush(objects)
+  File "/Users/philippebeliveau/miniforge3/envs/orientor/lib/python3.11/site-packages/sqlalchemy/orm/session.py", line 4447, in _flush
+    with util.safe_reraise():
+  File "/Users/philippebeliveau/miniforge3/envs/orientor/lib/python3.11/site-packages/sqlalchemy/util/langhelpers.py", line 146, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/Users/philippebeliveau/miniforge3/envs/orientor/lib/python3.11/site-packages/sqlalchemy/orm/session.py", line 4408, in _flush
+    flush_context.execute()
+  File "/Users/philippebeliveau/miniforge3/envs/orientor/lib/python3.11/site-packages/sqlalchemy/orm/unitofwork.py", line 466, in execute
+    rec.execute(self)
+  File "/Users/philippebeliveau/miniforge3/envs/orientor/lib/python3.11/site-packages/sqlalchemy/orm/unitofwork.py", line 642, in execute
+    util.preloaded.orm_persistence.save_obj(
+  File "/Users/philippebeliveau/miniforge3/envs/orientor/lib/python3.11/site-packages/sqlalchemy/orm/persistence.py", line 93, in save_obj
+    _emit_insert_statements(
+  File "/Users/philippebeliveau/miniforge3/envs/orientor/lib/python3.11/site-packages/sqlalchemy/orm/persistence.py", line 1226, in _emit_insert_statements
+    result = connection.execute(
+             ^^^^^^^^^^^^^^^^^^^
+  File "/Users/philippebeliveau/miniforge3/envs/orientor/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1416, in execute
+    return meth(
+           ^^^^^
+  File "/Users/philippebeliveau/miniforge3/envs/orientor/lib/python3.11/site-packages/sqlalchemy/sql/elements.py", line 516, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/philippebeliveau/miniforge3/envs/orientor/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1639, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/philippebeliveau/miniforge3/envs/orientor/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1848, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/philippebeliveau/miniforge3/envs/orientor/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1988, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "/Users/philippebeliveau/miniforge3/envs/orientor/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 2343, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "/Users/philippebeliveau/miniforge3/envs/orientor/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1969, in _exec_single_context
+    self.dialect.do_execute(
+  File "/Users/philippebeliveau/miniforge3/envs/orientor/lib/python3.11/site-packages/sqlalchemy/engine/default.py", line 922, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.IntegrityError: (psycopg2.errors.NotNullViolation) null value in column "id" of relation "personality_assessments" violates not-null constraint
+DETAIL:  Failing row contains (null, 22, onboarding, v1.0, c350afcd-69db-426a-98c4-ddd2bd14e93b, in_progress, 2025-07-18 16:38:40.026458+00, null, 9, 0, {}, {}, 2025-07-18 16:38:39.90685+00, 2025-07-18 16:38:39.90685+00).
+
+[SQL: INSERT INTO personality_assessments (user_id, assessment_type, assessment_version, session_id, status, started_at, completed_at, total_items, completed_items, validity_flags, metadata) VALUES (%(user_id)s, %(assessment_type)s, %(assessment_version)s, %(session_id)s::UUID, %(status)s, %(started_at)s, %(completed_at)s, %(total_items)s, %(completed_items)s, %(validity_flags)s, %(metadata)s) RETURNING personality_assessments.id, personality_assessments.created_at, personality_assessments.updated_at]
+[parameters: {'user_id': 22, 'assessment_type': 'onboarding', 'assessment_version': 'v1.0', 'session_id': UUID('c350afcd-69db-426a-98c4-ddd2bd14e93b'), 'status': 'in_progress', 'started_at': datetime.datetime(2025, 7, 18, 16, 38, 40, 26458), 'completed_at': None, 'total_items': 9, 'completed_items': 0, 'validity_flags': '{}', 'metadata': '{}'}]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/philippebeliveau/Desktop/Notebook/Orientor_project/Orientor_project/backend/app/utils/database.py", line 163, in get_db
+    yield db
+fastapi.exceptions.HTTPException
+
+2025-07-18 12:38:53,773 - app.routers.user - INFO - Login attempt for email: beli5@example.com
+2025-07-18 12:38:54,070 - app.routers.user - INFO - Successful login for user ID: 22
+2025-07-18 12:38:54,252 - app.routers.onboarding - INFO - Resetting onboarding for user ID: 22
+2025-07-18 12:38:54,489 - app.routers.onboarding - INFO - Reset onboarding for user 22
+2025-07-18 12:38:54,673 - app.routers.user - INFO - Checking onboarding status for user ID: 22
+2025-07-18 12:38:54,866 - app.routers.onboarding - INFO - Saving onboarding response for user ID: 22
+2025-07-18 12:38:54,910 - app.routers.onboarding - INFO - Creating new onboarding session for user 22
+2025-07-18 12:38:55,022 - app.routers.onboarding - ERROR - Database error saving response: (psycopg2.errors.NotNullViolation) null value in column "id" of relation "personality_assessments" violates not-null constraint
+DETAIL:  Failing row contains (null, 22, onboarding, v1.0, 3d9db444-b5a8-4fa2-b286-d174d324cd63, in_progress, 2025-07-18 16:38:54.91071+00, null, 9, 0, {}, {}, 2025-07-18 16:38:54.774962+00, 2025-07-18 16:38:54.774962+00).
+
+[SQL: INSERT INTO personality_assessments (user_id, assessment_type, assessment_version, session_id, status, started_at, completed_at, total_items, completed_items, validity_flags, metadata) VALUES (%(user_id)s, %(assessment_type)s, %(assessment_version)s, %(session_id)s::UUID, %(status)s, %(started_at)s, %(completed_at)s, %(total_items)s, %(completed_items)s, %(validity_flags)s, %(metadata)s) RETURNING personality_assessments.id, personality_assessments.created_at, personality_assessments.updated_at]
+[parameters: {'user_id': 22, 'assessment_type': 'onboarding', 'assessment_version': 'v1.0', 'session_id': UUID('3d9db444-b5a8-4fa2-b286-d174d324cd63'), 'status': 'in_progress', 'started_at': datetime.datetime(2025, 7, 18, 16, 38, 54, 910710), 'completed_at': None, 'total_items': 9, 'completed_items': 0, 'validity_flags': '{}', 'metadata': '{}'}]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2025-07-18 12:38:55,044 - app.utils.database - ERROR - Database session error: 
+2025-07-18 12:38:55,045 - app.utils.database - ERROR - Error type: <class 'fastapi.exceptions.HTTPException'>
+2025-07-18 12:38:55,046 - app.utils.database - ERROR - Traceback: Traceback (most recent call last):
+  File "/Users/philippebeliveau/miniforge3/envs/orientor/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1969, in _exec_single_context
+    self.dialect.do_execute(
+  File "/Users/philippebeliveau/miniforge3/envs/orientor/lib/python3.11/site-packages/sqlalchemy/engine/default.py", line 922, in do_execute
+    cursor.execute(statement, parameters)
+psycopg2.errors.NotNullViolation: null value in column "id" of relation "personality_assessments" violates not-null constraint
+DETAIL:  Failing row contains (null, 22, onboarding, v1.0, 3d9db444-b5a8-4fa2-b286-d174d324cd63, in_progress, 2025-07-18 16:38:54.91071+00, null, 9, 0, {}, {}, 2025-07-18 16:38:54.774962+00, 2025-07-18 16:38:54.774962+00).
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/philippebeliveau/Desktop/Notebook/Orientor_project/Orientor_project/backend/app/routers/onboarding.py", line 162, in save_onboarding_response
+    db.flush()  # Get the ID
+    ^^^^^^^^^^
+  File "/Users/philippebeliveau/miniforge3/envs/orientor/lib/python3.11/site-packages/sqlalchemy/orm/session.py", line 4312, in flush
+    self._flush(objects)
+  File "/Users/philippebeliveau/miniforge3/envs/orientor/lib/python3.11/site-packages/sqlalchemy/orm/session.py", line 4447, in _flush
+    with util.safe_reraise():
+  File "/Users/philippebeliveau/miniforge3/envs/orientor/lib/python3.11/site-packages/sqlalchemy/util/langhelpers.py", line 146, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/Users/philippebeliveau/miniforge3/envs/orientor/lib/python3.11/site-packages/sqlalchemy/orm/session.py", line 4408, in _flush
+    flush_context.execute()
+  File "/Users/philippebeliveau/miniforge3/envs/orientor/lib/python3.11/site-packages/sqlalchemy/orm/unitofwork.py", line 466, in execute
+    rec.execute(self)
+  File "/Users/philippebeliveau/miniforge3/envs/orientor/lib/python3.11/site-packages/sqlalchemy/orm/unitofwork.py", line 642, in execute
+    util.preloaded.orm_persistence.save_obj(
+  File "/Users/philippebeliveau/miniforge3/envs/orientor/lib/python3.11/site-packages/sqlalchemy/orm/persistence.py", line 93, in save_obj
+    _emit_insert_statements(
+  File "/Users/philippebeliveau/miniforge3/envs/orientor/lib/python3.11/site-packages/sqlalchemy/orm/persistence.py", line 1226, in _emit_insert_statements
+    result = connection.execute(
+             ^^^^^^^^^^^^^^^^^^^
+  File "/Users/philippebeliveau/miniforge3/envs/orientor/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1416, in execute
+    return meth(
+           ^^^^^
+  File "/Users/philippebeliveau/miniforge3/envs/orientor/lib/python3.11/site-packages/sqlalchemy/sql/elements.py", line 516, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/philippebeliveau/miniforge3/envs/orientor/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1639, in _execute_clauseelement
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/philippebeliveau/miniforge3/envs/orientor/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1848, in _execute_context
+    return self._exec_single_context(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/philippebeliveau/miniforge3/envs/orientor/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1988, in _exec_single_context
+    self._handle_dbapi_exception(
+  File "/Users/philippebeliveau/miniforge3/envs/orientor/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 2343, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "/Users/philippebeliveau/miniforge3/envs/orientor/lib/python3.11/site-packages/sqlalchemy/engine/base.py", line 1969, in _exec_single_context
+    self.dialect.do_execute(
+  File "/Users/philippebeliveau/miniforge3/envs/orientor/lib/python3.11/site-packages/sqlalchemy/engine/default.py", line 922, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.IntegrityError: (psycopg2.errors.NotNullViolation) null value in column "id" of relation "personality_assessments" violates not-null constraint
+DETAIL:  Failing row contains (null, 22, onboarding, v1.0, 3d9db444-b5a8-4fa2-b286-d174d324cd63, in_progress, 2025-07-18 16:38:54.91071+00, null, 9, 0, {}, {}, 2025-07-18 16:38:54.774962+00, 2025-07-18 16:38:54.774962+00).
+
+[SQL: INSERT INTO personality_assessments (user_id, assessment_type, assessment_version, session_id, status, started_at, completed_at, total_items, completed_items, validity_flags, metadata) VALUES (%(user_id)s, %(assessment_type)s, %(assessment_version)s, %(session_id)s::UUID, %(status)s, %(started_at)s, %(completed_at)s, %(total_items)s, %(completed_items)s, %(validity_flags)s, %(metadata)s) RETURNING personality_assessments.id, personality_assessments.created_at, personality_assessments.updated_at]
+[parameters: {'user_id': 22, 'assessment_type': 'onboarding', 'assessment_version': 'v1.0', 'session_id': UUID('3d9db444-b5a8-4fa2-b286-d174d324cd63'), 'status': 'in_progress', 'started_at': datetime.datetime(2025, 7, 18, 16, 38, 54, 910710), 'completed_at': None, 'total_items': 9, 'completed_items': 0, 'validity_flags': '{}', 'metadata': '{}'}]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/philippebeliveau/Desktop/Notebook/Orientor_project/Orientor_project/backend/app/utils/database.py", line 163, in get_db
+    yield db
+fastapi.exceptions.HTTPException
+
+2025-07-18 12:39:19,597 - app - INFO - ======= ROUTER REGISTRATION DETAILS =======
+2025-07-18 12:39:19,597 - app - INFO - auth_router import path: fastapi.routing
+2025-07-18 12:39:19,598 - app - INFO - get_current_user import path: app.routers.user
+2025-07-18 12:39:19,598 - app - INFO - profiles_router import path: fastapi.routing
+2025-07-18 12:39:19,598 - app - INFO - Registering auth_router routes: ["/auth/register [{'POST'}]", "/auth/login [{'POST'}]", "/auth/update [{'PUT'}]", "/auth/change-password [{'PUT'}]", "/auth/onboarding-status [{'GET'}]"]
+2025-07-18 12:39:19,598 - app - INFO - Registering profiles_router routes: ["/profiles/test [{'GET'}]", "/profiles/me [{'GET'}]", "/profiles/update [{'PUT'}]", "/profiles/{user_id} [{'GET'}]"]
+2025-07-18 12:39:19,598 - app - INFO - Registering chat_router routes: ["/chat/send [{'POST'}]", "/chat/clear [{'POST'}]"]
+2025-07-18 12:39:19,598 - app - INFO - Registering peers_router routes: ["/peers/suggested [{'GET'}]", "/peers/compatible [{'GET'}]", "/peers/homepage [{'GET'}]", "/peers/refresh [{'POST'}]"]
+2025-07-18 12:39:19,598 - app - INFO - Registering messages_router routes: ["/messages [{'POST'}]", "/messages/conversation/{peer_id} [{'GET'}]", "/messages/conversations [{'GET'}]", "/messages/suggested-peers [{'GET'}]"]
+2025-07-18 12:39:19,598 - app - INFO - Registering test_router routes: ["/test/hello [{'GET'}]"]
+2025-07-18 12:39:19,598 - app - INFO - Registering space_router routes: ["/space/recommendations [{'POST'}]", "/space/recommendations [{'GET'}]", "/space/recommendations/{identifier} [{'DELETE'}]", "/space/notes [{'POST'}]", "/space/notes [{'GET'}]", "/space/notes/{note_id} [{'PUT'}]", "/space/notes/{note_id} [{'DELETE'}]", "/space/skills [{'GET'}]", "/space/skills [{'PUT'}]", "/space/recommendations/{oasis_code}/skill-comparison [{'GET'}]", "/space/recommendations/{recommendation_id}/generate-analysis [{'POST'}]"]
+2025-07-18 12:39:19,598 - app - INFO - Registering vector_router routes: ["/vector/search [{'POST'}]", "/vector/search/save [{'POST'}]", "/vector/health [{'GET'}]", "/vector/suggested-peers [{'GET'}]", "/vector/debug [{'GET'}]"]
+2025-07-18 12:39:19,598 - app - INFO - Registering recommendations_router routes: ["/recommendations [{'GET'}]", "/recommendations/swipe [{'POST'}]"]
+2025-07-18 12:39:19,598 - app - INFO - Registering careers_router routes: ["/careers/recommendations [{'GET'}]", "/careers/save/{career_id} [{'POST'}]", "/careers/saved [{'GET'}]", "/careers/fit-analysis [{'POST'}]", "/careers/cleanup-test-jobs [{'DELETE'}]"]
+2025-07-18 12:39:19,598 - app - INFO - Registering tree_router routes: ["/tree [{'POST'}]", "/tree/skills [{'POST'}]"]
+2025-07-18 12:39:19,598 - app - INFO - Registering tree_paths_router routes: ["/tree-paths/ [{'POST'}]", "/tree-paths/ [{'GET'}]", "/tree-paths/{tree_path_id} [{'GET'}]", "/tree-paths/{tree_path_id} [{'DELETE'}]"]
+2025-07-18 12:39:19,598 - app - INFO - Registering node_notes_router routes: ["/node-notes/ [{'POST'}]", "/node-notes/ [{'GET'}]", "/node-notes/node/{node_id} [{'GET'}]", "/node-notes/{note_id} [{'GET'}]", "/node-notes/{note_id} [{'DELETE'}]"]
+2025-07-18 12:39:19,598 - app - INFO - Registering user_progress_router routes: ["/user-progress/ [{'GET'}]", "/user-progress/update [{'POST'}]"]
+2025-07-18 12:39:19,598 - app - INFO - Registering holland_test_router routes: ["/api/tests/holland/ [{'GET'}]", "/api/tests/holland/questions [{'GET'}]", "/api/tests/holland/answer [{'POST'}]", "/api/tests/holland/score/{attempt_id} [{'GET'}]", "/api/tests/holland/user-results [{'GET'}]", "/api/tests/holland/profile-description [{'GET'}]", "/api/tests/holland/profile-description/{user_id} [{'GET'}]"]
+2025-07-18 12:39:19,598 - app - INFO - Registering hexaco_test_router routes: ["/api/tests/hexaco/ [{'GET'}]", "/api/tests/hexaco/languages [{'GET'}]", "/api/tests/hexaco/versions [{'GET'}]", "/api/tests/hexaco/start [{'POST'}]", "/api/tests/hexaco/questions [{'GET'}]", "/api/tests/hexaco/answer [{'POST'}]", "/api/tests/hexaco/progress/{session_id} [{'GET'}]", "/api/tests/hexaco/score/{session_id} [{'GET'}]", "/api/tests/hexaco/profile/{user_id} [{'GET'}]", "/api/tests/hexaco/my-profile [{'GET'}]", "/api/tests/hexaco/analysis/{user_id} [{'GET'}]", "/api/tests/hexaco/my-analysis [{'GET'}]"]
+2025-07-18 12:39:19,598 - app - INFO - Registering insight_router routes: ["/insight/generate [{'POST'}]", "/insight/get [{'GET'}]", "/insight/regenerate [{'POST'}]", "/insight/save [{'PATCH'}]", "/insight/rewrite [{'POST'}]"]
+2025-07-18 12:39:19,598 - app - INFO - Registering orientator_router routes: ["/orientator/test-message [{'POST'}]", "/orientator/message [{'POST'}]", "/orientator/save-component [{'POST'}]", "/orientator/conversations/{conversation_id}/messages [{'GET'}]", "/orientator/journey/{user_id} [{'GET'}]", "/orientator/conversations [{'GET'}]", "/orientator/tool-analytics [{'GET'}]", "/orientator/feedback [{'POST'}]", "/orientator/health [{'GET'}]"]
+2025-07-18 12:39:19,598 - app - INFO - ============================================
+2025-07-18 12:39:19,598 - app - INFO - Including routers in the FastAPI app
+2025-07-18 12:39:19,601 - app - INFO - Auth router included successfully
+2025-07-18 12:39:19,605 - app - INFO - Profiles router included successfully
+2025-07-18 12:39:19,692 - app - INFO - All routers included successfully
+2025-07-18 12:39:19,692 - app - INFO - === Available Routes ===
+2025-07-18 12:39:19,692 - app - INFO - Route: /openapi.json, Methods: {'GET', 'HEAD'}
+2025-07-18 12:39:19,693 - app - INFO - Route: /docs, Methods: {'GET', 'HEAD'}
+2025-07-18 12:39:19,693 - app - INFO - Route: /docs/oauth2-redirect, Methods: {'GET', 'HEAD'}
+2025-07-18 12:39:19,693 - app - INFO - Route: /redoc, Methods: {'GET', 'HEAD'}
+2025-07-18 12:39:19,693 - app - INFO - Mount: /static
+2025-07-18 12:39:19,693 - app - INFO - Route: /auth/register, Methods: {'POST'}
+2025-07-18 12:39:19,693 - app - INFO - Route: /auth/login, Methods: {'POST'}
+2025-07-18 12:39:19,693 - app - INFO - Route: /auth/update, Methods: {'PUT'}
+2025-07-18 12:39:19,693 - app - INFO - Route: /auth/change-password, Methods: {'PUT'}
+2025-07-18 12:39:19,693 - app - INFO - Route: /auth/onboarding-status, Methods: {'GET'}
+2025-07-18 12:39:19,693 - app - INFO - Route: /profiles/test, Methods: {'GET'}
+2025-07-18 12:39:19,693 - app - INFO - Route: /profiles/me, Methods: {'GET'}
+2025-07-18 12:39:19,693 - app - INFO - Route: /profiles/update, Methods: {'PUT'}
+2025-07-18 12:39:19,693 - app - INFO - Route: /profiles/{user_id}, Methods: {'GET'}
+2025-07-18 12:39:19,693 - app - INFO - Route: /test/hello, Methods: {'GET'}
+2025-07-18 12:39:19,693 - app - INFO - Route: /chat/conversations, Methods: {'GET'}
+2025-07-18 12:39:19,694 - app - INFO - Route: /chat/conversations, Methods: {'POST'}
+2025-07-18 12:39:19,694 - app - INFO - Route: /chat/conversations/{conversation_id}, Methods: {'GET'}
+2025-07-18 12:39:19,694 - app - INFO - Route: /chat/conversations/{conversation_id}, Methods: {'PUT'}
+2025-07-18 12:39:19,694 - app - INFO - Route: /chat/conversations/{conversation_id}, Methods: {'DELETE'}
+2025-07-18 12:39:19,694 - app - INFO - Route: /chat/conversations/{conversation_id}/favorite, Methods: {'POST'}
+2025-07-18 12:39:19,694 - app - INFO - Route: /chat/conversations/{conversation_id}/archive, Methods: {'POST'}
+2025-07-18 12:39:19,694 - app - INFO - Route: /chat/conversations/{conversation_id}/generate-title, Methods: {'POST'}
+2025-07-18 12:39:19,694 - app - INFO - Route: /chat/conversations/{conversation_id}/messages, Methods: {'GET'}
+2025-07-18 12:39:19,694 - app - INFO - Route: /chat/conversations/{conversation_id}/statistics, Methods: {'GET'}
+2025-07-18 12:39:19,694 - app - INFO - Route: /chat/conversations/{conversation_id}/export, Methods: {'POST'}
+2025-07-18 12:39:19,694 - app - INFO - Route: /chat/conversations/send/{conversation_id}, Methods: {'POST'}
+2025-07-18 12:39:19,694 - app - INFO - Route: /chat/send, Methods: {'POST'}
+2025-07-18 12:39:19,694 - app - INFO - Route: /chat/clear, Methods: {'POST'}
+2025-07-18 12:39:19,694 - app - INFO - Route: /chat/share/conversations/{conversation_id}, Methods: {'POST'}
+2025-07-18 12:39:19,694 - app - INFO - Route: /chat/share/shared/{share_token}, Methods: {'GET'}
+2025-07-18 12:39:19,694 - app - INFO - Route: /chat/share/shares/{share_id}, Methods: {'PUT'}
+2025-07-18 12:39:19,694 - app - INFO - Route: /chat/share/shares/{share_id}, Methods: {'DELETE'}
+2025-07-18 12:39:19,694 - app - INFO - Route: /chat/share/user/shares, Methods: {'GET'}
+2025-07-18 12:39:19,694 - app - INFO - Route: /chat/share/shares/{share_id}/analytics, Methods: {'GET'}
+2025-07-18 12:39:19,694 - app - INFO - Route: /chat/analytics/usage, Methods: {'GET'}
+2025-07-18 12:39:19,694 - app - INFO - Route: /chat/analytics/trends, Methods: {'GET'}
+2025-07-18 12:39:19,695 - app - INFO - Route: /chat/analytics/topics, Methods: {'GET'}
+2025-07-18 12:39:19,695 - app - INFO - Route: /chat/analytics/summary, Methods: {'GET'}
+2025-07-18 12:39:19,695 - app - INFO - Route: /peers/suggested, Methods: {'GET'}
+2025-07-18 12:39:19,695 - app - INFO - Route: /peers/compatible, Methods: {'GET'}
+2025-07-18 12:39:19,695 - app - INFO - Route: /peers/homepage, Methods: {'GET'}
+2025-07-18 12:39:19,695 - app - INFO - Route: /peers/refresh, Methods: {'POST'}
+2025-07-18 12:39:19,695 - app - INFO - Route: /messages, Methods: {'POST'}
+2025-07-18 12:39:19,695 - app - INFO - Route: /messages/conversation/{peer_id}, Methods: {'GET'}
+2025-07-18 12:39:19,695 - app - INFO - Route: /messages/conversations, Methods: {'GET'}
+2025-07-18 12:39:19,695 - app - INFO - Route: /messages/suggested-peers, Methods: {'GET'}
+2025-07-18 12:39:19,695 - app - INFO - Route: /space/recommendations, Methods: {'POST'}
+2025-07-18 12:39:19,695 - app - INFO - Route: /space/recommendations, Methods: {'GET'}
+2025-07-18 12:39:19,695 - app - INFO - Route: /space/recommendations/{identifier}, Methods: {'DELETE'}
+2025-07-18 12:39:19,695 - app - INFO - Route: /space/notes, Methods: {'POST'}
+2025-07-18 12:39:19,695 - app - INFO - Route: /space/notes, Methods: {'GET'}
+2025-07-18 12:39:19,695 - app - INFO - Route: /space/notes/{note_id}, Methods: {'PUT'}
+2025-07-18 12:39:19,695 - app - INFO - Route: /space/notes/{note_id}, Methods: {'DELETE'}
+2025-07-18 12:39:19,695 - app - INFO - Route: /space/skills, Methods: {'GET'}
+2025-07-18 12:39:19,695 - app - INFO - Route: /space/skills, Methods: {'PUT'}
+2025-07-18 12:39:19,695 - app - INFO - Route: /space/recommendations/{oasis_code}/skill-comparison, Methods: {'GET'}
+2025-07-18 12:39:19,695 - app - INFO - Route: /space/recommendations/{recommendation_id}/generate-analysis, Methods: {'POST'}
+2025-07-18 12:39:19,695 - app - INFO - Route: /vector/search, Methods: {'POST'}
+2025-07-18 12:39:19,695 - app - INFO - Route: /vector/search/save, Methods: {'POST'}
+2025-07-18 12:39:19,695 - app - INFO - Route: /vector/health, Methods: {'GET'}
+2025-07-18 12:39:19,695 - app - INFO - Route: /vector/suggested-peers, Methods: {'GET'}
+2025-07-18 12:39:19,696 - app - INFO - Route: /vector/debug, Methods: {'GET'}
+2025-07-18 12:39:19,696 - app - INFO - Route: /recommendations, Methods: {'GET'}
+2025-07-18 12:39:19,696 - app - INFO - Route: /recommendations/swipe, Methods: {'POST'}
+2025-07-18 12:39:19,696 - app - INFO - Route: /careers/recommendations, Methods: {'GET'}
+2025-07-18 12:39:19,696 - app - INFO - Route: /careers/save/{career_id}, Methods: {'POST'}
+2025-07-18 12:39:19,696 - app - INFO - Route: /careers/saved, Methods: {'GET'}
+2025-07-18 12:39:19,696 - app - INFO - Route: /careers/fit-analysis, Methods: {'POST'}
+2025-07-18 12:39:19,696 - app - INFO - Route: /careers/cleanup-test-jobs, Methods: {'DELETE'}
+2025-07-18 12:39:19,696 - app - INFO - Route: /tree, Methods: {'POST'}
+2025-07-18 12:39:19,696 - app - INFO - Route: /tree/skills, Methods: {'POST'}
+2025-07-18 12:39:19,696 - app - INFO - Route: /tree-paths/, Methods: {'POST'}
+2025-07-18 12:39:19,696 - app - INFO - Route: /tree-paths/, Methods: {'GET'}
+2025-07-18 12:39:19,696 - app - INFO - Route: /tree-paths/{tree_path_id}, Methods: {'GET'}
+2025-07-18 12:39:19,696 - app - INFO - Route: /tree-paths/{tree_path_id}, Methods: {'DELETE'}
+2025-07-18 12:39:19,696 - app - INFO - Route: /node-notes/, Methods: {'POST'}
+2025-07-18 12:39:19,696 - app - INFO - Route: /node-notes/, Methods: {'GET'}
+2025-07-18 12:39:19,696 - app - INFO - Route: /node-notes/node/{node_id}, Methods: {'GET'}
+2025-07-18 12:39:19,696 - app - INFO - Route: /node-notes/{note_id}, Methods: {'GET'}
+2025-07-18 12:39:19,696 - app - INFO - Route: /node-notes/{note_id}, Methods: {'DELETE'}
+2025-07-18 12:39:19,696 - app - INFO - Route: /user-progress/, Methods: {'GET'}
+2025-07-18 12:39:19,696 - app - INFO - Route: /user-progress/update, Methods: {'POST'}
+2025-07-18 12:39:19,696 - app - INFO - Route: /api/v1/jobs/save, Methods: {'POST'}
+2025-07-18 12:39:19,696 - app - INFO - Route: /api/v1/jobs/saved, Methods: {'GET'}
+2025-07-18 12:39:19,696 - app - INFO - Route: /api/v1/jobs/{job_id}, Methods: {'DELETE'}
+2025-07-18 12:39:19,696 - app - INFO - Route: /api/v1/jobs/{esco_id}/details, Methods: {'GET'}
+2025-07-18 12:39:19,696 - app - INFO - Route: /api/v1/jobs/recommendations/me, Methods: {'GET'}
+2025-07-18 12:39:19,697 - app - INFO - Route: /api/v1/program-recommendations/career-goal/{goal_id}, Methods: {'GET'}
+2025-07-18 12:39:19,697 - app - INFO - Route: /api/v1/program-recommendations/career-goal/{goal_id}/save, Methods: {'POST'}
+2025-07-18 12:39:19,697 - app - INFO - Route: /api/v1/program-recommendations/career-goal/{goal_id}/saved, Methods: {'GET'}
+2025-07-18 12:39:19,697 - app - INFO - Route: /api/v1/program-recommendations/institutions, Methods: {'GET'}
+2025-07-18 12:39:19,697 - app - INFO - Route: /api/tests/holland/, Methods: {'GET'}
+2025-07-18 12:39:19,697 - app - INFO - Route: /api/tests/holland/questions, Methods: {'GET'}
+2025-07-18 12:39:19,697 - app - INFO - Route: /api/tests/holland/answer, Methods: {'POST'}
+2025-07-18 12:39:19,697 - app - INFO - Route: /api/tests/holland/score/{attempt_id}, Methods: {'GET'}
+2025-07-18 12:39:19,697 - app - INFO - Route: /api/tests/holland/user-results, Methods: {'GET'}
+2025-07-18 12:39:19,697 - app - INFO - Route: /api/tests/holland/profile-description, Methods: {'GET'}
+2025-07-18 12:39:19,697 - app - INFO - Route: /api/tests/holland/profile-description/{user_id}, Methods: {'GET'}
+2025-07-18 12:39:19,697 - app - INFO - Route: /api/tests/hexaco/, Methods: {'GET'}
+2025-07-18 12:39:19,697 - app - INFO - Route: /api/tests/hexaco/languages, Methods: {'GET'}
+2025-07-18 12:39:19,697 - app - INFO - Route: /api/tests/hexaco/versions, Methods: {'GET'}
+2025-07-18 12:39:19,697 - app - INFO - Route: /api/tests/hexaco/start, Methods: {'POST'}
+2025-07-18 12:39:19,697 - app - INFO - Route: /api/tests/hexaco/questions, Methods: {'GET'}
+2025-07-18 12:39:19,697 - app - INFO - Route: /api/tests/hexaco/answer, Methods: {'POST'}
+2025-07-18 12:39:19,697 - app - INFO - Route: /api/tests/hexaco/progress/{session_id}, Methods: {'GET'}
+2025-07-18 12:39:19,697 - app - INFO - Route: /api/tests/hexaco/score/{session_id}, Methods: {'GET'}
+2025-07-18 12:39:19,697 - app - INFO - Route: /api/tests/hexaco/profile/{user_id}, Methods: {'GET'}
+2025-07-18 12:39:19,697 - app - INFO - Route: /api/tests/hexaco/my-profile, Methods: {'GET'}
+2025-07-18 12:39:19,697 - app - INFO - Route: /api/tests/hexaco/analysis/{user_id}, Methods: {'GET'}
+2025-07-18 12:39:19,697 - app - INFO - Route: /api/tests/hexaco/my-analysis, Methods: {'GET'}
+2025-07-18 12:39:19,697 - app - INFO - Route: /insight/generate, Methods: {'POST'}
+2025-07-18 12:39:19,697 - app - INFO - Route: /insight/get, Methods: {'GET'}
+2025-07-18 12:39:19,698 - app - INFO - Route: /insight/regenerate, Methods: {'POST'}
+2025-07-18 12:39:19,698 - app - INFO - Route: /insight/save, Methods: {'PATCH'}
+2025-07-18 12:39:19,698 - app - INFO - Route: /insight/rewrite, Methods: {'POST'}
+2025-07-18 12:39:19,698 - app - INFO - Route: /api/v1/competence-tree/generate, Methods: {'POST'}
+2025-07-18 12:39:19,698 - app - INFO - Route: /api/v1/competence-tree/generate-from-anchors, Methods: {'POST'}
+2025-07-18 12:39:19,698 - app - INFO - Route: /api/v1/competence-tree/anchor-skills, Methods: {'GET'}
+2025-07-18 12:39:19,698 - app - INFO - Route: /api/v1/competence-tree/{graph_id}, Methods: {'GET'}
+2025-07-18 12:39:19,698 - app - INFO - Route: /api/v1/competence-tree/node/{node_id}/complete, Methods: {'PATCH'}
+2025-07-18 12:39:19,698 - app - INFO - Route: /api/v1/career-progression/{occupation_id}, Methods: {'GET'}
+2025-07-18 12:39:19,698 - app - INFO - Route: /api/v1/career-progression/{occupation_id}/personalized, Methods: {'GET'}
+2025-07-18 12:39:19,698 - app - INFO - Route: /api/v1/career-progression/{occupation_id}/analyze, Methods: {'GET'}
+2025-07-18 12:39:19,698 - app - INFO - Route: /api/v1/users/me, Methods: {'GET'}
+2025-07-18 12:39:19,698 - app - INFO - Route: /api/v1/users/{user_id}/profile, Methods: {'GET'}
+2025-07-18 12:39:19,698 - app - INFO - Route: /api/reflection/questions, Methods: {'GET'}
+2025-07-18 12:39:19,698 - app - INFO - Route: /api/reflection/responses/{user_id}, Methods: {'GET'}
+2025-07-18 12:39:19,698 - app - INFO - Route: /api/reflection/responses, Methods: {'GET'}
+2025-07-18 12:39:19,698 - app - INFO - Route: /api/reflection/responses, Methods: {'POST'}
+2025-07-18 12:39:19,698 - app - INFO - Route: /api/reflection/responses/{response_id}, Methods: {'PUT'}
+2025-07-18 12:39:19,698 - app - INFO - Route: /api/reflection/responses/batch, Methods: {'POST'}
+2025-07-18 12:39:19,698 - app - INFO - Route: /api/reflection/responses/{response_id}, Methods: {'DELETE'}
+2025-07-18 12:39:19,698 - app - INFO - Route: /api/v1/avatar/generate-avatar/me, Methods: {'POST'}
+2025-07-18 12:39:19,698 - app - INFO - Route: /api/v1/avatar/me, Methods: {'GET'}
+2025-07-18 12:39:19,698 - app - INFO - Route: /api/v1/avatar/generate-avatar-test/{user_id}, Methods: {'POST'}
+2025-07-18 12:39:19,698 - app - INFO - Route: /onboarding/status, Methods: {'GET'}
+2025-07-18 12:39:19,699 - app - INFO - Route: /onboarding/start, Methods: {'POST'}
+2025-07-18 12:39:19,699 - app - INFO - Route: /onboarding/response, Methods: {'POST'}
+2025-07-18 12:39:19,699 - app - INFO - Route: /onboarding/complete, Methods: {'POST'}
+2025-07-18 12:39:19,699 - app - INFO - Route: /onboarding/profile, Methods: {'GET'}
+2025-07-18 12:39:19,699 - app - INFO - Route: /onboarding/responses, Methods: {'GET'}
+2025-07-18 12:39:19,699 - app - INFO - Route: /onboarding/reset, Methods: {'DELETE'}
+2025-07-18 12:39:19,699 - app - INFO - Route: /onboarding/skip, Methods: {'POST'}
+2025-07-18 12:39:19,699 - app - INFO - Route: /api/v1/education/programs/search, Methods: {'POST'}
+2025-07-18 12:39:19,699 - app - INFO - Route: /api/v1/education/programs/{program_id}, Methods: {'GET'}
+2025-07-18 12:39:19,699 - app - INFO - Route: /api/v1/education/institutions, Methods: {'GET'}
+2025-07-18 12:39:19,699 - app - INFO - Route: /api/v1/education/metadata, Methods: {'GET'}
+2025-07-18 12:39:19,699 - app - INFO - Route: /api/v1/school-programs/search, Methods: {'POST'}
+2025-07-18 12:39:19,699 - app - INFO - Route: /api/v1/school-programs/search, Methods: {'GET'}
+2025-07-18 12:39:19,699 - app - INFO - Route: /api/v1/school-programs/programs/{program_id}, Methods: {'GET'}
+2025-07-18 12:39:19,699 - app - INFO - Route: /api/v1/school-programs/users/interactions, Methods: {'POST'}
+2025-07-18 12:39:19,699 - app - INFO - Route: /api/v1/school-programs/users/saved-programs, Methods: {'POST'}
+2025-07-18 12:39:19,699 - app - INFO - Route: /api/v1/school-programs/users/saved-programs, Methods: {'GET'}
+2025-07-18 12:39:19,699 - app - INFO - Route: /api/v1/school-programs/users/saved-programs/{program_id}, Methods: {'DELETE'}
+2025-07-18 12:39:19,699 - app - INFO - Route: /api/v1/school-programs/filters, Methods: {'GET'}
+2025-07-18 12:39:19,699 - app - INFO - Route: /api/v1/school-programs/health, Methods: {'GET'}
+2025-07-18 12:39:19,699 - app - INFO - Route: /api/v1/courses, Methods: {'POST'}
+2025-07-18 12:39:19,699 - app - INFO - Route: /api/v1/courses, Methods: {'GET'}
+2025-07-18 12:39:19,699 - app - INFO - Route: /api/v1/courses/{course_id}, Methods: {'GET'}
+2025-07-18 12:39:19,699 - app - INFO - Route: /api/v1/courses/{course_id}, Methods: {'PUT'}
+2025-07-18 12:39:19,699 - app - INFO - Route: /api/v1/courses/{course_id}, Methods: {'DELETE'}
+2025-07-18 12:39:19,700 - app - INFO - Route: /api/v1/courses/{course_id}/targeted-analysis, Methods: {'POST'}
+2025-07-18 12:39:19,700 - app - INFO - Route: /api/v1/conversations/{session_id}/respond, Methods: {'POST'}
+2025-07-18 12:39:19,700 - app - INFO - Route: /api/v1/psychological-profile/{user_id}, Methods: {'GET'}
+2025-07-18 12:39:19,700 - app - INFO - Route: /api/v1/career-signals/{user_id}, Methods: {'GET'}
+2025-07-18 12:39:19,700 - app - INFO - Route: /api/v1/courses/{course_id}/insights, Methods: {'GET'}
+2025-07-18 12:39:19,700 - app - INFO - Route: /api/v1/conversations/{session_id}/summary, Methods: {'GET'}
+2025-07-18 12:39:19,700 - app - INFO - Route: /api/v1/enhanced-chat/send, Methods: {'POST'}
+2025-07-18 12:39:19,700 - app - INFO - Route: /api/v1/enhanced-chat/skill-explanation, Methods: {'POST'}
+2025-07-18 12:39:19,700 - app - INFO - Route: /api/v1/enhanced-chat/learning-recommendations, Methods: {'GET'}
+2025-07-18 12:39:19,700 - app - INFO - Route: /api/v1/enhanced-chat/career-path-analysis, Methods: {'POST'}
+2025-07-18 12:39:19,700 - app - INFO - Route: /api/v1/enhanced-chat/graphsage-insights, Methods: {'GET'}
+2025-07-18 12:39:19,700 - app - INFO - Route: /api/v1/enhanced-chat/status, Methods: {'GET'}
+2025-07-18 12:39:19,700 - app - INFO - Route: /api/v1/socratic-chat/send, Methods: {'POST'}
+2025-07-18 12:39:19,700 - app - INFO - Route: /api/v1/socratic-chat/introduction, Methods: {'POST'}
+2025-07-18 12:39:19,700 - app - INFO - Route: /api/v1/socratic-chat/modes, Methods: {'GET'}
+2025-07-18 12:39:19,700 - app - INFO - Route: /api/v1/socratic-chat/status, Methods: {'GET'}
+2025-07-18 12:39:19,700 - app - INFO - Route: /api/v1/career-goals/, Methods: {'POST'}
+2025-07-18 12:39:19,700 - app - INFO - Route: /api/v1/career-goals/active, Methods: {'GET'}
+2025-07-18 12:39:19,700 - app - INFO - Route: /api/v1/career-goals/, Methods: {'GET'}
+2025-07-18 12:39:19,700 - app - INFO - Route: /api/v1/career-goals/{goal_id}, Methods: {'PUT'}
+2025-07-18 12:39:19,700 - app - INFO - Route: /api/v1/career-goals/{goal_id}, Methods: {'DELETE'}
+2025-07-18 12:39:19,700 - app - INFO - Route: /api/v1/career-goals/{goal_id}/milestones/{milestone_id}/complete, Methods: {'POST'}
+2025-07-18 12:39:19,700 - app - INFO - Route: /api/v1/career-goals/{goal_id}/milestones, Methods: {'GET'}
+2025-07-18 12:39:19,700 - app - INFO - Route: /api/v1/jobs/recommendations/me, Methods: {'GET'}
+2025-07-18 12:39:19,700 - app - INFO - Route: /api/v1/jobs/recommendations/{user_id}, Methods: {'GET'}
+2025-07-18 12:39:19,701 - app - INFO - Route: /api/v1/jobs/recommendations/{user_id}, Methods: {'POST'}
+2025-07-18 12:39:19,701 - app - INFO - Route: /api/v1/jobs/skill-tree/{job_id}, Methods: {'GET'}
+2025-07-18 12:39:19,701 - app - INFO - Route: /api/careers/llm-query, Methods: {'POST'}
+2025-07-18 12:39:19,701 - app - INFO - Route: /api/orientator/test-message, Methods: {'POST'}
+2025-07-18 12:39:19,701 - app - INFO - Route: /api/orientator/message, Methods: {'POST'}
+2025-07-18 12:39:19,701 - app - INFO - Route: /api/orientator/save-component, Methods: {'POST'}
+2025-07-18 12:39:19,701 - app - INFO - Route: /api/orientator/conversations/{conversation_id}/messages, Methods: {'GET'}
+2025-07-18 12:39:19,701 - app - INFO - Route: /api/orientator/journey/{user_id}, Methods: {'GET'}
+2025-07-18 12:39:19,701 - app - INFO - Route: /api/orientator/conversations, Methods: {'GET'}
+2025-07-18 12:39:19,701 - app - INFO - Route: /api/orientator/tool-analytics, Methods: {'GET'}
+2025-07-18 12:39:19,701 - app - INFO - Route: /api/orientator/feedback, Methods: {'POST'}
+2025-07-18 12:39:19,701 - app - INFO - Route: /api/orientator/health, Methods: {'GET'}
+2025-07-18 12:39:19,701 - app - INFO - ======================
+2025-07-18 12:39:19,701 - app - INFO - 🚀 Application startup initiated
+2025-07-18 12:39:19,702 - app - INFO - Loading models...
+2025-07-18 12:39:19,702 - scripts.model_loader - INFO - Starting model loading...
+2025-07-18 12:39:19,703 - scripts.model_loader - INFO - Loading SentenceTransformer models...
+2025-07-18 12:39:19,703 - scripts.model_loader - WARNING - SentenceTransformer model directory not found, skipping...
+2025-07-18 12:39:19,703 - scripts.model_loader - INFO - Loading PCA, OHE, and Scaler models...
+2025-07-18 12:39:19,703 - scripts.model_loader - WARNING - Model files not found, skipping...
+2025-07-18 12:39:19,703 - scripts.model_loader - INFO - Model loading process completed!
+2025-07-18 12:39:19,703 - app - INFO - Models loaded from scripts
+2025-07-18 12:39:19,703 - app - INFO - Model loading process completed
+2025-07-18 12:39:19,703 - app - INFO - ✅ Models loaded successfully
+2025-07-18 12:39:19,703 - app - INFO - 🔌 Attempting database initialization...
+2025-07-18 12:39:19,703 - app.core.config - INFO - Using DATABASE_URL for local development
+2025-07-18 12:39:19,703 - app.utils.database - INFO - Attempting to connect to database...
+2025-07-18 12:39:19,723 - app.utils.database - INFO - ✅ Database engine created successfully
+2025-07-18 12:39:20,665 - app.utils.database - INFO - ✅ Database connection test successful
+2025-07-18 12:39:20,711 - app.utils.database - INFO - Database: postgres
+2025-07-18 12:39:20,711 - app.utils.database - INFO - User: postgres
+2025-07-18 12:39:20,712 - app.utils.database - INFO - PostgreSQL version: PostgreSQL 17.4 on aarch64-unknown-linux-gnu, comp...
+2025-07-18 12:39:20,760 - app.utils.database - INFO - Sample tables: ['messages', 'user_journey_milestones', 'user_profiles', 'user_skills', 'alembic_version']...
+2025-07-18 12:39:20,795 - app.utils.database - INFO - ✅ Database initialization completed successfully
+2025-07-18 12:39:20,796 - app - INFO - ✅ Application startup completed successfully
+2025-07-18 12:39:20,979 - app.routers.user - INFO - Login attempt for email: beli5@example.com
+2025-07-18 12:39:21,332 - app.routers.user - INFO - Successful login for user ID: 22
+2025-07-18 12:39:21,796 - app.routers.onboarding - INFO - Resetting onboarding for user ID: 22
+2025-07-18 12:39:22,031 - app.routers.onboarding - INFO - Reset onboarding for user 22
+2025-07-18 12:39:22,211 - app.routers.user - INFO - Checking onboarding status for user ID: 22
+2025-07-18 12:39:22,385 - app.routers.onboarding - INFO - Saving onboarding response for user ID: 22
+2025-07-18 12:39:22,434 - app.routers.onboarding - INFO - Creating new onboarding session for user 22
+2025-07-18 12:39:22,530 - app.routers.onboarding - ERROR - Database error saving response: (psycopg2.errors.NotNullViolation) null value in column "id" of relation "personality_assessments" violates not-null constraint
+DETAIL:  Failing row contains (null, 22, onboarding, v1.0, 09b0ae89-15b4-4667-a262-363959b16f48, in_progress, 2025-07-18 16:39:22.434609+00, null, 9, 0, {}, {}, 2025-07-18 16:39:22.30867+00, 2025-07-18 16:39:22.30867+00).
+
+[SQL: INSERT INTO personality_assessments (user_id, assessment_type, assessment_version, session_id, status, started_at, completed_at, total_items, completed_items, validity_flags, metadata) VALUES (%(user_id)s, %(assessment_type)s, %(assessment_version)s, %(session_id)s::UUID, %(status)s, %(started_at)s, %(completed_at)s, %(total_items)s, %(completed_items)s, %(validity_flags)s, %(metadata)s) RETURNING personality_assessments.id, personality_assessments.created_at, personality_assessments.updated_at]
+[parameters: {'user_id': 22, 'assessment_type': 'onboarding', 'assessment_version': 'v1.0', 'session_id': UUID('09b0ae89-15b4-4667-a262-363959b16f48'), 'status': 'in_progress', 'started_at': datetime.datetime(2025, 7, 18, 16, 39, 22, 434609), 'completed_at': None, 'total_items': 9, 'completed_items': 0, 'validity_flags': '{}', 'metadata': '{}'}]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2025-07-18 12:39:22,531 - app.utils.database - INFO - HTTPException from endpoint: Database error: (psycopg2.errors.NotNullViolation) null value in column "id" of relation "personality_assessments" violates not-null constraint
+DETAIL:  Failing row contains (null, 22, onboarding, v1.0, 09b0ae89-15b4-4667-a262-363959b16f48, in_progress, 2025-07-18 16:39:22.434609+00, null, 9, 0, {}, {}, 2025-07-18 16:39:22.30867+00, 2025-07-18 16:39:22.30867+00).
+
+[SQL: INSERT INTO personality_assessments (user_id, assessment_type, assessment_version, session_id, status, started_at, completed_at, total_items, completed_items, validity_flags, metadata) VALUES (%(user_id)s, %(assessment_type)s, %(assessment_version)s, %(session_id)s::UUID, %(status)s, %(started_at)s, %(completed_at)s, %(total_items)s, %(completed_items)s, %(validity_flags)s, %(metadata)s) RETURNING personality_assessments.id, personality_assessments.created_at, personality_assessments.updated_at]
+[parameters: {'user_id': 22, 'assessment_type': 'onboarding', 'assessment_version': 'v1.0', 'session_id': UUID('09b0ae89-15b4-4667-a262-363959b16f48'), 'status': 'in_progress', 'started_at': datetime.datetime(2025, 7, 18, 16, 39, 22, 434609), 'completed_at': None, 'total_items': 9, 'completed_items': 0, 'validity_flags': '{}', 'metadata': '{}'}]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2025-07-18 12:39:49,118 - app - INFO - ======= ROUTER REGISTRATION DETAILS =======
+2025-07-18 12:39:49,119 - app - INFO - auth_router import path: fastapi.routing
+2025-07-18 12:39:49,119 - app - INFO - get_current_user import path: app.routers.user
+2025-07-18 12:39:49,119 - app - INFO - profiles_router import path: fastapi.routing
+2025-07-18 12:39:49,119 - app - INFO - Registering auth_router routes: ["/auth/register [{'POST'}]", "/auth/login [{'POST'}]", "/auth/update [{'PUT'}]", "/auth/change-password [{'PUT'}]", "/auth/onboarding-status [{'GET'}]"]
+2025-07-18 12:39:49,119 - app - INFO - Registering profiles_router routes: ["/profiles/test [{'GET'}]", "/profiles/me [{'GET'}]", "/profiles/update [{'PUT'}]", "/profiles/{user_id} [{'GET'}]"]
+2025-07-18 12:39:49,119 - app - INFO - Registering chat_router routes: ["/chat/send [{'POST'}]", "/chat/clear [{'POST'}]"]
+2025-07-18 12:39:49,119 - app - INFO - Registering peers_router routes: ["/peers/suggested [{'GET'}]", "/peers/compatible [{'GET'}]", "/peers/homepage [{'GET'}]", "/peers/refresh [{'POST'}]"]
+2025-07-18 12:39:49,119 - app - INFO - Registering messages_router routes: ["/messages [{'POST'}]", "/messages/conversation/{peer_id} [{'GET'}]", "/messages/conversations [{'GET'}]", "/messages/suggested-peers [{'GET'}]"]
+2025-07-18 12:39:49,119 - app - INFO - Registering test_router routes: ["/test/hello [{'GET'}]"]
+2025-07-18 12:39:49,119 - app - INFO - Registering space_router routes: ["/space/recommendations [{'POST'}]", "/space/recommendations [{'GET'}]", "/space/recommendations/{identifier} [{'DELETE'}]", "/space/notes [{'POST'}]", "/space/notes [{'GET'}]", "/space/notes/{note_id} [{'PUT'}]", "/space/notes/{note_id} [{'DELETE'}]", "/space/skills [{'GET'}]", "/space/skills [{'PUT'}]", "/space/recommendations/{oasis_code}/skill-comparison [{'GET'}]", "/space/recommendations/{recommendation_id}/generate-analysis [{'POST'}]"]
+2025-07-18 12:39:49,119 - app - INFO - Registering vector_router routes: ["/vector/search [{'POST'}]", "/vector/search/save [{'POST'}]", "/vector/health [{'GET'}]", "/vector/suggested-peers [{'GET'}]", "/vector/debug [{'GET'}]"]
+2025-07-18 12:39:49,119 - app - INFO - Registering recommendations_router routes: ["/recommendations [{'GET'}]", "/recommendations/swipe [{'POST'}]"]
+2025-07-18 12:39:49,119 - app - INFO - Registering careers_router routes: ["/careers/recommendations [{'GET'}]", "/careers/save/{career_id} [{'POST'}]", "/careers/saved [{'GET'}]", "/careers/fit-analysis [{'POST'}]", "/careers/cleanup-test-jobs [{'DELETE'}]"]
+2025-07-18 12:39:49,120 - app - INFO - Registering tree_router routes: ["/tree [{'POST'}]", "/tree/skills [{'POST'}]"]
+2025-07-18 12:39:49,120 - app - INFO - Registering tree_paths_router routes: ["/tree-paths/ [{'POST'}]", "/tree-paths/ [{'GET'}]", "/tree-paths/{tree_path_id} [{'GET'}]", "/tree-paths/{tree_path_id} [{'DELETE'}]"]
+2025-07-18 12:39:49,120 - app - INFO - Registering node_notes_router routes: ["/node-notes/ [{'POST'}]", "/node-notes/ [{'GET'}]", "/node-notes/node/{node_id} [{'GET'}]", "/node-notes/{note_id} [{'GET'}]", "/node-notes/{note_id} [{'DELETE'}]"]
+2025-07-18 12:39:49,120 - app - INFO - Registering user_progress_router routes: ["/user-progress/ [{'GET'}]", "/user-progress/update [{'POST'}]"]
+2025-07-18 12:39:49,120 - app - INFO - Registering holland_test_router routes: ["/api/tests/holland/ [{'GET'}]", "/api/tests/holland/questions [{'GET'}]", "/api/tests/holland/answer [{'POST'}]", "/api/tests/holland/score/{attempt_id} [{'GET'}]", "/api/tests/holland/user-results [{'GET'}]", "/api/tests/holland/profile-description [{'GET'}]", "/api/tests/holland/profile-description/{user_id} [{'GET'}]"]
+2025-07-18 12:39:49,120 - app - INFO - Registering hexaco_test_router routes: ["/api/tests/hexaco/ [{'GET'}]", "/api/tests/hexaco/languages [{'GET'}]", "/api/tests/hexaco/versions [{'GET'}]", "/api/tests/hexaco/start [{'POST'}]", "/api/tests/hexaco/questions [{'GET'}]", "/api/tests/hexaco/answer [{'POST'}]", "/api/tests/hexaco/progress/{session_id} [{'GET'}]", "/api/tests/hexaco/score/{session_id} [{'GET'}]", "/api/tests/hexaco/profile/{user_id} [{'GET'}]", "/api/tests/hexaco/my-profile [{'GET'}]", "/api/tests/hexaco/analysis/{user_id} [{'GET'}]", "/api/tests/hexaco/my-analysis [{'GET'}]"]
+2025-07-18 12:39:49,120 - app - INFO - Registering insight_router routes: ["/insight/generate [{'POST'}]", "/insight/get [{'GET'}]", "/insight/regenerate [{'POST'}]", "/insight/save [{'PATCH'}]", "/insight/rewrite [{'POST'}]"]
+2025-07-18 12:39:49,120 - app - INFO - Registering orientator_router routes: ["/orientator/test-message [{'POST'}]", "/orientator/message [{'POST'}]", "/orientator/save-component [{'POST'}]", "/orientator/conversations/{conversation_id}/messages [{'GET'}]", "/orientator/journey/{user_id} [{'GET'}]", "/orientator/conversations [{'GET'}]", "/orientator/tool-analytics [{'GET'}]", "/orientator/feedback [{'POST'}]", "/orientator/health [{'GET'}]"]
+2025-07-18 12:39:49,120 - app - INFO - ============================================
+2025-07-18 12:39:49,120 - app - INFO - Including routers in the FastAPI app
+2025-07-18 12:39:49,122 - app - INFO - Auth router included successfully
+2025-07-18 12:39:49,126 - app - INFO - Profiles router included successfully
+2025-07-18 12:39:49,210 - app - INFO - All routers included successfully
+2025-07-18 12:39:49,210 - app - INFO - === Available Routes ===
+2025-07-18 12:39:49,210 - app - INFO - Route: /openapi.json, Methods: {'GET', 'HEAD'}
+2025-07-18 12:39:49,210 - app - INFO - Route: /docs, Methods: {'GET', 'HEAD'}
+2025-07-18 12:39:49,210 - app - INFO - Route: /docs/oauth2-redirect, Methods: {'GET', 'HEAD'}
+2025-07-18 12:39:49,210 - app - INFO - Route: /redoc, Methods: {'GET', 'HEAD'}
+2025-07-18 12:39:49,210 - app - INFO - Mount: /static
+2025-07-18 12:39:49,210 - app - INFO - Route: /auth/register, Methods: {'POST'}
+2025-07-18 12:39:49,210 - app - INFO - Route: /auth/login, Methods: {'POST'}
+2025-07-18 12:39:49,211 - app - INFO - Route: /auth/update, Methods: {'PUT'}
+2025-07-18 12:39:49,211 - app - INFO - Route: /auth/change-password, Methods: {'PUT'}
+2025-07-18 12:39:49,211 - app - INFO - Route: /auth/onboarding-status, Methods: {'GET'}
+2025-07-18 12:39:49,211 - app - INFO - Route: /profiles/test, Methods: {'GET'}
+2025-07-18 12:39:49,211 - app - INFO - Route: /profiles/me, Methods: {'GET'}
+2025-07-18 12:39:49,211 - app - INFO - Route: /profiles/update, Methods: {'PUT'}
+2025-07-18 12:39:49,211 - app - INFO - Route: /profiles/{user_id}, Methods: {'GET'}
+2025-07-18 12:39:49,211 - app - INFO - Route: /test/hello, Methods: {'GET'}
+2025-07-18 12:39:49,211 - app - INFO - Route: /chat/conversations, Methods: {'GET'}
+2025-07-18 12:39:49,211 - app - INFO - Route: /chat/conversations, Methods: {'POST'}
+2025-07-18 12:39:49,211 - app - INFO - Route: /chat/conversations/{conversation_id}, Methods: {'GET'}
+2025-07-18 12:39:49,211 - app - INFO - Route: /chat/conversations/{conversation_id}, Methods: {'PUT'}
+2025-07-18 12:39:49,211 - app - INFO - Route: /chat/conversations/{conversation_id}, Methods: {'DELETE'}
+2025-07-18 12:39:49,211 - app - INFO - Route: /chat/conversations/{conversation_id}/favorite, Methods: {'POST'}
+2025-07-18 12:39:49,211 - app - INFO - Route: /chat/conversations/{conversation_id}/archive, Methods: {'POST'}
+2025-07-18 12:39:49,211 - app - INFO - Route: /chat/conversations/{conversation_id}/generate-title, Methods: {'POST'}
+2025-07-18 12:39:49,211 - app - INFO - Route: /chat/conversations/{conversation_id}/messages, Methods: {'GET'}
+2025-07-18 12:39:49,211 - app - INFO - Route: /chat/conversations/{conversation_id}/statistics, Methods: {'GET'}
+2025-07-18 12:39:49,211 - app - INFO - Route: /chat/conversations/{conversation_id}/export, Methods: {'POST'}
+2025-07-18 12:39:49,211 - app - INFO - Route: /chat/conversations/send/{conversation_id}, Methods: {'POST'}
+2025-07-18 12:39:49,211 - app - INFO - Route: /chat/send, Methods: {'POST'}
+2025-07-18 12:39:49,211 - app - INFO - Route: /chat/clear, Methods: {'POST'}
+2025-07-18 12:39:49,211 - app - INFO - Route: /chat/share/conversations/{conversation_id}, Methods: {'POST'}
+2025-07-18 12:39:49,211 - app - INFO - Route: /chat/share/shared/{share_token}, Methods: {'GET'}
+2025-07-18 12:39:49,211 - app - INFO - Route: /chat/share/shares/{share_id}, Methods: {'PUT'}
+2025-07-18 12:39:49,211 - app - INFO - Route: /chat/share/shares/{share_id}, Methods: {'DELETE'}
+2025-07-18 12:39:49,211 - app - INFO - Route: /chat/share/user/shares, Methods: {'GET'}
+2025-07-18 12:39:49,212 - app - INFO - Route: /chat/share/shares/{share_id}/analytics, Methods: {'GET'}
+2025-07-18 12:39:49,212 - app - INFO - Route: /chat/analytics/usage, Methods: {'GET'}
+2025-07-18 12:39:49,212 - app - INFO - Route: /chat/analytics/trends, Methods: {'GET'}
+2025-07-18 12:39:49,212 - app - INFO - Route: /chat/analytics/topics, Methods: {'GET'}
+2025-07-18 12:39:49,212 - app - INFO - Route: /chat/analytics/summary, Methods: {'GET'}
+2025-07-18 12:39:49,212 - app - INFO - Route: /peers/suggested, Methods: {'GET'}
+2025-07-18 12:39:49,212 - app - INFO - Route: /peers/compatible, Methods: {'GET'}
+2025-07-18 12:39:49,212 - app - INFO - Route: /peers/homepage, Methods: {'GET'}
+2025-07-18 12:39:49,212 - app - INFO - Route: /peers/refresh, Methods: {'POST'}
+2025-07-18 12:39:49,212 - app - INFO - Route: /messages, Methods: {'POST'}
+2025-07-18 12:39:49,212 - app - INFO - Route: /messages/conversation/{peer_id}, Methods: {'GET'}
+2025-07-18 12:39:49,212 - app - INFO - Route: /messages/conversations, Methods: {'GET'}
+2025-07-18 12:39:49,212 - app - INFO - Route: /messages/suggested-peers, Methods: {'GET'}
+2025-07-18 12:39:49,212 - app - INFO - Route: /space/recommendations, Methods: {'POST'}
+2025-07-18 12:39:49,212 - app - INFO - Route: /space/recommendations, Methods: {'GET'}
+2025-07-18 12:39:49,212 - app - INFO - Route: /space/recommendations/{identifier}, Methods: {'DELETE'}
+2025-07-18 12:39:49,212 - app - INFO - Route: /space/notes, Methods: {'POST'}
+2025-07-18 12:39:49,212 - app - INFO - Route: /space/notes, Methods: {'GET'}
+2025-07-18 12:39:49,212 - app - INFO - Route: /space/notes/{note_id}, Methods: {'PUT'}
+2025-07-18 12:39:49,212 - app - INFO - Route: /space/notes/{note_id}, Methods: {'DELETE'}
+2025-07-18 12:39:49,212 - app - INFO - Route: /space/skills, Methods: {'GET'}
+2025-07-18 12:39:49,212 - app - INFO - Route: /space/skills, Methods: {'PUT'}
+2025-07-18 12:39:49,212 - app - INFO - Route: /space/recommendations/{oasis_code}/skill-comparison, Methods: {'GET'}
+2025-07-18 12:39:49,212 - app - INFO - Route: /space/recommendations/{recommendation_id}/generate-analysis, Methods: {'POST'}
+2025-07-18 12:39:49,212 - app - INFO - Route: /vector/search, Methods: {'POST'}
+2025-07-18 12:39:49,212 - app - INFO - Route: /vector/search/save, Methods: {'POST'}
+2025-07-18 12:39:49,212 - app - INFO - Route: /vector/health, Methods: {'GET'}
+2025-07-18 12:39:49,212 - app - INFO - Route: /vector/suggested-peers, Methods: {'GET'}
+2025-07-18 12:39:49,213 - app - INFO - Route: /vector/debug, Methods: {'GET'}
+2025-07-18 12:39:49,213 - app - INFO - Route: /recommendations, Methods: {'GET'}
+2025-07-18 12:39:49,213 - app - INFO - Route: /recommendations/swipe, Methods: {'POST'}
+2025-07-18 12:39:49,213 - app - INFO - Route: /careers/recommendations, Methods: {'GET'}
+2025-07-18 12:39:49,213 - app - INFO - Route: /careers/save/{career_id}, Methods: {'POST'}
+2025-07-18 12:39:49,213 - app - INFO - Route: /careers/saved, Methods: {'GET'}
+2025-07-18 12:39:49,213 - app - INFO - Route: /careers/fit-analysis, Methods: {'POST'}
+2025-07-18 12:39:49,213 - app - INFO - Route: /careers/cleanup-test-jobs, Methods: {'DELETE'}
+2025-07-18 12:39:49,213 - app - INFO - Route: /tree, Methods: {'POST'}
+2025-07-18 12:39:49,213 - app - INFO - Route: /tree/skills, Methods: {'POST'}
+2025-07-18 12:39:49,213 - app - INFO - Route: /tree-paths/, Methods: {'POST'}
+2025-07-18 12:39:49,213 - app - INFO - Route: /tree-paths/, Methods: {'GET'}
+2025-07-18 12:39:49,213 - app - INFO - Route: /tree-paths/{tree_path_id}, Methods: {'GET'}
+2025-07-18 12:39:49,213 - app - INFO - Route: /tree-paths/{tree_path_id}, Methods: {'DELETE'}
+2025-07-18 12:39:49,213 - app - INFO - Route: /node-notes/, Methods: {'POST'}
+2025-07-18 12:39:49,213 - app - INFO - Route: /node-notes/, Methods: {'GET'}
+2025-07-18 12:39:49,213 - app - INFO - Route: /node-notes/node/{node_id}, Methods: {'GET'}
+2025-07-18 12:39:49,213 - app - INFO - Route: /node-notes/{note_id}, Methods: {'GET'}
+2025-07-18 12:39:49,213 - app - INFO - Route: /node-notes/{note_id}, Methods: {'DELETE'}
+2025-07-18 12:39:49,213 - app - INFO - Route: /user-progress/, Methods: {'GET'}
+2025-07-18 12:39:49,213 - app - INFO - Route: /user-progress/update, Methods: {'POST'}
+2025-07-18 12:39:49,213 - app - INFO - Route: /api/v1/jobs/save, Methods: {'POST'}
+2025-07-18 12:39:49,213 - app - INFO - Route: /api/v1/jobs/saved, Methods: {'GET'}
+2025-07-18 12:39:49,213 - app - INFO - Route: /api/v1/jobs/{job_id}, Methods: {'DELETE'}
+2025-07-18 12:39:49,213 - app - INFO - Route: /api/v1/jobs/{esco_id}/details, Methods: {'GET'}
+2025-07-18 12:39:49,213 - app - INFO - Route: /api/v1/jobs/recommendations/me, Methods: {'GET'}
+2025-07-18 12:39:49,213 - app - INFO - Route: /api/v1/program-recommendations/career-goal/{goal_id}, Methods: {'GET'}
+2025-07-18 12:39:49,213 - app - INFO - Route: /api/v1/program-recommendations/career-goal/{goal_id}/save, Methods: {'POST'}
+2025-07-18 12:39:49,213 - app - INFO - Route: /api/v1/program-recommendations/career-goal/{goal_id}/saved, Methods: {'GET'}
+2025-07-18 12:39:49,214 - app - INFO - Route: /api/v1/program-recommendations/institutions, Methods: {'GET'}
+2025-07-18 12:39:49,214 - app - INFO - Route: /api/tests/holland/, Methods: {'GET'}
+2025-07-18 12:39:49,214 - app - INFO - Route: /api/tests/holland/questions, Methods: {'GET'}
+2025-07-18 12:39:49,214 - app - INFO - Route: /api/tests/holland/answer, Methods: {'POST'}
+2025-07-18 12:39:49,214 - app - INFO - Route: /api/tests/holland/score/{attempt_id}, Methods: {'GET'}
+2025-07-18 12:39:49,214 - app - INFO - Route: /api/tests/holland/user-results, Methods: {'GET'}
+2025-07-18 12:39:49,214 - app - INFO - Route: /api/tests/holland/profile-description, Methods: {'GET'}
+2025-07-18 12:39:49,214 - app - INFO - Route: /api/tests/holland/profile-description/{user_id}, Methods: {'GET'}
+2025-07-18 12:39:49,214 - app - INFO - Route: /api/tests/hexaco/, Methods: {'GET'}
+2025-07-18 12:39:49,214 - app - INFO - Route: /api/tests/hexaco/languages, Methods: {'GET'}
+2025-07-18 12:39:49,214 - app - INFO - Route: /api/tests/hexaco/versions, Methods: {'GET'}
+2025-07-18 12:39:49,214 - app - INFO - Route: /api/tests/hexaco/start, Methods: {'POST'}
+2025-07-18 12:39:49,214 - app - INFO - Route: /api/tests/hexaco/questions, Methods: {'GET'}
+2025-07-18 12:39:49,214 - app - INFO - Route: /api/tests/hexaco/answer, Methods: {'POST'}
+2025-07-18 12:39:49,214 - app - INFO - Route: /api/tests/hexaco/progress/{session_id}, Methods: {'GET'}
+2025-07-18 12:39:49,214 - app - INFO - Route: /api/tests/hexaco/score/{session_id}, Methods: {'GET'}
+2025-07-18 12:39:49,214 - app - INFO - Route: /api/tests/hexaco/profile/{user_id}, Methods: {'GET'}
+2025-07-18 12:39:49,214 - app - INFO - Route: /api/tests/hexaco/my-profile, Methods: {'GET'}
+2025-07-18 12:39:49,214 - app - INFO - Route: /api/tests/hexaco/analysis/{user_id}, Methods: {'GET'}
+2025-07-18 12:39:49,214 - app - INFO - Route: /api/tests/hexaco/my-analysis, Methods: {'GET'}
+2025-07-18 12:39:49,214 - app - INFO - Route: /insight/generate, Methods: {'POST'}
+2025-07-18 12:39:49,214 - app - INFO - Route: /insight/get, Methods: {'GET'}
+2025-07-18 12:39:49,214 - app - INFO - Route: /insight/regenerate, Methods: {'POST'}
+2025-07-18 12:39:49,214 - app - INFO - Route: /insight/save, Methods: {'PATCH'}
+2025-07-18 12:39:49,214 - app - INFO - Route: /insight/rewrite, Methods: {'POST'}
+2025-07-18 12:39:49,215 - app - INFO - Route: /api/v1/competence-tree/generate, Methods: {'POST'}
+2025-07-18 12:39:49,215 - app - INFO - Route: /api/v1/competence-tree/generate-from-anchors, Methods: {'POST'}
+2025-07-18 12:39:49,215 - app - INFO - Route: /api/v1/competence-tree/anchor-skills, Methods: {'GET'}
+2025-07-18 12:39:49,215 - app - INFO - Route: /api/v1/competence-tree/{graph_id}, Methods: {'GET'}
+2025-07-18 12:39:49,215 - app - INFO - Route: /api/v1/competence-tree/node/{node_id}/complete, Methods: {'PATCH'}
+2025-07-18 12:39:49,215 - app - INFO - Route: /api/v1/career-progression/{occupation_id}, Methods: {'GET'}
+2025-07-18 12:39:49,215 - app - INFO - Route: /api/v1/career-progression/{occupation_id}/personalized, Methods: {'GET'}
+2025-07-18 12:39:49,215 - app - INFO - Route: /api/v1/career-progression/{occupation_id}/analyze, Methods: {'GET'}
+2025-07-18 12:39:49,215 - app - INFO - Route: /api/v1/users/me, Methods: {'GET'}
+2025-07-18 12:39:49,215 - app - INFO - Route: /api/v1/users/{user_id}/profile, Methods: {'GET'}
+2025-07-18 12:39:49,215 - app - INFO - Route: /api/reflection/questions, Methods: {'GET'}
+2025-07-18 12:39:49,215 - app - INFO - Route: /api/reflection/responses/{user_id}, Methods: {'GET'}
+2025-07-18 12:39:49,215 - app - INFO - Route: /api/reflection/responses, Methods: {'GET'}
+2025-07-18 12:39:49,215 - app - INFO - Route: /api/reflection/responses, Methods: {'POST'}
+2025-07-18 12:39:49,215 - app - INFO - Route: /api/reflection/responses/{response_id}, Methods: {'PUT'}
+2025-07-18 12:39:49,215 - app - INFO - Route: /api/reflection/responses/batch, Methods: {'POST'}
+2025-07-18 12:39:49,215 - app - INFO - Route: /api/reflection/responses/{response_id}, Methods: {'DELETE'}
+2025-07-18 12:39:49,215 - app - INFO - Route: /api/v1/avatar/generate-avatar/me, Methods: {'POST'}
+2025-07-18 12:39:49,215 - app - INFO - Route: /api/v1/avatar/me, Methods: {'GET'}
+2025-07-18 12:39:49,215 - app - INFO - Route: /api/v1/avatar/generate-avatar-test/{user_id}, Methods: {'POST'}
+2025-07-18 12:39:49,215 - app - INFO - Route: /onboarding/status, Methods: {'GET'}
+2025-07-18 12:39:49,215 - app - INFO - Route: /onboarding/start, Methods: {'POST'}
+2025-07-18 12:39:49,215 - app - INFO - Route: /onboarding/response, Methods: {'POST'}
+2025-07-18 12:39:49,216 - app - INFO - Route: /onboarding/complete, Methods: {'POST'}
+2025-07-18 12:39:49,216 - app - INFO - Route: /onboarding/profile, Methods: {'GET'}
+2025-07-18 12:39:49,216 - app - INFO - Route: /onboarding/responses, Methods: {'GET'}
+2025-07-18 12:39:49,216 - app - INFO - Route: /onboarding/reset, Methods: {'DELETE'}
+2025-07-18 12:39:49,216 - app - INFO - Route: /onboarding/skip, Methods: {'POST'}
+2025-07-18 12:39:49,216 - app - INFO - Route: /api/v1/education/programs/search, Methods: {'POST'}
+2025-07-18 12:39:49,216 - app - INFO - Route: /api/v1/education/programs/{program_id}, Methods: {'GET'}
+2025-07-18 12:39:49,216 - app - INFO - Route: /api/v1/education/institutions, Methods: {'GET'}
+2025-07-18 12:39:49,216 - app - INFO - Route: /api/v1/education/metadata, Methods: {'GET'}
+2025-07-18 12:39:49,216 - app - INFO - Route: /api/v1/school-programs/search, Methods: {'POST'}
+2025-07-18 12:39:49,216 - app - INFO - Route: /api/v1/school-programs/search, Methods: {'GET'}
+2025-07-18 12:39:49,216 - app - INFO - Route: /api/v1/school-programs/programs/{program_id}, Methods: {'GET'}
+2025-07-18 12:39:49,216 - app - INFO - Route: /api/v1/school-programs/users/interactions, Methods: {'POST'}
+2025-07-18 12:39:49,216 - app - INFO - Route: /api/v1/school-programs/users/saved-programs, Methods: {'POST'}
+2025-07-18 12:39:49,216 - app - INFO - Route: /api/v1/school-programs/users/saved-programs, Methods: {'GET'}
+2025-07-18 12:39:49,216 - app - INFO - Route: /api/v1/school-programs/users/saved-programs/{program_id}, Methods: {'DELETE'}
+2025-07-18 12:39:49,216 - app - INFO - Route: /api/v1/school-programs/filters, Methods: {'GET'}
+2025-07-18 12:39:49,216 - app - INFO - Route: /api/v1/school-programs/health, Methods: {'GET'}
+2025-07-18 12:39:49,216 - app - INFO - Route: /api/v1/courses, Methods: {'POST'}
+2025-07-18 12:39:49,216 - app - INFO - Route: /api/v1/courses, Methods: {'GET'}
+2025-07-18 12:39:49,217 - app - INFO - Route: /api/v1/courses/{course_id}, Methods: {'GET'}
+2025-07-18 12:39:49,217 - app - INFO - Route: /api/v1/courses/{course_id}, Methods: {'PUT'}
+2025-07-18 12:39:49,217 - app - INFO - Route: /api/v1/courses/{course_id}, Methods: {'DELETE'}
+2025-07-18 12:39:49,217 - app - INFO - Route: /api/v1/courses/{course_id}/targeted-analysis, Methods: {'POST'}
+2025-07-18 12:39:49,217 - app - INFO - Route: /api/v1/conversations/{session_id}/respond, Methods: {'POST'}
+2025-07-18 12:39:49,217 - app - INFO - Route: /api/v1/psychological-profile/{user_id}, Methods: {'GET'}
+2025-07-18 12:39:49,217 - app - INFO - Route: /api/v1/career-signals/{user_id}, Methods: {'GET'}
+2025-07-18 12:39:49,217 - app - INFO - Route: /api/v1/courses/{course_id}/insights, Methods: {'GET'}
+2025-07-18 12:39:49,217 - app - INFO - Route: /api/v1/conversations/{session_id}/summary, Methods: {'GET'}
+2025-07-18 12:39:49,217 - app - INFO - Route: /api/v1/enhanced-chat/send, Methods: {'POST'}
+2025-07-18 12:39:49,217 - app - INFO - Route: /api/v1/enhanced-chat/skill-explanation, Methods: {'POST'}
+2025-07-18 12:39:49,217 - app - INFO - Route: /api/v1/enhanced-chat/learning-recommendations, Methods: {'GET'}
+2025-07-18 12:39:49,217 - app - INFO - Route: /api/v1/enhanced-chat/career-path-analysis, Methods: {'POST'}
+2025-07-18 12:39:49,217 - app - INFO - Route: /api/v1/enhanced-chat/graphsage-insights, Methods: {'GET'}
+2025-07-18 12:39:49,217 - app - INFO - Route: /api/v1/enhanced-chat/status, Methods: {'GET'}
+2025-07-18 12:39:49,217 - app - INFO - Route: /api/v1/socratic-chat/send, Methods: {'POST'}
+2025-07-18 12:39:49,217 - app - INFO - Route: /api/v1/socratic-chat/introduction, Methods: {'POST'}
+2025-07-18 12:39:49,217 - app - INFO - Route: /api/v1/socratic-chat/modes, Methods: {'GET'}
+2025-07-18 12:39:49,217 - app - INFO - Route: /api/v1/socratic-chat/status, Methods: {'GET'}
+2025-07-18 12:39:49,217 - app - INFO - Route: /api/v1/career-goals/, Methods: {'POST'}
+2025-07-18 12:39:49,217 - app - INFO - Route: /api/v1/career-goals/active, Methods: {'GET'}
+2025-07-18 12:39:49,217 - app - INFO - Route: /api/v1/career-goals/, Methods: {'GET'}
+2025-07-18 12:39:49,217 - app - INFO - Route: /api/v1/career-goals/{goal_id}, Methods: {'PUT'}
+2025-07-18 12:39:49,217 - app - INFO - Route: /api/v1/career-goals/{goal_id}, Methods: {'DELETE'}
+2025-07-18 12:39:49,217 - app - INFO - Route: /api/v1/career-goals/{goal_id}/milestones/{milestone_id}/complete, Methods: {'POST'}
+2025-07-18 12:39:49,217 - app - INFO - Route: /api/v1/career-goals/{goal_id}/milestones, Methods: {'GET'}
+2025-07-18 12:39:49,217 - app - INFO - Route: /api/v1/jobs/recommendations/me, Methods: {'GET'}
+2025-07-18 12:39:49,217 - app - INFO - Route: /api/v1/jobs/recommendations/{user_id}, Methods: {'GET'}
+2025-07-18 12:39:49,217 - app - INFO - Route: /api/v1/jobs/recommendations/{user_id}, Methods: {'POST'}
+2025-07-18 12:39:49,218 - app - INFO - Route: /api/v1/jobs/skill-tree/{job_id}, Methods: {'GET'}
+2025-07-18 12:39:49,218 - app - INFO - Route: /api/careers/llm-query, Methods: {'POST'}
+2025-07-18 12:39:49,218 - app - INFO - Route: /api/orientator/test-message, Methods: {'POST'}
+2025-07-18 12:39:49,218 - app - INFO - Route: /api/orientator/message, Methods: {'POST'}
+2025-07-18 12:39:49,218 - app - INFO - Route: /api/orientator/save-component, Methods: {'POST'}
+2025-07-18 12:39:49,218 - app - INFO - Route: /api/orientator/conversations/{conversation_id}/messages, Methods: {'GET'}
+2025-07-18 12:39:49,218 - app - INFO - Route: /api/orientator/journey/{user_id}, Methods: {'GET'}
+2025-07-18 12:39:49,218 - app - INFO - Route: /api/orientator/conversations, Methods: {'GET'}
+2025-07-18 12:39:49,218 - app - INFO - Route: /api/orientator/tool-analytics, Methods: {'GET'}
+2025-07-18 12:39:49,218 - app - INFO - Route: /api/orientator/feedback, Methods: {'POST'}
+2025-07-18 12:39:49,218 - app - INFO - Route: /api/orientator/health, Methods: {'GET'}
+2025-07-18 12:39:49,218 - app - INFO - ======================
+2025-07-18 12:39:49,218 - app - INFO - 🚀 Application startup initiated
+2025-07-18 12:39:49,218 - app - INFO - Loading models...
+2025-07-18 12:39:49,220 - scripts.model_loader - INFO - Starting model loading...
+2025-07-18 12:39:49,220 - scripts.model_loader - INFO - Loading SentenceTransformer models...
+2025-07-18 12:39:49,220 - scripts.model_loader - WARNING - SentenceTransformer model directory not found, skipping...
+2025-07-18 12:39:49,220 - scripts.model_loader - INFO - Loading PCA, OHE, and Scaler models...
+2025-07-18 12:39:49,220 - scripts.model_loader - WARNING - Model files not found, skipping...
+2025-07-18 12:39:49,220 - scripts.model_loader - INFO - Model loading process completed!
+2025-07-18 12:39:49,220 - app - INFO - Models loaded from scripts
+2025-07-18 12:39:49,220 - app - INFO - Model loading process completed
+2025-07-18 12:39:49,220 - app - INFO - ✅ Models loaded successfully
+2025-07-18 12:39:49,220 - app - INFO - 🔌 Attempting database initialization...
+2025-07-18 12:39:49,221 - app.core.config - INFO - Using DATABASE_URL for local development
+2025-07-18 12:39:49,221 - app.utils.database - INFO - Attempting to connect to database...
+2025-07-18 12:39:49,250 - app.utils.database - INFO - ✅ Database engine created successfully
+2025-07-18 12:39:50,143 - app.utils.database - INFO - ✅ Database connection test successful
+2025-07-18 12:39:50,186 - app.utils.database - INFO - Database: postgres
+2025-07-18 12:39:50,186 - app.utils.database - INFO - User: postgres
+2025-07-18 12:39:50,186 - app.utils.database - INFO - PostgreSQL version: PostgreSQL 17.4 on aarch64-unknown-linux-gnu, comp...
+2025-07-18 12:39:50,236 - app.utils.database - INFO - Sample tables: ['messages', 'user_journey_milestones', 'user_profiles', 'user_skills', 'alembic_version']...
+2025-07-18 12:39:50,293 - app.utils.database - INFO - ✅ Database initialization completed successfully
+2025-07-18 12:39:50,293 - app - INFO - ✅ Application startup completed successfully
+2025-07-18 12:40:33,999 - app.routers.user - INFO - Login attempt for email: beli5@example.com
+2025-07-18 12:40:34,362 - app.routers.user - INFO - Successful login for user ID: 22
+2025-07-18 12:40:34,821 - app.routers.onboarding - INFO - Resetting onboarding for user ID: 22
+2025-07-18 12:40:35,049 - app.routers.onboarding - INFO - Reset onboarding for user 22
+2025-07-18 12:40:35,222 - app.routers.user - INFO - Checking onboarding status for user ID: 22
+2025-07-18 12:40:35,405 - app.routers.onboarding - INFO - Saving onboarding response for user ID: 22
+2025-07-18 12:40:35,454 - app.routers.onboarding - INFO - Creating new onboarding session for user 22
+2025-07-18 12:40:35,636 - app.routers.onboarding - INFO - Saved response for question test_question_1
+2025-07-18 12:40:35,939 - app.routers.onboarding - INFO - Saving onboarding response for user ID: 22
+2025-07-18 12:40:36,119 - app.routers.onboarding - INFO - Saved response for question test_question_2
+2025-07-18 12:40:39,301 - app.routers.user - INFO - Attempting to register user with email: newuser@example.com
+2025-07-18 12:40:39,346 - app.routers.user - WARNING - Registration attempt with existing email: newuser@example.com
+2025-07-18 12:40:39,347 - app.routers.user - ERROR - Unexpected error during user registration: 
+2025-07-18 12:40:39,393 - app.utils.database - INFO - HTTPException from endpoint: Registration failed: 
+2025-07-18 12:41:19,554 - app.routers.user - INFO - Login attempt for email: beli5@example.com
+2025-07-18 12:41:19,855 - app.routers.user - INFO - Successful login for user ID: 22
+2025-07-18 12:41:20,037 - app.routers.onboarding - INFO - Resetting onboarding for user ID: 22
+2025-07-18 12:41:20,467 - app.routers.onboarding - INFO - Reset onboarding for user 22
+2025-07-18 12:41:20,638 - app.routers.onboarding - INFO - Saving onboarding response for user ID: 22
+2025-07-18 12:41:20,684 - app.routers.onboarding - INFO - Creating new onboarding session for user 22
+2025-07-18 12:41:20,858 - app.routers.onboarding - INFO - Saved response for question emotion-1
+2025-07-18 12:41:21,177 - app.routers.onboarding - INFO - Saving onboarding response for user ID: 22
+2025-07-18 12:41:21,370 - app.routers.onboarding - INFO - Saved response for question hexaco-1
+2025-07-18 12:41:21,675 - app.routers.onboarding - INFO - Saving onboarding response for user ID: 22
+2025-07-18 12:41:21,847 - app.routers.onboarding - INFO - Saved response for question hexaco-2
+2025-07-18 12:41:22,155 - app.routers.onboarding - INFO - Completing onboarding for user ID: 22
+2025-07-18 12:41:22,653 - app.routers.onboarding - INFO - Completed onboarding for user 22
+2025-07-18 12:41:22,883 - app.routers.user - INFO - Checking onboarding status for user ID: 22
+2025-07-18 12:41:23,074 - app.routers.user - INFO - Checking onboarding status for user ID: 22
+2025-07-18 12:43:40,664 - app - INFO - ======= ROUTER REGISTRATION DETAILS =======
+2025-07-18 12:43:40,664 - app - INFO - auth_router import path: fastapi.routing
+2025-07-18 12:43:40,664 - app - INFO - get_current_user import path: app.routers.user
+2025-07-18 12:43:40,664 - app - INFO - profiles_router import path: fastapi.routing
+2025-07-18 12:43:40,664 - app - INFO - Registering auth_router routes: ["/auth/register [{'POST'}]", "/auth/login [{'POST'}]", "/auth/update [{'PUT'}]", "/auth/change-password [{'PUT'}]", "/auth/onboarding-status [{'GET'}]"]
+2025-07-18 12:43:40,664 - app - INFO - Registering profiles_router routes: ["/profiles/test [{'GET'}]", "/profiles/me [{'GET'}]", "/profiles/update [{'PUT'}]", "/profiles/{user_id} [{'GET'}]"]
+2025-07-18 12:43:40,664 - app - INFO - Registering chat_router routes: ["/chat/send [{'POST'}]", "/chat/clear [{'POST'}]"]
+2025-07-18 12:43:40,664 - app - INFO - Registering peers_router routes: ["/peers/suggested [{'GET'}]", "/peers/compatible [{'GET'}]", "/peers/homepage [{'GET'}]", "/peers/refresh [{'POST'}]"]
+2025-07-18 12:43:40,664 - app - INFO - Registering messages_router routes: ["/messages [{'POST'}]", "/messages/conversation/{peer_id} [{'GET'}]", "/messages/conversations [{'GET'}]", "/messages/suggested-peers [{'GET'}]"]
+2025-07-18 12:43:40,664 - app - INFO - Registering test_router routes: ["/test/hello [{'GET'}]"]
+2025-07-18 12:43:40,664 - app - INFO - Registering space_router routes: ["/space/recommendations [{'POST'}]", "/space/recommendations [{'GET'}]", "/space/recommendations/{identifier} [{'DELETE'}]", "/space/notes [{'POST'}]", "/space/notes [{'GET'}]", "/space/notes/{note_id} [{'PUT'}]", "/space/notes/{note_id} [{'DELETE'}]", "/space/skills [{'GET'}]", "/space/skills [{'PUT'}]", "/space/recommendations/{oasis_code}/skill-comparison [{'GET'}]", "/space/recommendations/{recommendation_id}/generate-analysis [{'POST'}]"]
+2025-07-18 12:43:40,665 - app - INFO - Registering vector_router routes: ["/vector/search [{'POST'}]", "/vector/search/save [{'POST'}]", "/vector/health [{'GET'}]", "/vector/suggested-peers [{'GET'}]", "/vector/debug [{'GET'}]"]
+2025-07-18 12:43:40,665 - app - INFO - Registering recommendations_router routes: ["/recommendations [{'GET'}]", "/recommendations/swipe [{'POST'}]"]
+2025-07-18 12:43:40,665 - app - INFO - Registering careers_router routes: ["/careers/recommendations [{'GET'}]", "/careers/save/{career_id} [{'POST'}]", "/careers/saved [{'GET'}]", "/careers/fit-analysis [{'POST'}]", "/careers/cleanup-test-jobs [{'DELETE'}]"]
+2025-07-18 12:43:40,665 - app - INFO - Registering tree_router routes: ["/tree [{'POST'}]", "/tree/skills [{'POST'}]"]
+2025-07-18 12:43:40,665 - app - INFO - Registering tree_paths_router routes: ["/tree-paths/ [{'POST'}]", "/tree-paths/ [{'GET'}]", "/tree-paths/{tree_path_id} [{'GET'}]", "/tree-paths/{tree_path_id} [{'DELETE'}]"]
+2025-07-18 12:43:40,665 - app - INFO - Registering node_notes_router routes: ["/node-notes/ [{'POST'}]", "/node-notes/ [{'GET'}]", "/node-notes/node/{node_id} [{'GET'}]", "/node-notes/{note_id} [{'GET'}]", "/node-notes/{note_id} [{'DELETE'}]"]
+2025-07-18 12:43:40,665 - app - INFO - Registering user_progress_router routes: ["/user-progress/ [{'GET'}]", "/user-progress/update [{'POST'}]"]
+2025-07-18 12:43:40,665 - app - INFO - Registering holland_test_router routes: ["/api/tests/holland/ [{'GET'}]", "/api/tests/holland/questions [{'GET'}]", "/api/tests/holland/answer [{'POST'}]", "/api/tests/holland/score/{attempt_id} [{'GET'}]", "/api/tests/holland/user-results [{'GET'}]", "/api/tests/holland/profile-description [{'GET'}]", "/api/tests/holland/profile-description/{user_id} [{'GET'}]"]
+2025-07-18 12:43:40,665 - app - INFO - Registering hexaco_test_router routes: ["/api/tests/hexaco/ [{'GET'}]", "/api/tests/hexaco/languages [{'GET'}]", "/api/tests/hexaco/versions [{'GET'}]", "/api/tests/hexaco/start [{'POST'}]", "/api/tests/hexaco/questions [{'GET'}]", "/api/tests/hexaco/answer [{'POST'}]", "/api/tests/hexaco/progress/{session_id} [{'GET'}]", "/api/tests/hexaco/score/{session_id} [{'GET'}]", "/api/tests/hexaco/profile/{user_id} [{'GET'}]", "/api/tests/hexaco/my-profile [{'GET'}]", "/api/tests/hexaco/analysis/{user_id} [{'GET'}]", "/api/tests/hexaco/my-analysis [{'GET'}]"]
+2025-07-18 12:43:40,665 - app - INFO - Registering insight_router routes: ["/insight/generate [{'POST'}]", "/insight/get [{'GET'}]", "/insight/regenerate [{'POST'}]", "/insight/save [{'PATCH'}]", "/insight/rewrite [{'POST'}]"]
+2025-07-18 12:43:40,665 - app - INFO - Registering orientator_router routes: ["/orientator/test-message [{'POST'}]", "/orientator/message [{'POST'}]", "/orientator/save-component [{'POST'}]", "/orientator/conversations/{conversation_id}/messages [{'GET'}]", "/orientator/journey/{user_id} [{'GET'}]", "/orientator/conversations [{'GET'}]", "/orientator/tool-analytics [{'GET'}]", "/orientator/feedback [{'POST'}]", "/orientator/health [{'GET'}]"]
+2025-07-18 12:43:40,665 - app - INFO - ============================================
+2025-07-18 12:43:40,665 - app - INFO - Including routers in the FastAPI app
+2025-07-18 12:43:40,668 - app - INFO - Auth router included successfully
+2025-07-18 12:43:40,672 - app - INFO - Profiles router included successfully
+2025-07-18 12:43:40,756 - app - INFO - All routers included successfully
+2025-07-18 12:43:40,756 - app - INFO - === Available Routes ===
+2025-07-18 12:43:40,757 - app - INFO - Route: /openapi.json, Methods: {'HEAD', 'GET'}
+2025-07-18 12:43:40,757 - app - INFO - Route: /docs, Methods: {'HEAD', 'GET'}
+2025-07-18 12:43:40,757 - app - INFO - Route: /docs/oauth2-redirect, Methods: {'HEAD', 'GET'}
+2025-07-18 12:43:40,757 - app - INFO - Route: /redoc, Methods: {'HEAD', 'GET'}
+2025-07-18 12:43:40,757 - app - INFO - Mount: /static
+2025-07-18 12:43:40,757 - app - INFO - Route: /auth/register, Methods: {'POST'}
+2025-07-18 12:43:40,757 - app - INFO - Route: /auth/login, Methods: {'POST'}
+2025-07-18 12:43:40,757 - app - INFO - Route: /auth/update, Methods: {'PUT'}
+2025-07-18 12:43:40,757 - app - INFO - Route: /auth/change-password, Methods: {'PUT'}
+2025-07-18 12:43:40,757 - app - INFO - Route: /auth/onboarding-status, Methods: {'GET'}
+2025-07-18 12:43:40,757 - app - INFO - Route: /profiles/test, Methods: {'GET'}
+2025-07-18 12:43:40,757 - app - INFO - Route: /profiles/me, Methods: {'GET'}
+2025-07-18 12:43:40,757 - app - INFO - Route: /profiles/update, Methods: {'PUT'}
+2025-07-18 12:43:40,757 - app - INFO - Route: /profiles/{user_id}, Methods: {'GET'}
+2025-07-18 12:43:40,757 - app - INFO - Route: /test/hello, Methods: {'GET'}
+2025-07-18 12:43:40,757 - app - INFO - Route: /chat/conversations, Methods: {'GET'}
+2025-07-18 12:43:40,757 - app - INFO - Route: /chat/conversations, Methods: {'POST'}
+2025-07-18 12:43:40,757 - app - INFO - Route: /chat/conversations/{conversation_id}, Methods: {'GET'}
+2025-07-18 12:43:40,757 - app - INFO - Route: /chat/conversations/{conversation_id}, Methods: {'PUT'}
+2025-07-18 12:43:40,757 - app - INFO - Route: /chat/conversations/{conversation_id}, Methods: {'DELETE'}
+2025-07-18 12:43:40,757 - app - INFO - Route: /chat/conversations/{conversation_id}/favorite, Methods: {'POST'}
+2025-07-18 12:43:40,757 - app - INFO - Route: /chat/conversations/{conversation_id}/archive, Methods: {'POST'}
+2025-07-18 12:43:40,757 - app - INFO - Route: /chat/conversations/{conversation_id}/generate-title, Methods: {'POST'}
+2025-07-18 12:43:40,757 - app - INFO - Route: /chat/conversations/{conversation_id}/messages, Methods: {'GET'}
+2025-07-18 12:43:40,758 - app - INFO - Route: /chat/conversations/{conversation_id}/statistics, Methods: {'GET'}
+2025-07-18 12:43:40,758 - app - INFO - Route: /chat/conversations/{conversation_id}/export, Methods: {'POST'}
+2025-07-18 12:43:40,758 - app - INFO - Route: /chat/conversations/send/{conversation_id}, Methods: {'POST'}
+2025-07-18 12:43:40,758 - app - INFO - Route: /chat/send, Methods: {'POST'}
+2025-07-18 12:43:40,758 - app - INFO - Route: /chat/clear, Methods: {'POST'}
+2025-07-18 12:43:40,758 - app - INFO - Route: /chat/share/conversations/{conversation_id}, Methods: {'POST'}
+2025-07-18 12:43:40,758 - app - INFO - Route: /chat/share/shared/{share_token}, Methods: {'GET'}
+2025-07-18 12:43:40,758 - app - INFO - Route: /chat/share/shares/{share_id}, Methods: {'PUT'}
+2025-07-18 12:43:40,758 - app - INFO - Route: /chat/share/shares/{share_id}, Methods: {'DELETE'}
+2025-07-18 12:43:40,758 - app - INFO - Route: /chat/share/user/shares, Methods: {'GET'}
+2025-07-18 12:43:40,758 - app - INFO - Route: /chat/share/shares/{share_id}/analytics, Methods: {'GET'}
+2025-07-18 12:43:40,758 - app - INFO - Route: /chat/analytics/usage, Methods: {'GET'}
+2025-07-18 12:43:40,758 - app - INFO - Route: /chat/analytics/trends, Methods: {'GET'}
+2025-07-18 12:43:40,758 - app - INFO - Route: /chat/analytics/topics, Methods: {'GET'}
+2025-07-18 12:43:40,758 - app - INFO - Route: /chat/analytics/summary, Methods: {'GET'}
+2025-07-18 12:43:40,758 - app - INFO - Route: /peers/suggested, Methods: {'GET'}
+2025-07-18 12:43:40,758 - app - INFO - Route: /peers/compatible, Methods: {'GET'}
+2025-07-18 12:43:40,758 - app - INFO - Route: /peers/homepage, Methods: {'GET'}
+2025-07-18 12:43:40,758 - app - INFO - Route: /peers/refresh, Methods: {'POST'}
+2025-07-18 12:43:40,758 - app - INFO - Route: /messages, Methods: {'POST'}
+2025-07-18 12:43:40,758 - app - INFO - Route: /messages/conversation/{peer_id}, Methods: {'GET'}
+2025-07-18 12:43:40,758 - app - INFO - Route: /messages/conversations, Methods: {'GET'}
+2025-07-18 12:43:40,758 - app - INFO - Route: /messages/suggested-peers, Methods: {'GET'}
+2025-07-18 12:43:40,758 - app - INFO - Route: /space/recommendations, Methods: {'POST'}
+2025-07-18 12:43:40,758 - app - INFO - Route: /space/recommendations, Methods: {'GET'}
+2025-07-18 12:43:40,758 - app - INFO - Route: /space/recommendations/{identifier}, Methods: {'DELETE'}
+2025-07-18 12:43:40,758 - app - INFO - Route: /space/notes, Methods: {'POST'}
+2025-07-18 12:43:40,759 - app - INFO - Route: /space/notes, Methods: {'GET'}
+2025-07-18 12:43:40,759 - app - INFO - Route: /space/notes/{note_id}, Methods: {'PUT'}
+2025-07-18 12:43:40,759 - app - INFO - Route: /space/notes/{note_id}, Methods: {'DELETE'}
+2025-07-18 12:43:40,759 - app - INFO - Route: /space/skills, Methods: {'GET'}
+2025-07-18 12:43:40,759 - app - INFO - Route: /space/skills, Methods: {'PUT'}
+2025-07-18 12:43:40,759 - app - INFO - Route: /space/recommendations/{oasis_code}/skill-comparison, Methods: {'GET'}
+2025-07-18 12:43:40,759 - app - INFO - Route: /space/recommendations/{recommendation_id}/generate-analysis, Methods: {'POST'}
+2025-07-18 12:43:40,759 - app - INFO - Route: /vector/search, Methods: {'POST'}
+2025-07-18 12:43:40,759 - app - INFO - Route: /vector/search/save, Methods: {'POST'}
+2025-07-18 12:43:40,759 - app - INFO - Route: /vector/health, Methods: {'GET'}
+2025-07-18 12:43:40,759 - app - INFO - Route: /vector/suggested-peers, Methods: {'GET'}
+2025-07-18 12:43:40,759 - app - INFO - Route: /vector/debug, Methods: {'GET'}
+2025-07-18 12:43:40,759 - app - INFO - Route: /recommendations, Methods: {'GET'}
+2025-07-18 12:43:40,759 - app - INFO - Route: /recommendations/swipe, Methods: {'POST'}
+2025-07-18 12:43:40,759 - app - INFO - Route: /careers/recommendations, Methods: {'GET'}
+2025-07-18 12:43:40,759 - app - INFO - Route: /careers/save/{career_id}, Methods: {'POST'}
+2025-07-18 12:43:40,759 - app - INFO - Route: /careers/saved, Methods: {'GET'}
+2025-07-18 12:43:40,759 - app - INFO - Route: /careers/fit-analysis, Methods: {'POST'}
+2025-07-18 12:43:40,759 - app - INFO - Route: /careers/cleanup-test-jobs, Methods: {'DELETE'}
+2025-07-18 12:43:40,759 - app - INFO - Route: /tree, Methods: {'POST'}
+2025-07-18 12:43:40,759 - app - INFO - Route: /tree/skills, Methods: {'POST'}
+2025-07-18 12:43:40,759 - app - INFO - Route: /tree-paths/, Methods: {'POST'}
+2025-07-18 12:43:40,759 - app - INFO - Route: /tree-paths/, Methods: {'GET'}
+2025-07-18 12:43:40,759 - app - INFO - Route: /tree-paths/{tree_path_id}, Methods: {'GET'}
+2025-07-18 12:43:40,759 - app - INFO - Route: /tree-paths/{tree_path_id}, Methods: {'DELETE'}
+2025-07-18 12:43:40,759 - app - INFO - Route: /node-notes/, Methods: {'POST'}
+2025-07-18 12:43:40,759 - app - INFO - Route: /node-notes/, Methods: {'GET'}
+2025-07-18 12:43:40,759 - app - INFO - Route: /node-notes/node/{node_id}, Methods: {'GET'}
+2025-07-18 12:43:40,759 - app - INFO - Route: /node-notes/{note_id}, Methods: {'GET'}
+2025-07-18 12:43:40,760 - app - INFO - Route: /node-notes/{note_id}, Methods: {'DELETE'}
+2025-07-18 12:43:40,760 - app - INFO - Route: /user-progress/, Methods: {'GET'}
+2025-07-18 12:43:40,760 - app - INFO - Route: /user-progress/update, Methods: {'POST'}
+2025-07-18 12:43:40,760 - app - INFO - Route: /api/v1/jobs/save, Methods: {'POST'}
+2025-07-18 12:43:40,760 - app - INFO - Route: /api/v1/jobs/saved, Methods: {'GET'}
+2025-07-18 12:43:40,760 - app - INFO - Route: /api/v1/jobs/{job_id}, Methods: {'DELETE'}
+2025-07-18 12:43:40,760 - app - INFO - Route: /api/v1/jobs/{esco_id}/details, Methods: {'GET'}
+2025-07-18 12:43:40,760 - app - INFO - Route: /api/v1/jobs/recommendations/me, Methods: {'GET'}
+2025-07-18 12:43:40,760 - app - INFO - Route: /api/v1/program-recommendations/career-goal/{goal_id}, Methods: {'GET'}
+2025-07-18 12:43:40,760 - app - INFO - Route: /api/v1/program-recommendations/career-goal/{goal_id}/save, Methods: {'POST'}
+2025-07-18 12:43:40,760 - app - INFO - Route: /api/v1/program-recommendations/career-goal/{goal_id}/saved, Methods: {'GET'}
+2025-07-18 12:43:40,760 - app - INFO - Route: /api/v1/program-recommendations/institutions, Methods: {'GET'}
+2025-07-18 12:43:40,760 - app - INFO - Route: /api/tests/holland/, Methods: {'GET'}
+2025-07-18 12:43:40,760 - app - INFO - Route: /api/tests/holland/questions, Methods: {'GET'}
+2025-07-18 12:43:40,760 - app - INFO - Route: /api/tests/holland/answer, Methods: {'POST'}
+2025-07-18 12:43:40,760 - app - INFO - Route: /api/tests/holland/score/{attempt_id}, Methods: {'GET'}
+2025-07-18 12:43:40,760 - app - INFO - Route: /api/tests/holland/user-results, Methods: {'GET'}
+2025-07-18 12:43:40,760 - app - INFO - Route: /api/tests/holland/profile-description, Methods: {'GET'}
+2025-07-18 12:43:40,760 - app - INFO - Route: /api/tests/holland/profile-description/{user_id}, Methods: {'GET'}
+2025-07-18 12:43:40,760 - app - INFO - Route: /api/tests/hexaco/, Methods: {'GET'}
+2025-07-18 12:43:40,760 - app - INFO - Route: /api/tests/hexaco/languages, Methods: {'GET'}
+2025-07-18 12:43:40,760 - app - INFO - Route: /api/tests/hexaco/versions, Methods: {'GET'}
+2025-07-18 12:43:40,760 - app - INFO - Route: /api/tests/hexaco/start, Methods: {'POST'}
+2025-07-18 12:43:40,760 - app - INFO - Route: /api/tests/hexaco/questions, Methods: {'GET'}
+2025-07-18 12:43:40,760 - app - INFO - Route: /api/tests/hexaco/answer, Methods: {'POST'}
+2025-07-18 12:43:40,760 - app - INFO - Route: /api/tests/hexaco/progress/{session_id}, Methods: {'GET'}
+2025-07-18 12:43:40,760 - app - INFO - Route: /api/tests/hexaco/score/{session_id}, Methods: {'GET'}
+2025-07-18 12:43:40,760 - app - INFO - Route: /api/tests/hexaco/profile/{user_id}, Methods: {'GET'}
+2025-07-18 12:43:40,761 - app - INFO - Route: /api/tests/hexaco/my-profile, Methods: {'GET'}
+2025-07-18 12:43:40,761 - app - INFO - Route: /api/tests/hexaco/analysis/{user_id}, Methods: {'GET'}
+2025-07-18 12:43:40,761 - app - INFO - Route: /api/tests/hexaco/my-analysis, Methods: {'GET'}
+2025-07-18 12:43:40,761 - app - INFO - Route: /insight/generate, Methods: {'POST'}
+2025-07-18 12:43:40,761 - app - INFO - Route: /insight/get, Methods: {'GET'}
+2025-07-18 12:43:40,761 - app - INFO - Route: /insight/regenerate, Methods: {'POST'}
+2025-07-18 12:43:40,761 - app - INFO - Route: /insight/save, Methods: {'PATCH'}
+2025-07-18 12:43:40,761 - app - INFO - Route: /insight/rewrite, Methods: {'POST'}
+2025-07-18 12:43:40,761 - app - INFO - Route: /api/v1/competence-tree/generate, Methods: {'POST'}
+2025-07-18 12:43:40,761 - app - INFO - Route: /api/v1/competence-tree/generate-from-anchors, Methods: {'POST'}
+2025-07-18 12:43:40,761 - app - INFO - Route: /api/v1/competence-tree/anchor-skills, Methods: {'GET'}
+2025-07-18 12:43:40,761 - app - INFO - Route: /api/v1/competence-tree/{graph_id}, Methods: {'GET'}
+2025-07-18 12:43:40,761 - app - INFO - Route: /api/v1/competence-tree/node/{node_id}/complete, Methods: {'PATCH'}
+2025-07-18 12:43:40,761 - app - INFO - Route: /api/v1/career-progression/{occupation_id}, Methods: {'GET'}
+2025-07-18 12:43:40,761 - app - INFO - Route: /api/v1/career-progression/{occupation_id}/personalized, Methods: {'GET'}
+2025-07-18 12:43:40,761 - app - INFO - Route: /api/v1/career-progression/{occupation_id}/analyze, Methods: {'GET'}
+2025-07-18 12:43:40,761 - app - INFO - Route: /api/v1/users/me, Methods: {'GET'}
+2025-07-18 12:43:40,761 - app - INFO - Route: /api/v1/users/{user_id}/profile, Methods: {'GET'}
+2025-07-18 12:43:40,761 - app - INFO - Route: /api/reflection/questions, Methods: {'GET'}
+2025-07-18 12:43:40,761 - app - INFO - Route: /api/reflection/responses/{user_id}, Methods: {'GET'}
+2025-07-18 12:43:40,761 - app - INFO - Route: /api/reflection/responses, Methods: {'GET'}
+2025-07-18 12:43:40,761 - app - INFO - Route: /api/reflection/responses, Methods: {'POST'}
+2025-07-18 12:43:40,761 - app - INFO - Route: /api/reflection/responses/{response_id}, Methods: {'PUT'}
+2025-07-18 12:43:40,762 - app - INFO - Route: /api/reflection/responses/batch, Methods: {'POST'}
+2025-07-18 12:43:40,762 - app - INFO - Route: /api/reflection/responses/{response_id}, Methods: {'DELETE'}
+2025-07-18 12:43:40,762 - app - INFO - Route: /api/v1/avatar/generate-avatar/me, Methods: {'POST'}
+2025-07-18 12:43:40,762 - app - INFO - Route: /api/v1/avatar/me, Methods: {'GET'}
+2025-07-18 12:43:40,762 - app - INFO - Route: /api/v1/avatar/generate-avatar-test/{user_id}, Methods: {'POST'}
+2025-07-18 12:43:40,762 - app - INFO - Route: /onboarding/status, Methods: {'GET'}
+2025-07-18 12:43:40,762 - app - INFO - Route: /onboarding/start, Methods: {'POST'}
+2025-07-18 12:43:40,762 - app - INFO - Route: /onboarding/response, Methods: {'POST'}
+2025-07-18 12:43:40,762 - app - INFO - Route: /onboarding/complete, Methods: {'POST'}
+2025-07-18 12:43:40,762 - app - INFO - Route: /onboarding/profile, Methods: {'GET'}
+2025-07-18 12:43:40,762 - app - INFO - Route: /onboarding/responses, Methods: {'GET'}
+2025-07-18 12:43:40,762 - app - INFO - Route: /onboarding/reset, Methods: {'DELETE'}
+2025-07-18 12:43:40,762 - app - INFO - Route: /onboarding/skip, Methods: {'POST'}
+2025-07-18 12:43:40,762 - app - INFO - Route: /api/v1/education/programs/search, Methods: {'POST'}
+2025-07-18 12:43:40,763 - app - INFO - Route: /api/v1/education/programs/{program_id}, Methods: {'GET'}
+2025-07-18 12:43:40,763 - app - INFO - Route: /api/v1/education/institutions, Methods: {'GET'}
+2025-07-18 12:43:40,763 - app - INFO - Route: /api/v1/education/metadata, Methods: {'GET'}
+2025-07-18 12:43:40,763 - app - INFO - Route: /api/v1/school-programs/search, Methods: {'POST'}
+2025-07-18 12:43:40,763 - app - INFO - Route: /api/v1/school-programs/search, Methods: {'GET'}
+2025-07-18 12:43:40,763 - app - INFO - Route: /api/v1/school-programs/programs/{program_id}, Methods: {'GET'}
+2025-07-18 12:43:40,763 - app - INFO - Route: /api/v1/school-programs/users/interactions, Methods: {'POST'}
+2025-07-18 12:43:40,763 - app - INFO - Route: /api/v1/school-programs/users/saved-programs, Methods: {'POST'}
+2025-07-18 12:43:40,763 - app - INFO - Route: /api/v1/school-programs/users/saved-programs, Methods: {'GET'}
+2025-07-18 12:43:40,763 - app - INFO - Route: /api/v1/school-programs/users/saved-programs/{program_id}, Methods: {'DELETE'}
+2025-07-18 12:43:40,763 - app - INFO - Route: /api/v1/school-programs/filters, Methods: {'GET'}
+2025-07-18 12:43:40,763 - app - INFO - Route: /api/v1/school-programs/health, Methods: {'GET'}
+2025-07-18 12:43:40,763 - app - INFO - Route: /api/v1/courses, Methods: {'POST'}
+2025-07-18 12:43:40,763 - app - INFO - Route: /api/v1/courses, Methods: {'GET'}
+2025-07-18 12:43:40,763 - app - INFO - Route: /api/v1/courses/{course_id}, Methods: {'GET'}
+2025-07-18 12:43:40,763 - app - INFO - Route: /api/v1/courses/{course_id}, Methods: {'PUT'}
+2025-07-18 12:43:40,763 - app - INFO - Route: /api/v1/courses/{course_id}, Methods: {'DELETE'}
+2025-07-18 12:43:40,763 - app - INFO - Route: /api/v1/courses/{course_id}/targeted-analysis, Methods: {'POST'}
+2025-07-18 12:43:40,763 - app - INFO - Route: /api/v1/conversations/{session_id}/respond, Methods: {'POST'}
+2025-07-18 12:43:40,763 - app - INFO - Route: /api/v1/psychological-profile/{user_id}, Methods: {'GET'}
+2025-07-18 12:43:40,763 - app - INFO - Route: /api/v1/career-signals/{user_id}, Methods: {'GET'}
+2025-07-18 12:43:40,763 - app - INFO - Route: /api/v1/courses/{course_id}/insights, Methods: {'GET'}
+2025-07-18 12:43:40,763 - app - INFO - Route: /api/v1/conversations/{session_id}/summary, Methods: {'GET'}
+2025-07-18 12:43:40,763 - app - INFO - Route: /api/v1/enhanced-chat/send, Methods: {'POST'}
+2025-07-18 12:43:40,763 - app - INFO - Route: /api/v1/enhanced-chat/skill-explanation, Methods: {'POST'}
+2025-07-18 12:43:40,764 - app - INFO - Route: /api/v1/enhanced-chat/learning-recommendations, Methods: {'GET'}
+2025-07-18 12:43:40,764 - app - INFO - Route: /api/v1/enhanced-chat/career-path-analysis, Methods: {'POST'}
+2025-07-18 12:43:40,764 - app - INFO - Route: /api/v1/enhanced-chat/graphsage-insights, Methods: {'GET'}
+2025-07-18 12:43:40,764 - app - INFO - Route: /api/v1/enhanced-chat/status, Methods: {'GET'}
+2025-07-18 12:43:40,764 - app - INFO - Route: /api/v1/socratic-chat/send, Methods: {'POST'}
+2025-07-18 12:43:40,764 - app - INFO - Route: /api/v1/socratic-chat/introduction, Methods: {'POST'}
+2025-07-18 12:43:40,764 - app - INFO - Route: /api/v1/socratic-chat/modes, Methods: {'GET'}
+2025-07-18 12:43:40,764 - app - INFO - Route: /api/v1/socratic-chat/status, Methods: {'GET'}
+2025-07-18 12:43:40,764 - app - INFO - Route: /api/v1/career-goals/, Methods: {'POST'}
+2025-07-18 12:43:40,764 - app - INFO - Route: /api/v1/career-goals/active, Methods: {'GET'}
+2025-07-18 12:43:40,764 - app - INFO - Route: /api/v1/career-goals/, Methods: {'GET'}
+2025-07-18 12:43:40,764 - app - INFO - Route: /api/v1/career-goals/{goal_id}, Methods: {'PUT'}
+2025-07-18 12:43:40,764 - app - INFO - Route: /api/v1/career-goals/{goal_id}, Methods: {'DELETE'}
+2025-07-18 12:43:40,764 - app - INFO - Route: /api/v1/career-goals/{goal_id}/milestones/{milestone_id}/complete, Methods: {'POST'}
+2025-07-18 12:43:40,764 - app - INFO - Route: /api/v1/career-goals/{goal_id}/milestones, Methods: {'GET'}
+2025-07-18 12:43:40,764 - app - INFO - Route: /api/v1/jobs/recommendations/me, Methods: {'GET'}
+2025-07-18 12:43:40,764 - app - INFO - Route: /api/v1/jobs/recommendations/{user_id}, Methods: {'GET'}
+2025-07-18 12:43:40,764 - app - INFO - Route: /api/v1/jobs/recommendations/{user_id}, Methods: {'POST'}
+2025-07-18 12:43:40,764 - app - INFO - Route: /api/v1/jobs/skill-tree/{job_id}, Methods: {'GET'}
+2025-07-18 12:43:40,764 - app - INFO - Route: /api/careers/llm-query, Methods: {'POST'}
+2025-07-18 12:43:40,764 - app - INFO - Route: /api/orientator/test-message, Methods: {'POST'}
+2025-07-18 12:43:40,764 - app - INFO - Route: /api/orientator/message, Methods: {'POST'}
+2025-07-18 12:43:40,764 - app - INFO - Route: /api/orientator/save-component, Methods: {'POST'}
+2025-07-18 12:43:40,764 - app - INFO - Route: /api/orientator/conversations/{conversation_id}/messages, Methods: {'GET'}
+2025-07-18 12:43:40,764 - app - INFO - Route: /api/orientator/journey/{user_id}, Methods: {'GET'}
+2025-07-18 12:43:40,764 - app - INFO - Route: /api/orientator/conversations, Methods: {'GET'}
+2025-07-18 12:43:40,764 - app - INFO - Route: /api/orientator/tool-analytics, Methods: {'GET'}
+2025-07-18 12:43:40,765 - app - INFO - Route: /api/orientator/feedback, Methods: {'POST'}
+2025-07-18 12:43:40,765 - app - INFO - Route: /api/orientator/health, Methods: {'GET'}
+2025-07-18 12:43:40,765 - app - INFO - ======================
+2025-07-18 12:43:40,766 - app - INFO - 🚀 Application startup initiated
+2025-07-18 12:43:40,766 - app - INFO - Loading models...
+2025-07-18 12:43:40,767 - scripts.model_loader - INFO - Starting model loading...
+2025-07-18 12:43:40,767 - scripts.model_loader - INFO - Loading SentenceTransformer models...
+2025-07-18 12:43:40,767 - scripts.model_loader - WARNING - SentenceTransformer model directory not found, skipping...
+2025-07-18 12:43:40,767 - scripts.model_loader - INFO - Loading PCA, OHE, and Scaler models...
+2025-07-18 12:43:40,767 - scripts.model_loader - WARNING - Model files not found, skipping...
+2025-07-18 12:43:40,768 - scripts.model_loader - INFO - Model loading process completed!
+2025-07-18 12:43:40,768 - app - INFO - Models loaded from scripts
+2025-07-18 12:43:40,768 - app - INFO - Model loading process completed
+2025-07-18 12:43:40,768 - app - INFO - ✅ Models loaded successfully
+2025-07-18 12:43:40,768 - app - INFO - 🔌 Attempting database initialization...
+2025-07-18 12:43:40,768 - app.core.config - INFO - Using DATABASE_URL for local development
+2025-07-18 12:43:40,768 - app.utils.database - INFO - Attempting to connect to database...
+2025-07-18 12:43:40,808 - app.utils.database - INFO - ✅ Database engine created successfully
+2025-07-18 12:43:41,759 - app.utils.database - INFO - ✅ Database connection test successful
+2025-07-18 12:43:41,805 - app.utils.database - INFO - Database: postgres
+2025-07-18 12:43:41,807 - app.utils.database - INFO - User: postgres
+2025-07-18 12:43:41,807 - app.utils.database - INFO - PostgreSQL version: PostgreSQL 17.4 on aarch64-unknown-linux-gnu, comp...
+2025-07-18 12:43:41,853 - app.utils.database - INFO - Sample tables: ['messages', 'user_journey_milestones', 'user_profiles', 'user_skills', 'alembic_version']...
+2025-07-18 12:43:41,889 - app.utils.database - INFO - ✅ Database initialization completed successfully
+2025-07-18 12:43:41,890 - app - INFO - ✅ Application startup completed successfully
+2025-07-18 12:48:17,243 - app.routers.user_progress - INFO - Retrieved user progress for user 22: {}
+2025-07-18 12:48:17,428 - app.routers.user_progress - INFO - Retrieved user progress for user 22: {}
+2025-07-18 12:48:20,874 - app.routers.user_progress - INFO - Retrieved user progress for user 22: {}
+2025-07-18 12:48:20,875 - app.routers.holland_test - INFO - Récupération des résultats RIASEC pour l'utilisateur: 22
+2025-07-18 12:48:20,967 - app.routers.jobs - INFO - Getting job recommendations for user 22
+2025-07-18 12:48:20,968 - app.routers.jobs - INFO - Returned 3 real ESCO job recommendations for user 22
+2025-07-18 12:48:21,276 - app.routers.user_progress - INFO - Retrieved user progress for user 22: {}
+2025-07-18 12:48:21,773 - app.routers.holland_test - INFO - Récupération des résultats RIASEC pour l'utilisateur: 22
+2025-07-18 12:48:21,947 - app.routers.jobs - INFO - Getting job recommendations for user 22
+2025-07-18 12:48:21,948 - app.routers.jobs - INFO - Returned 3 real ESCO job recommendations for user 22
+2025-07-18 12:48:24,755 - app.routers.user_progress - INFO - Retrieved user progress for user 22: {}
+2025-07-18 12:48:24,970 - app.routers.user_progress - INFO - Retrieved user progress for user 22: {}
+2025-07-18 12:48:27,253 - app.services.socratic_chat_service - INFO - Conversation 62 has 3 messages
+2025-07-18 12:48:27,253 - app.services.socratic_chat_service - INFO -   Message 0: system - You are a helpful AI assistant....
+2025-07-18 12:48:27,254 - app.services.socratic_chat_service - INFO -   Message 1: user - heyt ......
+2025-07-18 12:48:27,254 - app.services.socratic_chat_service - INFO -   Message 2: user - heyt ...
+2025-07-18 12:48:30,035 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-07-18 12:48:42,683 - app.services.socratic_chat_service - INFO - Conversation 62 has 5 messages
+2025-07-18 12:48:42,686 - app.services.socratic_chat_service - INFO -   Message 0: system - You are a helpful AI assistant....
+2025-07-18 12:48:42,686 - app.services.socratic_chat_service - INFO -   Message 1: user - heyt ......
+2025-07-18 12:48:42,686 - app.services.socratic_chat_service - INFO -   Message 2: user - heyt ...
+2025-07-18 12:48:42,686 - app.services.socratic_chat_service - INFO -   Message 3: assistant - Hello there. Let's not waste time on small talk. W...
+2025-07-18 12:48:42,686 - app.services.socratic_chat_service - INFO -   Message 4: user - ok...
+2025-07-18 12:48:46,101 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"

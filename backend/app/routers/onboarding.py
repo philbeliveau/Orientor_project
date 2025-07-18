@@ -146,7 +146,20 @@ def save_onboarding_response(
         ).first()
         
         if not assessment:
-            raise HTTPException(status_code=404, detail="No active onboarding session found")
+            # Create a new assessment session if none exists
+            logger.info(f"Creating new onboarding session for user {current_user.id}")
+            assessment = PersonalityAssessment(
+                user_id=current_user.id,
+                assessment_type="onboarding",
+                assessment_version="v1.0",
+                session_id=uuid.uuid4(),
+                status="in_progress",
+                started_at=datetime.utcnow(),
+                total_items=9,  # 9 onboarding questions
+                completed_items=0
+            )
+            db.add(assessment)
+            db.flush()  # Get the ID
         
         # Save the response
         personality_response = PersonalityResponse(
