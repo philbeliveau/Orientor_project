@@ -790,6 +790,22 @@ def create_app():
         
         return questions
 
+    @app.get("/api/tests/holland", tags=["assessments"])
+    async def get_holland_metadata(current_user=Depends(get_current_user_from_token)):
+        """Get Holland test metadata"""
+        logger.info(f"🎯 Holland test metadata request for: {current_user['email']}")
+        
+        return {
+            "id": 1,
+            "title": "Holland RIASEC Career Interest Inventory",
+            "description": "Comprehensive career interest assessment based on John Holland's RIASEC model to identify your career preferences",
+            "seo_code": "holland-riasec-test",
+            "video_url": None,
+            "image_url": None,
+            "chapter_count": 6,
+            "question_count": 30
+        }
+
     @app.get("/api/tests/hexaco/versions", tags=["assessments"])
     async def get_hexaco_versions(current_user=Depends(get_current_user_from_token)):
         """Get available HEXACO test versions"""

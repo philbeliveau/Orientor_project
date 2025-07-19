@@ -60,7 +60,7 @@ const hollandTestService = {
   // Récupérer les métadonnées du test
   getTestMetadata: async (): Promise<TestMetadata> => {
     try {
-      const response = await axios.get<TestMetadata>(HOLLAND_TEST_API);
+      const response = await api.get<TestMetadata>(`/api/tests/holland`);
       return response.data;
     } catch (error) {
       console.error('Erreur lors de la récupération des métadonnées du test:', error);
@@ -71,7 +71,7 @@ const hollandTestService = {
   // Récupérer toutes les questions du test
   getQuestions: async (): Promise<Question[]> => {
     try {
-      const response = await axios.get<Question[]>(`${HOLLAND_TEST_API}/questions`);
+      const response = await api.get<Question[]>(`/api/tests/holland/questions`);
       return response.data;
     } catch (error) {
       console.error('Erreur lors de la récupération des questions:', error);

@@ -68,7 +68,7 @@ const hexacoTestService = {
   // Récupérer les métadonnées générales du test HEXACO
   getMetadata: async (): Promise<HexacoMetadata> => {
     try {
-      const response = await axios.get<HexacoMetadata>(HEXACO_TEST_API);
+      const response = await api.get<HexacoMetadata>(`/api/tests/hexaco`);
       return response.data;
     } catch (error) {
       console.error('Erreur lors de la récupération des métadonnées HEXACO:', error);
@@ -79,7 +79,7 @@ const hexacoTestService = {
   // Récupérer les langues disponibles
   getAvailableLanguages: async (): Promise<Record<string, any>> => {
     try {
-      const response = await axios.get<Record<string, any>>(`${HEXACO_TEST_API}/languages`);
+      const response = await api.get<Record<string, any>>(`/api/tests/hexaco/languages`);
       return response.data;
     } catch (error) {
       console.error('Erreur lors de la récupération des langues:', error);
@@ -91,9 +91,9 @@ const hexacoTestService = {
   getAvailableVersions: async (language?: string): Promise<Record<string, HexacoVersion>> => {
     try {
       const url = language 
-        ? `${HEXACO_TEST_API}/versions?language=${language}`
-        : `${HEXACO_TEST_API}/versions`;
-      const response = await axios.get<Record<string, HexacoVersion>>(url);
+        ? `/api/tests/hexaco/versions?language=${language}`
+        : `/api/tests/hexaco/versions`;
+      const response = await api.get<Record<string, HexacoVersion>>(url);
       return response.data;
     } catch (error) {
       console.error('Erreur lors de la récupération des versions:', error);
