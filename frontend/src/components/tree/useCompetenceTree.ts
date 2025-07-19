@@ -19,7 +19,18 @@ export const useCompetenceTree = (graphId: string) => {
     setError(null);
 
     try {
-      const data = await getCompetenceTree(graphId);
+      let data;
+      try {
+        data = await getCompetenceTree(graphId);
+      } catch (error: any) {
+        if (error.response && error.response.status === 404) {
+          console.log("No tree found, generating a new one...");
+          const newTree = await generateCompetenceTree(1); // Assuming user 1 for now
+          data = await getCompetenceTree(newTree.graph_id);
+        } else {
+          throw error;
+        }
+      }
       setTreeData(data);
 
       // Calculate positions for nodes

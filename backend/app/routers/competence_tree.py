@@ -329,9 +329,10 @@ def get_competence_tree(
         ).first()
         
         if not skill_tree:
+            logger.warning(f"Competence tree not found for graph_id: {graph_id} and user_id: {current_user.id}")
             raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND,
-                detail=f"Competence tree with ID {graph_id} not found"
+                detail=f"Competence tree with ID {graph_id} not found for user {current_user.id}"
             )
         
         # Log the type and content of tree_data for debugging
