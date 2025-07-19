@@ -12,6 +12,11 @@ import sys
 import os
 from datetime import datetime, timedelta
 from typing import Optional
+from sqlalchemy import create_engine, text
+from dotenv import load_dotenv
+
+# Load environment variables
+load_dotenv()
 
 # Configure logging
 logging.basicConfig(
@@ -70,7 +75,7 @@ class User(BaseModel):
     email: str
     name: str
 
-# Simple in-memory user store (replace with database later)
+# Simple in-memory user store (fallback if database fails)
 users_db = {
     "test@example.com": {
         "id": 1,
@@ -79,6 +84,87 @@ users_db = {
         "password": "password123"  # Plain text for now (will hash later)
     }
 }
+
+# Database setup
+DATABASE_URL = os.getenv("DATABASE_URL")
+db_engine = None
+
+def init_database():
+    """Initialize database connection"""
+    global db_engine
+    if DATABASE_URL:
+        try:
+            db_engine = create_engine(DATABASE_URL)
+            # Test connection
+            with db_engine.connect() as conn:
+                result = conn.execute(text("SELECT 1"))
+                logger.info("✅ Database connection successful")
+                return True
+        except Exception as e:
+            logger.warning(f"⚠️ Database connection failed: {e}")
+            logger.info("Using in-memory store as fallback")
+    else:
+        logger.info("No DATABASE_URL provided, using in-memory store")
+    return False
+
+def get_user_from_db(email: str):
+    """Get user from database"""
+    if not db_engine:
+        return users_db.get(email)
+    
+    try:
+        with db_engine.connect() as conn:
+            result = conn.execute(
+                text("SELECT id, email, name, password_hash FROM users WHERE email = :email"),
+                {"email": email}
+            )
+            user = result.fetchone()
+            if user:
+                return {
+                    "id": user[0],
+                    "email": user[1], 
+                    "name": user[2],
+                    "password": user[3]  # This would be hashed in real implementation
+                }
+    except Exception as e:
+        logger.error(f"Database query error: {e}")
+    
+    # Fallback to in-memory store
+    return users_db.get(email)
+
+def create_user_in_db(email: str, name: str, password: str):
+    """Create user in database"""
+    if not db_engine:
+        # Fallback to in-memory store
+        user_id = len(users_db) + 1
+        users_db[email] = {
+            "id": user_id,
+            "email": email,
+            "name": name,
+            "password": password
+        }
+        return user_id
+    
+    try:
+        with db_engine.connect() as conn:
+            result = conn.execute(
+                text("INSERT INTO users (email, name, password_hash) VALUES (:email, :name, :password) RETURNING id"),
+                {"email": email, "name": name, "password": password}
+            )
+            user_id = result.fetchone()[0]
+            conn.commit()
+            return user_id
+    except Exception as e:
+        logger.error(f"Database insert error: {e}")
+        # Fallback to in-memory store
+        user_id = len(users_db) + 1
+        users_db[email] = {
+            "id": user_id,
+            "email": email,
+            "name": name,
+            "password": password
+        }
+        return user_id
 
 def create_simple_token(email: str) -> str:
     """Create a simple token (we'll improve this later)"""
@@ -120,10 +206,10 @@ async def health_check():
 # Auth endpoints
 @app.post("/auth/login", response_model=Token)
 async def login(login_request: LoginRequest):
-    """Login endpoint"""
+    """Login endpoint with database support"""
     logger.info(f"Login attempt for: {login_request.email}")
     
-    user = users_db.get(login_request.email)
+    user = get_user_from_db(login_request.email)
     if not user or user["password"] != login_request.password:
         logger.warning(f"Login failed for: {login_request.email}")
         raise HTTPException(
@@ -139,22 +225,23 @@ async def login(login_request: LoginRequest):
 
 @app.post("/auth/register", response_model=Token)
 async def register(register_request: RegisterRequest):
-    """Registration endpoint"""
+    """Registration endpoint with database support"""
     logger.info(f"Registration attempt for: {register_request.email}")
     
-    if register_request.email in users_db:
+    # Check if user already exists
+    existing_user = get_user_from_db(register_request.email)
+    if existing_user:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Email already registered"
         )
     
-    # Add user to store
-    users_db[register_request.email] = {
-        "id": len(users_db) + 1,
-        "email": register_request.email,
-        "name": register_request.name,
-        "password": register_request.password  # Plain text for now
-    }
+    # Create user in database
+    user_id = create_user_in_db(
+        register_request.email,
+        register_request.name, 
+        register_request.password
+    )
     
     access_token = create_simple_token(register_request.email)
     
@@ -176,10 +263,18 @@ async def test_endpoint():
 # Startup event
 @app.on_event("startup")
 async def startup_event():
-    """Startup configuration"""
-    logger.info("🚀 Phase 1 with Auth startup initiated")
-    logger.info(f"Available users: {list(users_db.keys())}")
-    logger.info("✅ Phase 1 with Auth startup completed")
+    """Startup configuration with database"""
+    logger.info("🚀 Phase 1 with Auth + Database startup initiated")
+    
+    # Initialize database
+    db_connected = init_database()
+    if db_connected:
+        logger.info("✅ Database mode: Connected to Supabase")
+    else:
+        logger.info("ℹ️ Fallback mode: Using in-memory store")
+        logger.info(f"Available test users: {list(users_db.keys())}")
+    
+    logger.info("✅ Phase 1 with Auth + Database startup completed")
 
 if __name__ == "__main__":
     import uvicorn

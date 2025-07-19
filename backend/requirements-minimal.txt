@@ -1,3 +1,10 @@
 # Minimal requirements for basic FastAPI
 fastapi==0.104.1
 uvicorn[standard]==0.24.0
+
+# Database support
+sqlalchemy==2.0.23
+psycopg2-binary==2.9.9
+
+# Environment config
+python-dotenv==1.0.0
