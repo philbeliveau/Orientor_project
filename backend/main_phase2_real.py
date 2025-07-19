@@ -4,7 +4,7 @@ Phase 2 - Real Platform Integration
 Uses actual Orientor platform components with reduced dependencies
 """
 
-from fastapi import FastAPI, Depends
+from fastapi import FastAPI, Depends, HTTPException, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 import uvicorn
@@ -123,6 +123,58 @@ def create_app():
             logger.info("   ✅ Static files mounted")
     except Exception as e:
         logger.warning(f"   ⚠️ Static files failed: {e}")
+
+    # FALLBACK AUTH ENDPOINTS - In case real auth router fails to load
+    from pydantic import BaseModel
+    
+    class LoginRequest(BaseModel):
+        email: str
+        password: str
+        
+    class Token(BaseModel):
+        access_token: str
+        token_type: str
+
+    @app.post("/auth/login", response_model=Token, tags=["fallback-auth"])
+    async def fallback_login(login_request: LoginRequest):
+        """Fallback login endpoint in case real auth router fails to load"""
+        logger.info(f"🔄 Fallback login attempt for: {login_request.email}")
+        
+        # Import auth logic from our working implementation
+        try:
+            from main_phase2_chunk1 import get_user_from_db, verify_password, create_simple_token
+            
+            user = get_user_from_db(login_request.email)
+            if not user:
+                logger.warning(f"User not found: {login_request.email}")
+                raise HTTPException(
+                    status_code=status.HTTP_401_UNAUTHORIZED,
+                    detail="Incorrect email or password"
+                )
+            
+            password_valid = False
+            if "hashed_password" in user and user["hashed_password"]:
+                password_valid = verify_password(login_request.password, user["hashed_password"])
+            else:
+                password_valid = user["password"] == login_request.password
+            
+            if not password_valid:
+                logger.warning(f"Password verification failed for: {login_request.email}")
+                raise HTTPException(
+                    status_code=status.HTTP_401_UNAUTHORIZED,
+                    detail="Incorrect email or password"
+                )
+            
+            access_token = create_simple_token(user["email"])
+            logger.info(f"✅ Fallback login successful for: {login_request.email}")
+            return {"access_token": access_token, "token_type": "bearer"}
+            
+        except ImportError:
+            logger.error("❌ Fallback auth logic not available")
+            raise HTTPException(
+                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                detail="Authentication service unavailable"
+            )
 
     # Root endpoint
     @app.get("/")
