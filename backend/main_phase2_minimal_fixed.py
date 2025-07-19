@@ -59,6 +59,7 @@ def create_app():
     class Token(BaseModel):
         access_token: str
         token_type: str
+        user_id: int
 
     # AUTHENTICATION HELPER
     async def get_current_user_from_token(authorization: Optional[str] = Header(None)):
@@ -144,7 +145,7 @@ def create_app():
                 access_token = base64.b64encode(token_data.encode()).decode()
                 
                 logger.info(f"✅ Login successful for: {login_request.email}")
-                return {"access_token": access_token, "token_type": "bearer"}
+                return {"access_token": access_token, "token_type": "bearer", "user_id": user_id}
                 
         except Exception as e:
             logger.error(f"❌ Auth error: {e}")
@@ -225,7 +226,7 @@ def create_app():
                 access_token = base64.b64encode(token_data.encode()).decode()
                 
                 logger.info(f"✅ Registration successful for: {register_request.email}")
-                return {"access_token": access_token, "token_type": "bearer"}
+                return {"access_token": access_token, "token_type": "bearer", "user_id": new_user_id}
                 
         except HTTPException:
             raise
