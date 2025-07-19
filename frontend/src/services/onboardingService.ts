@@ -204,6 +204,21 @@ class OnboardingService {
       throw error;
     }
   }
+
+  /**
+   * Mark onboarding as complete in the database
+   */
+  async markOnboardingComplete(): Promise<{ message: string; onboarding_completed: boolean }> {
+    try {
+      console.log('Marking onboarding as complete...');
+      const response = await api.post('/auth/onboarding-complete');
+      console.log('Onboarding completion response:', response.data);
+      return response.data;
+    } catch (error) {
+      console.error('Failed to mark onboarding complete:', error);
+      throw error;
+    }
+  }
 }
 
 export const onboardingService = new OnboardingService();

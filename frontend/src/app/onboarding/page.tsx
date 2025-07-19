@@ -44,6 +44,11 @@ const OnboardingPage: React.FC = () => {
     try {
       console.log('Onboarding completed with responses:', responses);
       
+      // CRITICAL: Mark onboarding as complete in the database
+      console.log('Calling backend to mark onboarding complete...');
+      await onboardingService.markOnboardingComplete();
+      console.log('✅ Onboarding marked complete in database');
+      
       // Update state to show completion message
       setNeedsOnboarding(false);
       

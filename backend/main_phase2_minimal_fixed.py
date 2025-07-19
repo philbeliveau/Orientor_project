@@ -30,7 +30,7 @@ def create_app():
     app = FastAPI(
         title="Orientor Platform - Phase 2 Minimal",
         description="Minimal fallback endpoints for dashboard functionality",
-        version="2.1.0-minimal",
+        version="2.1.1-minimal-fixed",
     )
 
     # Configure CORS
@@ -298,6 +298,55 @@ def create_app():
                     "preferences": False
                 }
             }
+
+    @app.post("/auth/onboarding-complete", tags=["auth"])
+    async def complete_onboarding(current_user=Depends(get_current_user_with_onboarding)):
+        """Mark user's onboarding as complete - Frontend calls this when onboarding finishes"""
+        logger.info(f"🎉 Completing onboarding for: {current_user['email']}")
+        
+        try:
+            from sqlalchemy import create_engine, text
+            
+            # Database setup
+            DATABASE_URL = (
+                os.getenv("DATABASE_URL") or 
+                os.getenv("DATABASE_PRIVATE_URL") or 
+                os.getenv("POSTGRES_URL") or
+                os.getenv("RAILWAY_DATABASE_URL")
+            )
+            
+            if not DATABASE_URL:
+                logger.error("❌ No database URL available")
+                raise HTTPException(
+                    status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                    detail="Database unavailable"
+                )
+            
+            # Connect to database and update onboarding status
+            engine = create_engine(DATABASE_URL, pool_pre_ping=True)
+            
+            with engine.connect() as conn:
+                # Update onboarding_completed to true
+                result = conn.execute(
+                    text("UPDATE users SET onboarding_completed = :completed WHERE id = :user_id"),
+                    {"completed": True, "user_id": current_user["id"]}
+                )
+                conn.commit()
+                
+                logger.info(f"✅ Onboarding marked complete for user: {current_user['email']}")
+                
+                return {
+                    "message": "Onboarding completed successfully",
+                    "onboarding_completed": True,
+                    "user_id": current_user["id"]
+                }
+                
+        except Exception as e:
+            logger.error(f"❌ Error completing onboarding: {e}")
+            raise HTTPException(
+                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                detail="Failed to complete onboarding"
+            )
 
     @app.get("/api/v1/avatar/me", tags=["avatar"])
     async def get_user_avatar(current_user=Depends(get_current_user_from_token)):
