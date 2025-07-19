@@ -94,6 +94,37 @@ DATABASE_URL = (
 )
 db_engine = None
 
+def check_users_table():
+    """Debug function to check users table structure and data"""
+    if not db_engine:
+        return
+    
+    try:
+        with db_engine.connect() as conn:
+            # Check table structure
+            result = conn.execute(text("""
+                SELECT column_name, data_type 
+                FROM information_schema.columns 
+                WHERE table_name = 'users' 
+                ORDER BY ordinal_position
+            """))
+            columns = result.fetchall()
+            logger.info(f"📋 Users table columns: {[col[0] for col in columns]}")
+            
+            # Check sample data
+            result = conn.execute(text("SELECT COUNT(*) FROM users"))
+            count = result.fetchone()[0]
+            logger.info(f"📊 Total users in database: {count}")
+            
+            if count > 0:
+                # Show sample emails (first 5)
+                result = conn.execute(text("SELECT email FROM users LIMIT 5"))
+                emails = [row[0] for row in result.fetchall()]
+                logger.info(f"📧 Sample user emails: {emails}")
+                
+    except Exception as e:
+        logger.error(f"Failed to check users table: {e}")
+
 def init_database():
     """Initialize database connection with Railway-compatible settings"""
     global db_engine
@@ -152,44 +183,32 @@ def get_user_from_db(email: str):
     if not db_engine:
         return users_db.get(email)
     
-    try:
-        with db_engine.connect() as conn:
-            # Try different possible user table schemas
-            user = None
-            
-            # Try standard users table first
-            try:
-                result = conn.execute(
-                    text("SELECT id, email, encrypted_password FROM users WHERE email = :email LIMIT 1"),
-                    {"email": email}
-                )
+    # Try each schema variant in separate connections to avoid transaction errors
+    schemas_to_try = [
+        "SELECT id, email, encrypted_password FROM users WHERE email = :email LIMIT 1",
+        "SELECT id, email, hashed_password FROM users WHERE email = :email LIMIT 1", 
+        "SELECT id, email, password_hash FROM users WHERE email = :email LIMIT 1",
+        "SELECT id, email, password FROM users WHERE email = :email LIMIT 1"
+    ]
+    
+    for schema_query in schemas_to_try:
+        try:
+            with db_engine.connect() as conn:
+                result = conn.execute(text(schema_query), {"email": email})
                 user = result.fetchone()
                 if user:
+                    logger.info(f"✅ Found user in database using schema: {schema_query.split(' FROM ')[0]}")
                     return {
                         "id": user[0],
                         "email": user[1], 
                         "name": user[1].split('@')[0],  # Use email prefix as name
                         "password": user[2] if user[2] else "password123"  # Handle null passwords
                     }
-            except Exception:
-                # Try alternative schema
-                result = conn.execute(
-                    text("SELECT id, email, hashed_password FROM users WHERE email = :email LIMIT 1"),
-                    {"email": email}
-                )
-                user = result.fetchone()
-                if user:
-                    return {
-                        "id": user[0],
-                        "email": user[1], 
-                        "name": user[1].split('@')[0],
-                        "password": user[2] if user[2] else "password123"
-                    }
-                    
-    except Exception as e:
-        logger.error(f"Database query error: {e}")
-        logger.info("Falling back to in-memory user store")
+        except Exception as e:
+            logger.debug(f"Schema attempt failed: {e}")
+            continue  # Try next schema
     
+    logger.info(f"User {email} not found in database, checking in-memory store")
     # Fallback to in-memory store
     return users_db.get(email)
 
@@ -330,7 +349,9 @@ async def startup_event():
     # Initialize database
     db_connected = init_database()
     if db_connected:
-        logger.info("✅ Database mode: Connected to Supabase")
+        logger.info("✅ Database mode: Connected to Railway PostgreSQL")
+        # Debug: Check users table
+        check_users_table()
     else:
         logger.info("ℹ️ Fallback mode: Using in-memory store")
         logger.info(f"Available test users: {list(users_db.keys())}")
