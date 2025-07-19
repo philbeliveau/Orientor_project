@@ -9,9 +9,9 @@ import sys
 import logging
 from pathlib import Path
 
-# Add backend directory to path
-backend_dir = Path(__file__).parent / "backend"
-sys.path.insert(0, str(backend_dir))
+# Add current directory (backend) to path
+current_dir = Path(__file__).parent
+sys.path.insert(0, str(current_dir))
 
 # Configure logging for Railway
 logging.basicConfig(
@@ -35,7 +35,6 @@ def main():
     
     try:
         # Import Phase 1 FastAPI app
-        sys.path.insert(0, str(backend_dir / "app"))
         from main_phase1 import app
         
         logger.info("✅ Phase 1 FastAPI app imported successfully")
