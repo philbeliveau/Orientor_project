@@ -23,6 +23,7 @@ export default function RegisterPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const [name, setName] = useState('');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
     const router = useRouter();
@@ -51,7 +52,7 @@ export default function RegisterPage() {
             
             const response = await axios.post<RegisterResponse>(
                 registerUrl, 
-                { email, password },
+                { email, password, name },
                 { 
                     headers: { 'Content-Type': 'application/json' },
                     timeout: 10000 // 10 second timeout
@@ -122,6 +123,27 @@ export default function RegisterPage() {
                 <div className="bg-white/80 backdrop-blur-lg shadow-xl rounded-2xl p-8 border border-white/20">
                     <form className="space-y-6" onSubmit={handleSubmit}>
                         <div className="space-y-5">
+                            <div>
+                                <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
+                                    Full Name
+                                </label>
+                                <input
+                                    id="name"
+                                    name="name"
+                                    type="text"
+                                    required
+                                    className="w-full px-4 py-3 border border-gray-200 rounded-xl 
+                                        focus:ring-2 focus:ring-blue-500 focus:border-transparent 
+                                        transition-all duration-200 bg-white/50 
+                                        placeholder-gray-400 text-gray-900
+                                        hover:border-gray-300 disabled:bg-gray-50 disabled:cursor-not-allowed"
+                                    placeholder="Enter your full name"
+                                    value={name}
+                                    onChange={(e) => setName(e.target.value)}
+                                    disabled={loading}
+                                />
+                            </div>
+                            
                             <div>
                                 <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
                                     Email address
