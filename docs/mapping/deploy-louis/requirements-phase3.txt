@@ -1,0 +1,20 @@
+# Phase 3: Full ML Stack
+# Complete deployment with all features
+
+# Include Phase 2
+-r requirements-phase2.txt
+
+# CPU-only PyTorch (much smaller, faster install)
+--index-url https://download.pytorch.org/whl/cpu
+torch>=2.0.0+cpu
+
+# PyTorch Geometric (CPU)
+torch-geometric>=2.3.0
+
+# Sentence Transformers (for embeddings)
+sentence-transformers>=2.2.0
+
+# Additional ML utilities
+scipy>=1.7.0
+scikit-learn>=1.0.0
+transformers>=4.20.0

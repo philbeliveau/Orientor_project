@@ -1,0 +1,18 @@
+# Phase 1: Minimal Viable Deployment
+# Core FastAPI only - no ML dependencies
+
+fastapi==0.104.1
+uvicorn==0.24.0
+python-multipart==0.0.6
+
+# Database essentials
+sqlalchemy>=1.4.0
+psycopg2-binary>=2.9.0
+
+# Environment and config
+python-dotenv>=0.19.0
+pydantic-settings>=2.0.0
+
+# Basic auth (if needed)
+python-jose[cryptography]>=3.3.0
+passlib[bcrypt]>=1.7.4

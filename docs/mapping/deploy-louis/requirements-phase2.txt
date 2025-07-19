@@ -1,0 +1,14 @@
+# Phase 2: Add OpenAI + Basic Services
+# Extends Phase 1 with AI capabilities
+
+# Include Phase 1
+-r requirements-phase1.txt
+
+# OpenAI integration
+openai>=1.0.0
+
+# Scientific computing basics
+numpy>=1.21.0
+
+# Alembic for migrations
+alembic>=1.7.0

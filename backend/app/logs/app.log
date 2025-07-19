@@ -76697,3 +76697,915 @@
 2025-07-19 11:59:13,639 - app.routers.holland_test - INFO - Récupération des résultats RIASEC pour l'utilisateur: 22
 2025-07-19 11:59:14,330 - app.routers.holland_test - INFO - Récupération des résultats RIASEC pour l'utilisateur: 22
 2025-07-19 11:59:14,448 - app.routers.user_progress - INFO - Retrieved user progress for user 22: {}
+2025-07-19 12:01:07,699 - app - INFO - ======= ROUTER REGISTRATION DETAILS =======
+2025-07-19 12:01:07,699 - app - INFO - auth_router import path: fastapi.routing
+2025-07-19 12:01:07,699 - app - INFO - get_current_user import path: app.routers.user
+2025-07-19 12:01:07,699 - app - INFO - profiles_router import path: fastapi.routing
+2025-07-19 12:01:07,699 - app - INFO - Registering auth_router routes: ["/auth/register [{'POST'}]", "/auth/login [{'POST'}]", "/auth/update [{'PUT'}]", "/auth/change-password [{'PUT'}]", "/auth/onboarding-status [{'GET'}]"]
+2025-07-19 12:01:07,699 - app - INFO - Registering profiles_router routes: ["/profiles/test [{'GET'}]", "/profiles/me [{'GET'}]", "/profiles/update [{'PUT'}]", "/profiles/{user_id} [{'GET'}]"]
+2025-07-19 12:01:07,699 - app - INFO - Registering chat_router routes: ["/chat/send [{'POST'}]", "/chat/clear [{'POST'}]"]
+2025-07-19 12:01:07,699 - app - INFO - Registering peers_router routes: ["/peers/suggested [{'GET'}]", "/peers/compatible [{'GET'}]", "/peers/homepage [{'GET'}]", "/peers/refresh [{'POST'}]"]
+2025-07-19 12:01:07,699 - app - INFO - Registering messages_router routes: ["/messages [{'POST'}]", "/messages/conversation/{peer_id} [{'GET'}]", "/messages/conversations [{'GET'}]", "/messages/suggested-peers [{'GET'}]"]
+2025-07-19 12:01:07,699 - app - INFO - Registering test_router routes: ["/test/hello [{'GET'}]"]
+2025-07-19 12:01:07,700 - app - INFO - Registering space_router routes: ["/space/recommendations [{'POST'}]", "/space/recommendations [{'GET'}]", "/space/recommendations/{identifier} [{'DELETE'}]", "/space/notes [{'POST'}]", "/space/notes [{'GET'}]", "/space/notes/{note_id} [{'PUT'}]", "/space/notes/{note_id} [{'DELETE'}]", "/space/skills [{'GET'}]", "/space/skills [{'PUT'}]", "/space/recommendations/{oasis_code}/skill-comparison [{'GET'}]", "/space/recommendations/{recommendation_id}/generate-analysis [{'POST'}]"]
+2025-07-19 12:01:07,700 - app - INFO - Registering vector_router routes: ["/vector/search [{'POST'}]", "/vector/search/save [{'POST'}]", "/vector/health [{'GET'}]", "/vector/suggested-peers [{'GET'}]", "/vector/debug [{'GET'}]"]
+2025-07-19 12:01:07,700 - app - INFO - Registering recommendations_router routes: ["/recommendations [{'GET'}]", "/recommendations/swipe [{'POST'}]"]
+2025-07-19 12:01:07,700 - app - INFO - Registering careers_router routes: ["/careers/recommendations [{'GET'}]", "/careers/save/{career_id} [{'POST'}]", "/careers/saved [{'GET'}]", "/careers/fit-analysis [{'POST'}]", "/careers/cleanup-test-jobs [{'DELETE'}]"]
+2025-07-19 12:01:07,700 - app - INFO - Registering tree_router routes: ["/tree [{'POST'}]", "/tree/skills [{'POST'}]"]
+2025-07-19 12:01:07,700 - app - INFO - Registering tree_paths_router routes: ["/tree-paths/ [{'POST'}]", "/tree-paths/ [{'GET'}]", "/tree-paths/{tree_path_id} [{'GET'}]", "/tree-paths/{tree_path_id} [{'DELETE'}]"]
+2025-07-19 12:01:07,700 - app - INFO - Registering node_notes_router routes: ["/node-notes/ [{'POST'}]", "/node-notes/ [{'GET'}]", "/node-notes/node/{node_id} [{'GET'}]", "/node-notes/{note_id} [{'GET'}]", "/node-notes/{note_id} [{'DELETE'}]"]
+2025-07-19 12:01:07,700 - app - INFO - Registering user_progress_router routes: ["/user-progress/ [{'GET'}]", "/user-progress/update [{'POST'}]"]
+2025-07-19 12:01:07,700 - app - INFO - Registering holland_test_router routes: ["/api/tests/holland/ [{'GET'}]", "/api/tests/holland/questions [{'GET'}]", "/api/tests/holland/answer [{'POST'}]", "/api/tests/holland/score/{attempt_id} [{'GET'}]", "/api/tests/holland/user-results [{'GET'}]", "/api/tests/holland/profile-description [{'GET'}]", "/api/tests/holland/profile-description/{user_id} [{'GET'}]"]
+2025-07-19 12:01:07,700 - app - INFO - Registering hexaco_test_router routes: ["/api/tests/hexaco/ [{'GET'}]", "/api/tests/hexaco/languages [{'GET'}]", "/api/tests/hexaco/versions [{'GET'}]", "/api/tests/hexaco/start [{'POST'}]", "/api/tests/hexaco/questions [{'GET'}]", "/api/tests/hexaco/answer [{'POST'}]", "/api/tests/hexaco/progress/{session_id} [{'GET'}]", "/api/tests/hexaco/score/{session_id} [{'GET'}]", "/api/tests/hexaco/profile/{user_id} [{'GET'}]", "/api/tests/hexaco/my-profile [{'GET'}]", "/api/tests/hexaco/analysis/{user_id} [{'GET'}]", "/api/tests/hexaco/my-analysis [{'GET'}]"]
+2025-07-19 12:01:07,700 - app - INFO - Registering insight_router routes: ["/insight/generate [{'POST'}]", "/insight/get [{'GET'}]", "/insight/regenerate [{'POST'}]", "/insight/save [{'PATCH'}]", "/insight/rewrite [{'POST'}]"]
+2025-07-19 12:01:07,701 - app - INFO - Registering orientator_router routes: ["/orientator/test-message [{'POST'}]", "/orientator/message [{'POST'}]", "/orientator/save-component [{'POST'}]", "/orientator/conversations/{conversation_id}/messages [{'GET'}]", "/orientator/journey/{user_id} [{'GET'}]", "/orientator/conversations [{'GET'}]", "/orientator/tool-analytics [{'GET'}]", "/orientator/feedback [{'POST'}]", "/orientator/health [{'GET'}]"]
+2025-07-19 12:01:07,701 - app - INFO - ============================================
+2025-07-19 12:01:07,701 - app - INFO - Including routers in the FastAPI app
+2025-07-19 12:01:07,704 - app - INFO - Auth router included successfully
+2025-07-19 12:01:07,707 - app - INFO - Profiles router included successfully
+2025-07-19 12:01:07,790 - app - INFO - All routers included successfully
+2025-07-19 12:01:07,790 - app - INFO - === Available Routes ===
+2025-07-19 12:01:07,790 - app - INFO - Route: /openapi.json, Methods: {'HEAD', 'GET'}
+2025-07-19 12:01:07,790 - app - INFO - Route: /docs, Methods: {'HEAD', 'GET'}
+2025-07-19 12:01:07,790 - app - INFO - Route: /docs/oauth2-redirect, Methods: {'HEAD', 'GET'}
+2025-07-19 12:01:07,790 - app - INFO - Route: /redoc, Methods: {'HEAD', 'GET'}
+2025-07-19 12:01:07,790 - app - INFO - Mount: /static
+2025-07-19 12:01:07,791 - app - INFO - Route: /auth/register, Methods: {'POST'}
+2025-07-19 12:01:07,791 - app - INFO - Route: /auth/login, Methods: {'POST'}
+2025-07-19 12:01:07,791 - app - INFO - Route: /auth/update, Methods: {'PUT'}
+2025-07-19 12:01:07,791 - app - INFO - Route: /auth/change-password, Methods: {'PUT'}
+2025-07-19 12:01:07,791 - app - INFO - Route: /auth/onboarding-status, Methods: {'GET'}
+2025-07-19 12:01:07,791 - app - INFO - Route: /api/v1/profiles/test, Methods: {'GET'}
+2025-07-19 12:01:07,791 - app - INFO - Route: /api/v1/profiles/me, Methods: {'GET'}
+2025-07-19 12:01:07,791 - app - INFO - Route: /api/v1/profiles/update, Methods: {'PUT'}
+2025-07-19 12:01:07,791 - app - INFO - Route: /api/v1/profiles/{user_id}, Methods: {'GET'}
+2025-07-19 12:01:07,791 - app - INFO - Route: /test/hello, Methods: {'GET'}
+2025-07-19 12:01:07,791 - app - INFO - Route: /chat/conversations, Methods: {'GET'}
+2025-07-19 12:01:07,791 - app - INFO - Route: /chat/conversations, Methods: {'POST'}
+2025-07-19 12:01:07,791 - app - INFO - Route: /chat/conversations/{conversation_id}, Methods: {'GET'}
+2025-07-19 12:01:07,791 - app - INFO - Route: /chat/conversations/{conversation_id}, Methods: {'PUT'}
+2025-07-19 12:01:07,791 - app - INFO - Route: /chat/conversations/{conversation_id}, Methods: {'DELETE'}
+2025-07-19 12:01:07,791 - app - INFO - Route: /chat/conversations/{conversation_id}/favorite, Methods: {'POST'}
+2025-07-19 12:01:07,791 - app - INFO - Route: /chat/conversations/{conversation_id}/archive, Methods: {'POST'}
+2025-07-19 12:01:07,791 - app - INFO - Route: /chat/conversations/{conversation_id}/generate-title, Methods: {'POST'}
+2025-07-19 12:01:07,791 - app - INFO - Route: /chat/conversations/{conversation_id}/messages, Methods: {'GET'}
+2025-07-19 12:01:07,791 - app - INFO - Route: /chat/conversations/{conversation_id}/statistics, Methods: {'GET'}
+2025-07-19 12:01:07,791 - app - INFO - Route: /chat/conversations/{conversation_id}/export, Methods: {'POST'}
+2025-07-19 12:01:07,791 - app - INFO - Route: /chat/conversations/send/{conversation_id}, Methods: {'POST'}
+2025-07-19 12:01:07,791 - app - INFO - Route: /chat/send, Methods: {'POST'}
+2025-07-19 12:01:07,791 - app - INFO - Route: /chat/clear, Methods: {'POST'}
+2025-07-19 12:01:07,791 - app - INFO - Route: /chat/share/conversations/{conversation_id}, Methods: {'POST'}
+2025-07-19 12:01:07,791 - app - INFO - Route: /chat/share/shared/{share_token}, Methods: {'GET'}
+2025-07-19 12:01:07,791 - app - INFO - Route: /chat/share/shares/{share_id}, Methods: {'PUT'}
+2025-07-19 12:01:07,792 - app - INFO - Route: /chat/share/shares/{share_id}, Methods: {'DELETE'}
+2025-07-19 12:01:07,792 - app - INFO - Route: /chat/share/user/shares, Methods: {'GET'}
+2025-07-19 12:01:07,792 - app - INFO - Route: /chat/share/shares/{share_id}/analytics, Methods: {'GET'}
+2025-07-19 12:01:07,792 - app - INFO - Route: /chat/analytics/usage, Methods: {'GET'}
+2025-07-19 12:01:07,792 - app - INFO - Route: /chat/analytics/trends, Methods: {'GET'}
+2025-07-19 12:01:07,792 - app - INFO - Route: /chat/analytics/topics, Methods: {'GET'}
+2025-07-19 12:01:07,792 - app - INFO - Route: /chat/analytics/summary, Methods: {'GET'}
+2025-07-19 12:01:07,792 - app - INFO - Route: /peers/suggested, Methods: {'GET'}
+2025-07-19 12:01:07,792 - app - INFO - Route: /peers/compatible, Methods: {'GET'}
+2025-07-19 12:01:07,792 - app - INFO - Route: /peers/homepage, Methods: {'GET'}
+2025-07-19 12:01:07,792 - app - INFO - Route: /peers/refresh, Methods: {'POST'}
+2025-07-19 12:01:07,792 - app - INFO - Route: /messages, Methods: {'POST'}
+2025-07-19 12:01:07,792 - app - INFO - Route: /messages/conversation/{peer_id}, Methods: {'GET'}
+2025-07-19 12:01:07,792 - app - INFO - Route: /messages/conversations, Methods: {'GET'}
+2025-07-19 12:01:07,792 - app - INFO - Route: /messages/suggested-peers, Methods: {'GET'}
+2025-07-19 12:01:07,792 - app - INFO - Route: /space/recommendations, Methods: {'POST'}
+2025-07-19 12:01:07,792 - app - INFO - Route: /space/recommendations, Methods: {'GET'}
+2025-07-19 12:01:07,792 - app - INFO - Route: /space/recommendations/{identifier}, Methods: {'DELETE'}
+2025-07-19 12:01:07,792 - app - INFO - Route: /space/notes, Methods: {'POST'}
+2025-07-19 12:01:07,792 - app - INFO - Route: /space/notes, Methods: {'GET'}
+2025-07-19 12:01:07,792 - app - INFO - Route: /space/notes/{note_id}, Methods: {'PUT'}
+2025-07-19 12:01:07,792 - app - INFO - Route: /space/notes/{note_id}, Methods: {'DELETE'}
+2025-07-19 12:01:07,792 - app - INFO - Route: /space/skills, Methods: {'GET'}
+2025-07-19 12:01:07,792 - app - INFO - Route: /space/skills, Methods: {'PUT'}
+2025-07-19 12:01:07,792 - app - INFO - Route: /space/recommendations/{oasis_code}/skill-comparison, Methods: {'GET'}
+2025-07-19 12:01:07,792 - app - INFO - Route: /space/recommendations/{recommendation_id}/generate-analysis, Methods: {'POST'}
+2025-07-19 12:01:07,792 - app - INFO - Route: /vector/search, Methods: {'POST'}
+2025-07-19 12:01:07,792 - app - INFO - Route: /vector/search/save, Methods: {'POST'}
+2025-07-19 12:01:07,793 - app - INFO - Route: /vector/health, Methods: {'GET'}
+2025-07-19 12:01:07,793 - app - INFO - Route: /vector/suggested-peers, Methods: {'GET'}
+2025-07-19 12:01:07,793 - app - INFO - Route: /vector/debug, Methods: {'GET'}
+2025-07-19 12:01:07,793 - app - INFO - Route: /recommendations, Methods: {'GET'}
+2025-07-19 12:01:07,793 - app - INFO - Route: /recommendations/swipe, Methods: {'POST'}
+2025-07-19 12:01:07,793 - app - INFO - Route: /careers/recommendations, Methods: {'GET'}
+2025-07-19 12:01:07,793 - app - INFO - Route: /careers/save/{career_id}, Methods: {'POST'}
+2025-07-19 12:01:07,793 - app - INFO - Route: /careers/saved, Methods: {'GET'}
+2025-07-19 12:01:07,793 - app - INFO - Route: /careers/fit-analysis, Methods: {'POST'}
+2025-07-19 12:01:07,793 - app - INFO - Route: /careers/cleanup-test-jobs, Methods: {'DELETE'}
+2025-07-19 12:01:07,793 - app - INFO - Route: /tree, Methods: {'POST'}
+2025-07-19 12:01:07,793 - app - INFO - Route: /tree/skills, Methods: {'POST'}
+2025-07-19 12:01:07,793 - app - INFO - Route: /tree-paths/, Methods: {'POST'}
+2025-07-19 12:01:07,793 - app - INFO - Route: /tree-paths/, Methods: {'GET'}
+2025-07-19 12:01:07,793 - app - INFO - Route: /tree-paths/{tree_path_id}, Methods: {'GET'}
+2025-07-19 12:01:07,793 - app - INFO - Route: /tree-paths/{tree_path_id}, Methods: {'DELETE'}
+2025-07-19 12:01:07,793 - app - INFO - Route: /node-notes/, Methods: {'POST'}
+2025-07-19 12:01:07,793 - app - INFO - Route: /node-notes/, Methods: {'GET'}
+2025-07-19 12:01:07,793 - app - INFO - Route: /node-notes/node/{node_id}, Methods: {'GET'}
+2025-07-19 12:01:07,793 - app - INFO - Route: /node-notes/{note_id}, Methods: {'GET'}
+2025-07-19 12:01:07,793 - app - INFO - Route: /node-notes/{note_id}, Methods: {'DELETE'}
+2025-07-19 12:01:07,793 - app - INFO - Route: /user-progress/, Methods: {'GET'}
+2025-07-19 12:01:07,793 - app - INFO - Route: /user-progress/update, Methods: {'POST'}
+2025-07-19 12:01:07,793 - app - INFO - Route: /api/v1/jobs/save, Methods: {'POST'}
+2025-07-19 12:01:07,793 - app - INFO - Route: /api/v1/jobs/saved, Methods: {'GET'}
+2025-07-19 12:01:07,793 - app - INFO - Route: /api/v1/jobs/{job_id}, Methods: {'DELETE'}
+2025-07-19 12:01:07,794 - app - INFO - Route: /api/v1/jobs/{esco_id}/details, Methods: {'GET'}
+2025-07-19 12:01:07,794 - app - INFO - Route: /api/v1/jobs/recommendations/me, Methods: {'GET'}
+2025-07-19 12:01:07,794 - app - INFO - Route: /api/v1/program-recommendations/career-goal/{goal_id}, Methods: {'GET'}
+2025-07-19 12:01:07,794 - app - INFO - Route: /api/v1/program-recommendations/career-goal/{goal_id}/save, Methods: {'POST'}
+2025-07-19 12:01:07,794 - app - INFO - Route: /api/v1/program-recommendations/career-goal/{goal_id}/saved, Methods: {'GET'}
+2025-07-19 12:01:07,794 - app - INFO - Route: /api/v1/program-recommendations/institutions, Methods: {'GET'}
+2025-07-19 12:01:07,794 - app - INFO - Route: /api/tests/holland/, Methods: {'GET'}
+2025-07-19 12:01:07,794 - app - INFO - Route: /api/tests/holland/questions, Methods: {'GET'}
+2025-07-19 12:01:07,794 - app - INFO - Route: /api/tests/holland/answer, Methods: {'POST'}
+2025-07-19 12:01:07,794 - app - INFO - Route: /api/tests/holland/score/{attempt_id}, Methods: {'GET'}
+2025-07-19 12:01:07,794 - app - INFO - Route: /api/tests/holland/user-results, Methods: {'GET'}
+2025-07-19 12:01:07,794 - app - INFO - Route: /api/tests/holland/profile-description, Methods: {'GET'}
+2025-07-19 12:01:07,794 - app - INFO - Route: /api/tests/holland/profile-description/{user_id}, Methods: {'GET'}
+2025-07-19 12:01:07,794 - app - INFO - Route: /api/tests/hexaco/, Methods: {'GET'}
+2025-07-19 12:01:07,794 - app - INFO - Route: /api/tests/hexaco/languages, Methods: {'GET'}
+2025-07-19 12:01:07,794 - app - INFO - Route: /api/tests/hexaco/versions, Methods: {'GET'}
+2025-07-19 12:01:07,794 - app - INFO - Route: /api/tests/hexaco/start, Methods: {'POST'}
+2025-07-19 12:01:07,794 - app - INFO - Route: /api/tests/hexaco/questions, Methods: {'GET'}
+2025-07-19 12:01:07,794 - app - INFO - Route: /api/tests/hexaco/answer, Methods: {'POST'}
+2025-07-19 12:01:07,794 - app - INFO - Route: /api/tests/hexaco/progress/{session_id}, Methods: {'GET'}
+2025-07-19 12:01:07,794 - app - INFO - Route: /api/tests/hexaco/score/{session_id}, Methods: {'GET'}
+2025-07-19 12:01:07,794 - app - INFO - Route: /api/tests/hexaco/profile/{user_id}, Methods: {'GET'}
+2025-07-19 12:01:07,794 - app - INFO - Route: /api/tests/hexaco/my-profile, Methods: {'GET'}
+2025-07-19 12:01:07,794 - app - INFO - Route: /api/tests/hexaco/analysis/{user_id}, Methods: {'GET'}
+2025-07-19 12:01:07,794 - app - INFO - Route: /api/tests/hexaco/my-analysis, Methods: {'GET'}
+2025-07-19 12:01:07,795 - app - INFO - Route: /insight/generate, Methods: {'POST'}
+2025-07-19 12:01:07,795 - app - INFO - Route: /insight/get, Methods: {'GET'}
+2025-07-19 12:01:07,795 - app - INFO - Route: /insight/regenerate, Methods: {'POST'}
+2025-07-19 12:01:07,795 - app - INFO - Route: /insight/save, Methods: {'PATCH'}
+2025-07-19 12:01:07,795 - app - INFO - Route: /insight/rewrite, Methods: {'POST'}
+2025-07-19 12:01:07,795 - app - INFO - Route: /api/v1/competence-tree/generate, Methods: {'POST'}
+2025-07-19 12:01:07,795 - app - INFO - Route: /api/v1/competence-tree/generate-from-anchors, Methods: {'POST'}
+2025-07-19 12:01:07,795 - app - INFO - Route: /api/v1/competence-tree/anchor-skills, Methods: {'GET'}
+2025-07-19 12:01:07,795 - app - INFO - Route: /api/v1/competence-tree/{graph_id}, Methods: {'GET'}
+2025-07-19 12:01:07,795 - app - INFO - Route: /api/v1/competence-tree/node/{node_id}/complete, Methods: {'PATCH'}
+2025-07-19 12:01:07,795 - app - INFO - Route: /api/v1/career-progression/{occupation_id}, Methods: {'GET'}
+2025-07-19 12:01:07,795 - app - INFO - Route: /api/v1/career-progression/{occupation_id}/personalized, Methods: {'GET'}
+2025-07-19 12:01:07,795 - app - INFO - Route: /api/v1/career-progression/{occupation_id}/analyze, Methods: {'GET'}
+2025-07-19 12:01:07,795 - app - INFO - Route: /api/v1/users/me, Methods: {'GET'}
+2025-07-19 12:01:07,795 - app - INFO - Route: /api/v1/users/{user_id}/profile, Methods: {'GET'}
+2025-07-19 12:01:07,795 - app - INFO - Route: /api/reflection/questions, Methods: {'GET'}
+2025-07-19 12:01:07,795 - app - INFO - Route: /api/reflection/responses/{user_id}, Methods: {'GET'}
+2025-07-19 12:01:07,795 - app - INFO - Route: /api/reflection/responses, Methods: {'GET'}
+2025-07-19 12:01:07,795 - app - INFO - Route: /api/reflection/responses, Methods: {'POST'}
+2025-07-19 12:01:07,795 - app - INFO - Route: /api/reflection/responses/{response_id}, Methods: {'PUT'}
+2025-07-19 12:01:07,795 - app - INFO - Route: /api/reflection/responses/batch, Methods: {'POST'}
+2025-07-19 12:01:07,795 - app - INFO - Route: /api/reflection/responses/{response_id}, Methods: {'DELETE'}
+2025-07-19 12:01:07,795 - app - INFO - Route: /api/v1/avatar/generate-avatar/me, Methods: {'POST'}
+2025-07-19 12:01:07,795 - app - INFO - Route: /api/v1/avatar/me, Methods: {'GET'}
+2025-07-19 12:01:07,795 - app - INFO - Route: /api/v1/avatar/generate-avatar-test/{user_id}, Methods: {'POST'}
+2025-07-19 12:01:07,795 - app - INFO - Route: /onboarding/status, Methods: {'GET'}
+2025-07-19 12:01:07,795 - app - INFO - Route: /onboarding/start, Methods: {'POST'}
+2025-07-19 12:01:07,796 - app - INFO - Route: /onboarding/response, Methods: {'POST'}
+2025-07-19 12:01:07,796 - app - INFO - Route: /onboarding/complete, Methods: {'POST'}
+2025-07-19 12:01:07,796 - app - INFO - Route: /onboarding/profile, Methods: {'GET'}
+2025-07-19 12:01:07,796 - app - INFO - Route: /onboarding/responses, Methods: {'GET'}
+2025-07-19 12:01:07,796 - app - INFO - Route: /onboarding/reset, Methods: {'DELETE'}
+2025-07-19 12:01:07,796 - app - INFO - Route: /onboarding/skip, Methods: {'POST'}
+2025-07-19 12:01:07,796 - app - INFO - Route: /api/v1/education/programs/search, Methods: {'POST'}
+2025-07-19 12:01:07,796 - app - INFO - Route: /api/v1/education/programs/{program_id}, Methods: {'GET'}
+2025-07-19 12:01:07,796 - app - INFO - Route: /api/v1/education/institutions, Methods: {'GET'}
+2025-07-19 12:01:07,796 - app - INFO - Route: /api/v1/education/metadata, Methods: {'GET'}
+2025-07-19 12:01:07,796 - app - INFO - Route: /api/v1/school-programs/search, Methods: {'POST'}
+2025-07-19 12:01:07,796 - app - INFO - Route: /api/v1/school-programs/search, Methods: {'GET'}
+2025-07-19 12:01:07,796 - app - INFO - Route: /api/v1/school-programs/programs/{program_id}, Methods: {'GET'}
+2025-07-19 12:01:07,796 - app - INFO - Route: /api/v1/school-programs/users/interactions, Methods: {'POST'}
+2025-07-19 12:01:07,796 - app - INFO - Route: /api/v1/school-programs/users/saved-programs, Methods: {'POST'}
+2025-07-19 12:01:07,796 - app - INFO - Route: /api/v1/school-programs/users/saved-programs, Methods: {'GET'}
+2025-07-19 12:01:07,796 - app - INFO - Route: /api/v1/school-programs/users/saved-programs/{program_id}, Methods: {'DELETE'}
+2025-07-19 12:01:07,796 - app - INFO - Route: /api/v1/school-programs/filters, Methods: {'GET'}
+2025-07-19 12:01:07,796 - app - INFO - Route: /api/v1/school-programs/health, Methods: {'GET'}
+2025-07-19 12:01:07,796 - app - INFO - Route: /api/v1/courses, Methods: {'POST'}
+2025-07-19 12:01:07,797 - app - INFO - Route: /api/v1/courses, Methods: {'GET'}
+2025-07-19 12:01:07,797 - app - INFO - Route: /api/v1/courses/{course_id}, Methods: {'GET'}
+2025-07-19 12:01:07,797 - app - INFO - Route: /api/v1/courses/{course_id}, Methods: {'PUT'}
+2025-07-19 12:01:07,797 - app - INFO - Route: /api/v1/courses/{course_id}, Methods: {'DELETE'}
+2025-07-19 12:01:07,797 - app - INFO - Route: /api/v1/courses/{course_id}/targeted-analysis, Methods: {'POST'}
+2025-07-19 12:01:07,797 - app - INFO - Route: /api/v1/conversations/{session_id}/respond, Methods: {'POST'}
+2025-07-19 12:01:07,797 - app - INFO - Route: /api/v1/psychological-profile/{user_id}, Methods: {'GET'}
+2025-07-19 12:01:07,797 - app - INFO - Route: /api/v1/career-signals/{user_id}, Methods: {'GET'}
+2025-07-19 12:01:07,797 - app - INFO - Route: /api/v1/courses/{course_id}/insights, Methods: {'GET'}
+2025-07-19 12:01:07,797 - app - INFO - Route: /api/v1/conversations/{session_id}/summary, Methods: {'GET'}
+2025-07-19 12:01:07,797 - app - INFO - Route: /api/v1/enhanced-chat/send, Methods: {'POST'}
+2025-07-19 12:01:07,797 - app - INFO - Route: /api/v1/enhanced-chat/skill-explanation, Methods: {'POST'}
+2025-07-19 12:01:07,797 - app - INFO - Route: /api/v1/enhanced-chat/learning-recommendations, Methods: {'GET'}
+2025-07-19 12:01:07,797 - app - INFO - Route: /api/v1/enhanced-chat/career-path-analysis, Methods: {'POST'}
+2025-07-19 12:01:07,797 - app - INFO - Route: /api/v1/enhanced-chat/graphsage-insights, Methods: {'GET'}
+2025-07-19 12:01:07,797 - app - INFO - Route: /api/v1/enhanced-chat/status, Methods: {'GET'}
+2025-07-19 12:01:07,797 - app - INFO - Route: /api/v1/socratic-chat/send, Methods: {'POST'}
+2025-07-19 12:01:07,797 - app - INFO - Route: /api/v1/socratic-chat/introduction, Methods: {'POST'}
+2025-07-19 12:01:07,797 - app - INFO - Route: /api/v1/socratic-chat/modes, Methods: {'GET'}
+2025-07-19 12:01:07,797 - app - INFO - Route: /api/v1/socratic-chat/status, Methods: {'GET'}
+2025-07-19 12:01:07,798 - app - INFO - Route: /api/v1/career-goals/, Methods: {'POST'}
+2025-07-19 12:01:07,798 - app - INFO - Route: /api/v1/career-goals/active, Methods: {'GET'}
+2025-07-19 12:01:07,798 - app - INFO - Route: /api/v1/career-goals/, Methods: {'GET'}
+2025-07-19 12:01:07,798 - app - INFO - Route: /api/v1/career-goals/{goal_id}, Methods: {'PUT'}
+2025-07-19 12:01:07,798 - app - INFO - Route: /api/v1/career-goals/{goal_id}, Methods: {'DELETE'}
+2025-07-19 12:01:07,798 - app - INFO - Route: /api/v1/career-goals/{goal_id}/milestones/{milestone_id}/complete, Methods: {'POST'}
+2025-07-19 12:01:07,798 - app - INFO - Route: /api/v1/career-goals/{goal_id}/milestones, Methods: {'GET'}
+2025-07-19 12:01:07,798 - app - INFO - Route: /api/v1/jobs/recommendations/me, Methods: {'GET'}
+2025-07-19 12:01:07,798 - app - INFO - Route: /api/v1/jobs/recommendations/{user_id}, Methods: {'GET'}
+2025-07-19 12:01:07,798 - app - INFO - Route: /api/v1/jobs/recommendations/{user_id}, Methods: {'POST'}
+2025-07-19 12:01:07,798 - app - INFO - Route: /api/v1/jobs/skill-tree/{job_id}, Methods: {'GET'}
+2025-07-19 12:01:07,798 - app - INFO - Route: /api/careers/llm-query, Methods: {'POST'}
+2025-07-19 12:01:07,798 - app - INFO - Route: /api/orientator/test-message, Methods: {'POST'}
+2025-07-19 12:01:07,798 - app - INFO - Route: /api/orientator/message, Methods: {'POST'}
+2025-07-19 12:01:07,798 - app - INFO - Route: /api/orientator/save-component, Methods: {'POST'}
+2025-07-19 12:01:07,798 - app - INFO - Route: /api/orientator/conversations/{conversation_id}/messages, Methods: {'GET'}
+2025-07-19 12:01:07,798 - app - INFO - Route: /api/orientator/journey/{user_id}, Methods: {'GET'}
+2025-07-19 12:01:07,798 - app - INFO - Route: /api/orientator/conversations, Methods: {'GET'}
+2025-07-19 12:01:07,798 - app - INFO - Route: /api/orientator/tool-analytics, Methods: {'GET'}
+2025-07-19 12:01:07,798 - app - INFO - Route: /api/orientator/feedback, Methods: {'POST'}
+2025-07-19 12:01:07,798 - app - INFO - Route: /api/orientator/health, Methods: {'GET'}
+2025-07-19 12:01:07,798 - app - INFO - ======================
+2025-07-19 12:01:07,800 - app - INFO - 🚀 Application startup initiated
+2025-07-19 12:01:07,800 - app - INFO - Loading models...
+2025-07-19 12:01:07,801 - scripts.model_loader - INFO - Starting model loading...
+2025-07-19 12:01:07,801 - scripts.model_loader - INFO - Loading SentenceTransformer models...
+2025-07-19 12:01:07,801 - scripts.model_loader - WARNING - SentenceTransformer model directory not found, skipping...
+2025-07-19 12:01:07,801 - scripts.model_loader - INFO - Loading PCA, OHE, and Scaler models...
+2025-07-19 12:01:07,801 - scripts.model_loader - WARNING - Model files not found, skipping...
+2025-07-19 12:01:07,801 - scripts.model_loader - INFO - Model loading process completed!
+2025-07-19 12:01:07,801 - app - INFO - Models loaded from scripts
+2025-07-19 12:01:07,801 - app - INFO - Model loading process completed
+2025-07-19 12:01:07,801 - app - INFO - ✅ Models loaded successfully
+2025-07-19 12:01:07,801 - app - INFO - 🔌 Attempting database initialization...
+2025-07-19 12:01:07,801 - app.core.config - INFO - Using DATABASE_URL for local development
+2025-07-19 12:01:07,801 - app.utils.database - INFO - Attempting to connect to database...
+2025-07-19 12:01:07,834 - app.utils.database - INFO - ✅ Database engine created successfully
+2025-07-19 12:01:08,722 - app.utils.database - INFO - ✅ Database connection test successful
+2025-07-19 12:01:08,764 - app.utils.database - INFO - Database: postgres
+2025-07-19 12:01:08,764 - app.utils.database - INFO - User: postgres
+2025-07-19 12:01:08,765 - app.utils.database - INFO - PostgreSQL version: PostgreSQL 17.4 on aarch64-unknown-linux-gnu, comp...
+2025-07-19 12:01:08,813 - app.utils.database - INFO - Sample tables: ['messages', 'user_journey_milestones', 'user_profiles', 'user_skills', 'alembic_version']...
+2025-07-19 12:01:08,852 - app.utils.database - INFO - ✅ Database initialization completed successfully
+2025-07-19 12:01:08,852 - app - INFO - ✅ Application startup completed successfully
+2025-07-19 12:02:52,769 - app.routers.user_progress - INFO - Retrieved user progress for user 22: {}
+2025-07-19 12:02:52,774 - app.routers.holland_test - INFO - Récupération des résultats RIASEC pour l'utilisateur: 22
+2025-07-19 12:02:53,061 - app.routers.user_progress - INFO - Retrieved user progress for user 22: {}
+2025-07-19 12:02:53,273 - app.routers.holland_test - INFO - Récupération des résultats RIASEC pour l'utilisateur: 22
+2025-07-19 12:02:58,820 - app.routers.education - INFO - Fetching fresh program data...
+2025-07-19 12:02:58,823 - app.routers.education - INFO - Loaded 80 programs from persistent cache
+2025-07-19 12:02:58,869 - app.routers.user_progress - INFO - Retrieved user progress for user 22: {}
+2025-07-19 12:02:58,987 - app.routers.education - INFO - Fetching fresh program data...
+2025-07-19 12:02:58,988 - app.routers.education - INFO - Loaded 80 programs from persistent cache
+2025-07-19 12:02:59,044 - app.routers.user_progress - INFO - Retrieved user progress for user 22: {}
+2025-07-19 12:02:59,160 - app.routers.education - INFO - Fetching fresh program data...
+2025-07-19 12:02:59,161 - app.routers.education - INFO - Loaded 80 programs from persistent cache
+2025-07-19 12:03:02,444 - app.routers.holland_test - INFO - Récupération des résultats RIASEC pour l'utilisateur: 22
+2025-07-19 12:03:02,592 - app.routers.jobs - INFO - Getting job recommendations for user 22
+2025-07-19 12:03:02,592 - app.routers.jobs - INFO - Returned 3 real ESCO job recommendations for user 22
+2025-07-19 12:03:02,890 - app.services.career_progression_service - INFO - Starting career progression extraction for occupation occupation::key_15227
+2025-07-19 12:03:02,890 - app.services.career_progression_service - INFO - Parameters: depth=3, max_per_tier=5, min_sim=0.4
+2025-07-19 12:03:02,890 - app.services.career_progression_service - INFO - Extracting tier 1 from 1 nodes
+2025-07-19 12:03:02,899 - app.services.career_progression_service - INFO - Extracting tier 2 from 5 nodes
+2025-07-19 12:03:02,900 - app.services.career_progression_service - INFO - Extracting tier 3 from 5 nodes
+2025-07-19 12:03:02,903 - app.services.career_progression_service - INFO - Career progression extracted: 3 tiers, 15 total skills
+2025-07-19 12:03:03,646 - app.routers.user_progress - INFO - Retrieved user progress for user 22: {}
+2025-07-19 12:03:03,735 - app.routers.holland_test - INFO - Récupération des résultats RIASEC pour l'utilisateur: 22
+2025-07-19 12:03:04,408 - app.routers.user_progress - INFO - Retrieved user progress for user 22: {}
+2025-07-19 12:03:04,698 - app.services.career_progression_service - INFO - Starting career progression extraction for occupation occupation::key_15227
+2025-07-19 12:03:04,699 - app.services.career_progression_service - INFO - Parameters: depth=3, max_per_tier=5, min_sim=0.4
+2025-07-19 12:03:04,699 - app.services.career_progression_service - INFO - Extracting tier 1 from 1 nodes
+2025-07-19 12:03:04,700 - app.services.career_progression_service - INFO - Extracting tier 2 from 5 nodes
+2025-07-19 12:03:04,700 - app.services.career_progression_service - INFO - Extracting tier 3 from 5 nodes
+2025-07-19 12:03:04,701 - app.services.career_progression_service - INFO - Career progression extracted: 3 tiers, 15 total skills
+2025-07-19 12:03:05,508 - app.routers.jobs - INFO - Getting job recommendations for user 22
+2025-07-19 12:03:05,509 - app.routers.jobs - INFO - Returned 3 real ESCO job recommendations for user 22
+2025-07-19 12:06:56,750 - app - INFO - ======= ROUTER REGISTRATION DETAILS =======
+2025-07-19 12:06:56,750 - app - INFO - auth_router import path: fastapi.routing
+2025-07-19 12:06:56,750 - app - INFO - get_current_user import path: app.routers.user
+2025-07-19 12:06:56,750 - app - INFO - profiles_router import path: fastapi.routing
+2025-07-19 12:06:56,750 - app - INFO - Registering auth_router routes: ["/auth/register [{'POST'}]", "/auth/login [{'POST'}]", "/auth/update [{'PUT'}]", "/auth/change-password [{'PUT'}]", "/auth/onboarding-status [{'GET'}]"]
+2025-07-19 12:06:56,750 - app - INFO - Registering profiles_router routes: ["/profiles/test [{'GET'}]", "/profiles/me [{'GET'}]", "/profiles/update [{'PUT'}]", "/profiles/{user_id} [{'GET'}]"]
+2025-07-19 12:06:56,750 - app - INFO - Registering chat_router routes: ["/chat/send [{'POST'}]", "/chat/clear [{'POST'}]"]
+2025-07-19 12:06:56,750 - app - INFO - Registering peers_router routes: ["/peers/suggested [{'GET'}]", "/peers/compatible [{'GET'}]", "/peers/homepage [{'GET'}]", "/peers/refresh [{'POST'}]"]
+2025-07-19 12:06:56,751 - app - INFO - Registering messages_router routes: ["/messages [{'POST'}]", "/messages/conversation/{peer_id} [{'GET'}]", "/messages/conversations [{'GET'}]", "/messages/suggested-peers [{'GET'}]"]
+2025-07-19 12:06:56,751 - app - INFO - Registering test_router routes: ["/test/hello [{'GET'}]"]
+2025-07-19 12:06:56,751 - app - INFO - Registering space_router routes: ["/space/recommendations [{'POST'}]", "/space/recommendations [{'GET'}]", "/space/recommendations/{identifier} [{'DELETE'}]", "/space/notes [{'POST'}]", "/space/notes [{'GET'}]", "/space/notes/{note_id} [{'PUT'}]", "/space/notes/{note_id} [{'DELETE'}]", "/space/skills [{'GET'}]", "/space/skills [{'PUT'}]", "/space/recommendations/{oasis_code}/skill-comparison [{'GET'}]", "/space/recommendations/{recommendation_id}/generate-analysis [{'POST'}]"]
+2025-07-19 12:06:56,751 - app - INFO - Registering vector_router routes: ["/vector/search [{'POST'}]", "/vector/search/save [{'POST'}]", "/vector/health [{'GET'}]", "/vector/suggested-peers [{'GET'}]", "/vector/debug [{'GET'}]"]
+2025-07-19 12:06:56,751 - app - INFO - Registering recommendations_router routes: ["/recommendations [{'GET'}]", "/recommendations/swipe [{'POST'}]"]
+2025-07-19 12:06:56,751 - app - INFO - Registering careers_router routes: ["/careers/recommendations [{'GET'}]", "/careers/save/{career_id} [{'POST'}]", "/careers/saved [{'GET'}]", "/careers/fit-analysis [{'POST'}]", "/careers/cleanup-test-jobs [{'DELETE'}]"]
+2025-07-19 12:06:56,751 - app - INFO - Registering tree_router routes: ["/tree [{'POST'}]", "/tree/skills [{'POST'}]"]
+2025-07-19 12:06:56,751 - app - INFO - Registering tree_paths_router routes: ["/tree-paths/ [{'POST'}]", "/tree-paths/ [{'GET'}]", "/tree-paths/{tree_path_id} [{'GET'}]", "/tree-paths/{tree_path_id} [{'DELETE'}]"]
+2025-07-19 12:06:56,751 - app - INFO - Registering node_notes_router routes: ["/node-notes/ [{'POST'}]", "/node-notes/ [{'GET'}]", "/node-notes/node/{node_id} [{'GET'}]", "/node-notes/{note_id} [{'GET'}]", "/node-notes/{note_id} [{'DELETE'}]"]
+2025-07-19 12:06:56,751 - app - INFO - Registering user_progress_router routes: ["/user-progress/ [{'GET'}]", "/user-progress/update [{'POST'}]"]
+2025-07-19 12:06:56,751 - app - INFO - Registering holland_test_router routes: ["/api/tests/holland/ [{'GET'}]", "/api/tests/holland/questions [{'GET'}]", "/api/tests/holland/answer [{'POST'}]", "/api/tests/holland/score/{attempt_id} [{'GET'}]", "/api/tests/holland/user-results [{'GET'}]", "/api/tests/holland/profile-description [{'GET'}]", "/api/tests/holland/profile-description/{user_id} [{'GET'}]"]
+2025-07-19 12:06:56,751 - app - INFO - Registering hexaco_test_router routes: ["/api/tests/hexaco/ [{'GET'}]", "/api/tests/hexaco/languages [{'GET'}]", "/api/tests/hexaco/versions [{'GET'}]", "/api/tests/hexaco/start [{'POST'}]", "/api/tests/hexaco/questions [{'GET'}]", "/api/tests/hexaco/answer [{'POST'}]", "/api/tests/hexaco/progress/{session_id} [{'GET'}]", "/api/tests/hexaco/score/{session_id} [{'GET'}]", "/api/tests/hexaco/profile/{user_id} [{'GET'}]", "/api/tests/hexaco/my-profile [{'GET'}]", "/api/tests/hexaco/analysis/{user_id} [{'GET'}]", "/api/tests/hexaco/my-analysis [{'GET'}]"]
+2025-07-19 12:06:56,751 - app - INFO - Registering insight_router routes: ["/insight/generate [{'POST'}]", "/insight/get [{'GET'}]", "/insight/regenerate [{'POST'}]", "/insight/save [{'PATCH'}]", "/insight/rewrite [{'POST'}]"]
+2025-07-19 12:06:56,751 - app - INFO - Registering orientator_router routes: ["/orientator/test-message [{'POST'}]", "/orientator/message [{'POST'}]", "/orientator/save-component [{'POST'}]", "/orientator/conversations/{conversation_id}/messages [{'GET'}]", "/orientator/journey/{user_id} [{'GET'}]", "/orientator/conversations [{'GET'}]", "/orientator/tool-analytics [{'GET'}]", "/orientator/feedback [{'POST'}]", "/orientator/health [{'GET'}]"]
+2025-07-19 12:06:56,751 - app - INFO - ============================================
+2025-07-19 12:06:56,751 - app - INFO - Including routers in the FastAPI app
+2025-07-19 12:06:56,753 - app - INFO - Auth router included successfully
+2025-07-19 12:06:56,756 - app - INFO - Profiles router included successfully
+2025-07-19 12:06:56,843 - app - INFO - All routers included successfully
+2025-07-19 12:06:56,843 - app - INFO - === Available Routes ===
+2025-07-19 12:06:56,843 - app - INFO - Route: /openapi.json, Methods: {'HEAD', 'GET'}
+2025-07-19 12:06:56,843 - app - INFO - Route: /docs, Methods: {'HEAD', 'GET'}
+2025-07-19 12:06:56,843 - app - INFO - Route: /docs/oauth2-redirect, Methods: {'HEAD', 'GET'}
+2025-07-19 12:06:56,843 - app - INFO - Route: /redoc, Methods: {'HEAD', 'GET'}
+2025-07-19 12:06:56,843 - app - INFO - Mount: /static
+2025-07-19 12:06:56,843 - app - INFO - Route: /auth/register, Methods: {'POST'}
+2025-07-19 12:06:56,843 - app - INFO - Route: /auth/login, Methods: {'POST'}
+2025-07-19 12:06:56,843 - app - INFO - Route: /auth/update, Methods: {'PUT'}
+2025-07-19 12:06:56,843 - app - INFO - Route: /auth/change-password, Methods: {'PUT'}
+2025-07-19 12:06:56,843 - app - INFO - Route: /auth/onboarding-status, Methods: {'GET'}
+2025-07-19 12:06:56,843 - app - INFO - Route: /api/v1/profiles/test, Methods: {'GET'}
+2025-07-19 12:06:56,843 - app - INFO - Route: /api/v1/profiles/me, Methods: {'GET'}
+2025-07-19 12:06:56,843 - app - INFO - Route: /api/v1/profiles/update, Methods: {'PUT'}
+2025-07-19 12:06:56,843 - app - INFO - Route: /api/v1/profiles/{user_id}, Methods: {'GET'}
+2025-07-19 12:06:56,843 - app - INFO - Route: /test/hello, Methods: {'GET'}
+2025-07-19 12:06:56,843 - app - INFO - Route: /chat/conversations, Methods: {'GET'}
+2025-07-19 12:06:56,843 - app - INFO - Route: /chat/conversations, Methods: {'POST'}
+2025-07-19 12:06:56,844 - app - INFO - Route: /chat/conversations/{conversation_id}, Methods: {'GET'}
+2025-07-19 12:06:56,844 - app - INFO - Route: /chat/conversations/{conversation_id}, Methods: {'PUT'}
+2025-07-19 12:06:56,844 - app - INFO - Route: /chat/conversations/{conversation_id}, Methods: {'DELETE'}
+2025-07-19 12:06:56,844 - app - INFO - Route: /chat/conversations/{conversation_id}/favorite, Methods: {'POST'}
+2025-07-19 12:06:56,844 - app - INFO - Route: /chat/conversations/{conversation_id}/archive, Methods: {'POST'}
+2025-07-19 12:06:56,844 - app - INFO - Route: /chat/conversations/{conversation_id}/generate-title, Methods: {'POST'}
+2025-07-19 12:06:56,844 - app - INFO - Route: /chat/conversations/{conversation_id}/messages, Methods: {'GET'}
+2025-07-19 12:06:56,844 - app - INFO - Route: /chat/conversations/{conversation_id}/statistics, Methods: {'GET'}
+2025-07-19 12:06:56,844 - app - INFO - Route: /chat/conversations/{conversation_id}/export, Methods: {'POST'}
+2025-07-19 12:06:56,844 - app - INFO - Route: /chat/conversations/send/{conversation_id}, Methods: {'POST'}
+2025-07-19 12:06:56,844 - app - INFO - Route: /chat/send, Methods: {'POST'}
+2025-07-19 12:06:56,844 - app - INFO - Route: /chat/clear, Methods: {'POST'}
+2025-07-19 12:06:56,844 - app - INFO - Route: /chat/share/conversations/{conversation_id}, Methods: {'POST'}
+2025-07-19 12:06:56,844 - app - INFO - Route: /chat/share/shared/{share_token}, Methods: {'GET'}
+2025-07-19 12:06:56,844 - app - INFO - Route: /chat/share/shares/{share_id}, Methods: {'PUT'}
+2025-07-19 12:06:56,844 - app - INFO - Route: /chat/share/shares/{share_id}, Methods: {'DELETE'}
+2025-07-19 12:06:56,844 - app - INFO - Route: /chat/share/user/shares, Methods: {'GET'}
+2025-07-19 12:06:56,844 - app - INFO - Route: /chat/share/shares/{share_id}/analytics, Methods: {'GET'}
+2025-07-19 12:06:56,844 - app - INFO - Route: /chat/analytics/usage, Methods: {'GET'}
+2025-07-19 12:06:56,844 - app - INFO - Route: /chat/analytics/trends, Methods: {'GET'}
+2025-07-19 12:06:56,844 - app - INFO - Route: /chat/analytics/topics, Methods: {'GET'}
+2025-07-19 12:06:56,844 - app - INFO - Route: /chat/analytics/summary, Methods: {'GET'}
+2025-07-19 12:06:56,844 - app - INFO - Route: /peers/suggested, Methods: {'GET'}
+2025-07-19 12:06:56,844 - app - INFO - Route: /peers/compatible, Methods: {'GET'}
+2025-07-19 12:06:56,844 - app - INFO - Route: /peers/homepage, Methods: {'GET'}
+2025-07-19 12:06:56,844 - app - INFO - Route: /peers/refresh, Methods: {'POST'}
+2025-07-19 12:06:56,844 - app - INFO - Route: /messages, Methods: {'POST'}
+2025-07-19 12:06:56,845 - app - INFO - Route: /messages/conversation/{peer_id}, Methods: {'GET'}
+2025-07-19 12:06:56,845 - app - INFO - Route: /messages/conversations, Methods: {'GET'}
+2025-07-19 12:06:56,845 - app - INFO - Route: /messages/suggested-peers, Methods: {'GET'}
+2025-07-19 12:06:56,845 - app - INFO - Route: /space/recommendations, Methods: {'POST'}
+2025-07-19 12:06:56,845 - app - INFO - Route: /space/recommendations, Methods: {'GET'}
+2025-07-19 12:06:56,845 - app - INFO - Route: /space/recommendations/{identifier}, Methods: {'DELETE'}
+2025-07-19 12:06:56,845 - app - INFO - Route: /space/notes, Methods: {'POST'}
+2025-07-19 12:06:56,845 - app - INFO - Route: /space/notes, Methods: {'GET'}
+2025-07-19 12:06:56,845 - app - INFO - Route: /space/notes/{note_id}, Methods: {'PUT'}
+2025-07-19 12:06:56,845 - app - INFO - Route: /space/notes/{note_id}, Methods: {'DELETE'}
+2025-07-19 12:06:56,845 - app - INFO - Route: /space/skills, Methods: {'GET'}
+2025-07-19 12:06:56,845 - app - INFO - Route: /space/skills, Methods: {'PUT'}
+2025-07-19 12:06:56,845 - app - INFO - Route: /space/recommendations/{oasis_code}/skill-comparison, Methods: {'GET'}
+2025-07-19 12:06:56,845 - app - INFO - Route: /space/recommendations/{recommendation_id}/generate-analysis, Methods: {'POST'}
+2025-07-19 12:06:56,845 - app - INFO - Route: /vector/search, Methods: {'POST'}
+2025-07-19 12:06:56,845 - app - INFO - Route: /vector/search/save, Methods: {'POST'}
+2025-07-19 12:06:56,845 - app - INFO - Route: /vector/health, Methods: {'GET'}
+2025-07-19 12:06:56,845 - app - INFO - Route: /vector/suggested-peers, Methods: {'GET'}
+2025-07-19 12:06:56,845 - app - INFO - Route: /vector/debug, Methods: {'GET'}
+2025-07-19 12:06:56,845 - app - INFO - Route: /recommendations, Methods: {'GET'}
+2025-07-19 12:06:56,845 - app - INFO - Route: /recommendations/swipe, Methods: {'POST'}
+2025-07-19 12:06:56,845 - app - INFO - Route: /careers/recommendations, Methods: {'GET'}
+2025-07-19 12:06:56,845 - app - INFO - Route: /careers/save/{career_id}, Methods: {'POST'}
+2025-07-19 12:06:56,845 - app - INFO - Route: /careers/saved, Methods: {'GET'}
+2025-07-19 12:06:56,845 - app - INFO - Route: /careers/fit-analysis, Methods: {'POST'}
+2025-07-19 12:06:56,845 - app - INFO - Route: /careers/cleanup-test-jobs, Methods: {'DELETE'}
+2025-07-19 12:06:56,845 - app - INFO - Route: /tree, Methods: {'POST'}
+2025-07-19 12:06:56,846 - app - INFO - Route: /tree/skills, Methods: {'POST'}
+2025-07-19 12:06:56,846 - app - INFO - Route: /tree-paths/, Methods: {'POST'}
+2025-07-19 12:06:56,846 - app - INFO - Route: /tree-paths/, Methods: {'GET'}
+2025-07-19 12:06:56,846 - app - INFO - Route: /tree-paths/{tree_path_id}, Methods: {'GET'}
+2025-07-19 12:06:56,846 - app - INFO - Route: /tree-paths/{tree_path_id}, Methods: {'DELETE'}
+2025-07-19 12:06:56,846 - app - INFO - Route: /node-notes/, Methods: {'POST'}
+2025-07-19 12:06:56,846 - app - INFO - Route: /node-notes/, Methods: {'GET'}
+2025-07-19 12:06:56,846 - app - INFO - Route: /node-notes/node/{node_id}, Methods: {'GET'}
+2025-07-19 12:06:56,846 - app - INFO - Route: /node-notes/{note_id}, Methods: {'GET'}
+2025-07-19 12:06:56,846 - app - INFO - Route: /node-notes/{note_id}, Methods: {'DELETE'}
+2025-07-19 12:06:56,846 - app - INFO - Route: /user-progress/, Methods: {'GET'}
+2025-07-19 12:06:56,846 - app - INFO - Route: /user-progress/update, Methods: {'POST'}
+2025-07-19 12:06:56,846 - app - INFO - Route: /api/v1/jobs/save, Methods: {'POST'}
+2025-07-19 12:06:56,846 - app - INFO - Route: /api/v1/jobs/saved, Methods: {'GET'}
+2025-07-19 12:06:56,846 - app - INFO - Route: /api/v1/jobs/{job_id}, Methods: {'DELETE'}
+2025-07-19 12:06:56,846 - app - INFO - Route: /api/v1/jobs/{esco_id}/details, Methods: {'GET'}
+2025-07-19 12:06:56,846 - app - INFO - Route: /api/v1/jobs/recommendations/me, Methods: {'GET'}
+2025-07-19 12:06:56,846 - app - INFO - Route: /api/v1/program-recommendations/career-goal/{goal_id}, Methods: {'GET'}
+2025-07-19 12:06:56,846 - app - INFO - Route: /api/v1/program-recommendations/career-goal/{goal_id}/save, Methods: {'POST'}
+2025-07-19 12:06:56,846 - app - INFO - Route: /api/v1/program-recommendations/career-goal/{goal_id}/saved, Methods: {'GET'}
+2025-07-19 12:06:56,846 - app - INFO - Route: /api/v1/program-recommendations/institutions, Methods: {'GET'}
+2025-07-19 12:06:56,846 - app - INFO - Route: /api/tests/holland/, Methods: {'GET'}
+2025-07-19 12:06:56,846 - app - INFO - Route: /api/tests/holland/questions, Methods: {'GET'}
+2025-07-19 12:06:56,846 - app - INFO - Route: /api/tests/holland/answer, Methods: {'POST'}
+2025-07-19 12:06:56,847 - app - INFO - Route: /api/tests/holland/score/{attempt_id}, Methods: {'GET'}
+2025-07-19 12:06:56,847 - app - INFO - Route: /api/tests/holland/user-results, Methods: {'GET'}
+2025-07-19 12:06:56,847 - app - INFO - Route: /api/tests/holland/profile-description, Methods: {'GET'}
+2025-07-19 12:06:56,847 - app - INFO - Route: /api/tests/holland/profile-description/{user_id}, Methods: {'GET'}
+2025-07-19 12:06:56,847 - app - INFO - Route: /api/tests/hexaco/, Methods: {'GET'}
+2025-07-19 12:06:56,847 - app - INFO - Route: /api/tests/hexaco/languages, Methods: {'GET'}
+2025-07-19 12:06:56,847 - app - INFO - Route: /api/tests/hexaco/versions, Methods: {'GET'}
+2025-07-19 12:06:56,847 - app - INFO - Route: /api/tests/hexaco/start, Methods: {'POST'}
+2025-07-19 12:06:56,847 - app - INFO - Route: /api/tests/hexaco/questions, Methods: {'GET'}
+2025-07-19 12:06:56,847 - app - INFO - Route: /api/tests/hexaco/answer, Methods: {'POST'}
+2025-07-19 12:06:56,847 - app - INFO - Route: /api/tests/hexaco/progress/{session_id}, Methods: {'GET'}
+2025-07-19 12:06:56,847 - app - INFO - Route: /api/tests/hexaco/score/{session_id}, Methods: {'GET'}
+2025-07-19 12:06:56,847 - app - INFO - Route: /api/tests/hexaco/profile/{user_id}, Methods: {'GET'}
+2025-07-19 12:06:56,847 - app - INFO - Route: /api/tests/hexaco/my-profile, Methods: {'GET'}
+2025-07-19 12:06:56,847 - app - INFO - Route: /api/tests/hexaco/analysis/{user_id}, Methods: {'GET'}
+2025-07-19 12:06:56,847 - app - INFO - Route: /api/tests/hexaco/my-analysis, Methods: {'GET'}
+2025-07-19 12:06:56,847 - app - INFO - Route: /insight/generate, Methods: {'POST'}
+2025-07-19 12:06:56,847 - app - INFO - Route: /insight/get, Methods: {'GET'}
+2025-07-19 12:06:56,847 - app - INFO - Route: /insight/regenerate, Methods: {'POST'}
+2025-07-19 12:06:56,847 - app - INFO - Route: /insight/save, Methods: {'PATCH'}
+2025-07-19 12:06:56,847 - app - INFO - Route: /insight/rewrite, Methods: {'POST'}
+2025-07-19 12:06:56,847 - app - INFO - Route: /api/v1/competence-tree/generate, Methods: {'POST'}
+2025-07-19 12:06:56,847 - app - INFO - Route: /api/v1/competence-tree/generate-from-anchors, Methods: {'POST'}
+2025-07-19 12:06:56,847 - app - INFO - Route: /api/v1/competence-tree/anchor-skills, Methods: {'GET'}
+2025-07-19 12:06:56,847 - app - INFO - Route: /api/v1/competence-tree/{graph_id}, Methods: {'GET'}
+2025-07-19 12:06:56,847 - app - INFO - Route: /api/v1/competence-tree/node/{node_id}/complete, Methods: {'PATCH'}
+2025-07-19 12:06:56,848 - app - INFO - Route: /api/v1/career-progression/{occupation_id}, Methods: {'GET'}
+2025-07-19 12:06:56,848 - app - INFO - Route: /api/v1/career-progression/{occupation_id}/personalized, Methods: {'GET'}
+2025-07-19 12:06:56,848 - app - INFO - Route: /api/v1/career-progression/{occupation_id}/analyze, Methods: {'GET'}
+2025-07-19 12:06:56,848 - app - INFO - Route: /api/v1/users/me, Methods: {'GET'}
+2025-07-19 12:06:56,848 - app - INFO - Route: /api/v1/users/{user_id}/profile, Methods: {'GET'}
+2025-07-19 12:06:56,848 - app - INFO - Route: /api/reflection/questions, Methods: {'GET'}
+2025-07-19 12:06:56,848 - app - INFO - Route: /api/reflection/responses/{user_id}, Methods: {'GET'}
+2025-07-19 12:06:56,848 - app - INFO - Route: /api/reflection/responses, Methods: {'GET'}
+2025-07-19 12:06:56,848 - app - INFO - Route: /api/reflection/responses, Methods: {'POST'}
+2025-07-19 12:06:56,848 - app - INFO - Route: /api/reflection/responses/{response_id}, Methods: {'PUT'}
+2025-07-19 12:06:56,848 - app - INFO - Route: /api/reflection/responses/batch, Methods: {'POST'}
+2025-07-19 12:06:56,848 - app - INFO - Route: /api/reflection/responses/{response_id}, Methods: {'DELETE'}
+2025-07-19 12:06:56,848 - app - INFO - Route: /api/v1/avatar/generate-avatar/me, Methods: {'POST'}
+2025-07-19 12:06:56,848 - app - INFO - Route: /api/v1/avatar/me, Methods: {'GET'}
+2025-07-19 12:06:56,848 - app - INFO - Route: /api/v1/avatar/generate-avatar-test/{user_id}, Methods: {'POST'}
+2025-07-19 12:06:56,848 - app - INFO - Route: /onboarding/status, Methods: {'GET'}
+2025-07-19 12:06:56,848 - app - INFO - Route: /onboarding/start, Methods: {'POST'}
+2025-07-19 12:06:56,848 - app - INFO - Route: /onboarding/response, Methods: {'POST'}
+2025-07-19 12:06:56,849 - app - INFO - Route: /onboarding/complete, Methods: {'POST'}
+2025-07-19 12:06:56,849 - app - INFO - Route: /onboarding/profile, Methods: {'GET'}
+2025-07-19 12:06:56,849 - app - INFO - Route: /onboarding/responses, Methods: {'GET'}
+2025-07-19 12:06:56,849 - app - INFO - Route: /onboarding/reset, Methods: {'DELETE'}
+2025-07-19 12:06:56,849 - app - INFO - Route: /onboarding/skip, Methods: {'POST'}
+2025-07-19 12:06:56,849 - app - INFO - Route: /api/v1/education/programs/search, Methods: {'POST'}
+2025-07-19 12:06:56,849 - app - INFO - Route: /api/v1/education/programs/{program_id}, Methods: {'GET'}
+2025-07-19 12:06:56,849 - app - INFO - Route: /api/v1/education/institutions, Methods: {'GET'}
+2025-07-19 12:06:56,849 - app - INFO - Route: /api/v1/education/metadata, Methods: {'GET'}
+2025-07-19 12:06:56,849 - app - INFO - Route: /api/v1/school-programs/search, Methods: {'POST'}
+2025-07-19 12:06:56,850 - app - INFO - Route: /api/v1/school-programs/search, Methods: {'GET'}
+2025-07-19 12:06:56,850 - app - INFO - Route: /api/v1/school-programs/programs/{program_id}, Methods: {'GET'}
+2025-07-19 12:06:56,850 - app - INFO - Route: /api/v1/school-programs/users/interactions, Methods: {'POST'}
+2025-07-19 12:06:56,850 - app - INFO - Route: /api/v1/school-programs/users/saved-programs, Methods: {'POST'}
+2025-07-19 12:06:56,850 - app - INFO - Route: /api/v1/school-programs/users/saved-programs, Methods: {'GET'}
+2025-07-19 12:06:56,850 - app - INFO - Route: /api/v1/school-programs/users/saved-programs/{program_id}, Methods: {'DELETE'}
+2025-07-19 12:06:56,850 - app - INFO - Route: /api/v1/school-programs/filters, Methods: {'GET'}
+2025-07-19 12:06:56,850 - app - INFO - Route: /api/v1/school-programs/health, Methods: {'GET'}
+2025-07-19 12:06:56,850 - app - INFO - Route: /api/v1/courses, Methods: {'POST'}
+2025-07-19 12:06:56,850 - app - INFO - Route: /api/v1/courses, Methods: {'GET'}
+2025-07-19 12:06:56,850 - app - INFO - Route: /api/v1/courses/{course_id}, Methods: {'GET'}
+2025-07-19 12:06:56,850 - app - INFO - Route: /api/v1/courses/{course_id}, Methods: {'PUT'}
+2025-07-19 12:06:56,850 - app - INFO - Route: /api/v1/courses/{course_id}, Methods: {'DELETE'}
+2025-07-19 12:06:56,850 - app - INFO - Route: /api/v1/courses/{course_id}/targeted-analysis, Methods: {'POST'}
+2025-07-19 12:06:56,850 - app - INFO - Route: /api/v1/conversations/{session_id}/respond, Methods: {'POST'}
+2025-07-19 12:06:56,850 - app - INFO - Route: /api/v1/psychological-profile/{user_id}, Methods: {'GET'}
+2025-07-19 12:06:56,850 - app - INFO - Route: /api/v1/career-signals/{user_id}, Methods: {'GET'}
+2025-07-19 12:06:56,850 - app - INFO - Route: /api/v1/courses/{course_id}/insights, Methods: {'GET'}
+2025-07-19 12:06:56,850 - app - INFO - Route: /api/v1/conversations/{session_id}/summary, Methods: {'GET'}
+2025-07-19 12:06:56,850 - app - INFO - Route: /api/v1/enhanced-chat/send, Methods: {'POST'}
+2025-07-19 12:06:56,850 - app - INFO - Route: /api/v1/enhanced-chat/skill-explanation, Methods: {'POST'}
+2025-07-19 12:06:56,850 - app - INFO - Route: /api/v1/enhanced-chat/learning-recommendations, Methods: {'GET'}
+2025-07-19 12:06:56,850 - app - INFO - Route: /api/v1/enhanced-chat/career-path-analysis, Methods: {'POST'}
+2025-07-19 12:06:56,850 - app - INFO - Route: /api/v1/enhanced-chat/graphsage-insights, Methods: {'GET'}
+2025-07-19 12:06:56,850 - app - INFO - Route: /api/v1/enhanced-chat/status, Methods: {'GET'}
+2025-07-19 12:06:56,850 - app - INFO - Route: /api/v1/socratic-chat/send, Methods: {'POST'}
+2025-07-19 12:06:56,850 - app - INFO - Route: /api/v1/socratic-chat/introduction, Methods: {'POST'}
+2025-07-19 12:06:56,850 - app - INFO - Route: /api/v1/socratic-chat/modes, Methods: {'GET'}
+2025-07-19 12:06:56,851 - app - INFO - Route: /api/v1/socratic-chat/status, Methods: {'GET'}
+2025-07-19 12:06:56,851 - app - INFO - Route: /api/v1/career-goals/, Methods: {'POST'}
+2025-07-19 12:06:56,851 - app - INFO - Route: /api/v1/career-goals/active, Methods: {'GET'}
+2025-07-19 12:06:56,851 - app - INFO - Route: /api/v1/career-goals/, Methods: {'GET'}
+2025-07-19 12:06:56,851 - app - INFO - Route: /api/v1/career-goals/{goal_id}, Methods: {'PUT'}
+2025-07-19 12:06:56,851 - app - INFO - Route: /api/v1/career-goals/{goal_id}, Methods: {'DELETE'}
+2025-07-19 12:06:56,851 - app - INFO - Route: /api/v1/career-goals/{goal_id}/milestones/{milestone_id}/complete, Methods: {'POST'}
+2025-07-19 12:06:56,851 - app - INFO - Route: /api/v1/career-goals/{goal_id}/milestones, Methods: {'GET'}
+2025-07-19 12:06:56,851 - app - INFO - Route: /api/v1/jobs/recommendations/me, Methods: {'GET'}
+2025-07-19 12:06:56,851 - app - INFO - Route: /api/v1/jobs/recommendations/{user_id}, Methods: {'GET'}
+2025-07-19 12:06:56,851 - app - INFO - Route: /api/v1/jobs/recommendations/{user_id}, Methods: {'POST'}
+2025-07-19 12:06:56,851 - app - INFO - Route: /api/v1/jobs/skill-tree/{job_id}, Methods: {'GET'}
+2025-07-19 12:06:56,851 - app - INFO - Route: /api/careers/llm-query, Methods: {'POST'}
+2025-07-19 12:06:56,851 - app - INFO - Route: /api/orientator/test-message, Methods: {'POST'}
+2025-07-19 12:06:56,851 - app - INFO - Route: /api/orientator/message, Methods: {'POST'}
+2025-07-19 12:06:56,851 - app - INFO - Route: /api/orientator/save-component, Methods: {'POST'}
+2025-07-19 12:06:56,851 - app - INFO - Route: /api/orientator/conversations/{conversation_id}/messages, Methods: {'GET'}
+2025-07-19 12:06:56,851 - app - INFO - Route: /api/orientator/journey/{user_id}, Methods: {'GET'}
+2025-07-19 12:06:56,851 - app - INFO - Route: /api/orientator/conversations, Methods: {'GET'}
+2025-07-19 12:06:56,851 - app - INFO - Route: /api/orientator/tool-analytics, Methods: {'GET'}
+2025-07-19 12:06:56,851 - app - INFO - Route: /api/orientator/feedback, Methods: {'POST'}
+2025-07-19 12:06:56,851 - app - INFO - Route: /api/orientator/health, Methods: {'GET'}
+2025-07-19 12:06:56,851 - app - INFO - ======================
+2025-07-19 12:06:56,855 - app - INFO - 🚀 Application startup initiated
+2025-07-19 12:06:56,855 - app - INFO - Loading models...
+2025-07-19 12:06:56,856 - scripts.model_loader - INFO - Starting model loading...
+2025-07-19 12:06:56,856 - scripts.model_loader - INFO - Loading SentenceTransformer models...
+2025-07-19 12:06:56,856 - scripts.model_loader - WARNING - SentenceTransformer model directory not found, skipping...
+2025-07-19 12:06:56,856 - scripts.model_loader - INFO - Loading PCA, OHE, and Scaler models...
+2025-07-19 12:06:56,857 - scripts.model_loader - WARNING - Model files not found, skipping...
+2025-07-19 12:06:56,857 - scripts.model_loader - INFO - Model loading process completed!
+2025-07-19 12:06:56,857 - app - INFO - Models loaded from scripts
+2025-07-19 12:06:56,857 - app - INFO - Model loading process completed
+2025-07-19 12:06:56,857 - app - INFO - ✅ Models loaded successfully
+2025-07-19 12:06:56,857 - app - INFO - 🔌 Attempting database initialization...
+2025-07-19 12:06:56,857 - app.core.config - INFO - Using DATABASE_URL for local development
+2025-07-19 12:06:56,857 - app.utils.database - INFO - Attempting to connect to database...
+2025-07-19 12:06:56,887 - app.utils.database - INFO - ✅ Database engine created successfully
+2025-07-19 12:06:57,994 - app.utils.database - INFO - ✅ Database connection test successful
+2025-07-19 12:06:58,041 - app.utils.database - INFO - Database: postgres
+2025-07-19 12:06:58,041 - app.utils.database - INFO - User: postgres
+2025-07-19 12:06:58,041 - app.utils.database - INFO - PostgreSQL version: PostgreSQL 17.4 on aarch64-unknown-linux-gnu, comp...
+2025-07-19 12:06:58,097 - app.utils.database - INFO - Sample tables: ['messages', 'user_journey_milestones', 'user_profiles', 'user_skills', 'alembic_version']...
+2025-07-19 12:06:58,150 - app.utils.database - INFO - ✅ Database initialization completed successfully
+2025-07-19 12:06:58,150 - app - INFO - ✅ Application startup completed successfully
+2025-07-19 12:06:59,571 - app.routers.holland_test - INFO - Récupération des résultats RIASEC pour l'utilisateur: 22
+2025-07-19 12:06:59,682 - app.routers.jobs - INFO - Getting job recommendations for user 22
+2025-07-19 12:06:59,682 - app.routers.jobs - INFO - Returned 3 real ESCO job recommendations for user 22
+2025-07-19 12:06:59,830 - app.routers.holland_test - INFO - Récupération des résultats RIASEC pour l'utilisateur: 22
+2025-07-19 12:06:59,929 - app.routers.jobs - INFO - Getting job recommendations for user 22
+2025-07-19 12:06:59,930 - app.routers.jobs - INFO - Returned 3 real ESCO job recommendations for user 22
+2025-07-19 12:07:00,999 - app.routers.user_progress - INFO - Retrieved user progress for user 22: {}
+2025-07-19 12:07:01,277 - app.services.career_progression_service - INFO - Starting career progression extraction for occupation occupation::key_15227
+2025-07-19 12:07:01,277 - app.services.career_progression_service - INFO - Parameters: depth=3, max_per_tier=5, min_sim=0.4
+2025-07-19 12:07:01,277 - app.services.career_progression_service - INFO - Extracting tier 1 from 1 nodes
+2025-07-19 12:07:01,284 - app.services.career_progression_service - INFO - Extracting tier 2 from 5 nodes
+2025-07-19 12:07:01,285 - app.services.career_progression_service - INFO - Extracting tier 3 from 5 nodes
+2025-07-19 12:07:01,286 - app.services.career_progression_service - INFO - Career progression extracted: 3 tiers, 15 total skills
+2025-07-19 12:07:03,858 - app.services.career_progression_service - INFO - Starting career progression extraction for occupation occupation::key_15227
+2025-07-19 12:07:03,859 - app.services.career_progression_service - INFO - Parameters: depth=3, max_per_tier=5, min_sim=0.4
+2025-07-19 12:07:03,859 - app.services.career_progression_service - INFO - Extracting tier 1 from 1 nodes
+2025-07-19 12:07:03,860 - app.services.career_progression_service - INFO - Extracting tier 2 from 5 nodes
+2025-07-19 12:07:03,860 - app.services.career_progression_service - INFO - Extracting tier 3 from 5 nodes
+2025-07-19 12:07:03,861 - app.services.career_progression_service - INFO - Career progression extracted: 3 tiers, 15 total skills
+2025-07-19 12:07:04,478 - app.routers.holland_test - INFO - Récupération des résultats RIASEC pour l'utilisateur: 22
+2025-07-19 12:07:04,618 - app.routers.user_progress - INFO - Retrieved user progress for user 22: {}
+2025-07-19 12:07:04,901 - app.routers.holland_test - INFO - Récupération des résultats RIASEC pour l'utilisateur: 22
+2025-07-19 12:07:05,044 - app.routers.user_progress - INFO - Retrieved user progress for user 22: {}
+2025-07-19 12:07:05,352 - app.routers.user_progress - INFO - Retrieved user progress for user 22: {}
+2025-07-19 12:07:07,427 - app.routers.jobs - INFO - Getting job recommendations for user 22
+2025-07-19 12:07:07,427 - app.routers.jobs - INFO - Returned 3 real ESCO job recommendations for user 22
+2025-07-19 12:07:08,076 - app.routers.jobs - INFO - Getting job recommendations for user 22
+2025-07-19 12:07:08,076 - app.routers.jobs - INFO - Returned 3 real ESCO job recommendations for user 22
+2025-07-19 12:07:08,112 - app.routers.user_progress - INFO - Retrieved user progress for user 22: {}
+2025-07-19 12:07:08,145 - app.routers.holland_test - INFO - Récupération des résultats RIASEC pour l'utilisateur: 22
+2025-07-19 12:07:08,678 - app.services.career_progression_service - INFO - Starting career progression extraction for occupation occupation::key_15227
+2025-07-19 12:07:08,678 - app.services.career_progression_service - INFO - Parameters: depth=3, max_per_tier=5, min_sim=0.4
+2025-07-19 12:07:08,678 - app.services.career_progression_service - INFO - Extracting tier 1 from 1 nodes
+2025-07-19 12:07:08,679 - app.services.career_progression_service - INFO - Extracting tier 2 from 5 nodes
+2025-07-19 12:07:08,679 - app.services.career_progression_service - INFO - Extracting tier 3 from 5 nodes
+2025-07-19 12:07:08,680 - app.services.career_progression_service - INFO - Career progression extracted: 3 tiers, 15 total skills
+2025-07-19 12:07:10,503 - app.routers.user_progress - INFO - Retrieved user progress for user 22: {}
+2025-07-19 12:07:10,504 - app.routers.holland_test - INFO - Récupération des résultats RIASEC pour l'utilisateur: 22
+2025-07-19 12:07:10,965 - app.services.career_progression_service - INFO - Starting career progression extraction for occupation occupation::key_15227
+2025-07-19 12:07:10,965 - app.services.career_progression_service - INFO - Parameters: depth=3, max_per_tier=5, min_sim=0.4
+2025-07-19 12:07:10,965 - app.services.career_progression_service - INFO - Extracting tier 1 from 1 nodes
+2025-07-19 12:07:10,966 - app.services.career_progression_service - INFO - Extracting tier 2 from 5 nodes
+2025-07-19 12:07:10,967 - app.services.career_progression_service - INFO - Extracting tier 3 from 5 nodes
+2025-07-19 12:07:10,968 - app.services.career_progression_service - INFO - Career progression extracted: 3 tiers, 15 total skills
+2025-07-19 12:09:04,800 - app.routers.jobs - INFO - Getting job recommendations for user 22
+2025-07-19 12:09:04,802 - app.routers.jobs - INFO - Returned 3 real ESCO job recommendations for user 22
+2025-07-19 12:09:06,057 - app.routers.jobs - INFO - Getting job recommendations for user 22
+2025-07-19 12:09:06,058 - app.routers.jobs - INFO - Returned 3 real ESCO job recommendations for user 22
+2025-07-19 12:09:10,103 - app.services.career_progression_service - INFO - Starting career progression extraction for occupation occupation::key_15227
+2025-07-19 12:09:10,103 - app.services.career_progression_service - INFO - Parameters: depth=3, max_per_tier=5, min_sim=0.4
+2025-07-19 12:09:10,104 - app.services.career_progression_service - INFO - Extracting tier 1 from 1 nodes
+2025-07-19 12:09:10,106 - app.services.career_progression_service - INFO - Extracting tier 2 from 5 nodes
+2025-07-19 12:09:10,107 - app.services.career_progression_service - INFO - Extracting tier 3 from 5 nodes
+2025-07-19 12:09:10,109 - app.services.career_progression_service - INFO - Career progression extracted: 3 tiers, 15 total skills
+2025-07-19 12:09:10,762 - app.routers.holland_test - INFO - Récupération des résultats RIASEC pour l'utilisateur: 22
+2025-07-19 12:09:11,050 - app.routers.user_progress - INFO - Retrieved user progress for user 22: {}
+2025-07-19 12:09:11,562 - app.services.career_progression_service - INFO - Starting career progression extraction for occupation occupation::key_15227
+2025-07-19 12:09:11,562 - app.services.career_progression_service - INFO - Parameters: depth=3, max_per_tier=5, min_sim=0.4
+2025-07-19 12:09:11,562 - app.services.career_progression_service - INFO - Extracting tier 1 from 1 nodes
+2025-07-19 12:09:11,563 - app.services.career_progression_service - INFO - Extracting tier 2 from 5 nodes
+2025-07-19 12:09:11,563 - app.services.career_progression_service - INFO - Extracting tier 3 from 5 nodes
+2025-07-19 12:09:11,564 - app.services.career_progression_service - INFO - Career progression extracted: 3 tiers, 15 total skills
+2025-07-19 12:09:12,369 - app.routers.holland_test - INFO - Récupération des résultats RIASEC pour l'utilisateur: 22
+2025-07-19 12:09:12,611 - app.routers.user_progress - INFO - Retrieved user progress for user 22: {}
+2025-07-19 12:10:43,323 - app.routers.user_progress - INFO - Retrieved user progress for user 22: {}
+2025-07-19 12:10:43,325 - app.routers.education - INFO - Fetching fresh program data...
+2025-07-19 12:10:43,326 - app.routers.education - INFO - Attempting to fetch real CEGEP data from Données Québec...
+2025-07-19 12:10:43,534 - app.routers.user_progress - INFO - Retrieved user progress for user 22: {}
+2025-07-19 12:10:43,864 - app.routers.education - INFO - Processing real dataset: Localisation des établissements d'enseignement du réseau scolaire au Québec
+2025-07-19 12:10:43,865 - app.routers.education - INFO - Attempting to fetch real university data from Données Québec...
+2025-07-19 12:10:44,160 - app.routers.education - INFO - Processing real university dataset: Localisation des établissements d'enseignement du réseau scolaire au Québec
+2025-07-19 12:10:44,160 - app.routers.education - INFO - Fetching real university data from: https://www.donneesquebec.ca/recherche/dataset/2d3b5cf8-b347-49c7-ad3b-bd6a9c15e443/resource/fc341512-12f8-431d-9225-d6b0c09c05cd/download/es_universitaire.csv
+2025-07-19 12:10:44,402 - app.routers.education - INFO - Loaded university CSV with 24 rows and columns: ['DT_MAJ_GDUNO', 'CD_ORGNS', 'NOM_COURT', 'NOM_OFFCL', 'ADRS_GEO_L1_GDUNO', 'ADRS_GEO_L2_GDUNO', 'CD_MUNCP', 'NOM_MUNCP', 'STAT_MUNCP', 'CD_POSTL_GDUNO', 'TYPE_ORGNS', 'RESEAU', 'SITE_WEB', 'COORD_X_LL84', 'COORD_Y_LL84', 'ORDRE_ENS', 'STYLE_CART', 'CD_REG_ADM', 'NOM_MRC', 'NOM_REG_ADM', 'NOM_CEP', 'LANG_ENS']
+2025-07-19 12:10:44,403 - app.routers.education - INFO - Using university columns: name=NOM_OFFCL, city=NOM_MUNCP, web=SITE_WEB, lang=LANG_ENS
+2025-07-19 12:10:44,404 - app.routers.education - INFO - Processed 20 real university institutions
+2025-07-19 12:10:44,405 - app.routers.education - INFO - Successfully loaded 80 real university programs
+2025-07-19 12:10:44,410 - app.routers.education - INFO - Saved 80 programs to persistent cache
+2025-07-19 12:10:44,410 - app.routers.education - INFO - Cached 80 programs (Real: 80, Sample: 0)
+2025-07-19 12:10:44,563 - app.routers.education - INFO - Fetching fresh program data...
+2025-07-19 12:10:44,565 - app.routers.education - INFO - Loaded 80 programs from persistent cache
+2025-07-19 12:10:44,567 - app.routers.education - INFO - Fetching fresh program data...
+2025-07-19 12:10:44,571 - app.routers.education - INFO - Loaded 80 programs from persistent cache
+2025-07-19 12:11:09,678 - app - INFO - ======= ROUTER REGISTRATION DETAILS =======
+2025-07-19 12:11:09,679 - app - INFO - auth_router import path: fastapi.routing
+2025-07-19 12:11:09,679 - app - INFO - get_current_user import path: app.routers.user
+2025-07-19 12:11:09,679 - app - INFO - profiles_router import path: fastapi.routing
+2025-07-19 12:11:09,679 - app - INFO - Registering auth_router routes: ["/auth/register [{'POST'}]", "/auth/login [{'POST'}]", "/auth/update [{'PUT'}]", "/auth/change-password [{'PUT'}]", "/auth/onboarding-status [{'GET'}]"]
+2025-07-19 12:11:09,679 - app - INFO - Registering profiles_router routes: ["/profiles/test [{'GET'}]", "/profiles/me [{'GET'}]", "/profiles/update [{'PUT'}]", "/profiles/{user_id} [{'GET'}]"]
+2025-07-19 12:11:09,679 - app - INFO - Registering chat_router routes: ["/chat/send [{'POST'}]", "/chat/clear [{'POST'}]"]
+2025-07-19 12:11:09,679 - app - INFO - Registering peers_router routes: ["/peers/suggested [{'GET'}]", "/peers/compatible [{'GET'}]", "/peers/homepage [{'GET'}]", "/peers/refresh [{'POST'}]"]
+2025-07-19 12:11:09,679 - app - INFO - Registering messages_router routes: ["/messages [{'POST'}]", "/messages/conversation/{peer_id} [{'GET'}]", "/messages/conversations [{'GET'}]", "/messages/suggested-peers [{'GET'}]"]
+2025-07-19 12:11:09,679 - app - INFO - Registering test_router routes: ["/test/hello [{'GET'}]"]
+2025-07-19 12:11:09,679 - app - INFO - Registering space_router routes: ["/space/recommendations [{'POST'}]", "/space/recommendations [{'GET'}]", "/space/recommendations/{identifier} [{'DELETE'}]", "/space/notes [{'POST'}]", "/space/notes [{'GET'}]", "/space/notes/{note_id} [{'PUT'}]", "/space/notes/{note_id} [{'DELETE'}]", "/space/skills [{'GET'}]", "/space/skills [{'PUT'}]", "/space/recommendations/{oasis_code}/skill-comparison [{'GET'}]", "/space/recommendations/{recommendation_id}/generate-analysis [{'POST'}]"]
+2025-07-19 12:11:09,679 - app - INFO - Registering vector_router routes: ["/vector/search [{'POST'}]", "/vector/search/save [{'POST'}]", "/vector/health [{'GET'}]", "/vector/suggested-peers [{'GET'}]", "/vector/debug [{'GET'}]"]
+2025-07-19 12:11:09,679 - app - INFO - Registering recommendations_router routes: ["/recommendations [{'GET'}]", "/recommendations/swipe [{'POST'}]"]
+2025-07-19 12:11:09,679 - app - INFO - Registering careers_router routes: ["/careers/recommendations [{'GET'}]", "/careers/save/{career_id} [{'POST'}]", "/careers/saved [{'GET'}]", "/careers/fit-analysis [{'POST'}]", "/careers/cleanup-test-jobs [{'DELETE'}]"]
+2025-07-19 12:11:09,679 - app - INFO - Registering tree_router routes: ["/tree [{'POST'}]", "/tree/skills [{'POST'}]"]
+2025-07-19 12:11:09,679 - app - INFO - Registering tree_paths_router routes: ["/tree-paths/ [{'POST'}]", "/tree-paths/ [{'GET'}]", "/tree-paths/{tree_path_id} [{'GET'}]", "/tree-paths/{tree_path_id} [{'DELETE'}]"]
+2025-07-19 12:11:09,679 - app - INFO - Registering node_notes_router routes: ["/node-notes/ [{'POST'}]", "/node-notes/ [{'GET'}]", "/node-notes/node/{node_id} [{'GET'}]", "/node-notes/{note_id} [{'GET'}]", "/node-notes/{note_id} [{'DELETE'}]"]
+2025-07-19 12:11:09,679 - app - INFO - Registering user_progress_router routes: ["/user-progress/ [{'GET'}]", "/user-progress/update [{'POST'}]"]
+2025-07-19 12:11:09,679 - app - INFO - Registering holland_test_router routes: ["/api/tests/holland/ [{'GET'}]", "/api/tests/holland/questions [{'GET'}]", "/api/tests/holland/answer [{'POST'}]", "/api/tests/holland/score/{attempt_id} [{'GET'}]", "/api/tests/holland/user-results [{'GET'}]", "/api/tests/holland/profile-description [{'GET'}]", "/api/tests/holland/profile-description/{user_id} [{'GET'}]"]
+2025-07-19 12:11:09,679 - app - INFO - Registering hexaco_test_router routes: ["/api/tests/hexaco/ [{'GET'}]", "/api/tests/hexaco/languages [{'GET'}]", "/api/tests/hexaco/versions [{'GET'}]", "/api/tests/hexaco/start [{'POST'}]", "/api/tests/hexaco/questions [{'GET'}]", "/api/tests/hexaco/answer [{'POST'}]", "/api/tests/hexaco/progress/{session_id} [{'GET'}]", "/api/tests/hexaco/score/{session_id} [{'GET'}]", "/api/tests/hexaco/profile/{user_id} [{'GET'}]", "/api/tests/hexaco/my-profile [{'GET'}]", "/api/tests/hexaco/analysis/{user_id} [{'GET'}]", "/api/tests/hexaco/my-analysis [{'GET'}]"]
+2025-07-19 12:11:09,680 - app - INFO - Registering insight_router routes: ["/insight/generate [{'POST'}]", "/insight/get [{'GET'}]", "/insight/regenerate [{'POST'}]", "/insight/save [{'PATCH'}]", "/insight/rewrite [{'POST'}]"]
+2025-07-19 12:11:09,680 - app - INFO - Registering orientator_router routes: ["/orientator/test-message [{'POST'}]", "/orientator/message [{'POST'}]", "/orientator/save-component [{'POST'}]", "/orientator/conversations/{conversation_id}/messages [{'GET'}]", "/orientator/journey/{user_id} [{'GET'}]", "/orientator/conversations [{'GET'}]", "/orientator/tool-analytics [{'GET'}]", "/orientator/feedback [{'POST'}]", "/orientator/health [{'GET'}]"]
+2025-07-19 12:11:09,680 - app - INFO - ============================================
+2025-07-19 12:11:09,680 - app - INFO - Including routers in the FastAPI app
+2025-07-19 12:11:09,682 - app - INFO - Auth router included successfully
+2025-07-19 12:11:09,684 - app - INFO - Profiles router included successfully
+2025-07-19 12:11:09,765 - app - INFO - All routers included successfully
+2025-07-19 12:11:09,765 - app - INFO - === Available Routes ===
+2025-07-19 12:11:09,765 - app - INFO - Route: /openapi.json, Methods: {'GET', 'HEAD'}
+2025-07-19 12:11:09,765 - app - INFO - Route: /docs, Methods: {'GET', 'HEAD'}
+2025-07-19 12:11:09,765 - app - INFO - Route: /docs/oauth2-redirect, Methods: {'GET', 'HEAD'}
+2025-07-19 12:11:09,765 - app - INFO - Route: /redoc, Methods: {'GET', 'HEAD'}
+2025-07-19 12:11:09,765 - app - INFO - Mount: /static
+2025-07-19 12:11:09,765 - app - INFO - Route: /auth/register, Methods: {'POST'}
+2025-07-19 12:11:09,765 - app - INFO - Route: /auth/login, Methods: {'POST'}
+2025-07-19 12:11:09,765 - app - INFO - Route: /auth/update, Methods: {'PUT'}
+2025-07-19 12:11:09,765 - app - INFO - Route: /auth/change-password, Methods: {'PUT'}
+2025-07-19 12:11:09,766 - app - INFO - Route: /auth/onboarding-status, Methods: {'GET'}
+2025-07-19 12:11:09,766 - app - INFO - Route: /api/v1/profiles/test, Methods: {'GET'}
+2025-07-19 12:11:09,766 - app - INFO - Route: /api/v1/profiles/me, Methods: {'GET'}
+2025-07-19 12:11:09,766 - app - INFO - Route: /api/v1/profiles/update, Methods: {'PUT'}
+2025-07-19 12:11:09,766 - app - INFO - Route: /api/v1/profiles/{user_id}, Methods: {'GET'}
+2025-07-19 12:11:09,766 - app - INFO - Route: /test/hello, Methods: {'GET'}
+2025-07-19 12:11:09,766 - app - INFO - Route: /chat/conversations, Methods: {'GET'}
+2025-07-19 12:11:09,766 - app - INFO - Route: /chat/conversations, Methods: {'POST'}
+2025-07-19 12:11:09,766 - app - INFO - Route: /chat/conversations/{conversation_id}, Methods: {'GET'}
+2025-07-19 12:11:09,766 - app - INFO - Route: /chat/conversations/{conversation_id}, Methods: {'PUT'}
+2025-07-19 12:11:09,766 - app - INFO - Route: /chat/conversations/{conversation_id}, Methods: {'DELETE'}
+2025-07-19 12:11:09,766 - app - INFO - Route: /chat/conversations/{conversation_id}/favorite, Methods: {'POST'}
+2025-07-19 12:11:09,766 - app - INFO - Route: /chat/conversations/{conversation_id}/archive, Methods: {'POST'}
+2025-07-19 12:11:09,766 - app - INFO - Route: /chat/conversations/{conversation_id}/generate-title, Methods: {'POST'}
+2025-07-19 12:11:09,766 - app - INFO - Route: /chat/conversations/{conversation_id}/messages, Methods: {'GET'}
+2025-07-19 12:11:09,766 - app - INFO - Route: /chat/conversations/{conversation_id}/statistics, Methods: {'GET'}
+2025-07-19 12:11:09,766 - app - INFO - Route: /chat/conversations/{conversation_id}/export, Methods: {'POST'}
+2025-07-19 12:11:09,766 - app - INFO - Route: /chat/conversations/send/{conversation_id}, Methods: {'POST'}
+2025-07-19 12:11:09,766 - app - INFO - Route: /chat/send, Methods: {'POST'}
+2025-07-19 12:11:09,766 - app - INFO - Route: /chat/clear, Methods: {'POST'}
+2025-07-19 12:11:09,766 - app - INFO - Route: /chat/share/conversations/{conversation_id}, Methods: {'POST'}
+2025-07-19 12:11:09,766 - app - INFO - Route: /chat/share/shared/{share_token}, Methods: {'GET'}
+2025-07-19 12:11:09,766 - app - INFO - Route: /chat/share/shares/{share_id}, Methods: {'PUT'}
+2025-07-19 12:11:09,766 - app - INFO - Route: /chat/share/shares/{share_id}, Methods: {'DELETE'}
+2025-07-19 12:11:09,766 - app - INFO - Route: /chat/share/user/shares, Methods: {'GET'}
+2025-07-19 12:11:09,766 - app - INFO - Route: /chat/share/shares/{share_id}/analytics, Methods: {'GET'}
+2025-07-19 12:11:09,766 - app - INFO - Route: /chat/analytics/usage, Methods: {'GET'}
+2025-07-19 12:11:09,767 - app - INFO - Route: /chat/analytics/trends, Methods: {'GET'}
+2025-07-19 12:11:09,767 - app - INFO - Route: /chat/analytics/topics, Methods: {'GET'}
+2025-07-19 12:11:09,767 - app - INFO - Route: /chat/analytics/summary, Methods: {'GET'}
+2025-07-19 12:11:09,767 - app - INFO - Route: /peers/suggested, Methods: {'GET'}
+2025-07-19 12:11:09,767 - app - INFO - Route: /peers/compatible, Methods: {'GET'}
+2025-07-19 12:11:09,767 - app - INFO - Route: /peers/homepage, Methods: {'GET'}
+2025-07-19 12:11:09,767 - app - INFO - Route: /peers/refresh, Methods: {'POST'}
+2025-07-19 12:11:09,767 - app - INFO - Route: /messages, Methods: {'POST'}
+2025-07-19 12:11:09,767 - app - INFO - Route: /messages/conversation/{peer_id}, Methods: {'GET'}
+2025-07-19 12:11:09,767 - app - INFO - Route: /messages/conversations, Methods: {'GET'}
+2025-07-19 12:11:09,767 - app - INFO - Route: /messages/suggested-peers, Methods: {'GET'}
+2025-07-19 12:11:09,767 - app - INFO - Route: /space/recommendations, Methods: {'POST'}
+2025-07-19 12:11:09,767 - app - INFO - Route: /space/recommendations, Methods: {'GET'}
+2025-07-19 12:11:09,767 - app - INFO - Route: /space/recommendations/{identifier}, Methods: {'DELETE'}
+2025-07-19 12:11:09,767 - app - INFO - Route: /space/notes, Methods: {'POST'}
+2025-07-19 12:11:09,767 - app - INFO - Route: /space/notes, Methods: {'GET'}
+2025-07-19 12:11:09,767 - app - INFO - Route: /space/notes/{note_id}, Methods: {'PUT'}
+2025-07-19 12:11:09,767 - app - INFO - Route: /space/notes/{note_id}, Methods: {'DELETE'}
+2025-07-19 12:11:09,767 - app - INFO - Route: /space/skills, Methods: {'GET'}
+2025-07-19 12:11:09,767 - app - INFO - Route: /space/skills, Methods: {'PUT'}
+2025-07-19 12:11:09,767 - app - INFO - Route: /space/recommendations/{oasis_code}/skill-comparison, Methods: {'GET'}
+2025-07-19 12:11:09,767 - app - INFO - Route: /space/recommendations/{recommendation_id}/generate-analysis, Methods: {'POST'}
+2025-07-19 12:11:09,767 - app - INFO - Route: /vector/search, Methods: {'POST'}
+2025-07-19 12:11:09,767 - app - INFO - Route: /vector/search/save, Methods: {'POST'}
+2025-07-19 12:11:09,768 - app - INFO - Route: /vector/health, Methods: {'GET'}
+2025-07-19 12:11:09,768 - app - INFO - Route: /vector/suggested-peers, Methods: {'GET'}
+2025-07-19 12:11:09,768 - app - INFO - Route: /vector/debug, Methods: {'GET'}
+2025-07-19 12:11:09,768 - app - INFO - Route: /recommendations, Methods: {'GET'}
+2025-07-19 12:11:09,768 - app - INFO - Route: /recommendations/swipe, Methods: {'POST'}
+2025-07-19 12:11:09,768 - app - INFO - Route: /careers/recommendations, Methods: {'GET'}
+2025-07-19 12:11:09,768 - app - INFO - Route: /careers/save/{career_id}, Methods: {'POST'}
+2025-07-19 12:11:09,768 - app - INFO - Route: /careers/saved, Methods: {'GET'}
+2025-07-19 12:11:09,768 - app - INFO - Route: /careers/fit-analysis, Methods: {'POST'}
+2025-07-19 12:11:09,768 - app - INFO - Route: /careers/cleanup-test-jobs, Methods: {'DELETE'}
+2025-07-19 12:11:09,768 - app - INFO - Route: /tree, Methods: {'POST'}
+2025-07-19 12:11:09,768 - app - INFO - Route: /tree/skills, Methods: {'POST'}
+2025-07-19 12:11:09,768 - app - INFO - Route: /tree-paths/, Methods: {'POST'}
+2025-07-19 12:11:09,768 - app - INFO - Route: /tree-paths/, Methods: {'GET'}
+2025-07-19 12:11:09,768 - app - INFO - Route: /tree-paths/{tree_path_id}, Methods: {'GET'}
+2025-07-19 12:11:09,768 - app - INFO - Route: /tree-paths/{tree_path_id}, Methods: {'DELETE'}
+2025-07-19 12:11:09,768 - app - INFO - Route: /node-notes/, Methods: {'POST'}
+2025-07-19 12:11:09,768 - app - INFO - Route: /node-notes/, Methods: {'GET'}
+2025-07-19 12:11:09,768 - app - INFO - Route: /node-notes/node/{node_id}, Methods: {'GET'}
+2025-07-19 12:11:09,768 - app - INFO - Route: /node-notes/{note_id}, Methods: {'GET'}
+2025-07-19 12:11:09,768 - app - INFO - Route: /node-notes/{note_id}, Methods: {'DELETE'}
+2025-07-19 12:11:09,768 - app - INFO - Route: /user-progress/, Methods: {'GET'}
+2025-07-19 12:11:09,768 - app - INFO - Route: /user-progress/update, Methods: {'POST'}
+2025-07-19 12:11:09,768 - app - INFO - Route: /api/v1/jobs/save, Methods: {'POST'}
+2025-07-19 12:11:09,768 - app - INFO - Route: /api/v1/jobs/saved, Methods: {'GET'}
+2025-07-19 12:11:09,768 - app - INFO - Route: /api/v1/jobs/{job_id}, Methods: {'DELETE'}
+2025-07-19 12:11:09,768 - app - INFO - Route: /api/v1/jobs/{esco_id}/details, Methods: {'GET'}
+2025-07-19 12:11:09,769 - app - INFO - Route: /api/v1/jobs/recommendations/me, Methods: {'GET'}
+2025-07-19 12:11:09,769 - app - INFO - Route: /api/v1/program-recommendations/career-goal/{goal_id}, Methods: {'GET'}
+2025-07-19 12:11:09,769 - app - INFO - Route: /api/v1/program-recommendations/career-goal/{goal_id}/save, Methods: {'POST'}
+2025-07-19 12:11:09,769 - app - INFO - Route: /api/v1/program-recommendations/career-goal/{goal_id}/saved, Methods: {'GET'}
+2025-07-19 12:11:09,769 - app - INFO - Route: /api/v1/program-recommendations/institutions, Methods: {'GET'}
+2025-07-19 12:11:09,769 - app - INFO - Route: /api/tests/holland/, Methods: {'GET'}
+2025-07-19 12:11:09,769 - app - INFO - Route: /api/tests/holland/questions, Methods: {'GET'}
+2025-07-19 12:11:09,769 - app - INFO - Route: /api/tests/holland/answer, Methods: {'POST'}
+2025-07-19 12:11:09,769 - app - INFO - Route: /api/tests/holland/score/{attempt_id}, Methods: {'GET'}
+2025-07-19 12:11:09,769 - app - INFO - Route: /api/tests/holland/user-results, Methods: {'GET'}
+2025-07-19 12:11:09,769 - app - INFO - Route: /api/tests/holland/profile-description, Methods: {'GET'}
+2025-07-19 12:11:09,769 - app - INFO - Route: /api/tests/holland/profile-description/{user_id}, Methods: {'GET'}
+2025-07-19 12:11:09,769 - app - INFO - Route: /api/tests/hexaco/, Methods: {'GET'}
+2025-07-19 12:11:09,769 - app - INFO - Route: /api/tests/hexaco/languages, Methods: {'GET'}
+2025-07-19 12:11:09,769 - app - INFO - Route: /api/tests/hexaco/versions, Methods: {'GET'}
+2025-07-19 12:11:09,769 - app - INFO - Route: /api/tests/hexaco/start, Methods: {'POST'}
+2025-07-19 12:11:09,769 - app - INFO - Route: /api/tests/hexaco/questions, Methods: {'GET'}
+2025-07-19 12:11:09,769 - app - INFO - Route: /api/tests/hexaco/answer, Methods: {'POST'}
+2025-07-19 12:11:09,769 - app - INFO - Route: /api/tests/hexaco/progress/{session_id}, Methods: {'GET'}
+2025-07-19 12:11:09,769 - app - INFO - Route: /api/tests/hexaco/score/{session_id}, Methods: {'GET'}
+2025-07-19 12:11:09,769 - app - INFO - Route: /api/tests/hexaco/profile/{user_id}, Methods: {'GET'}
+2025-07-19 12:11:09,769 - app - INFO - Route: /api/tests/hexaco/my-profile, Methods: {'GET'}
+2025-07-19 12:11:09,769 - app - INFO - Route: /api/tests/hexaco/analysis/{user_id}, Methods: {'GET'}
+2025-07-19 12:11:09,769 - app - INFO - Route: /api/tests/hexaco/my-analysis, Methods: {'GET'}
+2025-07-19 12:11:09,769 - app - INFO - Route: /insight/generate, Methods: {'POST'}
+2025-07-19 12:11:09,769 - app - INFO - Route: /insight/get, Methods: {'GET'}
+2025-07-19 12:11:09,769 - app - INFO - Route: /insight/regenerate, Methods: {'POST'}
+2025-07-19 12:11:09,769 - app - INFO - Route: /insight/save, Methods: {'PATCH'}
+2025-07-19 12:11:09,770 - app - INFO - Route: /insight/rewrite, Methods: {'POST'}
+2025-07-19 12:11:09,770 - app - INFO - Route: /api/v1/competence-tree/generate, Methods: {'POST'}
+2025-07-19 12:11:09,770 - app - INFO - Route: /api/v1/competence-tree/generate-from-anchors, Methods: {'POST'}
+2025-07-19 12:11:09,770 - app - INFO - Route: /api/v1/competence-tree/anchor-skills, Methods: {'GET'}
+2025-07-19 12:11:09,770 - app - INFO - Route: /api/v1/competence-tree/{graph_id}, Methods: {'GET'}
+2025-07-19 12:11:09,770 - app - INFO - Route: /api/v1/competence-tree/node/{node_id}/complete, Methods: {'PATCH'}
+2025-07-19 12:11:09,770 - app - INFO - Route: /api/v1/career-progression/{occupation_id}, Methods: {'GET'}
+2025-07-19 12:11:09,770 - app - INFO - Route: /api/v1/career-progression/{occupation_id}/personalized, Methods: {'GET'}
+2025-07-19 12:11:09,770 - app - INFO - Route: /api/v1/career-progression/{occupation_id}/analyze, Methods: {'GET'}
+2025-07-19 12:11:09,770 - app - INFO - Route: /api/v1/users/me, Methods: {'GET'}
+2025-07-19 12:11:09,770 - app - INFO - Route: /api/v1/users/{user_id}/profile, Methods: {'GET'}
+2025-07-19 12:11:09,770 - app - INFO - Route: /api/reflection/questions, Methods: {'GET'}
+2025-07-19 12:11:09,770 - app - INFO - Route: /api/reflection/responses/{user_id}, Methods: {'GET'}
+2025-07-19 12:11:09,770 - app - INFO - Route: /api/reflection/responses, Methods: {'GET'}
+2025-07-19 12:11:09,770 - app - INFO - Route: /api/reflection/responses, Methods: {'POST'}
+2025-07-19 12:11:09,770 - app - INFO - Route: /api/reflection/responses/{response_id}, Methods: {'PUT'}
+2025-07-19 12:11:09,770 - app - INFO - Route: /api/reflection/responses/batch, Methods: {'POST'}
+2025-07-19 12:11:09,770 - app - INFO - Route: /api/reflection/responses/{response_id}, Methods: {'DELETE'}
+2025-07-19 12:11:09,770 - app - INFO - Route: /api/v1/avatar/generate-avatar/me, Methods: {'POST'}
+2025-07-19 12:11:09,770 - app - INFO - Route: /api/v1/avatar/me, Methods: {'GET'}
+2025-07-19 12:11:09,770 - app - INFO - Route: /api/v1/avatar/generate-avatar-test/{user_id}, Methods: {'POST'}
+2025-07-19 12:11:09,770 - app - INFO - Route: /onboarding/status, Methods: {'GET'}
+2025-07-19 12:11:09,771 - app - INFO - Route: /onboarding/start, Methods: {'POST'}
+2025-07-19 12:11:09,771 - app - INFO - Route: /onboarding/response, Methods: {'POST'}
+2025-07-19 12:11:09,771 - app - INFO - Route: /onboarding/complete, Methods: {'POST'}
+2025-07-19 12:11:09,771 - app - INFO - Route: /onboarding/profile, Methods: {'GET'}
+2025-07-19 12:11:09,771 - app - INFO - Route: /onboarding/responses, Methods: {'GET'}
+2025-07-19 12:11:09,771 - app - INFO - Route: /onboarding/reset, Methods: {'DELETE'}
+2025-07-19 12:11:09,771 - app - INFO - Route: /onboarding/skip, Methods: {'POST'}
+2025-07-19 12:11:09,771 - app - INFO - Route: /api/v1/education/programs/search, Methods: {'POST'}
+2025-07-19 12:11:09,771 - app - INFO - Route: /api/v1/education/programs/{program_id}, Methods: {'GET'}
+2025-07-19 12:11:09,771 - app - INFO - Route: /api/v1/education/institutions, Methods: {'GET'}
+2025-07-19 12:11:09,771 - app - INFO - Route: /api/v1/education/metadata, Methods: {'GET'}
+2025-07-19 12:11:09,771 - app - INFO - Route: /api/v1/school-programs/search, Methods: {'POST'}
+2025-07-19 12:11:09,771 - app - INFO - Route: /api/v1/school-programs/search, Methods: {'GET'}
+2025-07-19 12:11:09,771 - app - INFO - Route: /api/v1/school-programs/programs/{program_id}, Methods: {'GET'}
+2025-07-19 12:11:09,771 - app - INFO - Route: /api/v1/school-programs/users/interactions, Methods: {'POST'}
+2025-07-19 12:11:09,771 - app - INFO - Route: /api/v1/school-programs/users/saved-programs, Methods: {'POST'}
+2025-07-19 12:11:09,772 - app - INFO - Route: /api/v1/school-programs/users/saved-programs, Methods: {'GET'}
+2025-07-19 12:11:09,772 - app - INFO - Route: /api/v1/school-programs/users/saved-programs/{program_id}, Methods: {'DELETE'}
+2025-07-19 12:11:09,772 - app - INFO - Route: /api/v1/school-programs/filters, Methods: {'GET'}
+2025-07-19 12:11:09,772 - app - INFO - Route: /api/v1/school-programs/health, Methods: {'GET'}
+2025-07-19 12:11:09,772 - app - INFO - Route: /api/v1/courses, Methods: {'POST'}
+2025-07-19 12:11:09,772 - app - INFO - Route: /api/v1/courses, Methods: {'GET'}
+2025-07-19 12:11:09,772 - app - INFO - Route: /api/v1/courses/{course_id}, Methods: {'GET'}
+2025-07-19 12:11:09,772 - app - INFO - Route: /api/v1/courses/{course_id}, Methods: {'PUT'}
+2025-07-19 12:11:09,772 - app - INFO - Route: /api/v1/courses/{course_id}, Methods: {'DELETE'}
+2025-07-19 12:11:09,772 - app - INFO - Route: /api/v1/courses/{course_id}/targeted-analysis, Methods: {'POST'}
+2025-07-19 12:11:09,772 - app - INFO - Route: /api/v1/conversations/{session_id}/respond, Methods: {'POST'}
+2025-07-19 12:11:09,772 - app - INFO - Route: /api/v1/psychological-profile/{user_id}, Methods: {'GET'}
+2025-07-19 12:11:09,772 - app - INFO - Route: /api/v1/career-signals/{user_id}, Methods: {'GET'}
+2025-07-19 12:11:09,772 - app - INFO - Route: /api/v1/courses/{course_id}/insights, Methods: {'GET'}
+2025-07-19 12:11:09,772 - app - INFO - Route: /api/v1/conversations/{session_id}/summary, Methods: {'GET'}
+2025-07-19 12:11:09,772 - app - INFO - Route: /api/v1/enhanced-chat/send, Methods: {'POST'}
+2025-07-19 12:11:09,772 - app - INFO - Route: /api/v1/enhanced-chat/skill-explanation, Methods: {'POST'}
+2025-07-19 12:11:09,772 - app - INFO - Route: /api/v1/enhanced-chat/learning-recommendations, Methods: {'GET'}
+2025-07-19 12:11:09,772 - app - INFO - Route: /api/v1/enhanced-chat/career-path-analysis, Methods: {'POST'}
+2025-07-19 12:11:09,772 - app - INFO - Route: /api/v1/enhanced-chat/graphsage-insights, Methods: {'GET'}
+2025-07-19 12:11:09,772 - app - INFO - Route: /api/v1/enhanced-chat/status, Methods: {'GET'}
+2025-07-19 12:11:09,772 - app - INFO - Route: /api/v1/socratic-chat/send, Methods: {'POST'}
+2025-07-19 12:11:09,772 - app - INFO - Route: /api/v1/socratic-chat/introduction, Methods: {'POST'}
+2025-07-19 12:11:09,772 - app - INFO - Route: /api/v1/socratic-chat/modes, Methods: {'GET'}
+2025-07-19 12:11:09,772 - app - INFO - Route: /api/v1/socratic-chat/status, Methods: {'GET'}
+2025-07-19 12:11:09,773 - app - INFO - Route: /api/v1/career-goals/, Methods: {'POST'}
+2025-07-19 12:11:09,773 - app - INFO - Route: /api/v1/career-goals/active, Methods: {'GET'}
+2025-07-19 12:11:09,773 - app - INFO - Route: /api/v1/career-goals/, Methods: {'GET'}
+2025-07-19 12:11:09,773 - app - INFO - Route: /api/v1/career-goals/{goal_id}, Methods: {'PUT'}
+2025-07-19 12:11:09,773 - app - INFO - Route: /api/v1/career-goals/{goal_id}, Methods: {'DELETE'}
+2025-07-19 12:11:09,773 - app - INFO - Route: /api/v1/career-goals/{goal_id}/milestones/{milestone_id}/complete, Methods: {'POST'}
+2025-07-19 12:11:09,773 - app - INFO - Route: /api/v1/career-goals/{goal_id}/milestones, Methods: {'GET'}
+2025-07-19 12:11:09,773 - app - INFO - Route: /api/v1/jobs/recommendations/me, Methods: {'GET'}
+2025-07-19 12:11:09,773 - app - INFO - Route: /api/v1/jobs/recommendations/{user_id}, Methods: {'GET'}
+2025-07-19 12:11:09,773 - app - INFO - Route: /api/v1/jobs/recommendations/{user_id}, Methods: {'POST'}
+2025-07-19 12:11:09,773 - app - INFO - Route: /api/v1/jobs/skill-tree/{job_id}, Methods: {'GET'}
+2025-07-19 12:11:09,773 - app - INFO - Route: /api/careers/llm-query, Methods: {'POST'}
+2025-07-19 12:11:09,773 - app - INFO - Route: /api/orientator/test-message, Methods: {'POST'}
+2025-07-19 12:11:09,773 - app - INFO - Route: /api/orientator/message, Methods: {'POST'}
+2025-07-19 12:11:09,773 - app - INFO - Route: /api/orientator/save-component, Methods: {'POST'}
+2025-07-19 12:11:09,773 - app - INFO - Route: /api/orientator/conversations/{conversation_id}/messages, Methods: {'GET'}
+2025-07-19 12:11:09,773 - app - INFO - Route: /api/orientator/journey/{user_id}, Methods: {'GET'}
+2025-07-19 12:11:09,773 - app - INFO - Route: /api/orientator/conversations, Methods: {'GET'}
+2025-07-19 12:11:09,773 - app - INFO - Route: /api/orientator/tool-analytics, Methods: {'GET'}
+2025-07-19 12:11:09,773 - app - INFO - Route: /api/orientator/feedback, Methods: {'POST'}
+2025-07-19 12:11:09,773 - app - INFO - Route: /api/orientator/health, Methods: {'GET'}
+2025-07-19 12:11:09,773 - app - INFO - ======================
+2025-07-19 12:11:09,774 - app - INFO - 🚀 Application startup initiated
+2025-07-19 12:11:09,774 - app - INFO - Loading models...
+2025-07-19 12:11:09,775 - scripts.model_loader - INFO - Starting model loading...
+2025-07-19 12:11:09,775 - scripts.model_loader - INFO - Loading SentenceTransformer models...
+2025-07-19 12:11:09,776 - scripts.model_loader - WARNING - SentenceTransformer model directory not found, skipping...
+2025-07-19 12:11:09,776 - scripts.model_loader - INFO - Loading PCA, OHE, and Scaler models...
+2025-07-19 12:11:09,776 - scripts.model_loader - WARNING - Model files not found, skipping...
+2025-07-19 12:11:09,776 - scripts.model_loader - INFO - Model loading process completed!
+2025-07-19 12:11:09,776 - app - INFO - Models loaded from scripts
+2025-07-19 12:11:09,776 - app - INFO - Model loading process completed
+2025-07-19 12:11:09,776 - app - INFO - ✅ Models loaded successfully
+2025-07-19 12:11:09,776 - app - INFO - 🔌 Attempting database initialization...
+2025-07-19 12:11:09,776 - app.core.config - INFO - Using DATABASE_URL for local development
+2025-07-19 12:11:09,776 - app.utils.database - INFO - Attempting to connect to database...
+2025-07-19 12:11:09,806 - app.utils.database - INFO - ✅ Database engine created successfully
+2025-07-19 12:11:10,731 - app.utils.database - INFO - ✅ Database connection test successful
+2025-07-19 12:11:10,783 - app.utils.database - INFO - Database: postgres
+2025-07-19 12:11:10,785 - app.utils.database - INFO - User: postgres
+2025-07-19 12:11:10,786 - app.utils.database - INFO - PostgreSQL version: PostgreSQL 17.4 on aarch64-unknown-linux-gnu, comp...
+2025-07-19 12:11:10,833 - app.utils.database - INFO - Sample tables: ['messages', 'user_journey_milestones', 'user_profiles', 'user_skills', 'alembic_version']...
+2025-07-19 12:11:10,876 - app.utils.database - INFO - ✅ Database initialization completed successfully
+2025-07-19 12:11:10,879 - app - INFO - ✅ Application startup completed successfully
+2025-07-19 12:13:10,543 - app.services.career_progression_service - INFO - Starting career progression extraction for occupation occupation::key_15227
+2025-07-19 12:13:10,544 - app.services.career_progression_service - INFO - Parameters: depth=3, max_per_tier=5, min_sim=0.4
+2025-07-19 12:13:10,545 - app.services.career_progression_service - INFO - Extracting tier 1 from 1 nodes
+2025-07-19 12:13:10,547 - app.services.career_progression_service - INFO - Extracting tier 2 from 5 nodes
+2025-07-19 12:13:10,549 - app.services.career_progression_service - INFO - Extracting tier 3 from 5 nodes
+2025-07-19 12:13:10,551 - app.services.career_progression_service - INFO - Career progression extracted: 3 tiers, 15 total skills
+2025-07-19 12:13:11,227 - app.routers.jobs - INFO - Getting job recommendations for user 22
+2025-07-19 12:13:11,228 - app.routers.jobs - INFO - Returned 3 real ESCO job recommendations for user 22
+2025-07-19 12:13:11,275 - app.routers.holland_test - INFO - Récupération des résultats RIASEC pour l'utilisateur: 22
+2025-07-19 12:13:11,412 - app.routers.user_progress - INFO - Retrieved user progress for user 22: {}
+2025-07-19 12:13:12,377 - app.services.career_progression_service - INFO - Starting career progression extraction for occupation occupation::key_15227
+2025-07-19 12:13:12,377 - app.services.career_progression_service - INFO - Parameters: depth=3, max_per_tier=5, min_sim=0.4
+2025-07-19 12:13:12,377 - app.services.career_progression_service - INFO - Extracting tier 1 from 1 nodes
+2025-07-19 12:13:12,379 - app.services.career_progression_service - INFO - Extracting tier 2 from 5 nodes
+2025-07-19 12:13:12,379 - app.services.career_progression_service - INFO - Extracting tier 3 from 5 nodes
+2025-07-19 12:13:12,381 - app.services.career_progression_service - INFO - Career progression extracted: 3 tiers, 15 total skills
+2025-07-19 12:13:13,100 - app.routers.user_progress - INFO - Retrieved user progress for user 22: {}
+2025-07-19 12:13:13,149 - app.routers.jobs - INFO - Getting job recommendations for user 22
+2025-07-19 12:13:13,149 - app.routers.jobs - INFO - Returned 3 real ESCO job recommendations for user 22
+2025-07-19 12:13:13,149 - app.routers.holland_test - INFO - Récupération des résultats RIASEC pour l'utilisateur: 22
+2025-07-19 12:13:19,915 - app.routers.user_progress - INFO - Retrieved user progress for user 22: {}
+2025-07-19 12:13:19,919 - app.routers.education - INFO - Fetching fresh program data...
+2025-07-19 12:13:19,922 - app.routers.education - INFO - Loaded 80 programs from persistent cache
+2025-07-19 12:13:20,144 - app.routers.user_progress - INFO - Retrieved user progress for user 22: {}
+2025-07-19 12:13:20,408 - app.routers.education - INFO - Fetching fresh program data...
+2025-07-19 12:13:20,409 - app.routers.education - INFO - Loaded 80 programs from persistent cache
+2025-07-19 12:13:20,411 - app.routers.education - INFO - Fetching fresh program data...
+2025-07-19 12:13:20,413 - app.routers.education - INFO - Loaded 80 programs from persistent cache
+2025-07-19 12:13:21,644 - app.routers.jobs - INFO - Getting job recommendations for user 22
+2025-07-19 12:13:21,648 - app.routers.jobs - INFO - Returned 3 real ESCO job recommendations for user 22
+2025-07-19 12:13:21,695 - app.routers.holland_test - INFO - Récupération des résultats RIASEC pour l'utilisateur: 22
+2025-07-19 12:13:21,861 - app.routers.user_progress - INFO - Retrieved user progress for user 22: {}
+2025-07-19 12:13:22,174 - app.services.career_progression_service - INFO - Starting career progression extraction for occupation occupation::key_15227
+2025-07-19 12:13:22,175 - app.services.career_progression_service - INFO - Parameters: depth=3, max_per_tier=5, min_sim=0.4
+2025-07-19 12:13:22,175 - app.services.career_progression_service - INFO - Extracting tier 1 from 1 nodes
+2025-07-19 12:13:22,177 - app.services.career_progression_service - INFO - Extracting tier 2 from 5 nodes
+2025-07-19 12:13:22,178 - app.services.career_progression_service - INFO - Extracting tier 3 from 5 nodes
+2025-07-19 12:13:22,182 - app.services.career_progression_service - INFO - Career progression extracted: 3 tiers, 15 total skills
+2025-07-19 12:13:23,493 - app.routers.jobs - INFO - Getting job recommendations for user 22
+2025-07-19 12:13:23,493 - app.routers.jobs - INFO - Returned 3 real ESCO job recommendations for user 22
+2025-07-19 12:13:23,534 - app.routers.holland_test - INFO - Récupération des résultats RIASEC pour l'utilisateur: 22
+2025-07-19 12:13:23,717 - app.routers.user_progress - INFO - Retrieved user progress for user 22: {}
+2025-07-19 12:13:24,065 - app.services.career_progression_service - INFO - Starting career progression extraction for occupation occupation::key_15227
+2025-07-19 12:13:24,065 - app.services.career_progression_service - INFO - Parameters: depth=3, max_per_tier=5, min_sim=0.4
+2025-07-19 12:13:24,066 - app.services.career_progression_service - INFO - Extracting tier 1 from 1 nodes
+2025-07-19 12:13:24,067 - app.services.career_progression_service - INFO - Extracting tier 2 from 5 nodes
+2025-07-19 12:13:24,068 - app.services.career_progression_service - INFO - Extracting tier 3 from 5 nodes
+2025-07-19 12:13:24,070 - app.services.career_progression_service - INFO - Career progression extracted: 3 tiers, 15 total skills

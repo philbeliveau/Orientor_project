@@ -65,9 +65,16 @@ const SearchFilters: React.FC<SearchFiltersProps> = ({ metadata, onSearch, isLoa
   };
 
   return (
-    <div className="bg-white rounded-xl border border-gray-200 p-6 mb-8 shadow-sm">
+    <div 
+      className="w-full p-6 mb-8"
+      style={{
+        borderRadius: '24px',
+        background: '#e0e0e0',
+        boxShadow: '10px 10px 20px #bebebe, -10px -10px 20px #ffffff'
+      }}
+    >
       <div className="flex items-center justify-between mb-6">
-        <h2 className="text-2xl font-bold text-gray-900 flex items-center">
+        <h2 className="text-xl font-semibold text-gray-900 flex items-center">
           <div className="w-8 h-8 bg-purple-100 rounded flex items-center justify-center mr-3">
             <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
           </div>
@@ -292,7 +299,12 @@ const ProgramCard: React.FC<ProgramCardProps> = ({ program, onSave, onUnsave, is
   return (
     <motion.div
       whileHover={{ y: -5 }}
-      className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm hover:shadow-md transition-all duration-300"
+      className="w-full p-6 transition-all duration-300"
+      style={{
+        borderRadius: '24px',
+        background: '#e0e0e0',
+        boxShadow: '10px 10px 20px #bebebe, -10px -10px 20px #ffffff'
+      }}
     >
       <div className="flex justify-between items-start mb-4">
         <div className="flex-1">
@@ -494,33 +506,101 @@ export default function EducationPage() {
 
   return (
     <MainLayout>
-      <div className="min-h-screen bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 py-8">
-          {/* Header - inspired by the greeting in the UI */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="mb-8"
-          >
-            <div className="flex items-center justify-between">
-              <div>
-                <h1 className="text-4xl font-bold text-gray-900 mb-2">
-                  Hey there! 👋
-                </h1>
-                <p className="text-xl text-gray-600">
-                  It's a great day to explore your educational future!
-                </p>
-              </div>
-              <div className="flex items-center space-x-3">
-                <div className="bg-purple-100 text-purple-600 px-3 py-1 rounded-full text-sm font-medium flex items-center">
-                  <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                  </svg>
-                  Personal Match
+      <div className="relative flex w-full min-h-screen flex-col pb-20 overflow-x-hidden" style={{ backgroundColor: '#ffffff' }}>
+        
+        <div className="relative z-10 w-full">
+          <div className="flex-1 w-full px-4 sm:px-6 md:px-12 lg:px-16 xl:px-24 max-w-none">
+            
+            {/* Header Section with Dashboard-style design */}
+            <div className="flex flex-col gap-6 mb-8">
+              <div className="w-full">
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                  
+                  {/* Header Title Card */}
+                  <div className="lg:col-span-2">
+                    <h1 className="text-2xl font-semibold mb-4" style={{ color: '#000000' }}>Education Programs</h1>
+                    <div 
+                      className="w-full p-6"
+                      style={{
+                        borderRadius: '24px',
+                        background: '#e0e0e0',
+                        boxShadow: '10px 10px 20px #bebebe, -10px -10px 20px #ffffff'
+                      }}
+                    >
+                      <div className="flex items-center justify-between mb-4">
+                        <div>
+                          <h2 className="text-lg font-medium text-gray-900">
+                            Hey there! 👋
+                          </h2>
+                          <p className="text-sm text-gray-600 mt-1">
+                            It's a great day to explore your educational future!
+                          </p>
+                        </div>
+                        
+                        <div className="bg-purple-100 text-purple-600 px-3 py-1 rounded-full text-sm font-medium flex items-center">
+                          <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                          </svg>
+                          Personal Match
+                        </div>
+                      </div>
+                      
+                      {/* Stats */}
+                      <div className="flex gap-4">
+                        <div className="flex items-center gap-2">
+                          <span className="text-2xl font-bold text-purple-600">
+                            {programs.length}
+                          </span>
+                          <span className="text-sm text-gray-600">
+                            programs found
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <span className="text-2xl font-bold text-green-600">
+                            {savedPrograms.length}
+                          </span>
+                          <span className="text-sm text-gray-600">
+                            saved programs
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* Quick Stats Card */}
+                  <div className="w-full">
+                    <h2 className="text-lg font-semibold mb-4 opacity-0">Hidden</h2>
+                    <div 
+                      className="w-full p-6"
+                      style={{
+                        height: '200px',
+                        borderRadius: '24px',
+                        background: '#e0e0e0',
+                        boxShadow: '10px 10px 20px #bebebe, -10px -10px 20px #ffffff'
+                      }}
+                    >
+                      <h3 className="text-md font-medium text-gray-900 mb-3">Program Types</h3>
+                      {metadata && (
+                        <div className="space-y-2">
+                          {metadata.institution_types.slice(0, 3).map((type, index) => (
+                            <div key={index} className="flex items-center justify-between">
+                              <span className="text-sm text-gray-700 capitalize">{type}</span>
+                              <div className="w-16 bg-gray-200 rounded-full h-2">
+                                <div 
+                                  className="bg-blue-500 h-2 rounded-full" 
+                                  style={{ width: `${Math.random() * 100}%` }}
+                                ></div>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                  
                 </div>
               </div>
             </div>
-          </motion.div>
 
           {/* Search and Filters */}
           <SearchFilters 
@@ -536,111 +616,146 @@ export default function EducationPage() {
             </div>
           )}
 
-          {/* Results Header */}
-          {searchMetadata && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              className="mb-6"
-            >
-              <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
-                <div className="flex justify-between items-center">
-                  <div>
-                    <h2 className="text-2xl font-bold text-gray-900 mb-1">
-                      {hasSearched ? 'Search Results' : 'Recommended for You'}
-                    </h2>
-                    <p className="text-gray-600">
-                      {searchMetadata.holland_matching_enabled ? 
-                        `Found ${programs.length} programs sorted by personality match` :
-                        `Found ${programs.length} programs`
-                      }
-                    </p>
-                  </div>
-                  <div className="text-right">
-                    <div className="text-2xl font-bold text-purple-600">{programs.length}</div>
-                    <div className="text-sm text-gray-500">Programs Found</div>
+          {/* Content Section with Dashboard-style layout */}
+          <div className="flex flex-col lg:grid lg:grid-cols-1 gap-6 mb-8">
+            
+            {/* Results Header */}
+            {searchMetadata && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className="w-full"
+              >
+                <div 
+                  className="w-full p-6"
+                  style={{
+                    borderRadius: '24px',
+                    background: '#e0e0e0',
+                    boxShadow: '10px 10px 20px #bebebe, -10px -10px 20px #ffffff'
+                  }}
+                >
+                  <div className="flex justify-between items-center">
+                    <div>
+                      <h2 className="text-xl font-semibold text-gray-900 mb-1">
+                        {hasSearched ? 'Search Results' : 'Recommended for You'}
+                      </h2>
+                      <p className="text-sm text-gray-600">
+                        {searchMetadata.holland_matching_enabled ? 
+                          `Found ${programs.length} programs sorted by personality match` :
+                          `Found ${programs.length} programs`
+                        }
+                      </p>
+                    </div>
+                    <div className="text-right">
+                      <div className="text-2xl font-bold text-purple-600">{programs.length}</div>
+                      <div className="text-xs text-gray-500">Programs Found</div>
+                    </div>
                   </div>
                 </div>
+              </motion.div>
+            )}
+
+            {/* Loading State */}
+            {isLoading && (
+              <div 
+                className="w-full p-12 text-center"
+                style={{
+                  borderRadius: '24px',
+                  background: '#e0e0e0',
+                  boxShadow: '10px 10px 20px #bebebe, -10px -10px 20px #ffffff'
+                }}
+              >
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-500 mx-auto"></div>
+                <span className="block mt-3 text-gray-600">Loading programs...</span>
               </div>
-            </motion.div>
-          )}
+            )}
 
-          {/* Loading State */}
-          {isLoading && (
-            <div className="flex justify-center items-center py-12">
-              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-500"></div>
-              <span className="ml-3 text-gray-600">Loading programs...</span>
-            </div>
-          )}
-
-          {/* Programs Grid */}
-          {!isLoading && programs.length > 0 && (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-              className="grid lg:grid-cols-2 xl:grid-cols-3 gap-6 mb-12"
-            >
-              {programs.map((program) => (
-                <ProgramCard
-                  key={program.id}
-                  program={program}
-                  onSave={handleSaveProgram}
-                  onUnsave={handleUnsaveProgram}
-                  isSaved={savedPrograms.includes(program.id)}
-                />
-              ))}
-            </motion.div>
-          )}
+            {/* Programs Grid */}
+            {!isLoading && programs.length > 0 && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2 }}
+                className="grid lg:grid-cols-2 xl:grid-cols-3 gap-6"
+              >
+                {programs.map((program) => (
+                  <ProgramCard
+                    key={program.id}
+                    program={program}
+                    onSave={handleSaveProgram}
+                    onUnsave={handleUnsaveProgram}
+                    isSaved={savedPrograms.includes(program.id)}
+                  />
+                ))}
+              </motion.div>
+            )}
+          </div>
 
           {/* No Results */}
           {!isLoading && programs.length === 0 && hasSearched && (
-            <div className="text-center py-12">
+            <div 
+              className="w-full p-12 text-center"
+              style={{
+                borderRadius: '24px',
+                background: '#e0e0e0',
+                boxShadow: '10px 10px 20px #bebebe, -10px -10px 20px #ffffff'
+              }}
+            >
               <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                 </svg>
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">No programs found</h3>
-              <p className="text-gray-600 mb-4">
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">No programs found</h3>
+              <p className="text-sm text-gray-600 mb-4">
                 Try adjusting your search criteria or removing some filters.
               </p>
             </div>
           )}
 
-          {/* Summary Stats - inspired by the clean stats in the UI */}
+          {/* Summary Stats */}
           {searchMetadata && (
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 }}
-              className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm"
+              className="w-full"
             >
-              <h2 className="text-xl font-bold text-gray-900 mb-4">Search Summary</h2>
-              <div className="grid md:grid-cols-4 gap-6 text-center">
-                <div>
-                  <div className="text-3xl font-bold text-purple-600 mb-1">{programs.length}</div>
-                  <div className="text-sm text-gray-600">Programs Found</div>
-                </div>
-                <div>
-                  <div className="text-3xl font-bold text-green-600 mb-1">{savedPrograms.length}</div>
-                  <div className="text-sm text-gray-600">Programs Saved</div>
-                </div>
-                <div>
-                  <div className="text-3xl font-bold text-blue-600 mb-1">
-                    {searchMetadata.total_available_programs}
+              <div 
+                className="w-full p-6"
+                style={{
+                  borderRadius: '24px',
+                  background: '#e0e0e0',
+                  boxShadow: '10px 10px 20px #bebebe, -10px -10px 20px #ffffff'
+                }}
+              >
+                <h2 className="text-lg font-semibold text-gray-900 mb-4">Search Summary</h2>
+                <div className="grid md:grid-cols-4 gap-6 text-center">
+                  <div>
+                    <div className="text-2xl font-bold text-purple-600 mb-1">{programs.length}</div>
+                    <div className="text-xs text-gray-600">Programs Found</div>
                   </div>
-                  <div className="text-sm text-gray-600">Total Available</div>
-                </div>
-                <div>
-                  <div className="text-3xl font-bold text-orange-600 mb-1">
-                    {searchMetadata.holland_matching_enabled ? 'ON' : 'OFF'}
+                  <div>
+                    <div className="text-2xl font-bold text-green-600 mb-1">{savedPrograms.length}</div>
+                    <div className="text-xs text-gray-600">Programs Saved</div>
                   </div>
-                  <div className="text-sm text-gray-600">Personality Matching</div>
+                  <div>
+                    <div className="text-2xl font-bold text-blue-600 mb-1">
+                      {searchMetadata.total_available_programs}
+                    </div>
+                    <div className="text-xs text-gray-600">Total Available</div>
+                  </div>
+                  <div>
+                    <div className="text-2xl font-bold text-orange-600 mb-1">
+                      {searchMetadata.holland_matching_enabled ? 'ON' : 'OFF'}
+                    </div>
+                    <div className="text-xs text-gray-600">Personality Matching</div>
+                  </div>
                 </div>
               </div>
             </motion.div>
           )}
+          </div>
         </div>
       </div>
     </MainLayout>

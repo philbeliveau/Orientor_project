@@ -165,126 +165,222 @@ export default function SpacePage() {
 
   return (
     <MainLayout>
-      <div className="flex min-h-screen font-inter" style={{
-        backgroundColor: 'var(--background)',
-        color: 'var(--text)'
-      }}>
-        {/* Sidebar */}
-        <aside className="w-64 shrink-0 border-r" style={{
-          borderColor: 'var(--border)',
-          backgroundColor: 'var(--background-secondary)'
-        }}>
-          {/* Tab Navigation */}
-          <div className="p-4 border-b" style={{ borderColor: 'var(--border)' }}>
-            <div className="flex rounded-lg p-1" style={{ backgroundColor: 'var(--card)' }}>
-              <button
-                onClick={() => setActiveTab('recommendations')}
-                className={`flex-1 px-3 py-2 text-sm font-medium rounded-md transition-colors ${
-                  activeTab === 'recommendations' 
-                    ? 'bg-blue-600 text-white' 
-                    : 'text-gray-600 hover:text-gray-900'
-                }`}
-              >
-                💾 Saved
-              </button>
-              <button
-                onClick={() => setActiveTab('jobs')}
-                className={`flex-1 px-3 py-2 text-sm font-medium rounded-md transition-colors ${
-                  activeTab === 'jobs' 
-                    ? 'bg-blue-600 text-white' 
-                    : 'text-gray-600 hover:text-gray-900'
-                }`}
-              >
-                🌳 From Tree
-              </button>
-            </div>
-          </div>
-
-          {/* Tab Content */}
-          {activeTab === 'recommendations' ? (
-            <Sidebar
-              items={recommendations}
-              selectedId={selected?.id}
-              onSelect={handleSelect}
-              onDelete={handleDelete}
-              loading={loading}
-              error={error}
-            />
-          ) : (
-            <SavedJobsList
-              jobs={savedJobs}
-              selectedJobId={selectedJob?.id}
-              onSelect={handleSelectJob}
-              onDelete={handleDeleteJob}
-              loading={jobsLoading}
-              error={jobsError}
-            />
-          )}
-        </aside>
-
-        {/* Main Content */}
-        <main className="flex-1 px-10 py-6 overflow-y-auto">
-          <div className="flex items-center justify-between mb-6">
-            <h1 className="text-xl font-semibold tracking-tight" style={{ color: 'var(--text)' }}>
-              {activeTab === 'recommendations' ? 'Saved Recommendations' : 'Jobs from Tree Exploration'}
-            </h1>
+      <div className="relative flex w-full min-h-screen flex-col pb-20 overflow-x-hidden" style={{ backgroundColor: '#ffffff' }}>
+        
+        <div className="relative z-10 w-full">
+          <div className="flex-1 w-full px-4 sm:px-6 md:px-12 lg:px-16 xl:px-24 max-w-none">
             
-            {/* Badge with count and refresh button */}
-            <div className="flex gap-3 items-center">
-              {activeTab === 'recommendations' && (
-                <>
-                  <span className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm">
-                    {recommendations.length} saved
-                  </span>
-                  <button
-                    onClick={() => {
-                      setLoading(true);
-                      loadRecommendations();
-                    }}
-                    className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm hover:bg-blue-200 transition-colors"
-                  >
-                    Refresh
-                  </button>
-                </>
-              )}
-              {activeTab === 'jobs' && (
-                <span className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm">
-                  {savedJobs.length} jobs discovered
-                </span>
-              )}
-            </div>
-          </div>
-
-          {/* Detail View */}
-          {activeTab === 'recommendations' ? (
-            selected ? (
-              <RecommendationDetail
-                recommendation={selected}
-                onGenerate={handleGenerate}
-                generating={generating}
-              />
-            ) : (
-              <div className="text-base text-center mt-20" style={{ color: 'var(--text-secondary)' }}>
-                <div className="mb-4">💾</div>
-                <div>Select a saved recommendation to view details.</div>
-              </div>
-            )
-          ) : (
-            selectedJob ? (
-              <SavedJobDetail
-                job={selectedJob}
-              />
-            ) : (
-              <div className="text-base text-center mt-20" style={{ color: 'var(--text-secondary)' }}>
-                <div className="mb-4">🌳</div>
-                <div>Select a job from your tree exploration to view details.</div>
-                <div className="text-sm mt-2">
-                  Visit the <strong>Competence Tree</strong> to discover career opportunities!
+            {/* Header Section with Dashboard-style design */}
+            <div className="flex flex-col gap-6 mb-8">
+              <div className="w-full">
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                  
+                  {/* Header Title Card */}
+                  <div className="lg:col-span-2">
+                    <h1 className="text-2xl font-semibold mb-4" style={{ color: '#000000' }}>My Workspace</h1>
+                    <div 
+                      className="w-full p-6"
+                      style={{
+                        borderRadius: '24px',
+                        background: '#e0e0e0',
+                        boxShadow: '10px 10px 20px #bebebe, -10px -10px 20px #ffffff'
+                      }}
+                    >
+                      <div className="flex items-center justify-between mb-4">
+                        <div>
+                          <h2 className="text-lg font-medium text-gray-900">
+                            {activeTab === 'recommendations' ? 'Saved Recommendations' : 'Jobs from Tree Exploration'}
+                          </h2>
+                          <p className="text-sm text-gray-600 mt-1">
+                            {activeTab === 'recommendations' 
+                              ? 'Career recommendations you\'ve saved for later review' 
+                              : 'Career opportunities discovered through skill tree exploration'
+                            }
+                          </p>
+                        </div>
+                        
+                        {/* Tab Toggle with Dashboard-style buttons */}
+                        <div className="flex rounded-lg p-1 bg-white shadow-inner">
+                          <button
+                            onClick={() => setActiveTab('recommendations')}
+                            className={`px-4 py-2 text-sm font-medium rounded-md transition-all duration-200 ${
+                              activeTab === 'recommendations' 
+                                ? 'bg-blue-500 text-white shadow-md' 
+                                : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+                            }`}
+                          >
+                            💾 Saved
+                          </button>
+                          <button
+                            onClick={() => setActiveTab('jobs')}
+                            className={`px-4 py-2 text-sm font-medium rounded-md transition-all duration-200 ${
+                              activeTab === 'jobs' 
+                                ? 'bg-blue-500 text-white shadow-md' 
+                                : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+                            }`}
+                          >
+                            🌳 From Tree
+                          </button>
+                        </div>
+                      </div>
+                      
+                      {/* Stats */}
+                      <div className="flex gap-4">
+                        <div className="flex items-center gap-2">
+                          <span className="text-2xl font-bold text-blue-600">
+                            {activeTab === 'recommendations' ? recommendations.length : savedJobs.length}
+                          </span>
+                          <span className="text-sm text-gray-600">
+                            {activeTab === 'recommendations' ? 'saved items' : 'discovered jobs'}
+                          </span>
+                        </div>
+                        {activeTab === 'recommendations' && (
+                          <button
+                            onClick={() => {
+                              setLoading(true);
+                              loadRecommendations();
+                            }}
+                            className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs hover:bg-blue-200 transition-colors"
+                          >
+                            Refresh
+                          </button>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* Quick Actions Card */}
+                  <div className="w-full">
+                    <h2 className="text-lg font-semibold mb-4 opacity-0">Hidden</h2>
+                    <div 
+                      className="w-full p-6"
+                      style={{
+                        height: '200px',
+                        borderRadius: '24px',
+                        background: '#e0e0e0',
+                        boxShadow: '10px 10px 20px #bebebe, -10px -10px 20px #ffffff'
+                      }}
+                    >
+                      <h3 className="text-md font-medium text-gray-900 mb-3">Quick Actions</h3>
+                      <div className="space-y-2">
+                        <button 
+                          onClick={() => router.push('/find-your-way')}
+                          className="w-full text-left p-3 rounded-lg hover:bg-white/50 transition-colors text-sm"
+                        >
+                          <div className="flex items-center gap-3">
+                            <span className="text-lg">🎯</span>
+                            <div>
+                              <div className="font-medium text-gray-900">Discover More Jobs</div>
+                              <div className="text-xs text-gray-600">Explore new career paths</div>
+                            </div>
+                          </div>
+                        </button>
+                        <button 
+                          onClick={() => router.push('/competence-tree')}
+                          className="w-full text-left p-3 rounded-lg hover:bg-white/50 transition-colors text-sm"
+                        >
+                          <div className="flex items-center gap-3">
+                            <span className="text-lg">🌳</span>
+                            <div>
+                              <div className="font-medium text-gray-900">Skill Tree</div>
+                              <div className="text-xs text-gray-600">Navigate career connections</div>
+                            </div>
+                          </div>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  
                 </div>
               </div>
-            )
-          )}
-        </main>
+            </div>
+
+            {/* Content Section with Dashboard-style layout */}
+            <div className="flex flex-col lg:grid lg:grid-cols-12 gap-6 mb-8">
+              
+              {/* Sidebar with Dashboard-style card */}
+              <div className="w-full lg:col-span-4">
+                <div 
+                  className="w-full p-6"
+                  style={{
+                    borderRadius: '24px',
+                    background: '#e0e0e0',
+                    boxShadow: '10px 10px 20px #bebebe, -10px -10px 20px #ffffff',
+                    minHeight: '500px'
+                  }}
+                >
+                  {activeTab === 'recommendations' ? (
+                    <Sidebar
+                      items={recommendations}
+                      selectedId={selected?.id}
+                      onSelect={handleSelect}
+                      onDelete={handleDelete}
+                      loading={loading}
+                      error={error}
+                    />
+                  ) : (
+                    <SavedJobsList
+                      jobs={savedJobs}
+                      selectedJobId={selectedJob?.id}
+                      onSelect={handleSelectJob}
+                      onDelete={handleDeleteJob}
+                      loading={jobsLoading}
+                      error={jobsError}
+                    />
+                  )}
+                </div>
+              </div>
+
+              {/* Main Content with Dashboard-style card */}
+              <div className="w-full lg:col-span-8">
+                <div 
+                  className="w-full p-6"
+                  style={{
+                    borderRadius: '24px',
+                    background: '#e0e0e0',
+                    boxShadow: '10px 10px 20px #bebebe, -10px -10px 20px #ffffff',
+                    minHeight: '500px'
+                  }}
+                >
+                  {activeTab === 'recommendations' ? (
+                    selected ? (
+                      <RecommendationDetail
+                        recommendation={selected}
+                        onGenerate={handleGenerate}
+                        generating={generating}
+                      />
+                    ) : (
+                      <div className="text-center mt-20">
+                        <div className="mb-4 text-4xl">💾</div>
+                        <div className="text-lg font-medium text-gray-900 mb-2">Select a saved recommendation</div>
+                        <div className="text-sm text-gray-600">Choose an item from the sidebar to view detailed analysis</div>
+                      </div>
+                    )
+                  ) : (
+                    selectedJob ? (
+                      <SavedJobDetail
+                        job={selectedJob}
+                      />
+                    ) : (
+                      <div className="text-center mt-20">
+                        <div className="mb-4 text-4xl">🌳</div>
+                        <div className="text-lg font-medium text-gray-900 mb-2">Select a job from your exploration</div>
+                        <div className="text-sm text-gray-600 mb-4">Choose a career opportunity you discovered in the skill tree</div>
+                        <button 
+                          onClick={() => router.push('/competence-tree')}
+                          className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors text-sm"
+                        >
+                          Explore Competence Tree
+                        </button>
+                      </div>
+                    )
+                  )}
+                </div>
+              </div>
+              
+            </div>
+          </div>
+        </div>
       </div>
     </MainLayout>
   );
