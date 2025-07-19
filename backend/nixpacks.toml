@@ -10,8 +10,8 @@ nixPkgs = ["python311", "python311Packages.pip"]
 [phases.install]
 cmds = [
     "pip install --upgrade pip", 
-    "pip install -r requirements-phase1.txt"
+    "pip install -r requirements-minimal.txt"
 ]
 
 [start]
-cmd = "python main_phase1_simple.py"
+cmd = "python main_minimal.py"
