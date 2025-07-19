@@ -34,10 +34,10 @@ def main():
     logger.info(f"🌐 Starting server on {host}:{port}")
     
     try:
-        # Import Phase 2 Chunk 1 FastAPI app
-        from main_phase2_chunk1 import app
+        # Import Phase 2 Real Platform app
+        from main_phase2_real import app
         
-        logger.info("✅ Phase 2 Chunk 1 FastAPI app imported successfully")
+        logger.info("✅ Phase 2 Real Platform app imported successfully")
         
         import uvicorn
         uvicorn.run(

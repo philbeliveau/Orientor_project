@@ -1,0 +1,39 @@
+# Phase 2: Real Platform Components with Reduced Dependencies
+# Core FastAPI and database essentials
+
+# Core Framework
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+python-multipart==0.0.6
+
+# Core Pydantic
+pydantic==2.5.0
+pydantic-settings==2.0.3
+
+# Database essentials  
+sqlalchemy==2.0.23
+psycopg2-binary==2.9.9
+alembic==1.13.1
+
+# Authentication & Security
+python-jose[cryptography]==3.3.0
+passlib[bcrypt]==1.7.4
+bcrypt==4.1.2
+PyJWT==2.8.0
+
+# Environment and HTTP
+python-dotenv==1.0.0
+requests==2.31.0
+aiohttp==3.9.0
+email-validator==2.1.0
+
+# EXCLUDED FOR PHASE 2 (AI/ML Heavy):
+# anthropic==0.31.2          # Claude AI - Phase 3
+# openai==1.3.0               # OpenAI GPT - Phase 3  
+# pinecone-client==2.2.4      # Vector database - Phase 3
+# numpy==1.26.2               # ML computations - Phase 3
+# scikit-learn==1.3.2         # ML algorithms - Phase 3
+# redis==5.0.1                # Caching (can add later)
+
+# Phase 2 Focus: Real database, auth, profiles, basic features
+# Phase 3 Will Add: AI chat, embeddings, recommendations, ML
