@@ -14,4 +14,4 @@ cmds = [
 ]
 
 [start]
-cmd = "python main_phase1_deploy.py"
+cmd = "python main_phase1.py"
