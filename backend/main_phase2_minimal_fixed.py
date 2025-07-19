@@ -14,6 +14,7 @@ from pathlib import Path
 from pydantic import BaseModel
 from typing import Optional, List
 import base64
+import time
 
 # Configure logging
 logging.basicConfig(
@@ -534,187 +535,289 @@ def create_app():
 
     @app.get("/api/tests/hexaco/questions", tags=["assessments"])
     async def get_hexaco_questions(current_user=Depends(get_current_user_from_token)):
-        """Get HEXACO personality test questions - Complete psychological profiling"""
+        """Get HEXACO personality test questions - Frontend compatible format"""
         logger.info(f"🧠 HEXACO questions request for: {current_user['email']}")
         
-        # HEXACO Big 6 personality factors with realistic questions
-        hexaco_questions = {
-            "session_id": f"hexaco_{current_user['id']}_{hash(current_user['email']) % 10000}",
-            "total_questions": 24,
-            "estimated_time_minutes": 15,
-            "description": "HEXACO-PI measures 6 major personality dimensions that predict career satisfaction and performance",
-            "factors": ["Honesty-Humility", "Emotionality", "Extraversion", "Agreeableness", "Conscientiousness", "Openness"],
-            "questions": [
-                # Honesty-Humility (H)
-                {
-                    "id": 1,
-                    "factor": "Honesty-Humility",
-                    "text": "I would never accept a bribe, even if it were very large",
-                    "scale": "1=Strongly Disagree, 5=Strongly Agree"
-                },
-                {
-                    "id": 2,
-                    "factor": "Honesty-Humility", 
-                    "text": "I think that I am entitled to more respect than the average person is",
-                    "scale": "1=Strongly Disagree, 5=Strongly Agree",
-                    "reverse_scored": True
-                },
-                {
-                    "id": 3,
-                    "factor": "Honesty-Humility",
-                    "text": "I am an ordinary person who is no better than others",
-                    "scale": "1=Strongly Disagree, 5=Strongly Agree"
-                },
-                {
-                    "id": 4,
-                    "factor": "Honesty-Humility",
-                    "text": "I would be tempted to use counterfeit money, if I were sure I could get away with it",
-                    "scale": "1=Strongly Disagree, 5=Strongly Agree",
-                    "reverse_scored": True
-                },
-                # Emotionality (E)
-                {
-                    "id": 5,
-                    "factor": "Emotionality",
-                    "text": "I sometimes can't help worrying about little things",
-                    "scale": "1=Strongly Disagree, 5=Strongly Agree"
-                },
-                {
-                    "id": 6,
-                    "factor": "Emotionality",
-                    "text": "I get very anxious when waiting to hear about an important decision",
-                    "scale": "1=Strongly Disagree, 5=Strongly Agree"
-                },
-                {
-                    "id": 7,
-                    "factor": "Emotionality",
-                    "text": "I rarely feel emotional about conflicts in my family",
-                    "scale": "1=Strongly Disagree, 5=Strongly Agree",
-                    "reverse_scored": True
-                },
-                {
-                    "id": 8,
-                    "factor": "Emotionality",
-                    "text": "I feel like crying when I see other people crying",
-                    "scale": "1=Strongly Disagree, 5=Strongly Agree"
-                },
-                # Extraversion (X)
-                {
-                    "id": 9,
-                    "factor": "Extraversion",
-                    "text": "I enjoy having lots of people around to talk with",
-                    "scale": "1=Strongly Disagree, 5=Strongly Agree"
-                },
-                {
-                    "id": 10,
-                    "factor": "Extraversion",
-                    "text": "I like to contribute to group discussions",
-                    "scale": "1=Strongly Disagree, 5=Strongly Agree"
-                },
-                {
-                    "id": 11,
-                    "factor": "Extraversion", 
-                    "text": "I prefer jobs that involve active social interaction to those that involve working alone",
-                    "scale": "1=Strongly Disagree, 5=Strongly Agree"
-                },
-                {
-                    "id": 12,
-                    "factor": "Extraversion",
-                    "text": "In social situations, I'm usually the one who makes the first move",
-                    "scale": "1=Strongly Disagree, 5=Strongly Agree"
-                },
-                # Agreeableness (A)
-                {
-                    "id": 13,
-                    "factor": "Agreeableness",
-                    "text": "I rarely hold a grudge, even against people who have badly wronged me",
-                    "scale": "1=Strongly Disagree, 5=Strongly Agree"
-                },
-                {
-                    "id": 14,
-                    "factor": "Agreeableness",
-                    "text": "I am usually quite flexible in my opinions when people disagree with me",
-                    "scale": "1=Strongly Disagree, 5=Strongly Agree"
-                },
-                {
-                    "id": 15,
-                    "factor": "Agreeableness",
-                    "text": "When people tell me that I'm wrong, my first reaction is to argue with them",
-                    "scale": "1=Strongly Disagree, 5=Strongly Agree",
-                    "reverse_scored": True
-                },
-                {
-                    "id": 16,
-                    "factor": "Agreeableness",
-                    "text": "I find it hard to fully forgive someone who has done something mean to me",
-                    "scale": "1=Strongly Disagree, 5=Strongly Agree",
-                    "reverse_scored": True
-                },
-                # Conscientiousness (C)
-                {
-                    "id": 17,
-                    "factor": "Conscientiousness",
-                    "text": "I plan ahead and organize things, to avoid scrambling at the last minute",
-                    "scale": "1=Strongly Disagree, 5=Strongly Agree"
-                },
-                {
-                    "id": 18,
-                    "factor": "Conscientiousness",
-                    "text": "I often push myself very hard when trying to achieve a goal",
-                    "scale": "1=Strongly Disagree, 5=Strongly Agree"
-                },
-                {
-                    "id": 19,
-                    "factor": "Conscientiousness",
-                    "text": "I often check my work over and over to find any mistakes",
-                    "scale": "1=Strongly Disagree, 5=Strongly Agree"
-                },
-                {
-                    "id": 20,
-                    "factor": "Conscientiousness",
-                    "text": "I do only the minimum amount of work needed to get by",
-                    "scale": "1=Strongly Disagree, 5=Strongly Agree",
-                    "reverse_scored": True
-                },
-                # Openness (O)
-                {
-                    "id": 21,
-                    "factor": "Openness",
-                    "text": "I'm interested in learning about the history and politics of other countries",
-                    "scale": "1=Strongly Disagree, 5=Strongly Agree"
-                },
-                {
-                    "id": 22,
-                    "factor": "Openness",
-                    "text": "I enjoy looking at art in a museum",
-                    "scale": "1=Strongly Disagree, 5=Strongly Agree"
-                },
-                {
-                    "id": 23,
-                    "factor": "Openness",
-                    "text": "I like people who have unconventional views",
-                    "scale": "1=Strongly Disagree, 5=Strongly Agree"
-                },
-                {
-                    "id": 24,
-                    "factor": "Openness",
-                    "text": "I find it boring to discuss philosophy",
-                    "scale": "1=Strongly Disagree, 5=Strongly Agree",
-                    "reverse_scored": True
-                }
-            ],
-            "instructions": "Please rate how much you agree with each statement about yourself. Be honest - there are no right or wrong answers. This assessment helps us understand your personality and recommend suitable career paths.",
-            "career_relevance": {
-                "Honesty-Humility": "Predicts integrity in leadership roles and financial responsibilities",
-                "Emotionality": "Important for people-facing roles and stress management",
-                "Extraversion": "Critical for sales, management, and social interaction roles",
-                "Agreeableness": "Key for teamwork, customer service, and collaborative environments",
-                "Conscientiousness": "Strongest predictor of job performance across all fields",
-                "Openness": "Essential for creative fields, research, and innovation roles"
+        # Return format that matches frontend HexacoQuestion interface
+        questions = [
+            # Honesty-Humility (H) 
+            {
+                "item_id": 1,
+                "item_text": "I would never accept a bribe, even if it were very large",
+                "response_min": 1,
+                "response_max": 5,
+                "version": "hexaco-pi-r-60",
+                "language": "en",
+                "reverse_keyed": False,
+                "facet": "Honesty-Humility"
+            },
+            {
+                "item_id": 2,
+                "item_text": "I think that I am entitled to more respect than the average person is",
+                "response_min": 1,
+                "response_max": 5,
+                "version": "hexaco-pi-r-60",
+                "language": "en",
+                "reverse_keyed": True,
+                "facet": "Honesty-Humility"
+            },
+            {
+                "item_id": 3,
+                "item_text": "I am an ordinary person who is no better than others",
+                "response_min": 1,
+                "response_max": 5,
+                "version": "hexaco-pi-r-60",
+                "language": "en",
+                "reverse_keyed": False,
+                "facet": "Honesty-Humility"
+            },
+            {
+                "item_id": 4,
+                "item_text": "I would be tempted to use counterfeit money, if I were sure I could get away with it",
+                "response_min": 1,
+                "response_max": 5,
+                "version": "hexaco-pi-r-60",
+                "language": "en",
+                "reverse_keyed": True,
+                "facet": "Honesty-Humility"
+            },
+            # Emotionality (E)
+            {
+                "item_id": 5,
+                "item_text": "I sometimes can't help worrying about little things",
+                "response_min": 1,
+                "response_max": 5,
+                "version": "hexaco-pi-r-60",
+                "language": "en",
+                "reverse_keyed": False,
+                "facet": "Emotionality"
+            },
+            {
+                "item_id": 6,
+                "item_text": "I get very anxious when waiting to hear about an important decision",
+                "response_min": 1,
+                "response_max": 5,
+                "version": "hexaco-pi-r-60",
+                "language": "en",
+                "reverse_keyed": False,
+                "facet": "Emotionality"
+            },
+            {
+                "item_id": 7,
+                "item_text": "I rarely feel emotional about conflicts in my family",
+                "response_min": 1,
+                "response_max": 5,
+                "version": "hexaco-pi-r-60",
+                "language": "en",
+                "reverse_keyed": True,
+                "facet": "Emotionality"
+            },
+            {
+                "item_id": 8,
+                "item_text": "I feel like crying when I see other people crying",
+                "response_min": 1,
+                "response_max": 5,
+                "version": "hexaco-pi-r-60",
+                "language": "en",
+                "reverse_keyed": False,
+                "facet": "Emotionality"
+            },
+            # Extraversion (X)
+            {
+                "item_id": 9,
+                "item_text": "I enjoy having lots of people around to talk with",
+                "response_min": 1,
+                "response_max": 5,
+                "version": "hexaco-pi-r-60",
+                "language": "en",
+                "reverse_keyed": False,
+                "facet": "Extraversion"
+            },
+            {
+                "item_id": 10,
+                "item_text": "I like to contribute to group discussions",
+                "response_min": 1,
+                "response_max": 5,
+                "version": "hexaco-pi-r-60",
+                "language": "en",
+                "reverse_keyed": False,
+                "facet": "Extraversion"
+            },
+            {
+                "item_id": 11,
+                "item_text": "I prefer jobs that involve active social interaction to those that involve working alone",
+                "response_min": 1,
+                "response_max": 5,
+                "version": "hexaco-pi-r-60",
+                "language": "en",
+                "reverse_keyed": False,
+                "facet": "Extraversion"
+            },
+            {
+                "item_id": 12,
+                "item_text": "In social situations, I'm usually the one who makes the first move",
+                "response_min": 1,
+                "response_max": 5,
+                "version": "hexaco-pi-r-60",
+                "language": "en",
+                "reverse_keyed": False,
+                "facet": "Extraversion"
+            },
+            # Agreeableness (A)
+            {
+                "item_id": 13,
+                "item_text": "I rarely hold a grudge, even against people who have badly wronged me",
+                "response_min": 1,
+                "response_max": 5,
+                "version": "hexaco-pi-r-60",
+                "language": "en",
+                "reverse_keyed": False,
+                "facet": "Agreeableness"
+            },
+            {
+                "item_id": 14,
+                "item_text": "I am usually quite flexible in my opinions when people disagree with me",
+                "response_min": 1,
+                "response_max": 5,
+                "version": "hexaco-pi-r-60",
+                "language": "en",
+                "reverse_keyed": False,
+                "facet": "Agreeableness"
+            },
+            {
+                "item_id": 15,
+                "item_text": "When people tell me that I'm wrong, my first reaction is to argue with them",
+                "response_min": 1,
+                "response_max": 5,
+                "version": "hexaco-pi-r-60",
+                "language": "en",
+                "reverse_keyed": True,
+                "facet": "Agreeableness"
+            },
+            {
+                "item_id": 16,
+                "item_text": "I find it hard to fully forgive someone who has done something mean to me",
+                "response_min": 1,
+                "response_max": 5,
+                "version": "hexaco-pi-r-60",
+                "language": "en",
+                "reverse_keyed": True,
+                "facet": "Agreeableness"
+            },
+            # Conscientiousness (C)
+            {
+                "item_id": 17,
+                "item_text": "I plan ahead and organize things, to avoid scrambling at the last minute",
+                "response_min": 1,
+                "response_max": 5,
+                "version": "hexaco-pi-r-60",
+                "language": "en",
+                "reverse_keyed": False,
+                "facet": "Conscientiousness"
+            },
+            {
+                "item_id": 18,
+                "item_text": "I often push myself very hard when trying to achieve a goal",
+                "response_min": 1,
+                "response_max": 5,
+                "version": "hexaco-pi-r-60",
+                "language": "en",
+                "reverse_keyed": False,
+                "facet": "Conscientiousness"
+            },
+            {
+                "item_id": 19,
+                "item_text": "I often check my work over and over to find any mistakes",
+                "response_min": 1,
+                "response_max": 5,
+                "version": "hexaco-pi-r-60",
+                "language": "en",
+                "reverse_keyed": False,
+                "facet": "Conscientiousness"
+            },
+            {
+                "item_id": 20,
+                "item_text": "I do only the minimum amount of work needed to get by",
+                "response_min": 1,
+                "response_max": 5,
+                "version": "hexaco-pi-r-60",
+                "language": "en",
+                "reverse_keyed": True,
+                "facet": "Conscientiousness"
+            },
+            # Openness to Experience (O)
+            {
+                "item_id": 21,
+                "item_text": "I'm interested in learning about the history and politics of other countries",
+                "response_min": 1,
+                "response_max": 5,
+                "version": "hexaco-pi-r-60",
+                "language": "en",
+                "reverse_keyed": False,
+                "facet": "Openness"
+            },
+            {
+                "item_id": 22,
+                "item_text": "I enjoy looking at art in a museum",
+                "response_min": 1,
+                "response_max": 5,
+                "version": "hexaco-pi-r-60",
+                "language": "en",
+                "reverse_keyed": False,
+                "facet": "Openness"
+            },
+            {
+                "item_id": 23,
+                "item_text": "I like people who have unconventional views",
+                "response_min": 1,
+                "response_max": 5,
+                "version": "hexaco-pi-r-60",
+                "language": "en",
+                "reverse_keyed": False,
+                "facet": "Openness"
+            },
+            {
+                "item_id": 24,
+                "item_text": "I find it boring to discuss philosophy",
+                "response_min": 1,
+                "response_max": 5,
+                "version": "hexaco-pi-r-60",
+                "language": "en",
+                "reverse_keyed": True,
+                "facet": "Openness"
+            }
+        ]
+        
+        return questions
+
+    @app.get("/api/tests/hexaco/versions", tags=["assessments"])
+    async def get_hexaco_versions(current_user=Depends(get_current_user_from_token)):
+        """Get available HEXACO test versions"""
+        logger.info(f"🧠 HEXACO versions request for: {current_user['email']}")
+        
+        return {
+            "hexaco-pi-r-60": {
+                "id": "hexaco-pi-r-60",
+                "title": "HEXACO-PI-R Personality Inventory",
+                "description": "Comprehensive 24-item HEXACO personality assessment measuring six major dimensions of personality",
+                "item_count": 24,
+                "estimated_duration": 15,
+                "language": "en",
+                "active": True
             }
         }
+
+    @app.post("/api/tests/hexaco/start", tags=["assessments"])
+    async def start_hexaco_test(request_data: dict, current_user=Depends(get_current_user_from_token)):
+        """Start a new HEXACO test session"""
+        logger.info(f"🧠 Starting HEXACO test for: {current_user['email']}")
         
-        return hexaco_questions
+        session_id = f"hexaco_{current_user['id']}_{hash(current_user['email']) % 10000}_{int(time.time())}"
+        
+        return {
+            "session_id": session_id,
+            "message": "HEXACO test session started successfully"
+        }
 
     # HEXACO Response Models
     class HexacoAnswerRequest(BaseModel):
