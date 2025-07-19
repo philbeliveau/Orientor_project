@@ -15,4 +15,4 @@ cmds = [
 ]
 
 [start]
-cmd = "python main_phase2_deploy.py"
+cmd = "python main_phase2_minimal_deploy.py"
