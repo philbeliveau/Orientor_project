@@ -2,18 +2,19 @@
 builder = "nixpacks"
 
 [deploy]
-startCommand = "python backend_simple.py"
+startCommand = "python main_phase1_deploy.py"
 restartPolicyType = "on_failure"
 
 [phases.setup]
-nixPkgs = ["python311"]
+nixPkgs = ["python311", "postgresql"]
 
 [phases.build]
 cmds = [
     "python -m pip install --upgrade pip",
-    "pip install fastapi uvicorn python-multipart"
+    "pip install -r docs/mapping/deploy-louis/requirements-phase1.txt"
 ]
 
 [variables]
 NIXPACKS_PYTHON_VERSION = "3.11"
 PORT = "8000"
+ENVIRONMENT = "railway-phase1"
