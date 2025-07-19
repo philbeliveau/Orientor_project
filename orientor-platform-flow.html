@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orientor Platform - Complete Feature Flow</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10.6.1/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #2c3e50, #3498db);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 2.5em;
+            font-weight: 300;
+        }
+        .header p {
+            margin: 10px 0 0 0;
+            opacity: 0.9;
+            font-size: 1.1em;
+        }
+        .diagram-container {
+            padding: 30px;
+            background: #fafafa;
+        }
+        .mermaid {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .legend {
+            margin-top: 30px;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .legend h3 {
+            margin-top: 0;
+            color: #2c3e50;
+        }
+        .legend-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 0.9em;
+        }
+        .legend-item.entry { background: #e8f5e8; color: #1b5e20; }
+        .legend-item.ai { background: #fff3e0; color: #e65100; }
+        .legend-item.assessment { background: #f3e5f5; color: #4a148c; }
+        .legend-item.career { background: #e3f2fd; color: #0d47a1; }
+        .legend-item.social { background: #fce4ec; color: #880e4f; }
+        .legend-item.education { background: #f1f8e9; color: #33691e; }
+        .legend-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+            background: currentColor;
+        }
+        .stats {
+            margin-top: 20px;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 20px;
+            margin-top: 15px;
+        }
+        .stat-item {
+            text-align: center;
+        }
+        .stat-number {
+            font-size: 2em;
+            font-weight: bold;
+            display: block;
+        }
+        .stat-label {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🧭 Orientor Platform</h1>
+            <p>Complete Feature Flow Architecture - AI-Driven Career Guidance System</p>
+        </div>
+        
+        <div class="diagram-container">
+            <div class="mermaid">
+                graph TB
+                    %% Entry Points
+                    START[👤 User Arrives] --> LANDING[🌟 Landing Page]
+                    LANDING --> AUTH{🔐 Authenticated?}
+                    AUTH -->|No| LOGIN[📝 Login/Register]
+                    AUTH -->|Yes| DASHBOARD[📊 Dashboard]
+                    LOGIN --> ONBOARDING[🚀 Onboarding Flow]
+                    
+                    %% Onboarding Process
+                    ONBOARDING --> CHAT_ONBOARD[💬 Chat-based Onboarding]
+                    CHAT_ONBOARD --> INITIAL_ASSESSMENT[📊 Initial Assessment]
+                    INITIAL_ASSESSMENT --> PROFILE_CREATION[👤 Profile Creation]
+                    PROFILE_CREATION --> DASHBOARD
+                    
+                    %% Core Platform Features
+                    DASHBOARD --> MAIN_FEATURES{🎯 Choose Feature}
+                    
+                    %% AI Chat System
+                    MAIN_FEATURES --> AI_CHAT[🤖 AI Chat System]
+                    AI_CHAT --> ORIENTATOR[🧠 Orientator AI]
+                    ORIENTATOR --> TOOL_INVOCATION[🔨 Tool Invocation]
+                    TOOL_INVOCATION --> ENHANCED_CHAT[⚡ Enhanced Chat]
+                    TOOL_INVOCATION --> SOCRATIC_CHAT[🤔 Socratic Chat]
+                    
+                    %% Assessment Features
+                    MAIN_FEATURES --> ASSESSMENTS[📊 Assessment Center]
+                    ASSESSMENTS --> HEXACO_TEST[🧠 HEXACO Personality Test]
+                    ASSESSMENTS --> HOLLAND_TEST[🔍 Holland Interest Test]
+                    ASSESSMENTS --> SELF_REFLECTION[🪞 Self-Reflection]
+                    HEXACO_TEST --> PERSONALITY_PROFILE[🎭 Personality Profile]
+                    HOLLAND_TEST --> INTEREST_PROFILE[💡 Interest Profile]
+                    SELF_REFLECTION --> INSIGHT_GENERATION[💡 AI Insights]
+                    
+                    %% Career Exploration
+                    MAIN_FEATURES --> CAREER_EXPLORATION[🌳 Career Exploration]
+                    CAREER_EXPLORATION --> COMPETENCE_TREE[🌲 Competence Tree]
+                    CAREER_EXPLORATION --> CAREER_RECOMMENDATIONS[🎯 Career Recommendations]
+                    CAREER_EXPLORATION --> FIND_YOUR_WAY[🧭 Find Your Way]
+                    COMPETENCE_TREE --> SKILL_TREES[⚡ Interactive Skill Trees]
+                    CAREER_RECOMMENDATIONS --> JOB_MATCHING[💼 Job Matching]
+                    FIND_YOUR_WAY --> CAREER_PATHS[🛤️ Career Path Planning]
+                    
+                    %% Education System
+                    MAIN_FEATURES --> EDUCATION[🎓 Education Hub]
+                    EDUCATION --> PROGRAM_DISCOVERY[📚 Program Discovery]
+                    EDUCATION --> COURSE_ANALYSIS[📝 Course Analysis]
+                    EDUCATION --> SCHOOL_MATCHING[🏫 School Matching]
+                    PROGRAM_DISCOVERY --> PROGRAM_RECOMMENDATIONS[📋 Program Recommendations]
+                    
+                    %% Social Features
+                    MAIN_FEATURES --> SOCIAL[👥 Social Network]
+                    SOCIAL --> PEER_MATCHING[🤝 Peer Matching]
+                    SOCIAL --> PEER_CHAT[💭 Peer Chat]
+                    SOCIAL --> COLLABORATION[🤝 Collaboration]
+                    PEER_MATCHING --> NETWORK_BUILDING[🌐 Network Building]
+                    
+                    %% Personal Space
+                    MAIN_FEATURES --> PERSONAL_SPACE[🌌 Personal Space]
+                    PERSONAL_SPACE --> SAVED_ITEMS[⭐ Saved Recommendations]
+                    PERSONAL_SPACE --> PROGRESS_TRACKING[📈 Progress Tracking]
+                    PERSONAL_SPACE --> GOAL_SETTING[🎯 Goal Setting]
+                    PERSONAL_SPACE --> NOTES_ANNOTATIONS[📝 Notes & Annotations]
+                    
+                    %% AI Processing Layer
+                    PERSONALITY_PROFILE --> AI_PROCESSING[🤖 AI Processing Engine]
+                    INTEREST_PROFILE --> AI_PROCESSING
+                    INSIGHT_GENERATION --> AI_PROCESSING
+                    AI_PROCESSING --> VECTOR_EMBEDDINGS[📊 Vector Embeddings]
+                    AI_PROCESSING --> NEURAL_NETWORKS[🕸️ Neural Networks]
+                    VECTOR_EMBEDDINGS --> ESCO_EMBEDDINGS[📈 ESCO Skills]
+                    VECTOR_EMBEDDINGS --> OASIS_EMBEDDINGS[🔍 OASIS Jobs]
+                    NEURAL_NETWORKS --> GRAPHSAGE[🕸️ GraphSage GNN]
+                    
+                    %% Recommendation Engine
+                    ESCO_EMBEDDINGS --> RECOMMENDATION_ENGINE[🎯 Recommendation Engine]
+                    OASIS_EMBEDDINGS --> RECOMMENDATION_ENGINE
+                    GRAPHSAGE --> RECOMMENDATION_ENGINE
+                    RECOMMENDATION_ENGINE --> PERSONALIZED_RESULTS[🎨 Personalized Results]
+                    
+                    %% Output Features
+                    PERSONALIZED_RESULTS --> CAREER_CARDS[💼 Career Cards]
+                    PERSONALIZED_RESULTS --> SKILL_DEVELOPMENT[⚡ Skill Development Plans]
+                    PERSONALIZED_RESULTS --> LEARNING_PATHS[📚 Learning Pathways]
+                    PERSONALIZED_RESULTS --> PEER_SUGGESTIONS[👥 Peer Suggestions]
+                    
+                    %% Advanced Features
+                    MAIN_FEATURES --> ADVANCED[🔧 Advanced Features]
+                    ADVANCED --> VECTOR_SEARCH[🔍 Vector Search]
+                    ADVANCED --> ANALYTICS_DASHBOARD[📊 Analytics Dashboard]
+                    ADVANCED --> AVATAR_CUSTOMIZATION[🎭 Avatar Customization]
+                    
+                    %% Data Flow Connections
+                    SKILL_TREES --> TOOL_INVOCATION
+                    JOB_MATCHING --> TOOL_INVOCATION
+                    CAREER_PATHS --> TOOL_INVOCATION
+                    PROGRAM_RECOMMENDATIONS --> TOOL_INVOCATION
+                    NETWORK_BUILDING --> TOOL_INVOCATION
+                    
+                    %% Feedback Loops
+                    CAREER_CARDS --> SAVED_ITEMS
+                    SKILL_DEVELOPMENT --> PROGRESS_TRACKING
+                    LEARNING_PATHS --> GOAL_SETTING
+                    PEER_SUGGESTIONS --> PEER_MATCHING
+                    
+                    %% Styling
+                    classDef entry fill:#e8f5e8,stroke:#1b5e20,stroke-width:2px
+                    classDef ai fill:#fff3e0,stroke:#e65100,stroke-width:2px
+                    classDef assessment fill:#f3e5f5,stroke:#4a148c,stroke-width:2px
+                    classDef career fill:#e3f2fd,stroke:#0d47a1,stroke-width:2px
+                    classDef social fill:#fce4ec,stroke:#880e4f,stroke-width:2px
+                    classDef education fill:#f1f8e9,stroke:#33691e,stroke-width:2px
+                    classDef personal fill:#e1f5fe,stroke:#01579b,stroke-width:2px
+                    classDef processing fill:#f9fbe7,stroke:#827717,stroke-width:2px
+                    
+                    class START,LANDING,AUTH,LOGIN,ONBOARDING,CHAT_ONBOARD entry
+                    class AI_CHAT,ORIENTATOR,TOOL_INVOCATION,ENHANCED_CHAT,SOCRATIC_CHAT,AI_PROCESSING,VECTOR_EMBEDDINGS,NEURAL_NETWORKS,RECOMMENDATION_ENGINE ai
+                    class ASSESSMENTS,HEXACO_TEST,HOLLAND_TEST,SELF_REFLECTION,PERSONALITY_PROFILE,INTEREST_PROFILE,INSIGHT_GENERATION assessment
+                    class CAREER_EXPLORATION,COMPETENCE_TREE,CAREER_RECOMMENDATIONS,FIND_YOUR_WAY,SKILL_TREES,JOB_MATCHING,CAREER_PATHS,CAREER_CARDS,SKILL_DEVELOPMENT career
+                    class SOCIAL,PEER_MATCHING,PEER_CHAT,COLLABORATION,NETWORK_BUILDING,PEER_SUGGESTIONS social
+                    class EDUCATION,PROGRAM_DISCOVERY,COURSE_ANALYSIS,SCHOOL_MATCHING,PROGRAM_RECOMMENDATIONS,LEARNING_PATHS education
+                    class PERSONAL_SPACE,SAVED_ITEMS,PROGRESS_TRACKING,GOAL_SETTING,NOTES_ANNOTATIONS,DASHBOARD,MAIN_FEATURES personal
+                    class ESCO_EMBEDDINGS,OASIS_EMBEDDINGS,GRAPHSAGE,PERSONALIZED_RESULTS,ADVANCED,VECTOR_SEARCH,ANALYTICS_DASHBOARD,AVATAR_CUSTOMIZATION processing
+            </div>
+            
+            <div class="legend">
+                <h3>🎯 Feature Categories</h3>
+                <div class="legend-grid">
+                    <div class="legend-item entry">
+                        <div class="legend-dot"></div>
+                        Entry & Onboarding
+                    </div>
+                    <div class="legend-item ai">
+                        <div class="legend-dot"></div>
+                        AI & Chat System
+                    </div>
+                    <div class="legend-item assessment">
+                        <div class="legend-dot"></div>
+                        Assessments & Testing
+                    </div>
+                    <div class="legend-item career">
+                        <div class="legend-dot"></div>
+                        Career Exploration
+                    </div>
+                    <div class="legend-item social">
+                        <div class="legend-dot"></div>
+                        Social Features
+                    </div>
+                    <div class="legend-item education">
+                        <div class="legend-dot"></div>
+                        Education & Learning
+                    </div>
+                </div>
+            </div>
+            
+            <div class="stats">
+                <h3>📊 Platform Statistics</h3>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <span class="stat-number">25+</span>
+                        <span class="stat-label">Frontend Pages</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">35+</span>
+                        <span class="stat-label">API Endpoints</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">30+</span>
+                        <span class="stat-label">AI/ML Services</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">20+</span>
+                        <span class="stat-label">Database Tables</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">100+</span>
+                        <span class="stat-label">Components</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">8</span>
+                        <span class="stat-label">Core Features</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'base',
+            themeVariables: {
+                primaryColor: '#e3f2fd',
+                primaryTextColor: '#0d47a1',
+                primaryBorderColor: '#1976d2',
+                lineColor: '#424242',
+                sectionBkgColor: '#f5f5f5',
+                altSectionBkgColor: '#ffffff',
+                gridColor: '#e0e0e0',
+                secondaryColor: '#fff3e0',
+                tertiaryColor: '#f1f8e9'
+            },
+            flowchart: {
+                useMaxWidth: true,
+                htmlLabels: true,
+                curve: 'basis'
+            }
+        });
+        
+        // Auto-zoom and center the diagram
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                const svg = document.querySelector('.mermaid svg');
+                if (svg) {
+                    svg.style.maxWidth = '100%';
+                    svg.style.height = 'auto';
+                }
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

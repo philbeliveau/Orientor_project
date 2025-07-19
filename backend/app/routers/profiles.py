@@ -19,6 +19,7 @@ logger.setLevel(logging.DEBUG)
 logger.info("Profiles router module loaded with get_current_user from app.routes.user")
 
 class ProfileResponse(BaseModel):
+    id: int
     user_id: int
     name: Optional[str] = None
     age: Optional[int] = None
@@ -123,6 +124,7 @@ def get_profile(current_user: User = Depends(get_current_user), db: Session = De
         # Get user skills
         skills = db.query(UserSkill).filter(UserSkill.user_id == current_user.id).first()
         response = ProfileResponse.model_validate(profile)
+        response.id = current_user.id
         
         # Add all skills to response if they exist
         if skills:

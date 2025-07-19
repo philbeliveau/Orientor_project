@@ -121,7 +121,7 @@ logger.info("Including routers in the FastAPI app")
 app.include_router(auth_router)
 logger.info("Auth router included successfully")
 # Include profiles router after auth router
-app.include_router(profiles_router)
+app.include_router(profiles_router, prefix="/api/v1")
 logger.info("Profiles router included successfully")
 # Include remaining routers  
 app.include_router(test_router)

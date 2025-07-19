@@ -7,7 +7,7 @@ import MainLayout from '../../components/layout/MainLayout';
 import { generateCompetenceTree } from '../../services/competenceTreeService';
 import axios from 'axios';
 
-const API_URL = '/api/v1';
+const API_URL = 'http://localhost:8000';
 
 interface ProfileResponse {
   id: number;
@@ -58,11 +58,20 @@ const CompetenceTreePage: React.FC = () => {
       }
 
       // Get the user's ID from the email
-      const response = await axios.get<ProfileResponse>(`${API_URL}/profiles/me`, {
+      console.log('🔍 API_URL being used:', API_URL);
+      console.log('🌐 Environment variable NEXT_PUBLIC_API_URL:', process.env.NEXT_PUBLIC_API_URL);
+      console.log('📡 Full request URL:', `${API_URL}/api/v1/profiles/me`);
+      
+      console.log('🔐 Token exists:', !!token);
+      console.log('🎯 Making request to:', `${API_URL}/api/v1/profiles/me`);
+      
+      const response = await axios.get<ProfileResponse>(`${API_URL}/api/v1/profiles/me`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
       });
+      
+      console.log('✅ Response received:', response.status, response.data);
       
       const userId = response.data.id;
       const result = await generateCompetenceTree(userId);
@@ -75,10 +84,20 @@ const CompetenceTreePage: React.FC = () => {
       const newUrl = `/competence-tree?graph_id=${result.graph_id}`;
       router.push(newUrl);
     } catch (err: any) {
-      console.error("handleGenerateTree: Erreur lors de la génération:", err);
+      console.error("❌ handleGenerateTree: Erreur lors de la génération:", err);
+      console.error("❌ Error details:", {
+        message: err.message,
+        status: err.response?.status,
+        statusText: err.response?.statusText,
+        url: err.config?.url,
+        method: err.config?.method
+      });
+      
       if (err.response?.status === 401 || err.response?.status === 403) {
         setError("Votre session a expiré. Veuillez vous reconnecter.");
         router.push('/login');
+      } else if (err.response?.status === 404) {
+        setError(`API endpoint not found: ${err.config?.url}. Please check if the backend is running.`);
       } else {
         setError(err.message || 'Une erreur est survenue lors de la génération de l\'arbre');
       }
