@@ -12,11 +12,11 @@ export interface InsightData {
 // Configure axios with the token
 const getAuthHeader = () => {
   const token = typeof window !== 'undefined' ? localStorage.getItem('access_token') : null;
-  return {
+  return token ? {
     headers: {
       Authorization: `Bearer ${token}`
     }
-  };
+  } : { headers: {} };
 };
 
 /**

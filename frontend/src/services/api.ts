@@ -10,12 +10,15 @@ const api = axios.create({
 
 // Add request interceptor to include the token
 api.interceptors.request.use((config) => {
-  const token = localStorage.getItem('access_token');
-  if (token) {
-    // @ts-ignore
-    config.headers = config.headers || {};
-    // @ts-ignore
-    config.headers.Authorization = `Bearer ${token}`;
+  // Check if we're in a browser environment before accessing localStorage
+  if (typeof window !== 'undefined') {
+    const token = localStorage.getItem('access_token');
+    if (token) {
+      // @ts-ignore
+      config.headers = config.headers || {};
+      // @ts-ignore
+      config.headers.Authorization = `Bearer ${token}`;
+    }
   }
   return config;
 });
