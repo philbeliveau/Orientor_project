@@ -2,8 +2,18 @@
 builder = "nixpacks"
 
 [deploy]
-startCommand = "uvicorn main:app --host 0.0.0.0 --port $PORT --timeout-keep-alive 30"
+startCommand = "python backend_simple.py"
+restartPolicyType = "on_failure"
 
-[env]
-PORT = { default = "8000" }
-ENV = { default = "production" }
+[phases.setup]
+nixPkgs = ["python311"]
+
+[phases.build]
+cmds = [
+    "python -m pip install --upgrade pip",
+    "pip install fastapi uvicorn python-multipart"
+]
+
+[variables]
+NIXPACKS_PYTHON_VERSION = "3.11"
+PORT = "8000"
