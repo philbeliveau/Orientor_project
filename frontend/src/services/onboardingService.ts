@@ -50,8 +50,10 @@ class OnboardingService {
       console.log('Checking onboarding status...');
       const response = await api.get(`/auth/onboarding-status`);
       console.log('Onboarding status response:', response.data);
+      console.log('Checking response.data.completed:', response.data.completed);
+      console.log('Full response data keys:', Object.keys(response.data));
 
-      const isComplete = response.data.onboarding_completed;
+      const isComplete = response.data.completed;
       return {
         isComplete: isComplete,
         hasStarted: isComplete,
