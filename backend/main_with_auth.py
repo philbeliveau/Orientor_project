@@ -178,6 +178,16 @@ def init_database():
         logger.info("No DATABASE_URL provided, using in-memory store")
     return False
 
+def verify_password(plain_password: str, hashed_password: str) -> bool:
+    """Verify password against bcrypt hash"""
+    try:
+        import bcrypt
+        return bcrypt.checkpw(plain_password.encode('utf-8'), hashed_password.encode('utf-8'))
+    except Exception as e:
+        logger.warning(f"bcrypt verification failed: {e}, falling back to plain text")
+        # Fallback for plain text passwords
+        return plain_password == hashed_password
+
 def get_user_from_db(email: str):
     """Get user from database - Railway PostgreSQL compatible"""
     if not db_engine:
@@ -185,10 +195,10 @@ def get_user_from_db(email: str):
     
     # Try each schema variant in separate connections to avoid transaction errors
     schemas_to_try = [
-        "SELECT id, email, encrypted_password FROM users WHERE email = :email LIMIT 1",
-        "SELECT id, email, hashed_password FROM users WHERE email = :email LIMIT 1", 
-        "SELECT id, email, password_hash FROM users WHERE email = :email LIMIT 1",
-        "SELECT id, email, password FROM users WHERE email = :email LIMIT 1"
+        "SELECT id, email, encrypted_password, name FROM users WHERE email = :email LIMIT 1",
+        "SELECT id, email, hashed_password, name FROM users WHERE email = :email LIMIT 1", 
+        "SELECT id, email, password_hash, name FROM users WHERE email = :email LIMIT 1",
+        "SELECT id, email, password, name FROM users WHERE email = :email LIMIT 1"
     ]
     
     for schema_query in schemas_to_try:
@@ -201,8 +211,9 @@ def get_user_from_db(email: str):
                     return {
                         "id": user[0],
                         "email": user[1], 
-                        "name": user[1].split('@')[0],  # Use email prefix as name
-                        "password": user[2] if user[2] else "password123"  # Handle null passwords
+                        "name": user[3] if len(user) > 3 and user[3] else user[1].split('@')[0],  # Use actual name or email prefix
+                        "password": user[2] if user[2] else "password123",  # Handle null passwords
+                        "hashed_password": user[2]  # Store the hash for verification
                     }
         except Exception as e:
             logger.debug(f"Schema attempt failed: {e}")
@@ -286,12 +297,31 @@ async def health_check():
 # Auth endpoints
 @app.post("/auth/login", response_model=Token)
 async def login(login_request: LoginRequest):
-    """Login endpoint with database support"""
+    """Login endpoint with database support and bcrypt verification"""
     logger.info(f"Login attempt for: {login_request.email}")
     
     user = get_user_from_db(login_request.email)
-    if not user or user["password"] != login_request.password:
-        logger.warning(f"Login failed for: {login_request.email}")
+    if not user:
+        logger.warning(f"User not found: {login_request.email}")
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Incorrect email or password",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+    
+    # Check password with bcrypt verification
+    password_valid = False
+    if "hashed_password" in user and user["hashed_password"]:
+        # Use bcrypt verification for hashed passwords
+        password_valid = verify_password(login_request.password, user["hashed_password"])
+        logger.info(f"Used bcrypt verification for {login_request.email}: {password_valid}")
+    else:
+        # Fallback to plain text comparison
+        password_valid = user["password"] == login_request.password
+        logger.info(f"Used plain text verification for {login_request.email}: {password_valid}")
+    
+    if not password_valid:
+        logger.warning(f"Password verification failed for: {login_request.email}")
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Incorrect email or password",
