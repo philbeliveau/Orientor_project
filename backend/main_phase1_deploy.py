@@ -35,7 +35,7 @@ def main():
     
     try:
         # Import Phase 1 FastAPI app
-        from main_phase1 import app
+        from main_minimal import app
         
         logger.info("✅ Phase 1 FastAPI app imported successfully")
         
