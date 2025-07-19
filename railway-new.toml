@@ -1,16 +1,16 @@
 [build]
 builder = "nixpacks"
-buildCommand = "pip install -r requirements-phase1.txt"
+buildCommand = "pip install -r docs/mapping/deploy-louis/requirements-phase1.txt"
 
 [deploy]
 startCommand = "cd backend && python main_deploy.py"
 restartPolicyType = "on_failure"
 
 [phases.setup]
-nixPkgs = ["python311"]
+nixPkgs = ["python311", "postgresql"]
 
 [phases.build]
 cmds = [
     "python -m pip install --upgrade pip",
-    "pip install -r requirements-simple.txt"
+    "pip install -r docs/mapping/deploy-louis/requirements-phase1.txt"
 ]
