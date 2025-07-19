@@ -122197,3 +122197,404 @@
 2025-07-19 09:53:44,059 - app.services.competenceTree - INFO - Arbre de compétences sauvegardé avec succès pour l'utilisateur 22 avec graph_id b3a33319-4ccc-41ee-a587-f3bf04038300
 2025-07-19 09:53:44,059 - app.routers.competence_tree - INFO - Competence tree saved successfully with graph_id: b3a33319-4ccc-41ee-a587-f3bf04038300
 2025-07-19 09:53:44,100 - app.routers.competence_tree - INFO - Returning success response for user 22: {'graph_id': 'b3a33319-4ccc-41ee-a587-f3bf04038300', 'message': 'Competence tree generated successfully', 'stats': {'total_nodes': 103, 'total_edges': 98, 'anchor_skills': 5}}
+2025-07-19 10:03:54,536 - app.routers.user - ERROR - JWT decode error: Signature has expired.
+2025-07-19 10:03:54,537 - app.utils.database - INFO - HTTPException from endpoint: Could not validate credentials
+2025-07-19 10:04:02,739 - app.routers.user - ERROR - JWT decode error: Signature has expired.
+2025-07-19 10:04:02,740 - app.utils.database - INFO - HTTPException from endpoint: Could not validate credentials
+2025-07-19 10:04:09,231 - app.routers.user - ERROR - JWT decode error: Signature has expired.
+2025-07-19 10:04:09,232 - app.utils.database - INFO - HTTPException from endpoint: Could not validate credentials
+2025-07-19 10:05:09,766 - app - INFO - ======= ROUTER REGISTRATION DETAILS =======
+2025-07-19 10:05:09,766 - app - INFO - auth_router import path: fastapi.routing
+2025-07-19 10:05:09,766 - app - INFO - get_current_user import path: app.routers.user
+2025-07-19 10:05:09,766 - app - INFO - profiles_router import path: fastapi.routing
+2025-07-19 10:05:09,766 - app - INFO - Registering auth_router routes: ["/auth/register [{'POST'}]", "/auth/login [{'POST'}]", "/auth/update [{'PUT'}]", "/auth/change-password [{'PUT'}]", "/auth/onboarding-status [{'GET'}]"]
+2025-07-19 10:05:09,766 - app - INFO - Registering profiles_router routes: ["/profiles/test [{'GET'}]", "/profiles/me [{'GET'}]", "/profiles/update [{'PUT'}]", "/profiles/{user_id} [{'GET'}]"]
+2025-07-19 10:05:09,766 - app - INFO - Registering chat_router routes: ["/chat/send [{'POST'}]", "/chat/clear [{'POST'}]"]
+2025-07-19 10:05:09,766 - app - INFO - Registering peers_router routes: ["/peers/suggested [{'GET'}]", "/peers/compatible [{'GET'}]", "/peers/homepage [{'GET'}]", "/peers/refresh [{'POST'}]"]
+2025-07-19 10:05:09,766 - app - INFO - Registering messages_router routes: ["/messages [{'POST'}]", "/messages/conversation/{peer_id} [{'GET'}]", "/messages/conversations [{'GET'}]", "/messages/suggested-peers [{'GET'}]"]
+2025-07-19 10:05:09,767 - app - INFO - Registering test_router routes: ["/test/hello [{'GET'}]"]
+2025-07-19 10:05:09,767 - app - INFO - Registering space_router routes: ["/space/recommendations [{'POST'}]", "/space/recommendations [{'GET'}]", "/space/recommendations/{identifier} [{'DELETE'}]", "/space/notes [{'POST'}]", "/space/notes [{'GET'}]", "/space/notes/{note_id} [{'PUT'}]", "/space/notes/{note_id} [{'DELETE'}]", "/space/skills [{'GET'}]", "/space/skills [{'PUT'}]", "/space/recommendations/{oasis_code}/skill-comparison [{'GET'}]", "/space/recommendations/{recommendation_id}/generate-analysis [{'POST'}]"]
+2025-07-19 10:05:09,767 - app - INFO - Registering vector_router routes: ["/vector/search [{'POST'}]", "/vector/search/save [{'POST'}]", "/vector/health [{'GET'}]", "/vector/suggested-peers [{'GET'}]", "/vector/debug [{'GET'}]"]
+2025-07-19 10:05:09,767 - app - INFO - Registering recommendations_router routes: ["/recommendations [{'GET'}]", "/recommendations/swipe [{'POST'}]"]
+2025-07-19 10:05:09,767 - app - INFO - Registering careers_router routes: ["/careers/recommendations [{'GET'}]", "/careers/save/{career_id} [{'POST'}]", "/careers/saved [{'GET'}]", "/careers/fit-analysis [{'POST'}]", "/careers/cleanup-test-jobs [{'DELETE'}]"]
+2025-07-19 10:05:09,767 - app - INFO - Registering tree_router routes: ["/tree [{'POST'}]", "/tree/skills [{'POST'}]"]
+2025-07-19 10:05:09,767 - app - INFO - Registering tree_paths_router routes: ["/tree-paths/ [{'POST'}]", "/tree-paths/ [{'GET'}]", "/tree-paths/{tree_path_id} [{'GET'}]", "/tree-paths/{tree_path_id} [{'DELETE'}]"]
+2025-07-19 10:05:09,767 - app - INFO - Registering node_notes_router routes: ["/node-notes/ [{'POST'}]", "/node-notes/ [{'GET'}]", "/node-notes/node/{node_id} [{'GET'}]", "/node-notes/{note_id} [{'GET'}]", "/node-notes/{note_id} [{'DELETE'}]"]
+2025-07-19 10:05:09,767 - app - INFO - Registering user_progress_router routes: ["/user-progress/ [{'GET'}]", "/user-progress/update [{'POST'}]"]
+2025-07-19 10:05:09,767 - app - INFO - Registering holland_test_router routes: ["/api/tests/holland/ [{'GET'}]", "/api/tests/holland/questions [{'GET'}]", "/api/tests/holland/answer [{'POST'}]", "/api/tests/holland/score/{attempt_id} [{'GET'}]", "/api/tests/holland/user-results [{'GET'}]", "/api/tests/holland/profile-description [{'GET'}]", "/api/tests/holland/profile-description/{user_id} [{'GET'}]"]
+2025-07-19 10:05:09,767 - app - INFO - Registering hexaco_test_router routes: ["/api/tests/hexaco/ [{'GET'}]", "/api/tests/hexaco/languages [{'GET'}]", "/api/tests/hexaco/versions [{'GET'}]", "/api/tests/hexaco/start [{'POST'}]", "/api/tests/hexaco/questions [{'GET'}]", "/api/tests/hexaco/answer [{'POST'}]", "/api/tests/hexaco/progress/{session_id} [{'GET'}]", "/api/tests/hexaco/score/{session_id} [{'GET'}]", "/api/tests/hexaco/profile/{user_id} [{'GET'}]", "/api/tests/hexaco/my-profile [{'GET'}]", "/api/tests/hexaco/analysis/{user_id} [{'GET'}]", "/api/tests/hexaco/my-analysis [{'GET'}]"]
+2025-07-19 10:05:09,767 - app - INFO - Registering insight_router routes: ["/insight/generate [{'POST'}]", "/insight/get [{'GET'}]", "/insight/regenerate [{'POST'}]", "/insight/save [{'PATCH'}]", "/insight/rewrite [{'POST'}]"]
+2025-07-19 10:05:09,767 - app - INFO - Registering orientator_router routes: ["/orientator/test-message [{'POST'}]", "/orientator/message [{'POST'}]", "/orientator/save-component [{'POST'}]", "/orientator/conversations/{conversation_id}/messages [{'GET'}]", "/orientator/journey/{user_id} [{'GET'}]", "/orientator/conversations [{'GET'}]", "/orientator/tool-analytics [{'GET'}]", "/orientator/feedback [{'POST'}]", "/orientator/health [{'GET'}]"]
+2025-07-19 10:05:09,767 - app - INFO - ============================================
+2025-07-19 10:05:09,767 - app - INFO - Including routers in the FastAPI app
+2025-07-19 10:05:09,770 - app - INFO - Auth router included successfully
+2025-07-19 10:05:09,772 - app - INFO - Profiles router included successfully
+2025-07-19 10:05:09,857 - app - INFO - All routers included successfully
+2025-07-19 10:05:09,857 - app - INFO - === Available Routes ===
+2025-07-19 10:05:09,857 - app - INFO - Route: /openapi.json, Methods: {'HEAD', 'GET'}
+2025-07-19 10:05:09,857 - app - INFO - Route: /docs, Methods: {'HEAD', 'GET'}
+2025-07-19 10:05:09,857 - app - INFO - Route: /docs/oauth2-redirect, Methods: {'HEAD', 'GET'}
+2025-07-19 10:05:09,857 - app - INFO - Route: /redoc, Methods: {'HEAD', 'GET'}
+2025-07-19 10:05:09,857 - app - INFO - Mount: /static
+2025-07-19 10:05:09,857 - app - INFO - Route: /auth/register, Methods: {'POST'}
+2025-07-19 10:05:09,857 - app - INFO - Route: /auth/login, Methods: {'POST'}
+2025-07-19 10:05:09,857 - app - INFO - Route: /auth/update, Methods: {'PUT'}
+2025-07-19 10:05:09,857 - app - INFO - Route: /auth/change-password, Methods: {'PUT'}
+2025-07-19 10:05:09,857 - app - INFO - Route: /auth/onboarding-status, Methods: {'GET'}
+2025-07-19 10:05:09,857 - app - INFO - Route: /api/v1/profiles/test, Methods: {'GET'}
+2025-07-19 10:05:09,858 - app - INFO - Route: /api/v1/profiles/me, Methods: {'GET'}
+2025-07-19 10:05:09,858 - app - INFO - Route: /api/v1/profiles/update, Methods: {'PUT'}
+2025-07-19 10:05:09,858 - app - INFO - Route: /api/v1/profiles/{user_id}, Methods: {'GET'}
+2025-07-19 10:05:09,858 - app - INFO - Route: /test/hello, Methods: {'GET'}
+2025-07-19 10:05:09,858 - app - INFO - Route: /chat/conversations, Methods: {'GET'}
+2025-07-19 10:05:09,858 - app - INFO - Route: /chat/conversations, Methods: {'POST'}
+2025-07-19 10:05:09,858 - app - INFO - Route: /chat/conversations/{conversation_id}, Methods: {'GET'}
+2025-07-19 10:05:09,858 - app - INFO - Route: /chat/conversations/{conversation_id}, Methods: {'PUT'}
+2025-07-19 10:05:09,858 - app - INFO - Route: /chat/conversations/{conversation_id}, Methods: {'DELETE'}
+2025-07-19 10:05:09,858 - app - INFO - Route: /chat/conversations/{conversation_id}/favorite, Methods: {'POST'}
+2025-07-19 10:05:09,858 - app - INFO - Route: /chat/conversations/{conversation_id}/archive, Methods: {'POST'}
+2025-07-19 10:05:09,858 - app - INFO - Route: /chat/conversations/{conversation_id}/generate-title, Methods: {'POST'}
+2025-07-19 10:05:09,858 - app - INFO - Route: /chat/conversations/{conversation_id}/messages, Methods: {'GET'}
+2025-07-19 10:05:09,858 - app - INFO - Route: /chat/conversations/{conversation_id}/statistics, Methods: {'GET'}
+2025-07-19 10:05:09,858 - app - INFO - Route: /chat/conversations/{conversation_id}/export, Methods: {'POST'}
+2025-07-19 10:05:09,858 - app - INFO - Route: /chat/conversations/send/{conversation_id}, Methods: {'POST'}
+2025-07-19 10:05:09,858 - app - INFO - Route: /chat/send, Methods: {'POST'}
+2025-07-19 10:05:09,858 - app - INFO - Route: /chat/clear, Methods: {'POST'}
+2025-07-19 10:05:09,858 - app - INFO - Route: /chat/share/conversations/{conversation_id}, Methods: {'POST'}
+2025-07-19 10:05:09,858 - app - INFO - Route: /chat/share/shared/{share_token}, Methods: {'GET'}
+2025-07-19 10:05:09,858 - app - INFO - Route: /chat/share/shares/{share_id}, Methods: {'PUT'}
+2025-07-19 10:05:09,858 - app - INFO - Route: /chat/share/shares/{share_id}, Methods: {'DELETE'}
+2025-07-19 10:05:09,858 - app - INFO - Route: /chat/share/user/shares, Methods: {'GET'}
+2025-07-19 10:05:09,858 - app - INFO - Route: /chat/share/shares/{share_id}/analytics, Methods: {'GET'}
+2025-07-19 10:05:09,858 - app - INFO - Route: /chat/analytics/usage, Methods: {'GET'}
+2025-07-19 10:05:09,858 - app - INFO - Route: /chat/analytics/trends, Methods: {'GET'}
+2025-07-19 10:05:09,858 - app - INFO - Route: /chat/analytics/topics, Methods: {'GET'}
+2025-07-19 10:05:09,858 - app - INFO - Route: /chat/analytics/summary, Methods: {'GET'}
+2025-07-19 10:05:09,858 - app - INFO - Route: /peers/suggested, Methods: {'GET'}
+2025-07-19 10:05:09,859 - app - INFO - Route: /peers/compatible, Methods: {'GET'}
+2025-07-19 10:05:09,859 - app - INFO - Route: /peers/homepage, Methods: {'GET'}
+2025-07-19 10:05:09,859 - app - INFO - Route: /peers/refresh, Methods: {'POST'}
+2025-07-19 10:05:09,859 - app - INFO - Route: /messages, Methods: {'POST'}
+2025-07-19 10:05:09,859 - app - INFO - Route: /messages/conversation/{peer_id}, Methods: {'GET'}
+2025-07-19 10:05:09,859 - app - INFO - Route: /messages/conversations, Methods: {'GET'}
+2025-07-19 10:05:09,859 - app - INFO - Route: /messages/suggested-peers, Methods: {'GET'}
+2025-07-19 10:05:09,859 - app - INFO - Route: /space/recommendations, Methods: {'POST'}
+2025-07-19 10:05:09,859 - app - INFO - Route: /space/recommendations, Methods: {'GET'}
+2025-07-19 10:05:09,859 - app - INFO - Route: /space/recommendations/{identifier}, Methods: {'DELETE'}
+2025-07-19 10:05:09,859 - app - INFO - Route: /space/notes, Methods: {'POST'}
+2025-07-19 10:05:09,859 - app - INFO - Route: /space/notes, Methods: {'GET'}
+2025-07-19 10:05:09,859 - app - INFO - Route: /space/notes/{note_id}, Methods: {'PUT'}
+2025-07-19 10:05:09,859 - app - INFO - Route: /space/notes/{note_id}, Methods: {'DELETE'}
+2025-07-19 10:05:09,859 - app - INFO - Route: /space/skills, Methods: {'GET'}
+2025-07-19 10:05:09,859 - app - INFO - Route: /space/skills, Methods: {'PUT'}
+2025-07-19 10:05:09,859 - app - INFO - Route: /space/recommendations/{oasis_code}/skill-comparison, Methods: {'GET'}
+2025-07-19 10:05:09,859 - app - INFO - Route: /space/recommendations/{recommendation_id}/generate-analysis, Methods: {'POST'}
+2025-07-19 10:05:09,859 - app - INFO - Route: /vector/search, Methods: {'POST'}
+2025-07-19 10:05:09,859 - app - INFO - Route: /vector/search/save, Methods: {'POST'}
+2025-07-19 10:05:09,859 - app - INFO - Route: /vector/health, Methods: {'GET'}
+2025-07-19 10:05:09,859 - app - INFO - Route: /vector/suggested-peers, Methods: {'GET'}
+2025-07-19 10:05:09,859 - app - INFO - Route: /vector/debug, Methods: {'GET'}
+2025-07-19 10:05:09,859 - app - INFO - Route: /recommendations, Methods: {'GET'}
+2025-07-19 10:05:09,859 - app - INFO - Route: /recommendations/swipe, Methods: {'POST'}
+2025-07-19 10:05:09,859 - app - INFO - Route: /careers/recommendations, Methods: {'GET'}
+2025-07-19 10:05:09,859 - app - INFO - Route: /careers/save/{career_id}, Methods: {'POST'}
+2025-07-19 10:05:09,859 - app - INFO - Route: /careers/saved, Methods: {'GET'}
+2025-07-19 10:05:09,859 - app - INFO - Route: /careers/fit-analysis, Methods: {'POST'}
+2025-07-19 10:05:09,860 - app - INFO - Route: /careers/cleanup-test-jobs, Methods: {'DELETE'}
+2025-07-19 10:05:09,860 - app - INFO - Route: /tree, Methods: {'POST'}
+2025-07-19 10:05:09,860 - app - INFO - Route: /tree/skills, Methods: {'POST'}
+2025-07-19 10:05:09,860 - app - INFO - Route: /tree-paths/, Methods: {'POST'}
+2025-07-19 10:05:09,860 - app - INFO - Route: /tree-paths/, Methods: {'GET'}
+2025-07-19 10:05:09,860 - app - INFO - Route: /tree-paths/{tree_path_id}, Methods: {'GET'}
+2025-07-19 10:05:09,860 - app - INFO - Route: /tree-paths/{tree_path_id}, Methods: {'DELETE'}
+2025-07-19 10:05:09,860 - app - INFO - Route: /node-notes/, Methods: {'POST'}
+2025-07-19 10:05:09,860 - app - INFO - Route: /node-notes/, Methods: {'GET'}
+2025-07-19 10:05:09,860 - app - INFO - Route: /node-notes/node/{node_id}, Methods: {'GET'}
+2025-07-19 10:05:09,860 - app - INFO - Route: /node-notes/{note_id}, Methods: {'GET'}
+2025-07-19 10:05:09,860 - app - INFO - Route: /node-notes/{note_id}, Methods: {'DELETE'}
+2025-07-19 10:05:09,860 - app - INFO - Route: /user-progress/, Methods: {'GET'}
+2025-07-19 10:05:09,860 - app - INFO - Route: /user-progress/update, Methods: {'POST'}
+2025-07-19 10:05:09,860 - app - INFO - Route: /api/v1/jobs/save, Methods: {'POST'}
+2025-07-19 10:05:09,860 - app - INFO - Route: /api/v1/jobs/saved, Methods: {'GET'}
+2025-07-19 10:05:09,860 - app - INFO - Route: /api/v1/jobs/{job_id}, Methods: {'DELETE'}
+2025-07-19 10:05:09,860 - app - INFO - Route: /api/v1/jobs/{esco_id}/details, Methods: {'GET'}
+2025-07-19 10:05:09,860 - app - INFO - Route: /api/v1/jobs/recommendations/me, Methods: {'GET'}
+2025-07-19 10:05:09,860 - app - INFO - Route: /api/v1/program-recommendations/career-goal/{goal_id}, Methods: {'GET'}
+2025-07-19 10:05:09,860 - app - INFO - Route: /api/v1/program-recommendations/career-goal/{goal_id}/save, Methods: {'POST'}
+2025-07-19 10:05:09,860 - app - INFO - Route: /api/v1/program-recommendations/career-goal/{goal_id}/saved, Methods: {'GET'}
+2025-07-19 10:05:09,860 - app - INFO - Route: /api/v1/program-recommendations/institutions, Methods: {'GET'}
+2025-07-19 10:05:09,860 - app - INFO - Route: /api/tests/holland/, Methods: {'GET'}
+2025-07-19 10:05:09,860 - app - INFO - Route: /api/tests/holland/questions, Methods: {'GET'}
+2025-07-19 10:05:09,860 - app - INFO - Route: /api/tests/holland/answer, Methods: {'POST'}
+2025-07-19 10:05:09,860 - app - INFO - Route: /api/tests/holland/score/{attempt_id}, Methods: {'GET'}
+2025-07-19 10:05:09,860 - app - INFO - Route: /api/tests/holland/user-results, Methods: {'GET'}
+2025-07-19 10:05:09,860 - app - INFO - Route: /api/tests/holland/profile-description, Methods: {'GET'}
+2025-07-19 10:05:09,861 - app - INFO - Route: /api/tests/holland/profile-description/{user_id}, Methods: {'GET'}
+2025-07-19 10:05:09,861 - app - INFO - Route: /api/tests/hexaco/, Methods: {'GET'}
+2025-07-19 10:05:09,861 - app - INFO - Route: /api/tests/hexaco/languages, Methods: {'GET'}
+2025-07-19 10:05:09,861 - app - INFO - Route: /api/tests/hexaco/versions, Methods: {'GET'}
+2025-07-19 10:05:09,861 - app - INFO - Route: /api/tests/hexaco/start, Methods: {'POST'}
+2025-07-19 10:05:09,861 - app - INFO - Route: /api/tests/hexaco/questions, Methods: {'GET'}
+2025-07-19 10:05:09,861 - app - INFO - Route: /api/tests/hexaco/answer, Methods: {'POST'}
+2025-07-19 10:05:09,861 - app - INFO - Route: /api/tests/hexaco/progress/{session_id}, Methods: {'GET'}
+2025-07-19 10:05:09,861 - app - INFO - Route: /api/tests/hexaco/score/{session_id}, Methods: {'GET'}
+2025-07-19 10:05:09,861 - app - INFO - Route: /api/tests/hexaco/profile/{user_id}, Methods: {'GET'}
+2025-07-19 10:05:09,861 - app - INFO - Route: /api/tests/hexaco/my-profile, Methods: {'GET'}
+2025-07-19 10:05:09,861 - app - INFO - Route: /api/tests/hexaco/analysis/{user_id}, Methods: {'GET'}
+2025-07-19 10:05:09,861 - app - INFO - Route: /api/tests/hexaco/my-analysis, Methods: {'GET'}
+2025-07-19 10:05:09,861 - app - INFO - Route: /insight/generate, Methods: {'POST'}
+2025-07-19 10:05:09,861 - app - INFO - Route: /insight/get, Methods: {'GET'}
+2025-07-19 10:05:09,861 - app - INFO - Route: /insight/regenerate, Methods: {'POST'}
+2025-07-19 10:05:09,861 - app - INFO - Route: /insight/save, Methods: {'PATCH'}
+2025-07-19 10:05:09,861 - app - INFO - Route: /insight/rewrite, Methods: {'POST'}
+2025-07-19 10:05:09,861 - app - INFO - Route: /api/v1/competence-tree/generate, Methods: {'POST'}
+2025-07-19 10:05:09,861 - app - INFO - Route: /api/v1/competence-tree/generate-from-anchors, Methods: {'POST'}
+2025-07-19 10:05:09,861 - app - INFO - Route: /api/v1/competence-tree/anchor-skills, Methods: {'GET'}
+2025-07-19 10:05:09,861 - app - INFO - Route: /api/v1/competence-tree/{graph_id}, Methods: {'GET'}
+2025-07-19 10:05:09,861 - app - INFO - Route: /api/v1/competence-tree/node/{node_id}/complete, Methods: {'PATCH'}
+2025-07-19 10:05:09,861 - app - INFO - Route: /api/v1/career-progression/{occupation_id}, Methods: {'GET'}
+2025-07-19 10:05:09,861 - app - INFO - Route: /api/v1/career-progression/{occupation_id}/personalized, Methods: {'GET'}
+2025-07-19 10:05:09,861 - app - INFO - Route: /api/v1/career-progression/{occupation_id}/analyze, Methods: {'GET'}
+2025-07-19 10:05:09,862 - app - INFO - Route: /api/v1/users/me, Methods: {'GET'}
+2025-07-19 10:05:09,862 - app - INFO - Route: /api/v1/users/{user_id}/profile, Methods: {'GET'}
+2025-07-19 10:05:09,862 - app - INFO - Route: /api/reflection/questions, Methods: {'GET'}
+2025-07-19 10:05:09,862 - app - INFO - Route: /api/reflection/responses/{user_id}, Methods: {'GET'}
+2025-07-19 10:05:09,862 - app - INFO - Route: /api/reflection/responses, Methods: {'GET'}
+2025-07-19 10:05:09,862 - app - INFO - Route: /api/reflection/responses, Methods: {'POST'}
+2025-07-19 10:05:09,862 - app - INFO - Route: /api/reflection/responses/{response_id}, Methods: {'PUT'}
+2025-07-19 10:05:09,862 - app - INFO - Route: /api/reflection/responses/batch, Methods: {'POST'}
+2025-07-19 10:05:09,862 - app - INFO - Route: /api/reflection/responses/{response_id}, Methods: {'DELETE'}
+2025-07-19 10:05:09,862 - app - INFO - Route: /api/v1/avatar/generate-avatar/me, Methods: {'POST'}
+2025-07-19 10:05:09,862 - app - INFO - Route: /api/v1/avatar/me, Methods: {'GET'}
+2025-07-19 10:05:09,862 - app - INFO - Route: /api/v1/avatar/generate-avatar-test/{user_id}, Methods: {'POST'}
+2025-07-19 10:05:09,862 - app - INFO - Route: /onboarding/status, Methods: {'GET'}
+2025-07-19 10:05:09,862 - app - INFO - Route: /onboarding/start, Methods: {'POST'}
+2025-07-19 10:05:09,862 - app - INFO - Route: /onboarding/response, Methods: {'POST'}
+2025-07-19 10:05:09,862 - app - INFO - Route: /onboarding/complete, Methods: {'POST'}
+2025-07-19 10:05:09,862 - app - INFO - Route: /onboarding/profile, Methods: {'GET'}
+2025-07-19 10:05:09,862 - app - INFO - Route: /onboarding/responses, Methods: {'GET'}
+2025-07-19 10:05:09,863 - app - INFO - Route: /onboarding/reset, Methods: {'DELETE'}
+2025-07-19 10:05:09,863 - app - INFO - Route: /onboarding/skip, Methods: {'POST'}
+2025-07-19 10:05:09,863 - app - INFO - Route: /api/v1/education/programs/search, Methods: {'POST'}
+2025-07-19 10:05:09,863 - app - INFO - Route: /api/v1/education/programs/{program_id}, Methods: {'GET'}
+2025-07-19 10:05:09,863 - app - INFO - Route: /api/v1/education/institutions, Methods: {'GET'}
+2025-07-19 10:05:09,863 - app - INFO - Route: /api/v1/education/metadata, Methods: {'GET'}
+2025-07-19 10:05:09,863 - app - INFO - Route: /api/v1/school-programs/search, Methods: {'POST'}
+2025-07-19 10:05:09,863 - app - INFO - Route: /api/v1/school-programs/search, Methods: {'GET'}
+2025-07-19 10:05:09,863 - app - INFO - Route: /api/v1/school-programs/programs/{program_id}, Methods: {'GET'}
+2025-07-19 10:05:09,863 - app - INFO - Route: /api/v1/school-programs/users/interactions, Methods: {'POST'}
+2025-07-19 10:05:09,863 - app - INFO - Route: /api/v1/school-programs/users/saved-programs, Methods: {'POST'}
+2025-07-19 10:05:09,863 - app - INFO - Route: /api/v1/school-programs/users/saved-programs, Methods: {'GET'}
+2025-07-19 10:05:09,863 - app - INFO - Route: /api/v1/school-programs/users/saved-programs/{program_id}, Methods: {'DELETE'}
+2025-07-19 10:05:09,863 - app - INFO - Route: /api/v1/school-programs/filters, Methods: {'GET'}
+2025-07-19 10:05:09,863 - app - INFO - Route: /api/v1/school-programs/health, Methods: {'GET'}
+2025-07-19 10:05:09,863 - app - INFO - Route: /api/v1/courses, Methods: {'POST'}
+2025-07-19 10:05:09,863 - app - INFO - Route: /api/v1/courses, Methods: {'GET'}
+2025-07-19 10:05:09,863 - app - INFO - Route: /api/v1/courses/{course_id}, Methods: {'GET'}
+2025-07-19 10:05:09,864 - app - INFO - Route: /api/v1/courses/{course_id}, Methods: {'PUT'}
+2025-07-19 10:05:09,864 - app - INFO - Route: /api/v1/courses/{course_id}, Methods: {'DELETE'}
+2025-07-19 10:05:09,864 - app - INFO - Route: /api/v1/courses/{course_id}/targeted-analysis, Methods: {'POST'}
+2025-07-19 10:05:09,864 - app - INFO - Route: /api/v1/conversations/{session_id}/respond, Methods: {'POST'}
+2025-07-19 10:05:09,864 - app - INFO - Route: /api/v1/psychological-profile/{user_id}, Methods: {'GET'}
+2025-07-19 10:05:09,864 - app - INFO - Route: /api/v1/career-signals/{user_id}, Methods: {'GET'}
+2025-07-19 10:05:09,864 - app - INFO - Route: /api/v1/courses/{course_id}/insights, Methods: {'GET'}
+2025-07-19 10:05:09,864 - app - INFO - Route: /api/v1/conversations/{session_id}/summary, Methods: {'GET'}
+2025-07-19 10:05:09,864 - app - INFO - Route: /api/v1/enhanced-chat/send, Methods: {'POST'}
+2025-07-19 10:05:09,864 - app - INFO - Route: /api/v1/enhanced-chat/skill-explanation, Methods: {'POST'}
+2025-07-19 10:05:09,864 - app - INFO - Route: /api/v1/enhanced-chat/learning-recommendations, Methods: {'GET'}
+2025-07-19 10:05:09,864 - app - INFO - Route: /api/v1/enhanced-chat/career-path-analysis, Methods: {'POST'}
+2025-07-19 10:05:09,864 - app - INFO - Route: /api/v1/enhanced-chat/graphsage-insights, Methods: {'GET'}
+2025-07-19 10:05:09,864 - app - INFO - Route: /api/v1/enhanced-chat/status, Methods: {'GET'}
+2025-07-19 10:05:09,864 - app - INFO - Route: /api/v1/socratic-chat/send, Methods: {'POST'}
+2025-07-19 10:05:09,864 - app - INFO - Route: /api/v1/socratic-chat/introduction, Methods: {'POST'}
+2025-07-19 10:05:09,864 - app - INFO - Route: /api/v1/socratic-chat/modes, Methods: {'GET'}
+2025-07-19 10:05:09,864 - app - INFO - Route: /api/v1/socratic-chat/status, Methods: {'GET'}
+2025-07-19 10:05:09,864 - app - INFO - Route: /api/v1/career-goals/, Methods: {'POST'}
+2025-07-19 10:05:09,864 - app - INFO - Route: /api/v1/career-goals/active, Methods: {'GET'}
+2025-07-19 10:05:09,864 - app - INFO - Route: /api/v1/career-goals/, Methods: {'GET'}
+2025-07-19 10:05:09,864 - app - INFO - Route: /api/v1/career-goals/{goal_id}, Methods: {'PUT'}
+2025-07-19 10:05:09,864 - app - INFO - Route: /api/v1/career-goals/{goal_id}, Methods: {'DELETE'}
+2025-07-19 10:05:09,864 - app - INFO - Route: /api/v1/career-goals/{goal_id}/milestones/{milestone_id}/complete, Methods: {'POST'}
+2025-07-19 10:05:09,864 - app - INFO - Route: /api/v1/career-goals/{goal_id}/milestones, Methods: {'GET'}
+2025-07-19 10:05:09,864 - app - INFO - Route: /api/v1/jobs/recommendations/me, Methods: {'GET'}
+2025-07-19 10:05:09,865 - app - INFO - Route: /api/v1/jobs/recommendations/{user_id}, Methods: {'GET'}
+2025-07-19 10:05:09,865 - app - INFO - Route: /api/v1/jobs/recommendations/{user_id}, Methods: {'POST'}
+2025-07-19 10:05:09,865 - app - INFO - Route: /api/v1/jobs/skill-tree/{job_id}, Methods: {'GET'}
+2025-07-19 10:05:09,865 - app - INFO - Route: /api/careers/llm-query, Methods: {'POST'}
+2025-07-19 10:05:09,865 - app - INFO - Route: /api/orientator/test-message, Methods: {'POST'}
+2025-07-19 10:05:09,865 - app - INFO - Route: /api/orientator/message, Methods: {'POST'}
+2025-07-19 10:05:09,865 - app - INFO - Route: /api/orientator/save-component, Methods: {'POST'}
+2025-07-19 10:05:09,865 - app - INFO - Route: /api/orientator/conversations/{conversation_id}/messages, Methods: {'GET'}
+2025-07-19 10:05:09,865 - app - INFO - Route: /api/orientator/journey/{user_id}, Methods: {'GET'}
+2025-07-19 10:05:09,865 - app - INFO - Route: /api/orientator/conversations, Methods: {'GET'}
+2025-07-19 10:05:09,865 - app - INFO - Route: /api/orientator/tool-analytics, Methods: {'GET'}
+2025-07-19 10:05:09,865 - app - INFO - Route: /api/orientator/feedback, Methods: {'POST'}
+2025-07-19 10:05:09,865 - app - INFO - Route: /api/orientator/health, Methods: {'GET'}
+2025-07-19 10:05:09,865 - app - INFO - ======================
+2025-07-19 10:05:09,866 - app - INFO - 🚀 Application startup initiated
+2025-07-19 10:05:09,867 - app - INFO - Loading models...
+2025-07-19 10:05:09,868 - scripts.model_loader - INFO - Starting model loading...
+2025-07-19 10:05:09,868 - scripts.model_loader - INFO - Loading SentenceTransformer models...
+2025-07-19 10:05:09,868 - scripts.model_loader - WARNING - SentenceTransformer model directory not found, skipping...
+2025-07-19 10:05:09,868 - scripts.model_loader - INFO - Loading PCA, OHE, and Scaler models...
+2025-07-19 10:05:09,868 - scripts.model_loader - WARNING - Model files not found, skipping...
+2025-07-19 10:05:09,868 - scripts.model_loader - INFO - Model loading process completed!
+2025-07-19 10:05:09,868 - app - INFO - Models loaded from scripts
+2025-07-19 10:05:09,868 - app - INFO - Model loading process completed
+2025-07-19 10:05:09,868 - app - INFO - ✅ Models loaded successfully
+2025-07-19 10:05:09,868 - app - INFO - 🔌 Attempting database initialization...
+2025-07-19 10:05:09,868 - app.core.config - INFO - Using DATABASE_URL for local development
+2025-07-19 10:05:09,868 - app.utils.database - INFO - Attempting to connect to database...
+2025-07-19 10:05:09,898 - app.utils.database - INFO - ✅ Database engine created successfully
+2025-07-19 10:05:10,912 - app.utils.database - INFO - ✅ Database connection test successful
+2025-07-19 10:05:10,958 - app.utils.database - INFO - Database: postgres
+2025-07-19 10:05:10,958 - app.utils.database - INFO - User: postgres
+2025-07-19 10:05:10,958 - app.utils.database - INFO - PostgreSQL version: PostgreSQL 17.4 on aarch64-unknown-linux-gnu, comp...
+2025-07-19 10:05:11,009 - app.utils.database - INFO - Sample tables: ['messages', 'user_journey_milestones', 'user_profiles', 'user_skills', 'alembic_version']...
+2025-07-19 10:05:11,056 - app.utils.database - INFO - ✅ Database initialization completed successfully
+2025-07-19 10:05:11,056 - app - INFO - ✅ Application startup completed successfully
+2025-07-19 10:05:15,423 - app.routers.user - ERROR - JWT decode error: Signature has expired.
+2025-07-19 10:05:15,423 - app.utils.database - INFO - HTTPException from endpoint: Could not validate credentials
+2025-07-19 10:05:15,623 - app.routers.user - ERROR - JWT decode error: Signature has expired.
+2025-07-19 10:05:15,623 - app.utils.database - INFO - HTTPException from endpoint: Could not validate credentials
+2025-07-19 10:05:15,714 - app.routers.user - ERROR - JWT decode error: Signature has expired.
+2025-07-19 10:05:15,715 - app.utils.database - INFO - HTTPException from endpoint: Could not validate credentials
+2025-07-19 10:05:15,887 - app.routers.user - ERROR - JWT decode error: Signature has expired.
+2025-07-19 10:05:15,887 - app.utils.database - INFO - HTTPException from endpoint: Could not validate credentials
+2025-07-19 10:05:16,470 - app.routers.user - ERROR - JWT decode error: Signature has expired.
+2025-07-19 10:05:16,471 - app.utils.database - INFO - HTTPException from endpoint: Could not validate credentials
+2025-07-19 10:05:33,391 - app.routers.user - INFO - Login attempt for email: beli5@example.com
+2025-07-19 10:05:33,756 - app.routers.user - INFO - Successful login for user ID: 22
+2025-07-19 10:05:33,939 - app.routers.onboarding - INFO - Getting onboarding status for user ID: 22
+2025-07-19 10:05:35,758 - app.routers.user_progress - INFO - Retrieved user progress for user 22: {}
+2025-07-19 10:05:35,764 - app.routers.jobs - INFO - Getting job recommendations for user 22
+2025-07-19 10:05:35,765 - app.routers.jobs - INFO - Returned 3 real ESCO job recommendations for user 22
+2025-07-19 10:05:36,090 - app.services.career_progression_service - INFO - Starting career progression extraction for occupation occupation::key_15227
+2025-07-19 10:05:36,090 - app.services.career_progression_service - INFO - Parameters: depth=3, max_per_tier=5, min_sim=0.4
+2025-07-19 10:05:36,090 - app.services.career_progression_service - INFO - Extracting tier 1 from 1 nodes
+2025-07-19 10:05:36,098 - app.services.career_progression_service - INFO - Extracting tier 2 from 5 nodes
+2025-07-19 10:05:36,100 - app.services.career_progression_service - INFO - Extracting tier 3 from 5 nodes
+2025-07-19 10:05:36,104 - app.services.career_progression_service - INFO - Career progression extracted: 3 tiers, 15 total skills
+2025-07-19 10:05:36,912 - app.routers.holland_test - INFO - Récupération des résultats RIASEC pour l'utilisateur: 22
+2025-07-19 10:05:37,678 - app.routers.jobs - INFO - Getting job recommendations for user 22
+2025-07-19 10:05:37,678 - app.routers.jobs - INFO - Returned 3 real ESCO job recommendations for user 22
+2025-07-19 10:05:37,725 - app.routers.holland_test - INFO - Récupération des résultats RIASEC pour l'utilisateur: 22
+2025-07-19 10:05:37,866 - app.routers.user_progress - INFO - Retrieved user progress for user 22: {}
+2025-07-19 10:05:38,182 - app.services.career_progression_service - INFO - Starting career progression extraction for occupation occupation::key_15227
+2025-07-19 10:05:38,182 - app.services.career_progression_service - INFO - Parameters: depth=3, max_per_tier=5, min_sim=0.4
+2025-07-19 10:05:38,182 - app.services.career_progression_service - INFO - Extracting tier 1 from 1 nodes
+2025-07-19 10:05:38,184 - app.services.career_progression_service - INFO - Extracting tier 2 from 5 nodes
+2025-07-19 10:05:38,184 - app.services.career_progression_service - INFO - Extracting tier 3 from 5 nodes
+2025-07-19 10:05:38,185 - app.services.career_progression_service - INFO - Career progression extracted: 3 tiers, 15 total skills
+2025-07-19 10:05:39,175 - app.routers.user_progress - INFO - Retrieved user progress for user 22: {}
+2025-07-19 10:05:39,393 - app.routers.user_progress - INFO - Retrieved user progress for user 22: {}
+2025-07-19 10:05:40,162 - app.routers.profiles - INFO - Attempting to get profile for user ID: 22
+2025-07-19 10:05:40,466 - app.routers.competence_tree - INFO - Request received to generate competence tree for user 22
+2025-07-19 10:05:40,467 - app.routers.competence_tree - INFO - Creating competence tree for user 22 with max_depth=3, max_nodes_per_level=6
+2025-07-19 10:05:40,468 - app.services.competenceTree - INFO - Generated new graph_id: a067b166-b5e0-4a0d-8a16-cc71f850094e for user 22
+2025-07-19 10:05:40,512 - app.services.competenceTree - INFO - Âge de l'utilisateur 22: 25
+2025-07-19 10:05:40,512 - app.services.competenceTree - INFO - Starting anchor skill inference for user 22
+2025-07-19 10:05:40,750 - app.services.LLMcompetence_service - INFO - Successfully gathered profile data for user 22
+2025-07-19 10:05:44,797 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-07-19 10:05:44,809 - app.services.LLMcompetence_service - INFO - Successfully inferred 5 skills for user 22
+2025-07-19 10:05:44,809 - app.services.competenceTree - INFO - LLM inferred 5 skills for user 22
+2025-07-19 10:05:45,033 - app.services.LLMcompetence_service - INFO - Successfully gathered profile data for user 22
+2025-07-19 10:05:46,187 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-07-19 10:05:47,720 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-07-19 10:05:48,878 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-07-19 10:05:49,847 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-07-19 10:05:50,900 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-07-19 10:05:50,911 - app.services.esco_formatting_service - INFO - Successfully formatted 5 skills to ESCO standard
+2025-07-19 10:05:50,911 - app.services.competenceTree - INFO - Loading competence tree embedding model...
+2025-07-19 10:05:50,920 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2025-07-19 10:05:53,590 - app.services.competenceTree - INFO - Competence tree embedding model loaded successfully on CPU
+2025-07-19 10:05:53,724 - app.services.competenceTree - INFO - Vecteur d'embedding préparé pour la requête Pinecone: 384 dimensions
+2025-07-19 10:05:53,724 - app.services.competenceTree - INFO - Envoi de la requête à Pinecone...
+2025-07-19 10:05:54,032 - app.services.competenceTree - INFO - Réponse reçue de Pinecone: 1 résultats
+2025-07-19 10:05:54,032 - app.services.competenceTree - INFO - Recommandation ajoutée: skill::key_12485 (score: 0.53)
+2025-07-19 10:05:54,032 - app.services.competenceTree - INFO - Récupération de 1 recommandations de compétences réussie
+2025-07-19 10:05:54,032 - app.services.competenceTree - INFO - Found Pinecone match for skill 'Ethical AI Development': skill::key_12485
+2025-07-19 10:05:54,047 - app.services.competenceTree - INFO - Vecteur d'embedding préparé pour la requête Pinecone: 384 dimensions
+2025-07-19 10:05:54,047 - app.services.competenceTree - INFO - Envoi de la requête à Pinecone...
+2025-07-19 10:05:54,155 - app.services.competenceTree - INFO - Réponse reçue de Pinecone: 1 résultats
+2025-07-19 10:05:54,155 - app.services.competenceTree - INFO - Recommandation ajoutée: skill::key_1428 (score: 0.43)
+2025-07-19 10:05:54,155 - app.services.competenceTree - INFO - Récupération de 1 recommandations de compétences réussie
+2025-07-19 10:05:54,155 - app.services.competenceTree - INFO - Found Pinecone match for skill 'Problem Solving': skill::key_1428
+2025-07-19 10:05:54,169 - app.services.competenceTree - INFO - Vecteur d'embedding préparé pour la requête Pinecone: 384 dimensions
+2025-07-19 10:05:54,169 - app.services.competenceTree - INFO - Envoi de la requête à Pinecone...
+2025-07-19 10:05:54,203 - app.services.competenceTree - INFO - Réponse reçue de Pinecone: 1 résultats
+2025-07-19 10:05:54,203 - app.services.competenceTree - INFO - Recommandation ajoutée: skill::key_3901 (score: 0.40)
+2025-07-19 10:05:54,203 - app.services.competenceTree - INFO - Récupération de 1 recommandations de compétences réussie
+2025-07-19 10:05:54,203 - app.services.competenceTree - INFO - Found Pinecone match for skill 'Effective Communication': skill::key_3901
+2025-07-19 10:05:54,216 - app.services.competenceTree - INFO - Vecteur d'embedding préparé pour la requête Pinecone: 384 dimensions
+2025-07-19 10:05:54,216 - app.services.competenceTree - INFO - Envoi de la requête à Pinecone...
+2025-07-19 10:05:54,251 - app.services.competenceTree - INFO - Réponse reçue de Pinecone: 1 résultats
+2025-07-19 10:05:54,251 - app.services.competenceTree - INFO - Recommandation ajoutée: skill::key_9448 (score: 0.29)
+2025-07-19 10:05:54,251 - app.services.competenceTree - INFO - Récupération de 1 recommandations de compétences réussie
+2025-07-19 10:05:54,251 - app.services.competenceTree - INFO - Found Pinecone match for skill 'Strategic Leadership': skill::key_9448
+2025-07-19 10:05:54,264 - app.services.competenceTree - INFO - Vecteur d'embedding préparé pour la requête Pinecone: 384 dimensions
+2025-07-19 10:05:54,264 - app.services.competenceTree - INFO - Envoi de la requête à Pinecone...
+2025-07-19 10:05:54,302 - app.services.competenceTree - INFO - Réponse reçue de Pinecone: 1 résultats
+2025-07-19 10:05:54,302 - app.services.competenceTree - INFO - Recommandation ajoutée: skill::key_2100 (score: 0.25)
+2025-07-19 10:05:54,302 - app.services.competenceTree - INFO - Récupération de 1 recommandations de compétences réussie
+2025-07-19 10:05:54,302 - app.services.competenceTree - INFO - Found Pinecone match for skill 'Systems Thinking': skill::key_2100
+2025-07-19 10:05:54,302 - app.services.competenceTree - INFO - Successfully inferred 5 anchor skills for user 22
+2025-07-19 10:05:54,302 - app.services.competenceTree - INFO - Anchor skills inferred for user 22: 5
+2025-07-19 10:05:54,302 - app.services.competenceTree - INFO - Creating enhanced skill tree for user 22 with 5 anchor skills
+2025-07-19 10:05:54,302 - app.services.competenceTree - INFO - Looking for graph_traversal_service at: /Users/philippebeliveau/Desktop/Notebook/Orientor_project/Orientor_project/backend/dev/competenceTree_dev
+2025-07-19 10:05:54,302 - app.services.competenceTree - INFO - Successfully imported GraphTraversalService from: /Users/philippebeliveau/Desktop/Notebook/Orientor_project/Orientor_project/backend/dev/competenceTree_dev
+2025-07-19 10:05:54,303 - graph_traversal_service - ERROR - Le fichier du modèle n'existe pas: /Users/philippebeliveau/Desktop/Notebook/Orientor_project/Orientor_project/backend/dev/app/services/GNN/best_model_20250520_022237.pt
+2025-07-19 10:05:54,306 - graph_traversal_service - INFO - Mappages idx2node chargés pour 18162 nœuds
+2025-07-19 10:05:54,310 - graph_traversal_service - INFO - Mappages node2idx chargés pour 18162 nœuds
+2025-07-19 10:05:54,380 - graph_traversal_service - INFO - Métadonnées chargées pour 18162 nœuds
+2025-07-19 10:05:54,381 - graph_traversal_service - INFO - Dictionnaire des types d'arêtes chargé avec 7 types
+2025-07-19 10:05:54,385 - graph_traversal_service - INFO - Index d'arêtes chargés avec forme torch.Size([2, 274732])
+2025-07-19 10:05:54,396 - graph_traversal_service - INFO - Caractéristiques des nœuds chargées avec forme torch.Size([18162, 384])
+2025-07-19 10:05:54,408 - graph_traversal_service - INFO - Types d'arêtes chargés
+2025-07-19 10:05:54,409 - graph_traversal_service - WARNING - Le fichier des indices des types d'arêtes n'existe pas: /Users/philippebeliveau/Desktop/Notebook/Orientor_project/Orientor_project/backend/dev/competenceTree_dev/data/edge_type_indices.json
+2025-07-19 10:05:54,458 - graph_traversal_service - INFO - Chargement du graphe prétraité depuis /Users/philippebeliveau/Desktop/Notebook/Orientor_project/Orientor_project/backend/dev/competenceTree_dev/data/networkx_graph.pkl...
+2025-07-19 10:05:54,528 - graph_traversal_service - INFO - Graphe NetworkX chargé avec 18162 nœuds et 150941 arêtes
+2025-07-19 10:05:54,531 - graph_traversal_service - INFO - Service de traversée du graphe initialisé avec 18162 nœuds et 150941 arêtes
+2025-07-19 10:05:54,531 - app.services.competenceTree - INFO - GraphTraversalService initialized successfully
+2025-07-19 10:05:54,531 - app.services.competenceTree - INFO - Starting graph traversal from 5 anchor nodes
+2025-07-19 10:05:54,561 - graph_traversal_service - INFO - Graphe traversé avec 102 nœuds et 97 arêtes
+2025-07-19 10:05:54,561 - app.services.competenceTree - INFO - Graph traversal successful: 102 nodes, 97 edges
+2025-07-19 10:05:54,561 - app.services.competenceTree - INFO - Processing 102 nodes from graph traversal
+2025-07-19 10:05:54,561 - app.services.competenceTree - INFO - Anchor lookup has 5 entries: ['skill::key_12485', 'skill::key_1428', 'skill::key_3901', 'skill::key_9448', 'skill::key_2100']
+2025-07-19 10:05:54,561 - app.services.competenceTree - INFO - Processing anchor node 1: skill::key_12485 -> ethics
+2025-07-19 10:05:56,985 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-07-19 10:05:56,992 - app.services.competenceTree - INFO - Processing anchor node 2: skill::key_1428 -> create solutions to problems
+2025-07-19 10:05:58,704 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-07-19 10:05:58,708 - app.services.competenceTree - INFO - Processing anchor node 3: skill::key_3901 -> teach communication to clients
+2025-07-19 10:06:00,796 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-07-19 10:06:00,811 - app.services.competenceTree - INFO - Processing anchor node 4: skill::key_9448 -> implement strategic management
+2025-07-19 10:06:01,757 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-07-19 10:06:01,758 - app.services.competenceTree - INFO - Processing anchor node 5: skill::key_2100 -> systems thinking
+2025-07-19 10:06:03,276 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-07-19 10:06:03,504 - app.services.competenceTree - INFO - Added 1 occupation nodes connected to skills
+2025-07-19 10:06:03,505 - app.services.competenceTree - INFO - Enhanced skill tree created with 103 total nodes (102 skills, 1 occupations) and 98 edges
+2025-07-19 10:06:03,529 - app.services.competenceTree - INFO - Storing 5 anchor skills in tree data for user 22
+2025-07-19 10:06:03,529 - app.services.competenceTree - INFO - Arbre de compétences créé avec succès pour l'utilisateur 22 avec graph_id a067b166-b5e0-4a0d-8a16-cc71f850094e
+2025-07-19 10:06:03,530 - app.routers.competence_tree - INFO - Tree data created successfully: nodes=103, edges=98, anchors=5, anchor_metadata=5
+2025-07-19 10:06:03,530 - app.routers.competence_tree - INFO - Saving competence tree to database for user 22
+2025-07-19 10:06:04,065 - app.services.competenceTree - INFO - Arbre de compétences sauvegardé avec succès pour l'utilisateur 22 avec graph_id a067b166-b5e0-4a0d-8a16-cc71f850094e
+2025-07-19 10:06:04,065 - app.routers.competence_tree - INFO - Competence tree saved successfully with graph_id: a067b166-b5e0-4a0d-8a16-cc71f850094e
+2025-07-19 10:06:04,115 - app.routers.competence_tree - INFO - Returning success response for user 22: {'graph_id': 'a067b166-b5e0-4a0d-8a16-cc71f850094e', 'message': 'Competence tree generated successfully', 'stats': {'total_nodes': 103, 'total_edges': 98, 'anchor_skills': 5}}
+2025-07-19 10:06:04,313 - app.routers.competence_tree - INFO - Request received to get competence tree with ID a067b166-b5e0-4a0d-8a16-cc71f850094e
+2025-07-19 10:06:04,313 - app.routers.competence_tree - INFO - Retrieving competence tree a067b166-b5e0-4a0d-8a16-cc71f850094e from database
+2025-07-19 10:06:04,486 - app.routers.competence_tree - INFO - Type of tree_data: <class 'dict'>
+2025-07-19 10:06:04,486 - app.routers.competence_tree - INFO - Returning tree data with 103 nodes and 98 edges
+2025-07-19 10:06:04,486 - app.routers.competence_tree - INFO - Tree data keys: ['edges', 'nodes', 'anchors', 'graph_id', 'tree_type', 'anchor_metadata', 'generation_method']
+2025-07-19 10:06:04,486 - app.routers.competence_tree - INFO - Sample node: {'id': 'skill::key_12485', 'type': 'skill', 'depth': 0, 'label': 'ethics', 'notes': '', 'state': 'available', 'visible': True, 'category': 'technical', 'graph_id': 'a067b166-b5e0-4a0d-8a16-cc71f850094e', 'metadata': {'type': 'skill', 'label': 'ethics', 'altlabels': 'moral studies\nthe study of moral principles\nethics', 'originuri': 'http://data.europa.eu/esco/skill/cef5c0f8-1e40-4c09-b6a7-aa7811849e5d', 'scopenote': '', 'skilltype': 'knowledge', 'definition': '', 'reuselevel': 'cross-sector', 'description': 'The philosophical study that deals with solving questions of human morality; it defines and systemises concepts such as right, wrong, and crime.', 'islocalized': 'false', 'uuidhistory': 'e5bbe122-0b12-43ac-aa67-4e3688b50b3c\ne84dfdbb-85c5-45c9-85d3-eb95389c52d9', 'preferredlabel': 'ethics'}, 'revealed': True, 'challenge': 'Choisissez une situation éthique complexe dans votre environnement professionnel et proposez une analyse approfondie des différentes perspectives éthiques en jeu, ainsi que des solutions possibles. Vous devrez présenter vos conclusions de manière claire et argumentée.', 'is_anchor': True, 'xp_reward': 89, 'confidence': 0.85, 'esco_label': 'Ethical AI Development', 'applications': ['Designing AI algorithms with built-in ethical principles', 'Implementing ethical guidelines in AI development projects', 'Evaluating and mitigating ethical risks in AI applications'], 'justification': "Given the interest in artificial intelligence safety philosophy, developing expertise in ethical AI development aligns with the user's career goals and interest in solving pressing problems. This skill leverages the user's strong analytical thinking and critical thinking abilities.", 'esco_description': 'Developing AI systems with ethical considerations to ensure fairness, transparency, and accountability in decision-making processes.', 'similarity_score': 0.5}
+2025-07-19 10:06:04,487 - app.routers.competence_tree - INFO - Anchor nodes: 5, Non-anchor nodes: 98
+2025-07-19 10:06:04,487 - app.routers.competence_tree - INFO - Sample edge: {'type': 'similarity', 'source': 'skill::key_12485', 'target': 'skillgroup::key_656', 'weight': 0.8569544553756714}
+2025-07-19 10:06:04,487 - app.routers.competence_tree - INFO - Edge types: {'similarity': 97, 'skill_to_occupation': 1}
+2025-07-19 10:06:04,677 - app.routers.competence_tree - INFO - Request received to get competence tree with ID a067b166-b5e0-4a0d-8a16-cc71f850094e
+2025-07-19 10:06:04,678 - app.routers.competence_tree - INFO - Retrieving competence tree a067b166-b5e0-4a0d-8a16-cc71f850094e from database
+2025-07-19 10:06:04,862 - app.routers.competence_tree - INFO - Type of tree_data: <class 'dict'>
+2025-07-19 10:06:04,863 - app.routers.competence_tree - INFO - Returning tree data with 103 nodes and 98 edges
+2025-07-19 10:06:04,863 - app.routers.competence_tree - INFO - Tree data keys: ['edges', 'nodes', 'anchors', 'graph_id', 'tree_type', 'anchor_metadata', 'generation_method']
+2025-07-19 10:06:04,863 - app.routers.competence_tree - INFO - Sample node: {'id': 'skill::key_12485', 'type': 'skill', 'depth': 0, 'label': 'ethics', 'notes': '', 'state': 'available', 'visible': True, 'category': 'technical', 'graph_id': 'a067b166-b5e0-4a0d-8a16-cc71f850094e', 'metadata': {'type': 'skill', 'label': 'ethics', 'altlabels': 'moral studies\nthe study of moral principles\nethics', 'originuri': 'http://data.europa.eu/esco/skill/cef5c0f8-1e40-4c09-b6a7-aa7811849e5d', 'scopenote': '', 'skilltype': 'knowledge', 'definition': '', 'reuselevel': 'cross-sector', 'description': 'The philosophical study that deals with solving questions of human morality; it defines and systemises concepts such as right, wrong, and crime.', 'islocalized': 'false', 'uuidhistory': 'e5bbe122-0b12-43ac-aa67-4e3688b50b3c\ne84dfdbb-85c5-45c9-85d3-eb95389c52d9', 'preferredlabel': 'ethics'}, 'revealed': True, 'challenge': 'Choisissez une situation éthique complexe dans votre environnement professionnel et proposez une analyse approfondie des différentes perspectives éthiques en jeu, ainsi que des solutions possibles. Vous devrez présenter vos conclusions de manière claire et argumentée.', 'is_anchor': True, 'xp_reward': 89, 'confidence': 0.85, 'esco_label': 'Ethical AI Development', 'applications': ['Designing AI algorithms with built-in ethical principles', 'Implementing ethical guidelines in AI development projects', 'Evaluating and mitigating ethical risks in AI applications'], 'justification': "Given the interest in artificial intelligence safety philosophy, developing expertise in ethical AI development aligns with the user's career goals and interest in solving pressing problems. This skill leverages the user's strong analytical thinking and critical thinking abilities.", 'esco_description': 'Developing AI systems with ethical considerations to ensure fairness, transparency, and accountability in decision-making processes.', 'similarity_score': 0.5}
+2025-07-19 10:06:04,864 - app.routers.competence_tree - INFO - Anchor nodes: 5, Non-anchor nodes: 98
+2025-07-19 10:06:04,864 - app.routers.competence_tree - INFO - Sample edge: {'type': 'similarity', 'source': 'skill::key_12485', 'target': 'skillgroup::key_656', 'weight': 0.8569544553756714}
+2025-07-19 10:06:04,864 - app.routers.competence_tree - INFO - Edge types: {'similarity': 97, 'skill_to_occupation': 1}

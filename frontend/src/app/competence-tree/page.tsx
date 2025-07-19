@@ -74,7 +74,12 @@ const CompetenceTreePage: React.FC = () => {
       console.log('✅ Response received:', response.status, response.data);
       
       const userId = response.data.id;
+      console.log('💾 Saving userId to localStorage:', userId);
+      localStorage.setItem('user_id', userId.toString());
+      
+      console.log('🌳 Generating competence tree for userId:', userId);
       const result = await generateCompetenceTree(userId);
+      console.log('🎯 Tree generation result:', result);
       
       // Save as last viewed tree and update state
       localStorage.setItem('last-competence-tree-id', result.graph_id);

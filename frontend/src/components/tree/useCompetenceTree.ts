@@ -21,20 +21,27 @@ export const useCompetenceTree = (graphId: string) => {
 
   // Load tree data
   const loadTreeData = useCallback(async () => {
-    if (!graphId || !userId) return;
-
+    console.log('🔄 useCompetenceTree loadTreeData called with:', { graphId, userId });
+    if (!graphId) {
+      console.log('❌ No graphId provided, skipping load');
+      return;
+    }
+    
+    // Don't require userId for loading tree data since we have graphId
     setLoading(true);
     setError(null);
 
     try {
       let data;
       try {
+        console.log('📡 Fetching competence tree with graphId:', graphId);
         data = await getCompetenceTree(graphId);
+        console.log('✅ Successfully loaded tree data:', data);
       } catch (error: any) {
+        console.log('❌ Error loading tree:', error);
         if (error.response && error.response.status === 404) {
-          console.log("No tree found, generating a new one...");
-          const newTree = await generateCompetenceTree(userId);
-          data = await getCompetenceTree(newTree.graph_id);
+          console.log("No tree found, would need to generate a new one, but we have graphId...");
+          throw new Error('Tree not found for the provided graph ID');
         } else {
           throw error;
         }
@@ -153,12 +160,14 @@ export const useCompetenceTree = (graphId: string) => {
     };
   }, [getVisibleNodes, completedNodes]);
 
-  // Initial load
+  // Initial load - only wait for graphId, not userId
   useEffect(() => {
-    if (userId) {
+    console.log('🎯 useCompetenceTree useEffect triggered with:', { graphId, userId });
+    if (graphId) {
+      console.log('🚀 Starting tree data load...');
       loadTreeData();
     }
-  }, [loadTreeData, userId]);
+  }, [loadTreeData, graphId]);
 
   return {
     // Data
