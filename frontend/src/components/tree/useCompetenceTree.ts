@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { CompetenceTreeData, CompetenceNode, PositionedNode } from './types';
 import { calculateNodePositions } from './layoutAlgorithm';
-import { getCompetenceTree, completeChallenge } from '../../services/competenceTreeService';
+import { getCompetenceTree, completeChallenge, generateCompetenceTree } from '../../services/competenceTreeService';
 
 export const useCompetenceTree = (graphId: string) => {
   const [treeData, setTreeData] = useState<CompetenceTreeData | null>(null);
@@ -10,10 +10,18 @@ export const useCompetenceTree = (graphId: string) => {
   const [error, setError] = useState<string | null>(null);
   const [completedNodes, setCompletedNodes] = useState<Set<string>>(new Set());
   const [savedNodes, setSavedNodes] = useState<string[]>([]);
+  const [userId, setUserId] = useState<number | null>(null);
+
+  useEffect(() => {
+    const storedUserId = localStorage.getItem('user_id');
+    if (storedUserId) {
+      setUserId(parseInt(storedUserId, 10));
+    }
+  }, []);
 
   // Load tree data
   const loadTreeData = useCallback(async () => {
-    if (!graphId) return;
+    if (!graphId || !userId) return;
 
     setLoading(true);
     setError(null);
@@ -25,7 +33,7 @@ export const useCompetenceTree = (graphId: string) => {
       } catch (error: any) {
         if (error.response && error.response.status === 404) {
           console.log("No tree found, generating a new one...");
-          const newTree = await generateCompetenceTree(1); // Assuming user 1 for now
+          const newTree = await generateCompetenceTree(userId);
           data = await getCompetenceTree(newTree.graph_id);
         } else {
           throw error;
@@ -58,8 +66,12 @@ export const useCompetenceTree = (graphId: string) => {
 
   // Complete a challenge/node
   const completeNode = useCallback(async (nodeId: string) => {
+    if (!userId) {
+      console.error("User ID not found, cannot complete challenge.");
+      return;
+    }
     try {
-      await completeChallenge(nodeId, 1); // Using default userId 1 for now
+      await completeChallenge(nodeId, userId);
       
       // Update local state
       setCompletedNodes(prev => new Set(Array.from(prev).concat(nodeId)));
@@ -143,8 +155,10 @@ export const useCompetenceTree = (graphId: string) => {
 
   // Initial load
   useEffect(() => {
-    loadTreeData();
-  }, [loadTreeData]);
+    if (userId) {
+      loadTreeData();
+    }
+  }, [loadTreeData, userId]);
 
   return {
     // Data

@@ -9,9 +9,9 @@ import axios from 'axios';
 
 const API_URL = '/api/v1';
 
-interface UserResponse {
+interface ProfileResponse {
   id: number;
-  email: string;
+  email?: string;
 }
 
 const CompetenceTreePage: React.FC = () => {
@@ -26,19 +26,11 @@ const CompetenceTreePage: React.FC = () => {
 
   // Auto-restore last viewed tree if no graphId in URL
   useEffect(() => {
-    if (!urlGraphId) {
-      const lastGraphId = localStorage.getItem('last-competence-tree-id');
-      if (lastGraphId) {
-        console.log("Restoring last viewed tree:", lastGraphId);
-        setCurrentGraphId(lastGraphId);
-      }
-    } else {
-      // Save current graphId as the last viewed
+    if (urlGraphId) {
       localStorage.setItem('last-competence-tree-id', urlGraphId);
       setCurrentGraphId(urlGraphId);
     }
   }, [urlGraphId]);
-
   // Check authentication on mount
   useEffect(() => {
     const token = localStorage.getItem('access_token');
@@ -66,7 +58,7 @@ const CompetenceTreePage: React.FC = () => {
       }
 
       // Get the user's ID from the email
-      const response = await axios.get<UserResponse>(`${API_URL}/users/me`, {
+      const response = await axios.get<ProfileResponse>(`${API_URL}/profiles/me`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
