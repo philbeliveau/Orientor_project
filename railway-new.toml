@@ -1,6 +1,6 @@
 [build]
 builder = "nixpacks"
-buildCommand = "pip install -r requirements-simple.txt"
+buildCommand = "pip install -r requirements-phase1.txt"
 
 [deploy]
 startCommand = "cd backend && python main_deploy.py"

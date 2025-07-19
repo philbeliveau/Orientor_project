@@ -77609,3 +77609,4 @@
 2025-07-19 12:13:24,067 - app.services.career_progression_service - INFO - Extracting tier 2 from 5 nodes
 2025-07-19 12:13:24,068 - app.services.career_progression_service - INFO - Extracting tier 3 from 5 nodes
 2025-07-19 12:13:24,070 - app.services.career_progression_service - INFO - Career progression extracted: 3 tiers, 15 total skills
+2025-07-19 12:15:18,640 - app - INFO - Root endpoint called
