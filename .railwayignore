@@ -1,24 +1,24 @@
-# Tell Railway to ignore frontend files
-frontend/
-node_modules/
-package.json
-package-lock.json
-next.config.js
-next-env.d.ts
-tsconfig.json
-tailwind.config.js
-postcss.config.js
-.next/
-dist/
+# Deploy only backend directory
+# Ignore everything at root level except backend/
+/*
+!/backend/
 
-# Also ignore other unnecessary files
-archive/
-docs/
-memory/
-data_n_notebook/
-mlruns/
-reports/
-scripts/
-.git/
-*.md
-*.log
+# Also ignore these patterns within backend if they exist
+backend/node_modules/
+backend/.next/
+backend/dist/
+backend/__pycache__/
+backend/*.pyc
+backend/.pytest_cache/
+backend/.coverage
+backend/htmlcov/
+
+# Keep these backend files
+!backend/nixpacks.toml
+!backend/requirements-phase1.txt
+!backend/run.py
+!backend/main_phase1_deploy.py
+!backend/test_railway.py
+!backend/app/
+!backend/alembic/
+!backend/static/

@@ -1,4 +1,4 @@
-# Force Railway to detect this as a Python project
+# Backend deployment configuration
 providers = ["python"]
 
 [variables]
@@ -14,4 +14,4 @@ cmds = [
 ]
 
 [start]
-cmd = "python test_railway.py"
+cmd = "python run.py"

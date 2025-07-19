@@ -1,0 +1,19 @@
+[build]
+builder = "nixpacks"
+
+[deploy]
+startCommand = "python backend_simple.py"
+restartPolicyType = "on_failure"
+
+[phases.setup]
+nixPkgs = ["python311"]
+
+[phases.build]
+cmds = [
+    "python -m pip install --upgrade pip",
+    "pip install fastapi uvicorn python-multipart"
+]
+
+[variables]
+NIXPACKS_PYTHON_VERSION = "3.11"
+PORT = "8000"
