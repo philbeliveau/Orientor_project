@@ -23,9 +23,9 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 def main():
-    """Main function for Phase 1 Railway deployment"""
-    logger.info("🚀 Starting Orientor Platform - Phase 1 Deployment")
-    logger.info("📋 Features: Authentication, User Profiles, Health Checks")
+    """Main function for Phase 2 Chunk 1 Railway deployment"""
+    logger.info("🚀 Starting Orientor Platform - Phase 2 Chunk 1 Deployment")
+    logger.info("📋 Features: Authentication, User Profiles, Avatar Endpoints, Health Checks")
     
     # Get port from Railway environment
     port = int(os.getenv("PORT", 8000))
@@ -34,10 +34,10 @@ def main():
     logger.info(f"🌐 Starting server on {host}:{port}")
     
     try:
-        # Import Phase 1 FastAPI app
-        from main_with_auth import app
+        # Import Phase 2 Chunk 1 FastAPI app
+        from main_phase2_chunk1 import app
         
-        logger.info("✅ Phase 1 FastAPI app imported successfully")
+        logger.info("✅ Phase 2 Chunk 1 FastAPI app imported successfully")
         
         import uvicorn
         uvicorn.run(
