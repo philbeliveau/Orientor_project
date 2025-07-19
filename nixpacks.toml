@@ -1,16 +1,15 @@
 # Force Railway to detect this as a Python project
-[providers]
-python = "3.11"
+providers = ["python"]
 
 [variables]
 NIXPACKS_PYTHON_VERSION = "3.11"
 
 [phases.setup]
-nixPkgs = ["python311", "postgresql"]
+nixPkgs = ["python311"]
 
 [phases.install]
 cmds = [
-    "python -m pip install --upgrade pip",
+    "python -m pip install --upgrade pip", 
     "pip install -r requirements-phase1.txt"
 ]
 
