@@ -355,6 +355,50 @@ def create_app():
             "taken_at": "2024-07-15T14:30:00Z"
         }
 
+    @app.get("/api/v1/jobs/recommendations/me", tags=["fallback-jobs"])
+    async def get_job_recommendations(current_user=Depends(get_current_user_from_token), top_k: int = 3):
+        """Get job recommendations - Dashboard displays these"""
+        logger.info(f"💼 Job recommendations request for: {current_user['email']} (top_k: {top_k})")
+        return {
+            "recommendations": [
+                {
+                    "id": 1,
+                    "title": "Senior Software Engineer",
+                    "company": "TechCorp Inc.",
+                    "location": "Remote",
+                    "match_score": 95,
+                    "salary_range": "$120,000 - $160,000",
+                    "description": "Build scalable web applications using modern technologies",
+                    "required_skills": ["Python", "React", "PostgreSQL"],
+                    "match_reasons": ["Strong Python background", "Leadership experience"]
+                },
+                {
+                    "id": 2,
+                    "title": "Full Stack Developer",
+                    "company": "Startup Innovations",
+                    "location": "San Francisco, CA",
+                    "match_score": 88,
+                    "salary_range": "$90,000 - $130,000",
+                    "description": "Join our fast-growing team building the future of education",
+                    "required_skills": ["JavaScript", "Node.js", "React"],
+                    "match_reasons": ["Full-stack experience", "Education sector interest"]
+                },
+                {
+                    "id": 3,
+                    "title": "Data Scientist",
+                    "company": "Analytics Pro",
+                    "location": "New York, NY",
+                    "match_score": 82,
+                    "salary_range": "$110,000 - $150,000",
+                    "description": "Apply machine learning to solve complex business problems",
+                    "required_skills": ["Python", "Machine Learning", "SQL"],
+                    "match_reasons": ["Analytical mindset", "Python expertise"]
+                }
+            ][:top_k],
+            "total_available": 15,
+            "last_updated": "2024-07-19T10:00:00Z"
+        }
+
     # Root endpoint
     @app.get("/")
     async def root():
