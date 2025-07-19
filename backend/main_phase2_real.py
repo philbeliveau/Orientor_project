@@ -140,40 +140,81 @@ def create_app():
         """Fallback login endpoint in case real auth router fails to load"""
         logger.info(f"🔄 Fallback login attempt for: {login_request.email}")
         
-        # Import auth logic from our working implementation
+        # Self-contained auth logic
         try:
-            from main_phase2_chunk1 import get_user_from_db, verify_password, create_simple_token
+            import bcrypt
+            import base64
+            from datetime import datetime
+            from sqlalchemy import create_engine, text
             
-            user = get_user_from_db(login_request.email)
-            if not user:
-                logger.warning(f"User not found: {login_request.email}")
+            # Database setup
+            DATABASE_URL = (
+                os.getenv("DATABASE_URL") or 
+                os.getenv("DATABASE_PRIVATE_URL") or 
+                os.getenv("POSTGRES_URL") or
+                os.getenv("RAILWAY_DATABASE_URL")
+            )
+            
+            if not DATABASE_URL:
+                logger.error("❌ No database URL available")
                 raise HTTPException(
-                    status_code=status.HTTP_401_UNAUTHORIZED,
-                    detail="Incorrect email or password"
+                    status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                    detail="Database unavailable"
                 )
             
-            password_valid = False
-            if "hashed_password" in user and user["hashed_password"]:
-                password_valid = verify_password(login_request.password, user["hashed_password"])
-            else:
-                password_valid = user["password"] == login_request.password
+            # Connect to database
+            engine = create_engine(DATABASE_URL, pool_pre_ping=True)
             
-            if not password_valid:
-                logger.warning(f"Password verification failed for: {login_request.email}")
-                raise HTTPException(
-                    status_code=status.HTTP_401_UNAUTHORIZED,
-                    detail="Incorrect email or password"
+            with engine.connect() as conn:
+                # Find user
+                result = conn.execute(
+                    text("SELECT id, email, encrypted_password, name FROM users WHERE email = :email LIMIT 1"),
+                    {"email": login_request.email}
                 )
-            
-            access_token = create_simple_token(user["email"])
-            logger.info(f"✅ Fallback login successful for: {login_request.email}")
-            return {"access_token": access_token, "token_type": "bearer"}
-            
-        except ImportError:
-            logger.error("❌ Fallback auth logic not available")
+                user_row = result.fetchone()
+                
+                if not user_row:
+                    logger.warning(f"User not found: {login_request.email}")
+                    raise HTTPException(
+                        status_code=status.HTTP_401_UNAUTHORIZED,
+                        detail="Incorrect email or password"
+                    )
+                
+                user_id, email, encrypted_password, name = user_row
+                logger.info(f"✅ Found user: {email}")
+                
+                # Verify password
+                if encrypted_password and encrypted_password.startswith('$2b$'):
+                    # Bcrypt verification
+                    password_valid = bcrypt.checkpw(
+                        login_request.password.encode('utf-8'), 
+                        encrypted_password.encode('utf-8')
+                    )
+                    logger.info(f"🔐 Bcrypt verification: {password_valid}")
+                else:
+                    # Plain text fallback
+                    password_valid = encrypted_password == login_request.password
+                    logger.info(f"🔓 Plain text verification: {password_valid}")
+                
+                if not password_valid:
+                    logger.warning(f"Password verification failed for: {login_request.email}")
+                    raise HTTPException(
+                        status_code=status.HTTP_401_UNAUTHORIZED,
+                        detail="Incorrect email or password"
+                    )
+                
+                # Create simple token
+                token_data = f"{email}:{datetime.utcnow().isoformat()}"
+                access_token = base64.b64encode(token_data.encode()).decode()
+                
+                logger.info(f"✅ Fallback login successful for: {login_request.email}")
+                return {"access_token": access_token, "token_type": "bearer"}
+                
+        except Exception as e:
+            logger.error(f"❌ Fallback auth error: {e}")
             raise HTTPException(
                 status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-                detail="Authentication service unavailable"
+                detail="Authentication service error"
             )
 
     # Root endpoint
