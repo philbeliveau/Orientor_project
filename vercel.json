@@ -8,12 +8,13 @@
   ],
   "rewrites": [
     {
-      "source": "/api/:path*",
-      "destination": "https://orientor-backend-production.up.railway.app/:path*"
+      "source": "/api/(.*)",
+      "destination": "https://orientor-backend-production-7c13.up.railway.app/$1"
     }
   ],
   "env": {
-    "NEXT_PUBLIC_API_URL": "/api"
+    "NEXT_PUBLIC_API_URL": "/api",
+    "NEXT_PUBLIC_BACKEND_URL": "https://orientor-backend-production-7c13.up.railway.app"
   },
   "headers": [
     {
