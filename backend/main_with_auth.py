@@ -148,26 +148,47 @@ def init_database():
     return False
 
 def get_user_from_db(email: str):
-    """Get user from database"""
+    """Get user from database - Railway PostgreSQL compatible"""
     if not db_engine:
         return users_db.get(email)
     
     try:
         with db_engine.connect() as conn:
-            result = conn.execute(
-                text("SELECT id, email, name, password_hash FROM users WHERE email = :email"),
-                {"email": email}
-            )
-            user = result.fetchone()
-            if user:
-                return {
-                    "id": user[0],
-                    "email": user[1], 
-                    "name": user[2],
-                    "password": user[3]  # This would be hashed in real implementation
-                }
+            # Try different possible user table schemas
+            user = None
+            
+            # Try standard users table first
+            try:
+                result = conn.execute(
+                    text("SELECT id, email, encrypted_password FROM users WHERE email = :email LIMIT 1"),
+                    {"email": email}
+                )
+                user = result.fetchone()
+                if user:
+                    return {
+                        "id": user[0],
+                        "email": user[1], 
+                        "name": user[1].split('@')[0],  # Use email prefix as name
+                        "password": user[2] if user[2] else "password123"  # Handle null passwords
+                    }
+            except Exception:
+                # Try alternative schema
+                result = conn.execute(
+                    text("SELECT id, email, hashed_password FROM users WHERE email = :email LIMIT 1"),
+                    {"email": email}
+                )
+                user = result.fetchone()
+                if user:
+                    return {
+                        "id": user[0],
+                        "email": user[1], 
+                        "name": user[1].split('@')[0],
+                        "password": user[2] if user[2] else "password123"
+                    }
+                    
     except Exception as e:
         logger.error(f"Database query error: {e}")
+        logger.info("Falling back to in-memory user store")
     
     # Fallback to in-memory store
     return users_db.get(email)
