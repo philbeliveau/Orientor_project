@@ -11,7 +11,7 @@ nixPkgs = ["python311", "postgresql"]
 [phases.build]
 cmds = [
     "python -m pip install --upgrade pip",
-    "pip install -r docs/mapping/deploy-louis/requirements-phase1.txt"
+    "pip install -r requirements-phase1.txt"
 ]
 
 [variables]
