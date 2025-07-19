@@ -85,17 +85,42 @@ users_db = {
     }
 }
 
-# Database setup
-DATABASE_URL = os.getenv("DATABASE_URL")
+# Database setup - try multiple URL sources
+DATABASE_URL = (
+    os.getenv("DATABASE_URL") or 
+    os.getenv("DATABASE_PRIVATE_URL") or 
+    os.getenv("POSTGRES_URL") or
+    os.getenv("RAILWAY_DATABASE_URL")
+)
 db_engine = None
 
 def init_database():
-    """Initialize database connection"""
+    """Initialize database connection with Railway-compatible settings"""
     global db_engine
+    
+    # Debug logging
+    logger.info(f"🔍 DATABASE_URL available: {bool(DATABASE_URL)}")
     if DATABASE_URL:
+        # Log connection details (safely)
+        import re
+        safe_url = re.sub(r'://([^:]+):([^@]+)@', r'://\1:***@', DATABASE_URL)
+        logger.info(f"🔗 Connecting to: {safe_url}")
+        
         try:
-            db_engine = create_engine(DATABASE_URL)
-            # Test connection
+            # Railway + Supabase specific connection settings
+            engine_args = {
+                "pool_pre_ping": True,
+                "pool_recycle": 300,
+                "connect_args": {
+                    "sslmode": "require",
+                    "connect_timeout": 10,
+                    "application_name": "orientor-railway"
+                }
+            }
+            
+            db_engine = create_engine(DATABASE_URL, **engine_args)
+            
+            # Test connection with timeout
             with db_engine.connect() as conn:
                 result = conn.execute(text("SELECT 1"))
                 logger.info("✅ Database connection successful")
@@ -103,6 +128,21 @@ def init_database():
         except Exception as e:
             logger.warning(f"⚠️ Database connection failed: {e}")
             logger.info("Using in-memory store as fallback")
+            
+            # Try alternative connection approach
+            try:
+                logger.info("🔄 Trying alternative connection method...")
+                # Force IPv4 and add more connection options
+                alt_url = DATABASE_URL.replace("?sslmode=require", "?sslmode=require&hostaddr=")
+                
+                alt_engine = create_engine(alt_url, **engine_args)
+                with alt_engine.connect() as conn:
+                    result = conn.execute(text("SELECT 1"))
+                    db_engine = alt_engine
+                    logger.info("✅ Alternative database connection successful")
+                    return True
+            except Exception as alt_e:
+                logger.warning(f"⚠️ Alternative connection also failed: {alt_e}")
     else:
         logger.info("No DATABASE_URL provided, using in-memory store")
     return False
