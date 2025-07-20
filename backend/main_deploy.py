@@ -45,10 +45,7 @@ def create_app():
     # Configure CORS - Secure configuration for production
     app.add_middleware(
         CORSMiddleware,
-        allow_origins=[
-            "https://navigoproject.vercel.app",
-            "https://navigoproject-gayd0hh7p-philippe-beliveaus-projects.vercel.app"
-        ],
+        allow_origins=["https://navigoproject.vercel.app"],
         allow_credentials=True,
         allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
         allow_headers=["Content-Type", "Authorization", "X-Requested-With"],
@@ -386,33 +383,29 @@ def create_app():
     async def get_courses(current_user=Depends(get_current_user_with_onboarding)):
         """Get available courses - Education page needs this"""
         logger.info(f"📚 Courses request for: {current_user['email']}")
-        return {
-            "courses": [
-                {
-                    "id": 1,
-                    "title": "Career Exploration Basics",
-                    "description": "Learn fundamental career exploration techniques",
-                    "progress": 100,
-                    "status": "completed"
-                },
-                {
-                    "id": 2,
-                    "title": "Interview Preparation",
-                    "description": "Master job interview skills",
-                    "progress": 50,
-                    "status": "in_progress"
-                },
-                {
-                    "id": 3,
-                    "title": "Professional Networking",
-                    "description": "Build meaningful professional relationships",
-                    "progress": 0,
-                    "status": "available"
-                }
-            ],
-            "total": 3,
-            "completed": 1
-        }
+        return [
+            {
+                "id": 1,
+                "title": "Career Exploration Basics",
+                "description": "Learn fundamental career exploration techniques",
+                "progress": 100,
+                "status": "completed"
+            },
+            {
+                "id": 2,
+                "title": "Interview Preparation",
+                "description": "Master job interview skills",
+                "progress": 50,
+                "status": "in_progress"
+            },
+            {
+                "id": 3,
+                "title": "Professional Networking",
+                "description": "Build meaningful professional relationships",
+                "progress": 0,
+                "status": "available"
+            }
+        ]
 
     @app.get("/api/v1/career-goals/active", tags=["goals"])
     async def get_active_career_goals(current_user=Depends(get_current_user_with_onboarding)):
@@ -440,35 +433,29 @@ def create_app():
     async def get_space_notes(current_user=Depends(get_current_user_with_onboarding)):
         """Get user notes - Space page displays these"""
         logger.info(f"📝 Space notes request for: {current_user['email']}")
-        return {
-            "notes": [
-                {
-                    "id": 1,
-                    "title": "Career Reflection",
-                    "content": "Key insights from today's career exploration session...",
-                    "created_at": "2024-07-19T09:00:00Z",
-                    "tags": ["reflection", "career"]
-                }
-            ],
-            "total": 1
-        }
+        return [
+            {
+                "id": 1,
+                "title": "Career Reflection",
+                "content": "Key insights from today's career exploration session...",
+                "created_at": "2024-07-19T09:00:00Z",
+                "tags": ["reflection", "career"]
+            }
+        ]
 
     @app.get("/peers/compatible", tags=["peers"])
     async def get_compatible_peers(current_user=Depends(get_current_user_with_onboarding)):
         """Get compatible peers - Networking features"""
         logger.info(f"👥 Compatible peers request for: {current_user['email']}")
-        return {
-            "peers": [
-                {
-                    "id": 1,
-                    "name": "Alex Johnson",
-                    "field": "Software Engineering",
-                    "compatibility_score": 85,
-                    "shared_interests": ["Programming", "Career Change"]
-                }
-            ],
-            "total": 1
-        }
+        return [
+            {
+                "id": 1,
+                "name": "Alex Johnson",
+                "field": "Software Engineering",
+                "compatibility_score": 85,
+                "shared_interests": ["Programming", "Career Change"]
+            }
+        ]
 
     @app.get("/api/tests/holland/user-results", tags=["assessments"])
     async def get_holland_results(current_user=Depends(get_current_user_with_onboarding)):
@@ -500,45 +487,41 @@ def create_app():
     async def get_job_recommendations(current_user=Depends(get_current_user_with_onboarding), top_k: int = 3):
         """Get job recommendations - Dashboard displays these"""
         logger.info(f"💼 Job recommendations request for: {current_user['email']} (top_k: {top_k})")
-        return {
-            "recommendations": [
-                {
-                    "id": 1,
-                    "title": "Senior Software Engineer",
-                    "company": "TechCorp Inc.",
-                    "location": "Remote",
-                    "match_score": 95,
-                    "salary_range": "$120,000 - $160,000",
-                    "description": "Build scalable web applications using modern technologies",
-                    "required_skills": ["Python", "React", "PostgreSQL"],
-                    "match_reasons": ["Strong Python background", "Leadership experience"]
-                },
-                {
-                    "id": 2,
-                    "title": "Full Stack Developer",
-                    "company": "Startup Innovations",
-                    "location": "San Francisco, CA",
-                    "match_score": 88,
-                    "salary_range": "$90,000 - $130,000",
-                    "description": "Join our fast-growing team building the future of education",
-                    "required_skills": ["JavaScript", "Node.js", "React"],
-                    "match_reasons": ["Full-stack experience", "Education sector interest"]
-                },
-                {
-                    "id": 3,
-                    "title": "Data Scientist",
-                    "company": "Analytics Pro",
-                    "location": "New York, NY",
-                    "match_score": 82,
-                    "salary_range": "$110,000 - $150,000",
-                    "description": "Apply machine learning to solve complex business problems",
-                    "required_skills": ["Python", "Machine Learning", "SQL"],
-                    "match_reasons": ["Analytical mindset", "Python expertise"]
-                }
-            ][:top_k],
-            "total_available": 15,
-            "last_updated": "2024-07-19T10:00:00Z"
-        }
+        return [
+            {
+                "id": 1,
+                "title": "Senior Software Engineer",
+                "company": "TechCorp Inc.",
+                "location": "Remote",
+                "match_score": 95,
+                "salary_range": "$120,000 - $160,000",
+                "description": "Build scalable web applications using modern technologies",
+                "required_skills": ["Python", "React", "PostgreSQL"],
+                "match_reasons": ["Strong Python background", "Leadership experience"]
+            },
+            {
+                "id": 2,
+                "title": "Full Stack Developer",
+                "company": "Startup Innovations",
+                "location": "San Francisco, CA",
+                "match_score": 88,
+                "salary_range": "$90,000 - $130,000",
+                "description": "Join our fast-growing team building the future of education",
+                "required_skills": ["JavaScript", "Node.js", "React"],
+                "match_reasons": ["Full-stack experience", "Education sector interest"]
+            },
+            {
+                "id": 3,
+                "title": "Data Scientist",
+                "company": "Analytics Pro",
+                "location": "New York, NY",
+                "match_score": 82,
+                "salary_range": "$110,000 - $150,000",
+                "description": "Apply machine learning to solve complex business problems",
+                "required_skills": ["Python", "Machine Learning", "SQL"],
+                "match_reasons": ["Analytical mindset", "Python expertise"]
+            }
+        ][:top_k]
 
     # ================================
     # PHASE 3B BATCH 1: ENHANCED ASSESSMENT FRAMEWORK
