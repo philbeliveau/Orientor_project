@@ -104,8 +104,8 @@ const getAvatarForJob = (jobId: string, title: string): string => {
 const JobCard: React.FC<JobCardProps> = ({ job, isSelected, onClick, className = '' }) => {
   // Use real job data from ESCO/Pinecone, with better fallback handling
   const rawTitle = job.metadata.preferred_label || job.metadata.title || 
-    (job.id.startsWith('occupation::key_') ? `Position ${job.id.replace('occupation::key_', '')}` : job.id);
-  const title = rawTitle.length > 40 ? `${rawTitle.substring(0, 40)}...` : rawTitle;
+    (job.id.startsWith('occupation::key_') ? `Position ${job.id.replace('occupation::key_', '')}` : job.id) || 'Unknown Position';
+  const title = rawTitle && rawTitle.length > 40 ? `${rawTitle.substring(0, 40)}...` : rawTitle;
   const description = job.metadata.description || 'Aucune description disponible';
   const matchPercentage = job.metadata.match_percentage || Math.round(job.score * 100);
   const skills = job.metadata.skills || [];
@@ -147,7 +147,7 @@ const JobCard: React.FC<JobCardProps> = ({ job, isSelected, onClick, className =
           {/* Description */}
           <div className="flex-1 mb-4">
             <p className="text-sm text-gray-700 text-center leading-relaxed line-clamp-3">
-              {description.length > 120 ? `${description.substring(0, 120)}...` : description}
+              {description && description.length > 120 ? `${description.substring(0, 120)}...` : description}
             </p>
           </div>
 
@@ -161,7 +161,7 @@ const JobCard: React.FC<JobCardProps> = ({ job, isSelected, onClick, className =
                     key={index}
                     className="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-md font-medium"
                   >
-                    {skill.length > 15 ? `${skill.substring(0, 15)}...` : skill}
+                    {skill && skill.length > 15 ? `${skill.substring(0, 15)}...` : skill}
                   </span>
                 ))}
                 {skills.length > 3 && (

@@ -518,8 +518,8 @@ export default function Dashboard() {
                   ]}
                   notes={notesLoading ? [] : notesError ? [] : userNotes.map(note => ({
                     id: note.id,
-                    title: note.content.length > 50 ? `${note.content.substring(0, 50)}...` : note.content,
-                    content: note.content.length > 100 ? `${note.content.substring(0, 100)}...` : note.content,
+                    title: note.content && note.content.length > 50 ? `${note.content.substring(0, 50)}...` : (note.content || 'Untitled'),
+                    content: note.content && note.content.length > 100 ? `${note.content.substring(0, 100)}...` : (note.content || ''),
                     createdAt: new Date(note.created_at),
                     recommendationId: note.saved_recommendation_id
                   }))}
