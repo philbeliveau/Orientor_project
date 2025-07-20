@@ -114,7 +114,7 @@ export default function MessagesPage() {
                             >
                                 <div className="py-4 px-2 flex items-center space-x-4">
                                     <div className="w-12 h-12 bg-secondary-purple/20 rounded-full flex items-center justify-center text-secondary-purple font-semibold">
-                                        {conversation.peer_name?.charAt(0).toUpperCase() || '?'}
+                                        {conversation.peer_name && conversation.peer_name.charAt(0) ? conversation.peer_name.charAt(0).toUpperCase() : '?'}
                                     </div>
                                     <div className="flex-1 min-w-0">
                                         <div className="flex items-baseline justify-between">

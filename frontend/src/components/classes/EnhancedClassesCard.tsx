@@ -244,7 +244,7 @@ const EnhancedClassesCard: React.FC<EnhancedClassesCardProps> = ({
                 {/* Course Icon */}
                 <div className={`w-8 h-8 ${getSubjectColor(course.subject_category)} rounded-lg flex items-center justify-center text-white shadow-sm flex-shrink-0`}>
                   <span className="text-sm font-semibold">
-                    {course.course_code?.charAt(0) || course.course_name.charAt(0)}
+                    {course.course_code?.charAt(0) || (course.course_name && course.course_name.charAt(0)) || '?'}
                   </span>
                 </div>
                 

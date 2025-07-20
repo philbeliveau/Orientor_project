@@ -173,7 +173,7 @@ const PeerDetailPage: React.FC = () => {
               <div className="flex items-start justify-between mb-6">
                 <div className="flex items-center gap-4">
                   <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold text-2xl">
-                    {peer.name?.charAt(0).toUpperCase() || '?'}
+                    {peer.name && peer.name.charAt(0) ? peer.name.charAt(0).toUpperCase() : '?'}
                   </div>
                   <div>
                     <h2 className="text-2xl font-bold text-gray-800 dark:text-white">

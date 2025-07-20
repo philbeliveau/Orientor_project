@@ -360,7 +360,7 @@ export default function Dashboard() {
                         onClick={() => router.push(`/peers/${peer.user_id}`)}
                       >
                         <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold text-sm flex-shrink-0">
-                          {peer.name?.charAt(0).toUpperCase() || '?'}
+                          {peer.name && peer.name.charAt(0) ? peer.name.charAt(0).toUpperCase() : '?'}
                         </div>
                         <div className="flex-1 min-w-0">
                           <div className="flex justify-between items-start">

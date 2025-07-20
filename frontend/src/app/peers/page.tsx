@@ -175,7 +175,7 @@ export default function SuggestedPeersPage() {
                   <div className="flex items-start justify-between mb-4">
                     <div className="flex items-center gap-3">
                       <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold text-lg">
-                        {peer.name?.charAt(0).toUpperCase() || '?'}
+                        {peer.name && peer.name.charAt(0) ? peer.name.charAt(0).toUpperCase() : '?'}
                       </div>
                       <div>
                         <h3 className="text-xl font-semibold text-gray-800">
