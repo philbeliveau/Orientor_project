@@ -16,6 +16,14 @@ from typing import Optional, List
 import base64
 import time
 
+# Import onboarding router
+try:
+    from app.routers.onboarding import router as onboarding_router
+    ONBOARDING_ROUTER_AVAILABLE = True
+except ImportError as e:
+    logging.warning(f"Onboarding router not available: {e}")
+    ONBOARDING_ROUTER_AVAILABLE = False
+
 # Configure logging
 logging.basicConfig(
     level=logging.INFO,
