@@ -68,7 +68,7 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 origins = [
     "http://localhost:3000",  # Frontend development server
     "http://localhost:8000",  # Backend when served 
-    "https://navigo-explorer.vercel.app",  # Production frontend
+    "https://navigoproject.vercel.app",  # Production frontend
     "http://localhost:5173",  # Vite development server
     "https://localhost:3000",  # HTTPS local development
     "https://localhost:5173",  # HTTPS Vite development
@@ -81,8 +81,8 @@ app.add_middleware(
     allow_origins=origins,
     allow_credentials=True,
     allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
-    allow_headers=["*"],
-    expose_headers=["*"],
+    allow_headers=["Content-Type", "Authorization", "X-Requested-With"],
+    expose_headers=["Set-Cookie"],
     max_age=600,
 )
 
