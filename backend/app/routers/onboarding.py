@@ -1,22 +1,43 @@
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, status, Header
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import SQLAlchemyError
 from app.utils.database import get_db
 from app.models import User, UserProfile
 from app.models.personality_profiles import PersonalityAssessment, PersonalityResponse, PersonalityProfile
-from app.routers.user import get_current_user
 from pydantic import BaseModel
 from typing import List, Optional, Dict, Any
 from datetime import datetime
 import logging
 import uuid
 import json
+import base64
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 router = APIRouter(prefix="/api/onboarding", tags=["onboarding"])
+
+# Compatible authentication function that matches main_deploy.py
+async def get_current_user_with_onboarding(authorization: Optional[str] = Header(None), db: Session = Depends(get_db)):
+    """Extract user info including onboarding status from base64 token (compatible with main app)"""
+    if not authorization or not authorization.startswith("Bearer "):
+        raise HTTPException(status_code=401, detail="No authorization token")
+    
+    try:
+        token = authorization.split(" ")[1]
+        decoded = base64.b64decode(token).decode()
+        email, user_id, onboarding_completed, timestamp = decoded.split(":", 3)
+        
+        # Get the actual User object from database for compatibility with existing code
+        user = db.query(User).filter(User.id == int(user_id)).first()
+        if not user:
+            raise HTTPException(status_code=401, detail="User not found")
+            
+        return user
+    except Exception as e:
+        logger.error(f"Token decode error: {str(e)}")
+        raise HTTPException(status_code=401, detail="Invalid token")
 
 # Pydantic schemas for onboarding
 class OnboardingResponse(BaseModel):
@@ -43,7 +64,7 @@ class PsychProfileCreate(BaseModel):
 
 @router.get("/status", response_model=OnboardingStatus)
 def get_onboarding_status(
-    current_user: User = Depends(get_current_user),
+    current_user: User = Depends(get_current_user_with_onboarding),
     db: Session = Depends(get_db)
 ):
     """Get the current onboarding status for a user"""
@@ -77,7 +98,7 @@ def get_onboarding_status(
 
 @router.post("/start")
 def start_onboarding(
-    current_user: User = Depends(get_current_user),
+    current_user: User = Depends(get_current_user_with_onboarding),
     db: Session = Depends(get_db)
 ):
     """Start a new onboarding session"""
@@ -131,7 +152,7 @@ def start_onboarding(
 @router.post("/response")
 def save_onboarding_response(
     response_data: OnboardingResponse,
-    current_user: User = Depends(get_current_user),
+    current_user: User = Depends(get_current_user_with_onboarding),
     db: Session = Depends(get_db)
 ):
     """Save a single onboarding response"""
@@ -202,7 +223,7 @@ def save_onboarding_response(
 @router.post("/complete")
 def complete_onboarding(
     onboarding_data: OnboardingData,
-    current_user: User = Depends(get_current_user),
+    current_user: User = Depends(get_current_user_with_onboarding),
     db: Session = Depends(get_db)
 ):
     """Complete the onboarding process and generate psychological profile"""
@@ -318,7 +339,7 @@ def complete_onboarding(
 
 @router.get("/profile")
 def get_onboarding_profile(
-    current_user: User = Depends(get_current_user),
+    current_user: User = Depends(get_current_user_with_onboarding),
     db: Session = Depends(get_db)
 ):
     """Get the user's onboarding psychological profile"""
@@ -347,7 +368,7 @@ def get_onboarding_profile(
 
 @router.get("/responses")
 def get_onboarding_responses(
-    current_user: User = Depends(get_current_user),
+    current_user: User = Depends(get_current_user_with_onboarding),
     db: Session = Depends(get_db)
 ):
     """Get all onboarding responses for a user"""
@@ -390,7 +411,7 @@ def get_onboarding_responses(
 
 @router.delete("/reset")
 def reset_onboarding(
-    current_user: User = Depends(get_current_user),
+    current_user: User = Depends(get_current_user_with_onboarding),
     db: Session = Depends(get_db)
 ):
     """Reset onboarding progress for a user"""
@@ -433,7 +454,7 @@ def reset_onboarding(
 
 @router.post("/skip")
 def skip_onboarding(
-    current_user: User = Depends(get_current_user),
+    current_user: User = Depends(get_current_user_with_onboarding),
     db: Session = Depends(get_db)
 ):
     """Skip onboarding for a user by creating a default profile"""
