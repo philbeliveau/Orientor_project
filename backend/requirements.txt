@@ -21,7 +21,7 @@ aiohttp==3.9.0
 requests==2.31.0
 httpx==0.24.1
 
-# AI and ML services
+# AI and ML services (lightweight for Phase 3B Priority 1)
 anthropic==0.31.2
 openai==1.3.0
 
@@ -29,34 +29,8 @@ openai==1.3.0
 pinecone>=3.0.0
 redis==5.0.1
 
-# Data science and ML
+# Essential data processing (lightweight - no heavy ML)
 numpy>=1.26.2
-pandas>=2.0.0
-scikit-learn>=1.3.2
-joblib>=1.3.0
-
-# Visualization
-matplotlib>=3.7.0
-seaborn>=0.12.0
-streamlit>=1.28.0
-
-# Scientific computing
-scipy>=1.11.0
-
-# Deep learning and transformers
-torch>=2.0.0
-torch-geometric>=2.4.0
-sentence-transformers>=2.2.0
-transformers>=4.30.0
-
-# Graph processing
-networkx>=3.1
-
-# Web scraping
-beautifulsoup4>=4.12.0
-
-# Cloud services
-boto3>=1.28.0
 
 # Utilities
 python-dotenv==1.0.0
