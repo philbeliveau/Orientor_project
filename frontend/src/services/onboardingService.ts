@@ -40,7 +40,7 @@ export interface OnboardingResponsesData {
 }
 
 class OnboardingService {
-  private baseURL = '/onboarding';
+  private baseURL = '/api/onboarding';
 
   /**
    * Get the current onboarding status for the authenticated user
