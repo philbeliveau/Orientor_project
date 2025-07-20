@@ -63,16 +63,21 @@ def create_app():
         user_id: int
 
     # AUTHENTICATION HELPER
-    async def get_current_user_from_token(authorization: Optional[str] = Header(None)):
-        """Extract user info from our simple token"""
+    async def get_current_user_with_onboarding(authorization: Optional[str] = Header(None)):
+        """Extract user info including onboarding status from token"""
         if not authorization or not authorization.startswith("Bearer "):
             raise HTTPException(status_code=401, detail="No authorization token")
         
         try:
             token = authorization.split(" ")[1]
             decoded = base64.b64decode(token).decode()
-            email, timestamp = decoded.split(":", 1)
-            return {"email": email, "id": 1, "name": email.split("@")[0]}
+            email, user_id, onboarding_completed, timestamp = decoded.split(":", 3)
+            return {
+                "email": email, 
+                "id": int(user_id), 
+                "name": email.split("@")[0],
+                "onboarding_completed": onboarding_completed.lower() == 'true'
+            }
         except:
             raise HTTPException(status_code=401, detail="Invalid token")
 
@@ -238,24 +243,6 @@ def create_app():
                 detail="Registration service error"
             )
 
-    # ENHANCED AUTH HELPER WITH ONBOARDING INFO
-    async def get_current_user_with_onboarding(authorization: Optional[str] = Header(None)):
-        """Extract user info including onboarding status from token"""
-        if not authorization or not authorization.startswith("Bearer "):
-            raise HTTPException(status_code=401, detail="No authorization token")
-        
-        try:
-            token = authorization.split(" ")[1]
-            decoded = base64.b64decode(token).decode()
-            email, user_id, onboarding_completed, timestamp = decoded.split(":", 3)
-            return {
-                "email": email, 
-                "id": int(user_id), 
-                "name": email.split("@")[0],
-                "onboarding_completed": onboarding_completed.lower() == 'true'
-            }
-        except:
-            raise HTTPException(status_code=401, detail="Invalid token")
 
     # CRITICAL DASHBOARD ENDPOINTS
     @app.get("/auth/me", tags=["auth"])
@@ -363,7 +350,7 @@ def create_app():
         }
 
     @app.get("/api/v1/avatar/me", tags=["avatar"])
-    async def get_user_avatar(current_user=Depends(get_current_user_from_token)):
+    async def get_user_avatar(current_user=Depends(get_current_user_with_onboarding)):
         """Get user avatar - Frontend displays this in header"""
         logger.info(f"🖼️ Avatar request for: {current_user['email']}")
         return {
@@ -373,7 +360,7 @@ def create_app():
         }
 
     @app.get("/user-progress/", tags=["progress"])
-    async def get_user_progress(current_user=Depends(get_current_user_from_token)):
+    async def get_user_progress(current_user=Depends(get_current_user_with_onboarding)):
         """Get user progress - Dashboard shows this"""
         logger.info(f"📊 Progress request for: {current_user['email']}")
         return {
@@ -385,7 +372,7 @@ def create_app():
         }
 
     @app.get("/api/v1/courses", tags=["courses"])
-    async def get_courses(current_user=Depends(get_current_user_from_token)):
+    async def get_courses(current_user=Depends(get_current_user_with_onboarding)):
         """Get available courses - Education page needs this"""
         logger.info(f"📚 Courses request for: {current_user['email']}")
         return {
@@ -417,7 +404,7 @@ def create_app():
         }
 
     @app.get("/api/v1/career-goals/active", tags=["goals"])
-    async def get_active_career_goals(current_user=Depends(get_current_user_from_token)):
+    async def get_active_career_goals(current_user=Depends(get_current_user_with_onboarding)):
         """Get active career goals - Dashboard highlights these"""
         logger.info(f"🎯 Career goals request for: {current_user['email']}")
         return {
@@ -439,7 +426,7 @@ def create_app():
         }
 
     @app.get("/space/notes", tags=["space"])
-    async def get_space_notes(current_user=Depends(get_current_user_from_token)):
+    async def get_space_notes(current_user=Depends(get_current_user_with_onboarding)):
         """Get user notes - Space page displays these"""
         logger.info(f"📝 Space notes request for: {current_user['email']}")
         return {
@@ -456,7 +443,7 @@ def create_app():
         }
 
     @app.get("/peers/compatible", tags=["peers"])
-    async def get_compatible_peers(current_user=Depends(get_current_user_from_token)):
+    async def get_compatible_peers(current_user=Depends(get_current_user_with_onboarding)):
         """Get compatible peers - Networking features"""
         logger.info(f"👥 Compatible peers request for: {current_user['email']}")
         return {
@@ -473,7 +460,7 @@ def create_app():
         }
 
     @app.get("/api/tests/holland/user-results", tags=["assessments"])
-    async def get_holland_results(current_user=Depends(get_current_user_from_token)):
+    async def get_holland_results(current_user=Depends(get_current_user_with_onboarding)):
         """Get Holland test results - Career assessments"""
         logger.info(f"🧪 Holland results request for: {current_user['email']}")
         return {
@@ -499,7 +486,7 @@ def create_app():
         }
 
     @app.get("/api/v1/jobs/recommendations/me", tags=["jobs"])
-    async def get_job_recommendations(current_user=Depends(get_current_user_from_token), top_k: int = 3):
+    async def get_job_recommendations(current_user=Depends(get_current_user_with_onboarding), top_k: int = 3):
         """Get job recommendations - Dashboard displays these"""
         logger.info(f"💼 Job recommendations request for: {current_user['email']} (top_k: {top_k})")
         return {
@@ -547,7 +534,7 @@ def create_app():
     # ================================
 
     @app.get("/api/tests/hexaco/questions", tags=["assessments"])
-    async def get_hexaco_questions(current_user=Depends(get_current_user_from_token)):
+    async def get_hexaco_questions(current_user=Depends(get_current_user_with_onboarding)):
         """Get HEXACO personality test questions - Frontend compatible format"""
         logger.info(f"🧠 HEXACO questions request for: {current_user['email']}")
         
@@ -804,7 +791,7 @@ def create_app():
         return questions
 
     @app.get("/api/tests/holland", tags=["assessments"])
-    async def get_holland_metadata(current_user=Depends(get_current_user_from_token)):
+    async def get_holland_metadata(current_user=Depends(get_current_user_with_onboarding)):
         """Get Holland test metadata"""
         logger.info(f"🎯 Holland test metadata request for: {current_user['email']}")
         
@@ -820,7 +807,7 @@ def create_app():
         }
 
     @app.get("/api/tests/hexaco/versions", tags=["assessments"])
-    async def get_hexaco_versions(current_user=Depends(get_current_user_from_token)):
+    async def get_hexaco_versions(current_user=Depends(get_current_user_with_onboarding)):
         """Get available HEXACO test versions"""
         logger.info(f"🧠 HEXACO versions request for: {current_user['email']}")
         
@@ -837,7 +824,7 @@ def create_app():
         }
 
     @app.post("/api/tests/hexaco/start", tags=["assessments"])
-    async def start_hexaco_test(request_data: dict, current_user=Depends(get_current_user_from_token)):
+    async def start_hexaco_test(request_data: dict, current_user=Depends(get_current_user_with_onboarding)):
         """Start a new HEXACO test session"""
         logger.info(f"🧠 Starting HEXACO test for: {current_user['email']}")
         
@@ -856,7 +843,7 @@ def create_app():
         factor: str
 
     @app.post("/api/tests/hexaco/answer", tags=["assessments"])
-    async def submit_hexaco_answer(answer_data: HexacoAnswerRequest, current_user=Depends(get_current_user_from_token)):
+    async def submit_hexaco_answer(answer_data: HexacoAnswerRequest, current_user=Depends(get_current_user_with_onboarding)):
         """Submit a single HEXACO personality test answer"""
         logger.info(f"🧠 HEXACO answer submission for question {answer_data.question_id} by {current_user['email']}")
         
@@ -953,7 +940,7 @@ def create_app():
             raise HTTPException(status_code=500, detail="Failed to submit answer")
 
     @app.get("/api/tests/hexaco/results/{user_id}", tags=["assessments"])
-    async def get_hexaco_results(user_id: int, current_user=Depends(get_current_user_from_token)):
+    async def get_hexaco_results(user_id: int, current_user=Depends(get_current_user_with_onboarding)):
         """Get complete HEXACO personality profile with career recommendations"""
         logger.info(f"🧠 HEXACO results request for user {user_id} by {current_user['email']}")
         
@@ -1194,7 +1181,7 @@ def create_app():
     # ================================
 
     @app.get("/api/tests/holland/questions", tags=["assessments"])
-    async def get_holland_questions(current_user=Depends(get_current_user_from_token)):
+    async def get_holland_questions(current_user=Depends(get_current_user_with_onboarding)):
         """Get enhanced Holland RIASEC career interest test questions"""
         logger.info(f"🎯 Holland RIASEC questions request for: {current_user['email']}")
         
@@ -1412,7 +1399,7 @@ def create_app():
         responses: List[dict]  # List of {question_id, factor, answer}
 
     @app.post("/api/tests/holland/submit", tags=["assessments"])
-    async def submit_holland_assessment(submission_data: HollandSubmitRequest, current_user=Depends(get_current_user_from_token)):
+    async def submit_holland_assessment(submission_data: HollandSubmitRequest, current_user=Depends(get_current_user_with_onboarding)):
         """Submit complete Holland RIASEC assessment and get results"""
         logger.info(f"🎯 Holland assessment submission by {current_user['email']} - {len(submission_data.responses)} responses")
         
@@ -1616,7 +1603,7 @@ def create_app():
         user_context: Optional[dict] = {}
 
     @app.post("/enhanced-chat/send", tags=["ai-career-guidance"])
-    async def enhanced_chat_send(chat_data: ChatMessage, current_user=Depends(get_current_user_from_token)):
+    async def enhanced_chat_send(chat_data: ChatMessage, current_user=Depends(get_current_user_with_onboarding)):
         """AI-powered career conversations with GraphSage integration"""
         logger.info(f"🤖 Enhanced chat request from: {current_user['email']}")
         
@@ -1659,7 +1646,7 @@ def create_app():
         return response
 
     @app.get("/enhanced-chat/skill-explanation/{skill}", tags=["ai-career-guidance"])
-    async def get_skill_explanation(skill: str, current_user=Depends(get_current_user_from_token)):
+    async def get_skill_explanation(skill: str, current_user=Depends(get_current_user_with_onboarding)):
         """Skill relevance analysis with career context"""
         logger.info(f"🎯 Skill explanation request for '{skill}' by: {current_user['email']}")
         
@@ -1731,7 +1718,7 @@ def create_app():
         }
 
     @app.get("/enhanced-chat/learning-recommendations", tags=["ai-career-guidance"])
-    async def get_learning_recommendations(current_user=Depends(get_current_user_from_token)):
+    async def get_learning_recommendations(current_user=Depends(get_current_user_with_onboarding)):
         """Personalized learning paths based on user profile"""
         logger.info(f"📚 Learning recommendations request for: {current_user['email']}")
         
@@ -1793,7 +1780,7 @@ def create_app():
         return recommendations
 
     @app.get("/competence-tree/generate", tags=["ai-career-guidance"]) 
-    async def generate_competence_tree(current_user=Depends(get_current_user_from_token)):
+    async def generate_competence_tree(current_user=Depends(get_current_user_with_onboarding)):
         """Dynamic skill tree generation with GraphSage-like network analysis"""
         logger.info(f"🌳 Competence tree generation for: {current_user['email']}")
         
@@ -1873,7 +1860,7 @@ def create_app():
         return skill_tree
 
     @app.get("/career-progression/{occupation_id}/personalized", tags=["ai-career-guidance"])
-    async def get_personalized_career_progression(occupation_id: str, current_user=Depends(get_current_user_from_token)):
+    async def get_personalized_career_progression(occupation_id: str, current_user=Depends(get_current_user_with_onboarding)):
         """Career path analytics with GraphSage-based progression modeling"""
         logger.info(f"📈 Career progression analysis for occupation '{occupation_id}' by: {current_user['email']}")
         
