@@ -2,7 +2,6 @@ import streamlit as st
 import numpy as np
 import pandas as pd
 from scipy.spatial.distance import cosine
-import pinecone
 import psycopg2
 import json
 from sklearn.decomposition import PCA

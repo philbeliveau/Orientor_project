@@ -8,7 +8,7 @@ import pickle
 import random
 import json
 from app.services.Oasisembedding_service import parse_embedding, get_user_oasis_embedding
-import pinecone
+from pinecone import Pinecone
 import re
 from app.models.user_profile import UserProfile
 import ast
@@ -362,7 +362,7 @@ def get_pinecone_career_recommendations(embedding: List[float], limit: int = 30)
         logger.info(f"Initializing Pinecone with environment: {pinecone_environment}")
         
         # Initialize Pinecone client
-        pc = pinecone.Pinecone(
+        pc = Pinecone(
             api_key=pinecone_api_key,
             environment=pinecone_environment
         )

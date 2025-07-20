@@ -4,7 +4,6 @@ import numpy as np
 from typing import List, Dict, Any, Optional
 from sqlalchemy.orm import Session
 from sqlalchemy import text
-import pinecone
 from pinecone import Pinecone
 
 # Configure logger
