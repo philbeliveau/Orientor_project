@@ -121,7 +121,7 @@ def create_app():
             with engine.connect() as conn:
                 # Find user with onboarding status
                 result = conn.execute(
-                    text("SELECT id, email, encrypted_password, name, onboarding_completed FROM users WHERE email = :email LIMIT 1"),
+                    text("SELECT id, email, hashed_password, onboarding_completed FROM users WHERE email = :email LIMIT 1"),
                     {"email": login_request.email}
                 )
                 user_row = result.fetchone()
@@ -133,18 +133,18 @@ def create_app():
                         detail="Incorrect email or password"
                     )
                 
-                user_id, email, encrypted_password, name, onboarding_completed = user_row
+                user_id, email, hashed_password, onboarding_completed = user_row
                 logger.info(f"✅ Found user: {email}")
                 
                 # Verify password
-                if encrypted_password and encrypted_password.startswith('$2b$'):
+                if hashed_password and hashed_password.startswith('$2b$'):
                     password_valid = bcrypt.checkpw(
                         login_request.password.encode('utf-8'), 
-                        encrypted_password.encode('utf-8')
+                        hashed_password.encode('utf-8')
                     )
                     logger.info(f"🔐 Bcrypt verification: {password_valid}")
                 else:
-                    password_valid = encrypted_password == login_request.password
+                    password_valid = hashed_password == login_request.password
                     logger.info(f"🔓 Plain text verification: {password_valid}")
                 
                 if not password_valid:
