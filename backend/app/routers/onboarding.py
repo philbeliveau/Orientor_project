@@ -16,7 +16,7 @@ import json
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-router = APIRouter(prefix="/onboarding", tags=["onboarding"])
+router = APIRouter(prefix="/api/onboarding", tags=["onboarding"])
 
 # Pydantic schemas for onboarding
 class OnboardingResponse(BaseModel):
