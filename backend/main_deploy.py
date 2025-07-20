@@ -349,6 +349,19 @@ def create_app():
                 detail="Failed to complete onboarding"
             )
 
+    @app.post("/onboarding/start", tags=["onboarding"])
+    async def start_onboarding(current_user=Depends(get_current_user_with_onboarding)):
+        """Start onboarding session - Minimal implementation for frontend compatibility"""
+        logger.info(f"TEMP ONBOARD ACTIVE: Starting onboarding for: {current_user['email']}")
+        
+        # Generate simple session ID using user info and timestamp
+        session_id = f"session_{current_user['user_id']}_{int(time.time())}"
+        
+        return {
+            "session_id": session_id,
+            "message": "Onboarding session started successfully"
+        }
+
     @app.get("/api/v1/avatar/me", tags=["avatar"])
     async def get_user_avatar(current_user=Depends(get_current_user_from_token)):
         """Get user avatar - Frontend displays this in header"""
