@@ -190,7 +190,7 @@ const HollandResultsView: React.FC<HollandResultsViewProps> = ({ userId }) => {
   };
 
   // Extraire les lettres individuelles du code Holland
-  const codeLetters = score.top_3_code.split('');
+  const codeLetters = score.top_3_code ? score.top_3_code.split('') : [];
 
   return (
     <div className="space-y-8">

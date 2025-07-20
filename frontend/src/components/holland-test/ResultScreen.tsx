@@ -87,7 +87,7 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ score, onRetakeTest }) => {
   };
 
   // Extraire les lettres individuelles du code Holland
-  const codeLetters = score.top_3_code.split('');
+  const codeLetters = score.top_3_code ? score.top_3_code.split('') : [];
   
   // Obtenir la description du trait dominant (première lettre du code)
   const dominantTrait = codeLetters[0];

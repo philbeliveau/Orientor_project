@@ -309,7 +309,7 @@ export default function Home() {
                           Votre code Holland:
                         </p>
                         <div className="flex gap-3 mb-4">
-                          {hollandResults.top_3_code.split('').map((letter, index) => (
+                          {hollandResults.top_3_code && hollandResults.top_3_code.split('').map((letter, index) => (
                             <div
                               key={index}
                               className="flex items-center justify-center w-10 h-10 rounded-full text-white text-base font-bold"

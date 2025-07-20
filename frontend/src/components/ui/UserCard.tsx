@@ -137,7 +137,7 @@ const UserCard: React.FC<UserCardProps> = ({
             </div>
           ) : error ? (
             <span className={styles.card__subtitle} style={{ color: 'rgba(255, 255, 255, 0.8)' }}>{error}</span>
-          ) : hollandResults ? (
+          ) : hollandResults && hollandResults.top_3_code ? (
             <div className={styles.card__riasec}>
               <div className={styles.card__riasec_codes}>
                 {hollandResults.top_3_code.split('').map((letter, index) => (
