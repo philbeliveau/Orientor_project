@@ -1994,6 +1994,13 @@ def create_app():
             "platform": "minimal_fallback_endpoints"
         }
 
+    # Include onboarding router if available
+    if ONBOARDING_ROUTER_AVAILABLE:
+        app.include_router(onboarding_router)
+        logger.info("✅ Onboarding router included")
+    else:
+        logger.warning("⚠️ Onboarding router not available")
+    
     logger.info("✅ Minimal app created successfully")
     return app
 
