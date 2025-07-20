@@ -63,7 +63,6 @@ def create_app():
     class RegisterRequest(BaseModel):
         email: str
         password: str
-        name: str
         
     class Token(BaseModel):
         access_token: str
@@ -220,14 +219,13 @@ def create_app():
                 # Create new user
                 result = conn.execute(
                     text("""
-                        INSERT INTO users (email, encrypted_password, name, onboarding_completed, created_at) 
-                        VALUES (:email, :password, :name, :onboarding, :created_at)
+                        INSERT INTO users (email, hashed_password, onboarding_completed, created_at) 
+                        VALUES (:email, :password, :onboarding, :created_at)
                         RETURNING id
                     """),
                     {
                         "email": register_request.email,
                         "password": hashed_password,
-                        "name": register_request.name,
                         "onboarding": False,  # New users need onboarding
                         "created_at": datetime.utcnow()
                     }
