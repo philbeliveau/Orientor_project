@@ -45,7 +45,10 @@ def create_app():
     # Configure CORS - Secure configuration for production
     app.add_middleware(
         CORSMiddleware,
-        allow_origins=["https://navigoproject.vercel.app"],
+        allow_origins=[
+            "https://navigoproject.vercel.app",
+            "https://navigoproject-gayd0hh7p-philippe-beliveaus-projects.vercel.app"
+        ],
         allow_credentials=True,
         allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
         allow_headers=["Content-Type", "Authorization", "X-Requested-With"],
