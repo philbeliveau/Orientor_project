@@ -34,10 +34,15 @@ def create_app():
         version="2.1.1-minimal-fixed",
     )
 
-    # Configure CORS
+    # Configure CORS - Fix for credentials with specific origins
     app.add_middleware(
         CORSMiddleware,
-        allow_origins=["*"],
+        allow_origins=[
+            "https://navigoproject.vercel.app",
+            "https://orientor-backend-production-7c13.up.railway.app",
+            "http://localhost:3000",
+            "http://localhost:8000"
+        ],
         allow_credentials=True,
         allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
         allow_headers=["*"],
