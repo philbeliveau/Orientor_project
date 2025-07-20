@@ -352,7 +352,7 @@ def create_app():
     @app.post("/onboarding/start", tags=["onboarding"])
     async def start_onboarding(current_user=Depends(get_current_user_with_onboarding)):
         """Start onboarding session - Minimal implementation for frontend compatibility"""
-        logger.info(f"🚀 Starting onboarding for: {current_user['email']}")
+        logger.info(f"TEMP ONBOARD ACTIVE: Starting onboarding for: {current_user['email']}")
         
         # Generate simple session ID using user info and timestamp
         session_id = f"session_{current_user['user_id']}_{int(time.time())}"
