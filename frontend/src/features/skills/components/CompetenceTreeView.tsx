@@ -43,12 +43,24 @@ export const CompetenceTreeView: React.FC<CompetenceTreeViewProps> = ({ graphId 
         // Load saved data from localStorage
         const saved = localStorage.getItem('savedOccupations');
         if (saved) {
-          setSavedOccupations(new Set(JSON.parse(saved)));
+          try {
+            setSavedOccupations(new Set(JSON.parse(saved)));
+          } catch (e) {
+            console.warn('Failed to parse saved occupations from localStorage:', e);
+            localStorage.removeItem('savedOccupations');
+            setSavedOccupations(new Set());
+          }
         }
         
         const completed = localStorage.getItem('completedChallenges');
         if (completed) {
-          setCompletedNodes(new Set(JSON.parse(completed)));
+          try {
+            setCompletedNodes(new Set(JSON.parse(completed)));
+          } catch (e) {
+            console.warn('Failed to parse completed challenges from localStorage:', e);
+            localStorage.removeItem('completedChallenges');
+            setCompletedNodes(new Set());
+          }
         }
       } catch (err) {
         setError('Failed to load competence tree');

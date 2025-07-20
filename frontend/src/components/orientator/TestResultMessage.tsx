@@ -88,7 +88,10 @@ export const TestResultMessage: React.FC<TestResultMessageProps> = ({
           <div>
             <h3 className="font-medium text-gray-900">{data.test_name} Results</h3>
             {data.completion_date && (
-              <p className="text-sm text-gray-600">Completed on {new Date(data.completion_date).toLocaleDateString()}</p>
+              <p className="text-sm text-gray-600">Completed on {(() => {
+                const date = new Date(data.completion_date);
+                return isNaN(date.getTime()) ? 'Date invalide' : date.toLocaleDateString();
+              })()}</p>
             )}
           </div>
         </div>

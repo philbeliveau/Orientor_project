@@ -61,8 +61,14 @@ export const useCompetenceTree = (graphId: string) => {
       setCompletedNodes(completed);
 
       // Load saved nodes from localStorage
-      const saved = JSON.parse(localStorage.getItem('savedNodes') || '[]');
-      setSavedNodes(saved);
+      try {
+        const saved = JSON.parse(localStorage.getItem('savedNodes') || '[]');
+        setSavedNodes(saved);
+      } catch (parseError) {
+        console.warn('Failed to parse savedNodes from localStorage:', parseError);
+        localStorage.removeItem('savedNodes');
+        setSavedNodes([]);
+      }
     } catch (err) {
       console.error('Failed to load competence tree:', err);
       setError('Failed to load competence tree. Please try again.');

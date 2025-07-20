@@ -116,7 +116,11 @@ const SelfReflectionSection: React.FC<SelfReflectionSectionProps> = ({ className
   };
 
   const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('fr-FR', {
+    const date = new Date(dateString);
+    if (isNaN(date.getTime())) {
+      return 'Date invalide';
+    }
+    return date.toLocaleDateString('fr-FR', {
       day: '2-digit',
       month: '2-digit',
       year: 'numeric',

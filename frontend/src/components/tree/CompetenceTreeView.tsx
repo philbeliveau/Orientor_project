@@ -622,12 +622,19 @@ const CompetenceTreeView: React.FC<CompetenceTreeViewProps> = ({ graphId }) => {
       const cachedPositions = localStorage.getItem(`competence-tree-positions-${graphId}`);
       
       if (cachedTreeData && cachedPositions) {
-        const data = JSON.parse(cachedTreeData);
-        const positions = JSON.parse(cachedPositions);
-        setTreeData(data);
-        setPositionedNodes(positions);
-        setLoading(false);
-        return;
+        try {
+          const data = JSON.parse(cachedTreeData);
+          const positions = JSON.parse(cachedPositions);
+          setTreeData(data);
+          setPositionedNodes(positions);
+          setLoading(false);
+          return;
+        } catch (e) {
+          console.warn('Failed to parse cached tree data:', e);
+          localStorage.removeItem(`competence-tree-${graphId}`);
+          localStorage.removeItem(`competence-tree-positions-${graphId}`);
+          // Continue to fetch fresh data
+        }
       }
       
       const data = await getCompetenceTree(graphId);

@@ -44,11 +44,16 @@ const InsightPage: React.FC = () => {
         // Récupérer l'ID de l'utilisateur depuis le localStorage
         const userDataStr = localStorage.getItem('user_data');
         if (userDataStr) {
-          const userData = JSON.parse(userDataStr);
-          if (userData && userData.id) {
-            console.log("ID utilisateur récupéré:", userData.id);
-            setUserId(userData.id);
-            return userData.id;
+          try {
+            const userData = JSON.parse(userDataStr);
+            if (userData && userData.id) {
+              console.log("ID utilisateur récupéré:", userData.id);
+              setUserId(userData.id);
+              return userData.id;
+            }
+          } catch (parseError) {
+            console.warn('Failed to parse user_data from localStorage:', parseError);
+            localStorage.removeItem('user_data');
           }
         }
         

@@ -262,7 +262,10 @@ const PeerDetailPage: React.FC = () => {
                   Analysis Date
                 </h4>
                 <p className="text-sm text-gray-600 dark:text-gray-400">
-                  {new Date(peer.score_details.timestamp).toLocaleDateString()}
+                  {(() => {
+                    const date = new Date(peer.score_details.timestamp);
+                    return isNaN(date.getTime()) ? 'Date invalide' : date.toLocaleDateString();
+                  })()}
                 </p>
               </div>
             </div>

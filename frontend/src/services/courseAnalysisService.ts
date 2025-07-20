@@ -306,7 +306,14 @@ class CourseAnalysisService {
     // Prioritize recent courses with grades
     return unanalyzedCourses
       .filter(course => course.grade)
-      .sort((a, b) => new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime())[0] || 
+      .sort((a, b) => {
+        const dateA = new Date(a.updated_at);
+        const dateB = new Date(b.updated_at);
+        // Handle invalid dates by treating them as older (epoch time)
+        const timeA = isNaN(dateA.getTime()) ? 0 : dateA.getTime();
+        const timeB = isNaN(dateB.getTime()) ? 0 : dateB.getTime();
+        return timeB - timeA;
+      })[0] || 
       unanalyzedCourses[0];
   }
 
