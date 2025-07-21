@@ -2336,7 +2336,6 @@ def create_app():
         try:
             app.include_router(
                 education_router,
-                prefix="/api/v1/education",
                 tags=["education"]
             )
             logger.info("✅ Education router included at /api/v1/education")
