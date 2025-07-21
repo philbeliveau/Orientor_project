@@ -2575,6 +2575,18 @@ async def startup_event():
     """Startup configuration"""
     logger.info("🚀 Phase 2 Minimal startup initiated")
     logger.info("🎯 Focus: Essential dashboard endpoints only")
+    
+    # Auto-fix database sequences on startup
+    try:
+        from fix_sequences import fix_conversation_sequence
+        logger.info("🔧 Running automatic database sequence fix...")
+        if fix_conversation_sequence():
+            logger.info("✅ Database sequences fixed automatically")
+        else:
+            logger.warning("⚠️ Database sequence fix failed, but continuing startup")
+    except Exception as e:
+        logger.warning(f"⚠️ Could not run database sequence fix: {e}")
+    
     logger.info("✅ Phase 2 Minimal startup completed")
 
 if __name__ == "__main__":
