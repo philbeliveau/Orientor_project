@@ -21,10 +21,9 @@ startCommand = "uvicorn main_deploy:app --host 0.0.0.0 --port $PORT"
 healthcheckPath = "/health"
 
 [build.env]
+# CPU-optimized torch for faster downloads  
 PIP_INDEX_URL = "https://download.pytorch.org/whl/cpu"
 PIP_EXTRA_INDEX_URL = "https://pypi.org/simple/"
-BUILDKIT_INLINE_CACHE = "1"
 
 [build.cache]
 enabled = true
-paths = ["/usr/local/lib/python3.11/site-packages"]
