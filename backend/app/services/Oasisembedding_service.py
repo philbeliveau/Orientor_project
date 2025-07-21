@@ -33,15 +33,29 @@ def import_oasis_formatter():
         Le module importé ou None en cas d'échec
     """
     try:
-        # Chemin vers le module de formatage OaSIS
-        # Le module se trouve dans le répertoire 'scripts' au niveau racine du projet
-        script_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))),
-                                  "scripts", "format_user_profile_oasis_style.py")
+        # Chemin vers le module de formatage (essayez plusieurs chemins possibles)
+        possible_paths = [
+            # Chemin OaSIS original
+            os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))),
+                        "scripts", "format_user_profile_oasis_style.py"),
+            # Chemin ESCO alternatif
+            os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))),
+                        "scripts", "format_user_profile_esco_style.py"),
+            # Chemin Railway/deployment
+            "/app/scripts/format_user_profile_esco_style.py"
+        ]
         
+        script_path = None
+        for path in possible_paths:
+            if os.path.exists(path):
+                script_path = path
+                logger.info(f"Found formatting script at: {path}")
+                break
+                
         # Vérifier si le fichier existe
-        if not os.path.exists(script_path):
-            logger.error(f"Le module de formatage OaSIS n'existe pas au chemin: {script_path}")
-            logger.info(f"Chemin absolu recherché: {os.path.abspath(script_path)}")
+        if not script_path:
+            logger.warning(f"Aucun module de formatage trouvé aux chemins: {possible_paths}")
+            logger.info("Using fallback OaSIS formatting method")
             return None
             
         # Importer le module dynamiquement

@@ -26,10 +26,28 @@ def fix_conversation_sequence():
         engine = create_engine(database_url)
         
         with engine.connect() as conn:
-            # Check current sequence value for conversations
-            result = conn.execute(text('SELECT last_value FROM conversations_id_seq;'))
-            last_value = result.fetchone()[0]
-            print(f'Current conversations sequence last_value: {last_value}')
+            # First, ensure the sequence exists
+            try:
+                result = conn.execute(text('SELECT last_value FROM conversations_id_seq;'))
+                last_value = result.fetchone()[0]
+                print(f'Current conversations sequence last_value: {last_value}')
+            except Exception as e:
+                if "does not exist" in str(e):
+                    print("🔧 Creating missing conversations_id_seq sequence...")
+                    # Get max ID first
+                    result = conn.execute(text('SELECT COALESCE(MAX(id), 0) FROM conversations;'))
+                    max_id = result.fetchone()[0]
+                    start_value = max_id + 1
+                    
+                    # Create the sequence
+                    conn.execute(text(f'CREATE SEQUENCE IF NOT EXISTS conversations_id_seq START WITH {start_value};'))
+                    # Set the table to use the sequence
+                    conn.execute(text('ALTER TABLE conversations ALTER COLUMN id SET DEFAULT nextval(\'conversations_id_seq\');'))
+                    conn.commit()
+                    print(f'✅ Created conversations sequence starting at {start_value}')
+                    return True
+                else:
+                    raise
             
             # Check max ID in table
             result = conn.execute(text('SELECT COALESCE(MAX(id), 0) FROM conversations;'))
