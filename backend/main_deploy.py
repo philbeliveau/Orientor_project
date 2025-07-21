@@ -2035,21 +2035,22 @@ def create_app():
 
     # FRONTEND COMPATIBILITY ALIASES - Fix 404 errors
     @app.get("/careers/saved", tags=["frontend-aliases"])
-    async def get_careers_saved_alias(current_user = Depends(get_current_user_with_onboarding)):
+    async def get_careers_saved_alias(
+        db: Session = Depends(get_db),
+        current_user = Depends(get_current_user_with_onboarding)
+    ):
         """Alias for /api/v1/space/recommendations - Frontend compatibility"""
         logger.info("🔄 Frontend called /careers/saved - redirecting to space recommendations")
         try:
-            # Import dependencies here to avoid circular imports
-            from app.utils.database import get_db
+            # Import the function from space router
             from app.routers.space import get_saved_recommendations
             
-            # Get database session
-            db = next(get_db())
-            
-            # Call the space router function
+            # Call the space router function with proper parameters
             return get_saved_recommendations(db=db, current_user=current_user)
         except Exception as e:
             logger.error(f"❌ Error in /careers/saved alias: {e}")
+            import traceback
+            logger.error(f"❌ Full traceback: {traceback.format_exc()}")
             raise HTTPException(status_code=500, detail=f"Error fetching saved careers: {str(e)}")
 
     @app.get("/health")
