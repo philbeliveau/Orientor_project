@@ -8,7 +8,7 @@ from pydantic import BaseModel
 from dotenv import load_dotenv
 from sqlalchemy.orm import Session
 
-from app.routers.user import get_current_user
+from app.utils.auth import get_current_user_unified as get_current_user
 from app.models import User, UserProfile, Conversation, ChatMessage
 from app.utils.database import get_db
 from app.services.conversation_service import ConversationService

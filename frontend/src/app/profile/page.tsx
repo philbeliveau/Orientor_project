@@ -118,7 +118,7 @@ export default function ProfilePage() {
                     return;
                 }
                 
-                const response = await axios.get<Profile>(`${cleanApiUrl}/profiles/me`, {
+                const response = await axios.get<Profile>(`${cleanApiUrl}/api/v1/profiles/me`, {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
@@ -297,7 +297,7 @@ export default function ProfilePage() {
 
             // Update profile info
             const response = await axios.put(
-                `${cleanApiUrl}/profiles/update`,
+                `${cleanApiUrl}/api/v1/profiles/update`,
                 cleanProfile,
                 {
                     headers: {

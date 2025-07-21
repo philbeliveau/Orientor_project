@@ -7,7 +7,7 @@
 # import os
 # from app.utils.database import get_db
 # from app.models import User, UserProfile, UserSkill
-# from app.routers.user import get_current_user, create_access_token
+# from app.utils.auth import get_current_user_unified as get_current_user, create_access_token
 # from datetime import timedelta
 
 # # Configure logging

@@ -2461,6 +2461,21 @@ def create_app():
 # Create the app
 app = create_app()
 
+# Add database admin endpoint for fixing sequences
+@app.post("/admin/fix-sequences")
+async def fix_database_sequences():
+    """Emergency endpoint to fix database sequences"""
+    try:
+        from fix_sequences import fix_conversation_sequence
+        success = fix_conversation_sequence()
+        if success:
+            return {"status": "success", "message": "Database sequences fixed"}
+        else:
+            return {"status": "error", "message": "Failed to fix sequences"}
+    except Exception as e:
+        logger.error(f"Error in fix-sequences endpoint: {e}")
+        return {"status": "error", "message": str(e)}
+
 @app.on_event("startup")
 async def startup_event():
     """Startup configuration"""

@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException, status, Request
 from typing import Optional
 from app.schemas.tree import ProfileInput, TreeResponse, TreeNode, SkillsTreeInput
 from app.services.LLMskillsTree import TreeService
-from app.routers.user import get_current_user
+from app.utils.auth import get_current_user_unified as get_current_user
 import logging
 import traceback
 import json

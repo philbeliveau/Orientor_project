@@ -25,28 +25,8 @@ logger = logging.getLogger(__name__)
 
 router = APIRouter(prefix="/api/v1", tags=["courses"])
 
-def get_current_user(db: Session = Depends(get_db)) -> User:
-    """Get current user from session/token. Simplified for now."""
-    # TODO: Implement proper authentication
-    # For now, return a mock user or get from session
-    try:
-        user = db.query(User).first()
-        if not user:
-            # Create a default user for testing purposes
-            user = User(
-                email="test@example.com",
-                hashed_password="temp_password"
-            )
-            db.add(user)
-            db.commit()
-            db.refresh(user)
-            logger.info(f"Created default user with ID: {user.id}")
-        return user
-    except Exception as e:
-        logger.error(f"Error getting current user: {str(e)}")
-        # Return a mock user as fallback
-        mock_user = User(id=1, email="test@example.com", hashed_password="temp_password")
-        return mock_user
+# Import the unified authentication system
+from ..utils.auth import get_current_user_unified as get_current_user
 
 @router.post("/courses", response_model=CourseSchema)
 async def create_course(

@@ -11,7 +11,7 @@ import logging
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
 
-from app.routers.user import get_current_user
+from app.utils.auth import get_current_user_unified as get_current_user
 from app.models import User
 from app.utils.database import get_db
 from app.services.enhanced_chat_service import enhanced_chat_service

@@ -14,7 +14,7 @@ from sqlalchemy.orm import Session
 from sqlalchemy import text
 
 from app.utils.database import get_db
-from app.routers.user import get_current_user
+from app.utils.auth import get_current_user_unified as get_current_user
 from app.models import User
 from app.schemas.school_programs import (
     ProgramSearchQuery, ProgramResponse, SearchResultsResponse,

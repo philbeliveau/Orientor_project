@@ -7,7 +7,7 @@ from sqlalchemy.orm import Session
 from openai import OpenAI
 from pydantic import BaseModel
 
-from app.routers.user import get_current_user
+from app.utils.auth import get_current_user_unified as get_current_user
 from app.models import User, UserProfile
 from app.utils.database import get_db
 from app.services.conversation_service import ConversationService

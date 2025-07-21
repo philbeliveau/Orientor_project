@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from typing import List
 from sqlalchemy.orm import Session
 from app.utils.database import get_db
-from app.routers.user import get_current_user
+from app.utils.auth import get_current_user_unified as get_current_user
 from app.models.user import User
 from app.models.tree_path import TreePath
 from app.schemas.tree import TreePathCreate, TreePath as TreePathSchema

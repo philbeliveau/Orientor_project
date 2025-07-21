@@ -18,7 +18,7 @@ from app.models.tool_invocation import ToolInvocation
 from app.models.saved_recommendation import SavedRecommendation
 from app.models.user_journey_milestone import UserJourneyMilestone
 
-from app.routers.user import get_current_user
+from app.utils.auth import get_current_user_unified as get_current_user
 from app.services.orientator_ai_service import OrientatorAIService
 from app.schemas.orientator import (
     OrientatorMessageRequest,

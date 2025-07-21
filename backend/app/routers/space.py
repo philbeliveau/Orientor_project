@@ -9,7 +9,7 @@ logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
 
 from ..utils.database import get_db
-from app.routers.user import get_current_user
+from app.utils.auth import get_current_user_unified as get_current_user
 from ..models import User, SavedRecommendation, UserNote, UserSkill, UserProfile
 from ..schemas.space import (
     SavedRecommendationCreate, SavedRecommendation as SavedRecommendationSchema,
