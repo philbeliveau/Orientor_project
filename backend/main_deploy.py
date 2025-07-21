@@ -42,11 +42,19 @@ try:
     PROFILES_ROUTER_AVAILABLE = True
     logging.info("✅ Profiles router imported successfully")
 except ImportError as e:
-    if "pandas" in str(e):
-        logging.warning(f"⚠️ Profiles router requires pandas - will be available in Phase 1B: {e}")
+    if "torch" in str(e) or "transformers" in str(e) or "sentence_transformers" in str(e):
+        logging.warning(f"⚠️ Profiles router ML services not available - basic functionality enabled: {e}")
+        # Try importing router again - it should work with graceful fallbacks now
+        try:
+            from app.routers.profiles import router as profiles_router
+            PROFILES_ROUTER_AVAILABLE = True
+            logging.info("✅ Profiles router imported with ML fallbacks")
+        except ImportError as e2:
+            logging.error(f"❌ Profiles router import failed even with fallbacks: {e2}")
+            PROFILES_ROUTER_AVAILABLE = False
     else:
         logging.error(f"❌ Profiles router import failed: {e}")
-    PROFILES_ROUTER_AVAILABLE = False
+        PROFILES_ROUTER_AVAILABLE = False
 
 try:
     from app.routers.space import router as space_router  

@@ -5,10 +5,31 @@ from pydantic import BaseModel, Field
 import logging
 from app.utils.database import get_db
 from app.models import User, UserProfile, UserSkill
-from app.routers.user import get_current_user
-from app.services.Oasisembedding_service import process_user_embedding, process_user_oasis_embedding
-from app.services.esco_embedding_service384 import process_user_esco_embeddings
-from app.services.peer_matching_service import generate_peer_suggestions
+from app.utils.auth import get_current_user_unified as get_current_user
+# Optional ML services - graceful fallback if not available
+try:
+    from app.services.Oasisembedding_service import process_user_embedding, process_user_oasis_embedding
+    OASIS_EMBEDDING_AVAILABLE = True
+    logger.info("✅ OaSIS embedding service available")
+except ImportError as e:
+    logger.warning(f"⚠️ OaSIS embedding service not available (requires torch): {e}")
+    OASIS_EMBEDDING_AVAILABLE = False
+
+try:
+    from app.services.esco_embedding_service384 import process_user_esco_embeddings
+    ESCO_EMBEDDING_AVAILABLE = True
+    logger.info("✅ ESCO embedding service available")
+except ImportError as e:
+    logger.warning(f"⚠️ ESCO embedding service not available (requires torch): {e}")
+    ESCO_EMBEDDING_AVAILABLE = False
+
+try:
+    from app.services.peer_matching_service import generate_peer_suggestions
+    PEER_MATCHING_AVAILABLE = True
+    logger.info("✅ Peer matching service available")
+except ImportError as e:
+    logger.warning(f"⚠️ Peer matching service not available (requires ML dependencies): {e}")
+    PEER_MATCHING_AVAILABLE = False
 from sqlalchemy.sql import text
 import uuid
 
@@ -311,22 +332,36 @@ async def update_profile(
             logger.info("Complete profile data for embedding generation:")
             logger.info(f"Profile data: {profile_data}")
             
-            # Use the centralized embedding service
-            success = process_user_embedding(db, current_user.id, profile_data)
-            
-            if not success:
-                logger.warning(f"Failed to generate embedding for user ID: {current_user.id}")
+            # Optional embedding generation - only if ML services available
+            if OASIS_EMBEDDING_AVAILABLE:
+                try:
+                    success = process_user_embedding(db, current_user.id, profile_data)
+                    if not success:
+                        logger.warning(f"Failed to generate embedding for user ID: {current_user.id}")
+                    else:
+                        logger.info(f"Successfully generated new embedding for user ID: {current_user.id}")
+                except Exception as e:
+                    logger.error(f"Error in embedding generation: {str(e)}")
+                    success = False
             else:
-                logger.info(f"Successfully generated new embedding for user ID: {current_user.id}")
+                logger.info("⚠️ Embedding generation skipped - ML services not available")
+                success = True  # Don't block profile update
                 
-                # Generate peer suggestions with the new embedding
-                peer_success = generate_peer_suggestions(db, current_user.id)
-                if peer_success:
-                    logger.info(f"Successfully generated peer suggestions for user ID: {current_user.id}")
-                else:
-                    logger.warning(f"Failed to generate peer suggestions for user ID: {current_user.id}")
+            # Generate peer suggestions if available and embedding succeeded
+            if PEER_MATCHING_AVAILABLE and success:
+                try:
+                    peer_success = generate_peer_suggestions(db, current_user.id)
+                    if peer_success:
+                        logger.info(f"Successfully generated peer suggestions for user ID: {current_user.id}")
+                    else:
+                        logger.warning(f"Failed to generate peer suggestions for user ID: {current_user.id}")
+                except Exception as e:
+                    logger.error(f"Error in peer matching: {str(e)}")
+            elif not PEER_MATCHING_AVAILABLE:
+                logger.info("⚠️ Peer matching skipped - service not available")
                 
-                # Generate the OaSIS embedding
+            # Generate the OaSIS embedding if available
+            if OASIS_EMBEDDING_AVAILABLE:
                 try:
                     logger.info(f"Generating OaSIS embedding for user ID: {current_user.id}")
                     oasis_success = process_user_oasis_embedding(db, current_user.id)
@@ -336,9 +371,11 @@ async def update_profile(
                         logger.warning(f"Failed to generate or store OaSIS embedding for user ID: {current_user.id}")
                 except Exception as e:
                     logger.error(f"Error in OaSIS embedding process: {str(e)}")
-                    # Do not block the profile update if OaSIS embedding fails
+            else:
+                logger.info("⚠️ OaSIS embedding skipped - service not available")
                 
-                # Generate the ESCO embeddings
+            # Generate the ESCO embeddings if available
+            if ESCO_EMBEDDING_AVAILABLE:
                 try:
                     logger.info(f"Generating ESCO embeddings for user ID: {current_user.id}")
                     esco_success = process_user_esco_embeddings(db, current_user.id)
@@ -348,7 +385,8 @@ async def update_profile(
                         logger.warning(f"Failed to generate or store ESCO embeddings for user ID: {current_user.id}")
                 except Exception as e:
                     logger.error(f"Error in ESCO embedding process: {str(e)}")
-                    # Do not block the profile update if ESCO embedding fails
+            else:
+                logger.info("⚠️ ESCO embedding skipped - service not available")
                 
         except Exception as e:
             logger.error(f"Error in embedding/peer suggestion process: {str(e)}")
