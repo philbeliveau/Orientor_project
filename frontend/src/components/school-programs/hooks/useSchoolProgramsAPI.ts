@@ -14,7 +14,7 @@ export const useSchoolProgramsAPI = () => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+          'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
         },
         body: JSON.stringify({
           ...filters,
@@ -37,7 +37,7 @@ export const useSchoolProgramsAPI = () => {
     try {
       const response = await fetch(`/api/v1/school-programs/programs/${programId}`, {
         headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+          'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
         },
       });
 
@@ -58,7 +58,7 @@ export const useSchoolProgramsAPI = () => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+          'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
         },
         body: JSON.stringify({
           program_id: programId,
@@ -82,7 +82,7 @@ export const useSchoolProgramsAPI = () => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+          'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
         },
         body: JSON.stringify({
           program_id: programId,
@@ -100,7 +100,7 @@ export const useSchoolProgramsAPI = () => {
     try {
       const response = await fetch('/api/v1/school-programs/users/saved-programs', {
         headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+          'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
         },
       });
 
@@ -120,7 +120,7 @@ export const useSchoolProgramsAPI = () => {
       const response = await fetch(`/api/v1/school-programs/users/saved-programs/${programId}`, {
         method: 'DELETE',
         headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+          'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
         },
       });
 
@@ -138,7 +138,7 @@ export const useSchoolProgramsAPI = () => {
     try {
       const response = await fetch('/api/v1/school-programs/filters', {
         headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+          'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
         },
       });
 

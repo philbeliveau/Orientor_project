@@ -75,7 +75,7 @@ const EnhancedChat: React.FC = () => {
     try {
       const response = await fetch('/api/v1/enhanced-chat/status', {
         headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
+          'Authorization': `Bearer ${localStorage.getItem('access_token')}`
         }
       });
       const status = await response.json();
@@ -104,7 +104,7 @@ const EnhancedChat: React.FC = () => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
+          'Authorization': `Bearer ${localStorage.getItem('access_token')}`
         },
         body: JSON.stringify({
           text: inputText,
@@ -150,7 +150,7 @@ const EnhancedChat: React.FC = () => {
     try {
       const response = await fetch('/api/v1/enhanced-chat/learning-recommendations', {
         headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
+          'Authorization': `Bearer ${localStorage.getItem('access_token')}`
         }
       });
 
@@ -174,7 +174,7 @@ const EnhancedChat: React.FC = () => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
+          'Authorization': `Bearer ${localStorage.getItem('access_token')}`
         },
         body: JSON.stringify({ skill_name: skillName })
       });

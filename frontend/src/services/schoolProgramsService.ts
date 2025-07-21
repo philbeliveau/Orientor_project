@@ -10,7 +10,7 @@ class SchoolProgramsService {
   private baseUrl = '/api/v1/school-programs';
 
   private async makeRequest<T>(endpoint: string, options?: RequestInit): Promise<T> {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('access_token');
     
     const response = await fetch(`${this.baseUrl}${endpoint}`, {
       ...options,
