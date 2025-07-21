@@ -2491,6 +2491,21 @@ async def create_missing_tables():
         logger.error(f"Error in create-tables endpoint: {e}")
         return {"status": "error", "message": str(e)}
 
+@app.post("/admin/migrate-user-profiles")
+async def migrate_user_profiles_from_supabase():
+    """Emergency endpoint to migrate user_profiles data from Supabase"""
+    try:
+        from migrate_user_profiles import migrate_user_profiles, migrate_user_skills
+        success1 = migrate_user_profiles()
+        success2 = migrate_user_skills()
+        if success1 and success2:
+            return {"status": "success", "message": "User profiles migrated successfully from Supabase"}
+        else:
+            return {"status": "partial", "message": "Migration completed with some issues"}
+    except Exception as e:
+        logger.error(f"Error in migrate-user-profiles endpoint: {e}")
+        return {"status": "error", "message": str(e)}
+
 @app.on_event("startup")
 async def startup_event():
     """Startup configuration"""
