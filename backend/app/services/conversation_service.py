@@ -1,7 +1,7 @@
 from typing import List, Optional, Dict, Any
 from datetime import datetime
 from sqlalchemy.orm import Session
-from sqlalchemy import func, and_, or_
+from sqlalchemy import func, and_, or_, text
 from sqlalchemy.exc import SQLAlchemyError
 import logging
 
@@ -24,7 +24,7 @@ class ConversationService:
         """Create a new conversation with an initial message"""
         try:
             # Get next available ID to work around sequence issues
-            max_id_result = db.execute("SELECT COALESCE(MAX(id), 0) + 1 FROM conversations").fetchone()
+            max_id_result = db.execute(text("SELECT COALESCE(MAX(id), 0) + 1 FROM conversations")).fetchone()
             next_id = max_id_result[0] if max_id_result else 1
             
             # Create conversation with explicit ID and auto-generated title if not provided
