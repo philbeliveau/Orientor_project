@@ -6,6 +6,13 @@ import logging
 from app.utils.database import get_db
 from app.models import User, UserProfile, UserSkill
 from app.utils.auth import get_current_user_unified as get_current_user
+from sqlalchemy.sql import text
+import uuid
+
+# Configure logging FIRST
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
+
 # Optional ML services - graceful fallback if not available
 try:
     from app.services.Oasisembedding_service import process_user_embedding, process_user_oasis_embedding
@@ -30,14 +37,9 @@ try:
 except ImportError as e:
     logger.warning(f"⚠️ Peer matching service not available (requires ML dependencies): {e}")
     PEER_MATCHING_AVAILABLE = False
-from sqlalchemy.sql import text
-import uuid
 
-# Configure logging
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
 # Add a more detailed log message to help with debugging
-logger.info("Profiles router module loaded with get_current_user from app.routes.user")
+logger.info("Profiles router module loaded with unified authentication")
 
 class ProfileResponse(BaseModel):
     id: int
