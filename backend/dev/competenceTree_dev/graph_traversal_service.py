@@ -32,7 +32,8 @@ def get_production_paths():
         'backend': '/app',
         'services': '/app/app/services', 
         'gnn': '/app/app/services/GNN',
-        'model': '/app/app/services/GNN/best_model_20250520_022237.pt'
+        'model': '/app/app/services/GNN/best_model_20250520_022237.pt',
+        'data_dir': '/app/app/data'  # Moved from /app/dev which might not deploy
     }
     
     # Check if we're in Railway environment
