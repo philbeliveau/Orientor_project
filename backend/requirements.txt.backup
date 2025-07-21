@@ -1,0 +1,43 @@
+# PHASE 1A REQUIREMENTS - Core functionality only
+# Heavy ML packages moved to requirements-ml.txt for gradual deployment
+
+# Core FastAPI and web framework
+fastapi==0.104.1
+uvicorn==0.24.0
+pydantic==2.5.0
+pydantic-settings==2.1.0
+
+# Database and ORM
+sqlalchemy==2.0.23
+alembic==1.13.1
+psycopg2-binary==2.9.10
+
+# Authentication and security
+python-jose[cryptography]==3.3.0
+python-multipart==0.0.6
+bcrypt==4.1.2
+passlib[bcrypt]==1.7.4
+email-validator==2.1.0
+
+# HTTP clients and networking
+aiohttp==3.9.0
+requests==2.31.0
+httpx==0.24.1
+
+# AI services (lightweight)
+anthropic==0.31.2
+openai==1.3.0
+
+# Vector databases and search
+pinecone>=3.0.0
+redis==5.0.1
+
+# Essential data processing (Phase 1A minimum)
+numpy>=1.26.2
+pandas>=2.0.0
+
+# Utilities
+python-dotenv==1.0.0
+
+# NOTE: Heavy ML packages (torch, sklearn, matplotlib, seaborn) are in requirements-ml.txt
+# Add them to this file only when implementing features that require them
