@@ -2323,6 +2323,7 @@ def create_app():
         try:
             app.include_router(
                 socratic_chat_router,
+                prefix="/api/v1",
                 tags=["socratic-chat"]
             )
             logger.info("✅ Socratic chat router included at /api/v1/socratic-chat")
@@ -2336,6 +2337,7 @@ def create_app():
         try:
             app.include_router(
                 education_router,
+                prefix="/api/v1",
                 tags=["education"]
             )
             logger.info("✅ Education router included at /api/v1/education")
@@ -2362,6 +2364,7 @@ def create_app():
         try:
             app.include_router(
                 school_programs_router,
+                prefix="/api/v1",
                 tags=["school-programs"]
             )
             logger.info("✅ School programs router included at /api/v1/school-programs")
@@ -2413,6 +2416,7 @@ def create_app():
         try:
             app.include_router(
                 courses_router,
+                prefix="/api/v1",
                 tags=["courses"]
             )
             logger.info("✅ Courses router included at /api/v1/courses")

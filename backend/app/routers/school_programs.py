@@ -32,7 +32,7 @@ except ImportError:
 
 logger = logging.getLogger(__name__)
 
-router = APIRouter(prefix="/api/v1/school-programs", tags=["School Programs"])
+router = APIRouter(prefix="/school-programs", tags=["School Programs"])
 
 
 # Redis dependency

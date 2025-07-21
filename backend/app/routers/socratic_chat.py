@@ -12,7 +12,7 @@ from app.utils.auth import get_current_user_unified as get_current_user
 from app.models import User
 from ..services.socratic_chat_service import socratic_chat_service, ChatMode
 
-router = APIRouter(prefix="/api/v1/socratic-chat", tags=["socratic-chat"])
+router = APIRouter(prefix="/socratic-chat", tags=["socratic-chat"])
 
 class SendMessageRequest(BaseModel):
     text: str = Field(..., min_length=1, max_length=2000)

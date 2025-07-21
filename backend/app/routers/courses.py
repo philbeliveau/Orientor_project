@@ -23,7 +23,7 @@ from ..services.esco_integration_service import ESCOIntegrationService
 # Set up logging
 logger = logging.getLogger(__name__)
 
-router = APIRouter(prefix="/api/v1", tags=["courses"])
+router = APIRouter(prefix="/courses", tags=["courses"])
 
 # Import the unified authentication system
 from ..utils.auth import get_current_user_unified as get_current_user

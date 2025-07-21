@@ -18,7 +18,7 @@ from app.services.career_progression_service import CareerProgressionService
 # Configure logging
 logger = logging.getLogger(__name__)
 
-router = APIRouter(prefix="/api/v1/career-goals", tags=["career-goals"])
+router = APIRouter(prefix="/career-goals", tags=["career-goals"])
 
 # Pydantic schemas
 class CareerGoalCreate(BaseModel):

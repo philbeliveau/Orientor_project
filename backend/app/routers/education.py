@@ -1301,7 +1301,7 @@ class EducationSearchService:
             )
 
 # Router setup
-router = APIRouter(prefix="/api/v1/education", tags=["education"])
+router = APIRouter(prefix="/education", tags=["education"])
 search_service = EducationSearchService()
 
 @router.post("/programs/search", response_model=ProgramSearchResponse)
