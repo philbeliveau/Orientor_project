@@ -32,7 +32,7 @@ httpx==0.24.1
 
 # AI services (lightweight)
 anthropic==0.31.2
-openai==1.3.0
+openai>=1.10.0,<2.0.0  # Updated for langchain-openai compatibility
 boto3==1.34.0
 
 # Vector databases and search
