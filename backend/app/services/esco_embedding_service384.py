@@ -27,7 +27,8 @@ def import_esco_formatter():
     try:
         # Chemin vers le module de formatage ESCO
         # Le module se trouve dans le répertoire 'scripts' au niveau racine du projet
-        script_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))),
+        # From app/services/esco_embedding_service384.py -> backend/scripts/
+        script_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))),
                                   "scripts", "format_user_profile_esco_style.py")
         
         # Vérifier si le fichier existe
