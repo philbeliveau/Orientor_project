@@ -6,6 +6,7 @@ Focus on dashboard functionality without real router dependencies
 
 from fastapi import FastAPI, Depends, HTTPException, status, Header
 from fastapi.middleware.cors import CORSMiddleware
+from sqlalchemy.orm import Session
 import uvicorn
 import os
 import logging
@@ -76,15 +77,28 @@ def create_app():
         version="1A.0.1-critical-routers",
     )
 
-    # Configure CORS - Secure configuration for production
+    # Configure CORS - Enhanced for navigoproject.vercel.app
     app.add_middleware(
         CORSMiddleware,
-        allow_origins=["https://navigoproject.vercel.app"],
+        allow_origins=[
+            "https://navigoproject.vercel.app",
+            "https://*.vercel.app",  # Allow all Vercel subdomains for development
+            "http://localhost:3000",  # Local development
+            "http://localhost:3001"   # Staging
+        ],
         allow_credentials=True,
-        allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-        allow_headers=["Content-Type", "Authorization", "X-Requested-With"],
-        expose_headers=["Set-Cookie"],
-        max_age=600,
+        allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
+        allow_headers=[
+            "Content-Type", 
+            "Authorization", 
+            "X-Requested-With",
+            "Accept",
+            "Origin",
+            "Cache-Control",
+            "X-File-Name"
+        ],
+        expose_headers=["Set-Cookie", "Content-Length"],
+        max_age=3600,  # 1 hour cache for preflight requests
     )
 
     logger.info("🔧 Creating minimal app with ONLY fallback endpoints...")
@@ -2024,11 +2038,19 @@ def create_app():
     async def get_careers_saved_alias(current_user = Depends(get_current_user_with_onboarding)):
         """Alias for /api/v1/space/recommendations - Frontend compatibility"""
         logger.info("🔄 Frontend called /careers/saved - redirecting to space recommendations")
-        # Import here to avoid circular imports
-        from app.routers.space import get_saved_recommendations
-        from app.utils.database import get_db
-        db = next(get_db())
-        return get_saved_recommendations(db=db, current_user=current_user)
+        try:
+            # Import dependencies here to avoid circular imports
+            from app.utils.database import get_db
+            from app.routers.space import get_saved_recommendations
+            
+            # Get database session
+            db = next(get_db())
+            
+            # Call the space router function
+            return get_saved_recommendations(db=db, current_user=current_user)
+        except Exception as e:
+            logger.error(f"❌ Error in /careers/saved alias: {e}")
+            raise HTTPException(status_code=500, detail=f"Error fetching saved careers: {str(e)}")
 
     @app.get("/health")
     async def health_check():
