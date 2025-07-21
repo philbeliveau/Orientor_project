@@ -80,6 +80,23 @@ except ImportError as e:
     logging.error(f"❌ Socratic chat router import failed: {e}")
     SOCRATIC_CHAT_ROUTER_AVAILABLE = False
 
+# PHASE 1B: Import advanced routers
+try:
+    from app.routers.education import router as education_router
+    EDUCATION_ROUTER_AVAILABLE = True
+    logging.info("✅ Education router imported successfully")
+except ImportError as e:
+    logging.error(f"❌ Education router import failed: {e}")
+    EDUCATION_ROUTER_AVAILABLE = False
+
+try:
+    from app.routers.insight_router import router as insight_router
+    INSIGHT_ROUTER_AVAILABLE = True
+    logging.info("✅ Insight router imported successfully")
+except ImportError as e:
+    logging.error(f"❌ Insight router import failed: {e}")
+    INSIGHT_ROUTER_AVAILABLE = False
+
 # Test critical model imports
 try:
     from app.models import UserProfile, UserSkill, SavedRecommendation, UserNote
@@ -2161,6 +2178,8 @@ def create_app():
                 "jobs": JOBS_ROUTER_AVAILABLE,
                 "socratic_chat": SOCRATIC_CHAT_ROUTER_AVAILABLE,
                 "onboarding": ONBOARDING_ROUTER_AVAILABLE,
+                "education": EDUCATION_ROUTER_AVAILABLE,
+                "insight": INSIGHT_ROUTER_AVAILABLE,
                 "models": CRITICAL_MODELS_AVAILABLE
             },
             "authentication": {
@@ -2229,8 +2248,35 @@ def create_app():
             logger.error(f"❌ Failed to include socratic chat router: {e}")
     else:
         logger.error("❌ Socratic chat router not available")
+
+    # PHASE 1B: Include advanced routers
+    if EDUCATION_ROUTER_AVAILABLE:
+        try:
+            app.include_router(
+                education_router,
+                prefix="/api/v1/education",
+                tags=["education"]
+            )
+            logger.info("✅ Education router included at /api/v1/education")
+        except Exception as e:
+            logger.error(f"❌ Failed to include education router: {e}")
+    else:
+        logger.warning("⚠️ Education router not available")
+
+    if INSIGHT_ROUTER_AVAILABLE:
+        try:
+            app.include_router(
+                insight_router,
+                prefix="/api/v1/insights",
+                tags=["insights"]
+            )
+            logger.info("✅ Insight router included at /api/v1/insights")
+        except Exception as e:
+            logger.error(f"❌ Failed to include insight router: {e}")
+    else:
+        logger.warning("⚠️ Insight router not available")
     
-    logger.info("✅ Minimal app created successfully")
+    logger.info("✅ Phase 1B enhanced app created successfully")
     return app
 
 # Create the app
