@@ -2217,7 +2217,8 @@ def create_app():
     else:
         logger.error("❌ Jobs router or critical models not available")
 
-    if SOCRATIC_CHAT_ROUTER_AVAILABLE and CRITICAL_MODELS_AVAILABLE:
+    # Socratic chat only needs basic models, not the heavy profile models
+    if SOCRATIC_CHAT_ROUTER_AVAILABLE:
         try:
             app.include_router(
                 socratic_chat_router,
@@ -2227,7 +2228,7 @@ def create_app():
         except Exception as e:
             logger.error(f"❌ Failed to include socratic chat router: {e}")
     else:
-        logger.error("❌ Socratic chat router or critical models not available")
+        logger.error("❌ Socratic chat router not available")
     
     logger.info("✅ Minimal app created successfully")
     return app
