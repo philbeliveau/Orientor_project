@@ -41,6 +41,14 @@ except ImportError as e:
     logging.error(f"❌ Space router import failed: {e}")
     SPACE_ROUTER_AVAILABLE = False
 
+try:
+    from app.routers.jobs import router as jobs_router
+    JOBS_ROUTER_AVAILABLE = True
+    logging.info("✅ Jobs router imported successfully")
+except ImportError as e:
+    logging.error(f"❌ Jobs router import failed: {e}")
+    JOBS_ROUTER_AVAILABLE = False
+
 # Test critical model imports
 try:
     from app.models import UserProfile, UserSkill, SavedRecommendation, UserNote
@@ -2011,6 +2019,17 @@ def create_app():
             "endpoints": "fallback_only"
         }
 
+    # FRONTEND COMPATIBILITY ALIASES - Fix 404 errors
+    @app.get("/careers/saved", tags=["frontend-aliases"])
+    async def get_careers_saved_alias(current_user = Depends(get_current_user_with_onboarding)):
+        """Alias for /api/v1/space/recommendations - Frontend compatibility"""
+        logger.info("🔄 Frontend called /careers/saved - redirecting to space recommendations")
+        # Import here to avoid circular imports
+        from app.routers.space import get_saved_recommendations
+        from app.utils.database import get_db
+        db = next(get_db())
+        return get_saved_recommendations(db=db, current_user=current_user)
+
     @app.get("/health")
     async def health_check():
         return {
@@ -2021,6 +2040,7 @@ def create_app():
             "routers_included": {
                 "profiles": PROFILES_ROUTER_AVAILABLE,
                 "space": SPACE_ROUTER_AVAILABLE,
+                "jobs": JOBS_ROUTER_AVAILABLE,
                 "onboarding": ONBOARDING_ROUTER_AVAILABLE,
                 "models": CRITICAL_MODELS_AVAILABLE
             }
@@ -2059,6 +2079,19 @@ def create_app():
             logger.error(f"❌ Failed to include space router: {e}")
     else:
         logger.error("❌ Space router or critical models not available")
+    
+    if JOBS_ROUTER_AVAILABLE and CRITICAL_MODELS_AVAILABLE:
+        try:
+            app.include_router(
+                jobs_router,
+                prefix="/api/v1",
+                tags=["jobs"]
+            )
+            logger.info("✅ Jobs router included at /api/v1/jobs")
+        except Exception as e:
+            logger.error(f"❌ Failed to include jobs router: {e}")
+    else:
+        logger.error("❌ Jobs router or critical models not available")
     
     logger.info("✅ Minimal app created successfully")
     return app
