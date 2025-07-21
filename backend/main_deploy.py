@@ -114,6 +114,22 @@ except ImportError as e:
     logging.error(f"❌ Recommendations router import failed: {e}")
     RECOMMENDATIONS_ROUTER_AVAILABLE = False
 
+try:
+    from app.routers.program_recommendations import router as program_recommendations_router
+    PROGRAM_RECOMMENDATIONS_ROUTER_AVAILABLE = True
+    logging.info("✅ Program recommendations router imported successfully")
+except ImportError as e:
+    logging.error(f"❌ Program recommendations router import failed: {e}")
+    PROGRAM_RECOMMENDATIONS_ROUTER_AVAILABLE = False
+
+try:
+    from app.routers.conversations import router as conversations_router
+    CONVERSATIONS_ROUTER_AVAILABLE = True
+    logging.info("✅ Conversations router imported successfully")
+except ImportError as e:
+    logging.error(f"❌ Conversations router import failed: {e}")
+    CONVERSATIONS_ROUTER_AVAILABLE = False
+
 # Test critical model imports
 try:
     from app.models import UserProfile, UserSkill, SavedRecommendation, UserNote
@@ -2186,9 +2202,9 @@ def create_app():
     async def health_check():
         return {
             "status": "healthy",
-            "message": "Phase 1C Core Features: School Programs & Recommendations",
-            "version": "1C.1.0-core-features",
-            "platform": "phase1c_core_integration",
+            "message": "Phase 1D Enhanced: Program Recommendations & Conversations",
+            "version": "1D.1.0-enhanced-features",
+            "platform": "phase1d_enhanced_integration",
             "routers_included": {
                 "profiles": PROFILES_ROUTER_AVAILABLE,
                 "space": SPACE_ROUTER_AVAILABLE,
@@ -2199,6 +2215,8 @@ def create_app():
                 "insight": INSIGHT_ROUTER_AVAILABLE,
                 "school_programs": SCHOOL_PROGRAMS_ROUTER_AVAILABLE,
                 "recommendations": RECOMMENDATIONS_ROUTER_AVAILABLE,
+                "program_recommendations": PROGRAM_RECOMMENDATIONS_ROUTER_AVAILABLE,
+                "conversations": CONVERSATIONS_ROUTER_AVAILABLE,
                 "models": CRITICAL_MODELS_AVAILABLE
             },
             "authentication": {
@@ -2320,8 +2338,34 @@ def create_app():
             logger.error(f"❌ Failed to include recommendations router: {e}")
     else:
         logger.warning("⚠️ Recommendations router not available")
+
+    if PROGRAM_RECOMMENDATIONS_ROUTER_AVAILABLE:
+        try:
+            app.include_router(
+                program_recommendations_router,
+                prefix="/api/v1",
+                tags=["program-recommendations"]
+            )
+            logger.info("✅ Program recommendations router included at /api/v1/program-recommendations")
+        except Exception as e:
+            logger.error(f"❌ Failed to include program recommendations router: {e}")
+    else:
+        logger.warning("⚠️ Program recommendations router not available")
+
+    if CONVERSATIONS_ROUTER_AVAILABLE:
+        try:
+            app.include_router(
+                conversations_router,
+                prefix="/api/v1",
+                tags=["conversations"]
+            )
+            logger.info("✅ Conversations router included at /api/v1/conversations")
+        except Exception as e:
+            logger.error(f"❌ Failed to include conversations router: {e}")
+    else:
+        logger.warning("⚠️ Conversations router not available")
     
-    logger.info("✅ Phase 1C enhanced app created successfully")
+    logger.info("✅ Phase 1D enhanced app created successfully")
     return app
 
 # Create the app
