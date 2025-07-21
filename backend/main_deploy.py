@@ -72,6 +72,14 @@ except ImportError as e:
     logging.error(f"❌ Jobs router import failed: {e}")
     JOBS_ROUTER_AVAILABLE = False
 
+try:
+    from app.routers.socratic_chat import router as socratic_chat_router
+    SOCRATIC_CHAT_ROUTER_AVAILABLE = True
+    logging.info("✅ Socratic chat router imported successfully")
+except ImportError as e:
+    logging.error(f"❌ Socratic chat router import failed: {e}")
+    SOCRATIC_CHAT_ROUTER_AVAILABLE = False
+
 # Test critical model imports
 try:
     from app.models import UserProfile, UserSkill, SavedRecommendation, UserNote
@@ -2151,6 +2159,7 @@ def create_app():
                 "profiles": PROFILES_ROUTER_AVAILABLE,
                 "space": SPACE_ROUTER_AVAILABLE,
                 "jobs": JOBS_ROUTER_AVAILABLE,
+                "socratic_chat": SOCRATIC_CHAT_ROUTER_AVAILABLE,
                 "onboarding": ONBOARDING_ROUTER_AVAILABLE,
                 "models": CRITICAL_MODELS_AVAILABLE
             },
@@ -2207,6 +2216,18 @@ def create_app():
             logger.error(f"❌ Failed to include jobs router: {e}")
     else:
         logger.error("❌ Jobs router or critical models not available")
+
+    if SOCRATIC_CHAT_ROUTER_AVAILABLE and CRITICAL_MODELS_AVAILABLE:
+        try:
+            app.include_router(
+                socratic_chat_router,
+                tags=["socratic-chat"]
+            )
+            logger.info("✅ Socratic chat router included at /api/v1/socratic-chat")
+        except Exception as e:
+            logger.error(f"❌ Failed to include socratic chat router: {e}")
+    else:
+        logger.error("❌ Socratic chat router or critical models not available")
     
     logger.info("✅ Minimal app created successfully")
     return app

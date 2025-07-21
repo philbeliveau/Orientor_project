@@ -8,7 +8,7 @@ from typing import Dict, Any, Optional, Literal
 from pydantic import BaseModel, Field
 
 from ..utils.database import get_db
-from app.routers.user import get_current_user
+from app.utils.auth import get_current_user_unified as get_current_user
 from app.models import User
 from ..services.socratic_chat_service import socratic_chat_service, ChatMode
 
