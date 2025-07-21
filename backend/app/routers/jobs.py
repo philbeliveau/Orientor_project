@@ -7,7 +7,7 @@ from datetime import datetime
 import logging
 
 from ..utils.database import get_db
-from ..routers.user import get_current_user
+from ..utils.auth import get_current_user_unified as get_current_user
 from ..models import User
 from ..schemas.job import SavedJob, SavedJobCreate, SavedJobResponse
 
