@@ -97,6 +97,23 @@ except ImportError as e:
     logging.error(f"❌ Insight router import failed: {e}")
     INSIGHT_ROUTER_AVAILABLE = False
 
+# PHASE 1C: Import additional core routers
+try:
+    from app.routers.school_programs import router as school_programs_router
+    SCHOOL_PROGRAMS_ROUTER_AVAILABLE = True
+    logging.info("✅ School programs router imported successfully")
+except ImportError as e:
+    logging.error(f"❌ School programs router import failed: {e}")
+    SCHOOL_PROGRAMS_ROUTER_AVAILABLE = False
+
+try:
+    from app.routers.recommendations import router as recommendations_router
+    RECOMMENDATIONS_ROUTER_AVAILABLE = True
+    logging.info("✅ Recommendations router imported successfully")
+except ImportError as e:
+    logging.error(f"❌ Recommendations router import failed: {e}")
+    RECOMMENDATIONS_ROUTER_AVAILABLE = False
+
 # Test critical model imports
 try:
     from app.models import UserProfile, UserSkill, SavedRecommendation, UserNote
@@ -2169,9 +2186,9 @@ def create_app():
     async def health_check():
         return {
             "status": "healthy",
-            "message": "Phase 1B Advanced Features with Quebec Education & Insights",
-            "version": "1B.1.0-advanced-features",
-            "platform": "phase1b_advanced_integration",
+            "message": "Phase 1C Core Features: School Programs & Recommendations",
+            "version": "1C.1.0-core-features",
+            "platform": "phase1c_core_integration",
             "routers_included": {
                 "profiles": PROFILES_ROUTER_AVAILABLE,
                 "space": SPACE_ROUTER_AVAILABLE,
@@ -2180,6 +2197,8 @@ def create_app():
                 "onboarding": ONBOARDING_ROUTER_AVAILABLE,
                 "education": EDUCATION_ROUTER_AVAILABLE,
                 "insight": INSIGHT_ROUTER_AVAILABLE,
+                "school_programs": SCHOOL_PROGRAMS_ROUTER_AVAILABLE,
+                "recommendations": RECOMMENDATIONS_ROUTER_AVAILABLE,
                 "models": CRITICAL_MODELS_AVAILABLE
             },
             "authentication": {
@@ -2275,8 +2294,34 @@ def create_app():
             logger.error(f"❌ Failed to include insight router: {e}")
     else:
         logger.warning("⚠️ Insight router not available")
+
+    # PHASE 1C: Include additional core routers
+    if SCHOOL_PROGRAMS_ROUTER_AVAILABLE:
+        try:
+            app.include_router(
+                school_programs_router,
+                tags=["school-programs"]
+            )
+            logger.info("✅ School programs router included at /api/v1/school-programs")
+        except Exception as e:
+            logger.error(f"❌ Failed to include school programs router: {e}")
+    else:
+        logger.warning("⚠️ School programs router not available")
+
+    if RECOMMENDATIONS_ROUTER_AVAILABLE:
+        try:
+            app.include_router(
+                recommendations_router,
+                prefix="/api/v1/recommendations",
+                tags=["recommendations"]
+            )
+            logger.info("✅ Recommendations router included at /api/v1/recommendations")
+        except Exception as e:
+            logger.error(f"❌ Failed to include recommendations router: {e}")
+    else:
+        logger.warning("⚠️ Recommendations router not available")
     
-    logger.info("✅ Phase 1B enhanced app created successfully")
+    logger.info("✅ Phase 1C enhanced app created successfully")
     return app
 
 # Create the app
