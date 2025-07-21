@@ -2066,6 +2066,38 @@ def create_app():
             logger.error(f"❌ Full traceback: {traceback.format_exc()}")
             raise HTTPException(status_code=500, detail=f"Error fetching saved careers: {str(e)}")
 
+    @app.get("/api/v1/jobs/saved", tags=["frontend-aliases"])
+    async def get_jobs_saved_alias(authorization: Optional[str] = Header(None)):
+        """Alias for jobs router saved endpoint - Frontend compatibility"""
+        logger.info("🔄 Frontend called /api/v1/jobs/saved - redirecting to jobs router")
+        try:
+            # Import dependencies here to avoid startup issues
+            from app.utils.database import get_db
+            from app.routers.jobs import get_saved_jobs
+            from app.models import User
+            
+            # Get authentication info
+            if not authorization or not authorization.startswith("Bearer "):
+                raise HTTPException(status_code=401, detail="No authorization token")
+            
+            token = authorization.split(" ")[1]
+            decoded = base64.b64decode(token).decode()
+            email, user_id, onboarding_completed, timestamp = decoded.split(":", 3)
+            
+            # Get database session and user object
+            db = next(get_db())
+            current_user = db.query(User).filter(User.id == int(user_id)).first()
+            if not current_user:
+                raise HTTPException(status_code=401, detail="User not found")
+            
+            # Call the jobs router function with proper parameters
+            return await get_saved_jobs(discovery_source=None, current_user=current_user, db=db)
+        except Exception as e:
+            logger.error(f"❌ Error in /api/v1/jobs/saved alias: {e}")
+            import traceback
+            logger.error(f"❌ Full traceback: {traceback.format_exc()}")
+            raise HTTPException(status_code=500, detail=f"Error fetching saved jobs: {str(e)}")
+
     @app.get("/health")
     async def health_check():
         return {
