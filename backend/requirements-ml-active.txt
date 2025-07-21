@@ -1,0 +1,19 @@
+# ACTIVE ML REQUIREMENTS - Only what's currently needed
+# This file gets copied to requirements.txt when enabling ML features
+
+# Phase 1B - Profiles Router MINIMUM (CPU-optimized)
+torch==2.1.0 --index-url https://download.pytorch.org/whl/cpu  # CPU-only version (~200MB vs 2GB)
+scikit-learn==1.3.0
+sentence-transformers==2.2.2
+
+# Essential for embeddings but lightweight
+numpy>=1.26.2  # Already in requirements.txt
+pandas>=2.0.0  # Already in requirements.txt
+
+# NOTE: This enables:
+# ✅ UserProfile embedding generation
+# ✅ Basic peer matching
+# ✅ Skill similarity calculations
+# ✅ SavedRecommendation ML features
+# 
+# Total size: ~500MB vs 3GB (full GPU torch)

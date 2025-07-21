@@ -1,0 +1,16 @@
+[build]
+# Optimize Railway builds for ML packages
+buildCommand = "pip install --no-cache-dir -r requirements.txt && pip install --no-cache-dir -r requirements-ml-active.txt"
+
+[deploy]
+startCommand = "uvicorn main_deploy:app --host 0.0.0.0 --port $PORT"
+
+# Use CPU-only torch for faster downloads
+[build.env]
+PIP_INDEX_URL = "https://download.pytorch.org/whl/cpu"
+PIP_EXTRA_INDEX_URL = "https://pypi.org/simple/"
+
+# Enable build caching
+[build.cache]
+enabled = true
+paths = ["/usr/local/lib/python3.11/site-packages"]
