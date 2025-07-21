@@ -23,17 +23,33 @@ class ConversationService:
     ) -> Conversation:
         """Create a new conversation with an initial message"""
         try:
-            # Create conversation with auto-generated title if not provided
-            # ID will be auto-assigned by the database sequence
-            conversation = Conversation(
-                user_id=user_id,
-                title=title or "New Conversation",
-                auto_generated_title=(title is None),
-                last_message_at=datetime.utcnow(),
-                message_count=1
-            )
-            db.add(conversation)
-            db.flush()  # Get the conversation ID without committing
+            # Create conversation using raw SQL to ensure sequence default works
+            # SQLAlchemy ORM isn't properly applying the sequence default
+            from sqlalchemy import text
+            
+            result = db.execute(text("""
+                INSERT INTO conversations (user_id, title, auto_generated_title, 
+                                        last_message_at, message_count, total_tokens_used)
+                VALUES (:user_id, :title, :auto_generated_title, 
+                       :last_message_at, :message_count, :total_tokens_used)
+                RETURNING id, created_at, updated_at;
+            """), {
+                'user_id': user_id,
+                'title': title or "New Conversation",
+                'auto_generated_title': (title is None),
+                'last_message_at': datetime.utcnow(),
+                'message_count': 1,
+                'total_tokens_used': 0
+            })
+            
+            row = result.fetchone()
+            conversation_id, created_at, updated_at = row
+            
+            # Now fetch the conversation object using the ORM
+            conversation = db.query(Conversation).filter(Conversation.id == conversation_id).first()
+            
+            if not conversation:
+                raise Exception(f"Failed to fetch created conversation with ID {conversation_id}")
             
             # Add the initial system message and user message
             system_message = ChatMessage(
