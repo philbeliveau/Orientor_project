@@ -2035,16 +2035,28 @@ def create_app():
 
     # FRONTEND COMPATIBILITY ALIASES - Fix 404 errors
     @app.get("/careers/saved", tags=["frontend-aliases"])
-    async def get_careers_saved_alias(current_user = Depends(get_current_user_with_onboarding)):
+    async def get_careers_saved_alias(authorization: Optional[str] = Header(None)):
         """Alias for /api/v1/space/recommendations - Frontend compatibility"""
         logger.info("🔄 Frontend called /careers/saved - redirecting to space recommendations")
         try:
             # Import dependencies here to avoid startup issues
             from app.utils.database import get_db
             from app.routers.space import get_saved_recommendations
+            from app.models import User
             
-            # Get database session
+            # Get authentication info
+            if not authorization or not authorization.startswith("Bearer "):
+                raise HTTPException(status_code=401, detail="No authorization token")
+            
+            token = authorization.split(" ")[1]
+            decoded = base64.b64decode(token).decode()
+            email, user_id, onboarding_completed, timestamp = decoded.split(":", 3)
+            
+            # Get database session and user object
             db = next(get_db())
+            current_user = db.query(User).filter(User.id == int(user_id)).first()
+            if not current_user:
+                raise HTTPException(status_code=401, detail="User not found")
             
             # Call the space router function with proper parameters
             return get_saved_recommendations(db=db, current_user=current_user)
