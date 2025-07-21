@@ -130,6 +130,14 @@ except ImportError as e:
     logging.error(f"❌ Conversations router import failed: {e}")
     CONVERSATIONS_ROUTER_AVAILABLE = False
 
+try:
+    from app.routers.courses import router as courses_router
+    COURSES_ROUTER_AVAILABLE = True
+    logging.info("✅ Courses router imported successfully")
+except ImportError as e:
+    logging.error(f"❌ Courses router import failed: {e}")
+    COURSES_ROUTER_AVAILABLE = False
+
 # PHASE 1E: Import GraphSage Neural Network routers
 try:
     from app.routers.enhanced_chat import router as enhanced_chat_router
@@ -2401,6 +2409,18 @@ def create_app():
             logger.error(f"❌ Failed to include conversations router: {e}")
     else:
         logger.warning("⚠️ Conversations router not available")
+
+    if COURSES_ROUTER_AVAILABLE:
+        try:
+            app.include_router(
+                courses_router,
+                tags=["courses"]
+            )
+            logger.info("✅ Courses router included at /api/v1/courses")
+        except Exception as e:
+            logger.error(f"❌ Failed to include courses router: {e}")
+    else:
+        logger.warning("⚠️ Courses router not available")
 
     # PHASE 1E: Include GraphSage Neural Network routers
     if ENHANCED_CHAT_ROUTER_AVAILABLE:
