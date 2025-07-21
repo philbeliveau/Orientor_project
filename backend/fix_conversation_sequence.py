@@ -25,13 +25,13 @@ def fix_conversation_sequence():
         """))
         
         if not result.fetchone()[0]:
-            print("❌ Conversations table doesn't exist")
+            print("[ERROR] Conversations table doesn't exist")
             return False
             
         # Check current max ID
         result = connection.execute(text("SELECT COALESCE(MAX(id), 0) FROM conversations;"))
         max_id = result.fetchone()[0]
-        print(f"📊 Current max conversation ID: {max_id}")
+        print(f"[INFO] Current max conversation ID: {max_id}")
         
         # Create sequence if it doesn't exist
         connection.execute(text("""
@@ -54,17 +54,17 @@ def fix_conversation_sequence():
             connection.execute(text("SELECT setval('conversations_id_seq', 1, false);"))
         
         connection.commit()
-        print("✅ Conversation sequence fixed successfully")
+        print("[SUCCESS] Conversation sequence fixed successfully")
         return True
 
 if __name__ == "__main__":
     try:
         success = fix_conversation_sequence()
         if success:
-            print("🚀 Conversation table is ready for auto-increment IDs")
+            print("[SUCCESS] Conversation table is ready for auto-increment IDs")
         else:
-            print("❌ Failed to fix conversation sequence")
+            print("[ERROR] Failed to fix conversation sequence")
             sys.exit(1)
     except Exception as e:
-        print(f"❌ Error fixing sequence: {e}")
+        print(f"[ERROR] Error fixing sequence: {e}")
         sys.exit(1)
