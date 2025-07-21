@@ -2169,9 +2169,9 @@ def create_app():
     async def health_check():
         return {
             "status": "healthy",
-            "message": "Phase 1A Migration with Unified Authentication System",
-            "version": "1A.1.0-unified-auth",
-            "platform": "phase1a_unified_authentication",
+            "message": "Phase 1B Advanced Features with Quebec Education & Insights",
+            "version": "1B.1.0-advanced-features",
+            "platform": "phase1b_advanced_integration",
             "routers_included": {
                 "profiles": PROFILES_ROUTER_AVAILABLE,
                 "space": SPACE_ROUTER_AVAILABLE,
