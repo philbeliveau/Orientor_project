@@ -1,0 +1,30 @@
+# ML REQUIREMENTS - Heavy packages added gradually per feature
+# Install only when specific ML features are needed
+
+# Phase 1B - Advanced Profiles Router
+# torch>=2.0.0              # For GraphSage and neural embeddings (1-2GB)
+
+# Phase 2A - Visualization Services  
+# matplotlib>=3.5.0         # For plotting and charts (100MB+)
+# seaborn>=0.11.0           # For statistical visualizations (50MB+)
+
+# Phase 2B - ML Analysis Services
+# scikit-learn>=1.3.0       # For ML algorithms and embeddings (200MB+)
+
+# Phase 3A - Advanced NLP
+# transformers>=4.20.0      # For BERT/GPT models (500MB+)
+# sentence-transformers>=2.2.0  # For semantic embeddings (300MB+)
+
+# Phase 3B - Computer Vision (if needed)
+# opencv-python>=4.5.0      # For image processing (200MB+)
+# pillow>=9.0.0             # For image handling (10MB)
+
+# Phase 4 - Advanced Analytics
+# plotly>=5.0.0             # Interactive visualizations (50MB+)
+# dash>=2.0.0               # Web dashboards (30MB+)
+
+# INSTALLATION INSTRUCTIONS:
+# 1. Copy specific packages from comments to requirements.txt when needed
+# 2. Test locally first: pip install package_name
+# 3. Deploy gradually and monitor Railway build times
+# 4. Update this file with actual deployment phase when used

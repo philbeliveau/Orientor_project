@@ -42,7 +42,10 @@ try:
     PROFILES_ROUTER_AVAILABLE = True
     logging.info("✅ Profiles router imported successfully")
 except ImportError as e:
-    logging.error(f"❌ Profiles router import failed: {e}")
+    if "pandas" in str(e):
+        logging.warning(f"⚠️ Profiles router requires pandas - will be available in Phase 1B: {e}")
+    else:
+        logging.error(f"❌ Profiles router import failed: {e}")
     PROFILES_ROUTER_AVAILABLE = False
 
 try:

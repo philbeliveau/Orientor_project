@@ -1,5 +1,5 @@
-# PHASE 1A REQUIREMENTS - Core functionality only
-# Heavy ML packages moved to requirements-ml.txt for gradual deployment
+# CORE REQUIREMENTS - Essential for all deployments
+# Always installed on Railway for basic functionality
 
 # Core FastAPI and web framework
 fastapi==0.104.1
@@ -38,6 +38,3 @@ pandas>=2.0.0
 
 # Utilities
 python-dotenv==1.0.0
-
-# NOTE: Heavy ML packages (torch, sklearn, matplotlib, seaborn) are in requirements-ml.txt
-# Add them to this file only when implementing features that require them
