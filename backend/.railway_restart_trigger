@@ -1,0 +1,6 @@
+# Railway Restart Trigger
+# Generated: 2025-07-21T06:36:04.958014
+# Purpose: Force deployment restart to clear SQLAlchemy metadata cache
+# 
+# This file triggers a restart when committed and pushed to Railway
+# The sequence fix is complete but SQLAlchemy needs to refresh its metadata cache
