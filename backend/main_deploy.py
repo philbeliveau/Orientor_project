@@ -2044,33 +2044,89 @@ def create_app():
             "endpoints": "fallback_only"
         }
 
-    # FRONTEND COMPATIBILITY ALIASES - Using unified authentication
+    # FRONTEND COMPATIBILITY ALIASES - Robust unified authentication
     @app.get("/careers/saved", tags=["frontend-aliases"])
-    async def get_careers_saved_alias(
-        current_user: User = Depends(get_current_user_unified),
-        db: Session = Depends(get_db)
-    ):
+    async def get_careers_saved_alias(authorization: Optional[str] = Header(None)):
         """Alias for /api/v1/space/recommendations - Frontend compatibility"""
-        logger.info(f"🔄 Frontend called /careers/saved for user: {current_user.email}")
+        logger.info("🔄 Frontend called /careers/saved - using unified auth")
         try:
+            # Use unified auth if available, fallback to manual parsing
+            if UNIFIED_AUTH_AVAILABLE:
+                from app.utils.auth import get_current_user_unified
+                from app.utils.database import get_db
+                
+                # Get user through unified auth
+                db = next(get_db())
+                current_user = await get_current_user_unified(authorization, db)
+                logger.info(f"✅ Unified auth success for user: {current_user.email}")
+            else:
+                # Fallback to manual auth parsing
+                logger.warning("⚠️ Using fallback authentication")
+                if not authorization or not authorization.startswith("Bearer "):
+                    raise HTTPException(status_code=401, detail="No authorization token")
+                
+                from app.utils.database import get_db
+                from app.models import User
+                
+                token = authorization.split(" ")[1]
+                decoded = base64.b64decode(token).decode()
+                email, user_id, onboarding_completed, timestamp = decoded.split(":", 3)
+                
+                db = next(get_db())
+                current_user = db.query(User).filter(User.id == int(user_id)).first()
+                if not current_user:
+                    raise HTTPException(status_code=401, detail="User not found")
+            
+            # Call space router function
             from app.routers.space import get_saved_recommendations
             return get_saved_recommendations(db=db, current_user=current_user)
+            
         except Exception as e:
             logger.error(f"❌ Error in /careers/saved alias: {e}")
+            import traceback
+            logger.error(f"❌ Full traceback: {traceback.format_exc()}")
             raise HTTPException(status_code=500, detail=f"Error fetching saved careers: {str(e)}")
 
     @app.get("/api/v1/jobs/saved", tags=["frontend-aliases"])
-    async def get_jobs_saved_alias(
-        current_user: User = Depends(get_current_user_unified),
-        db: Session = Depends(get_db)
-    ):
+    async def get_jobs_saved_alias(authorization: Optional[str] = Header(None)):
         """Alias for jobs router saved endpoint - Frontend compatibility"""
-        logger.info(f"🔄 Frontend called /api/v1/jobs/saved for user: {current_user.email}")
+        logger.info("🔄 Frontend called /api/v1/jobs/saved - using unified auth")
         try:
+            # Use unified auth if available, fallback to manual parsing
+            if UNIFIED_AUTH_AVAILABLE:
+                from app.utils.auth import get_current_user_unified
+                from app.utils.database import get_db
+                
+                # Get user through unified auth
+                db = next(get_db())
+                current_user = await get_current_user_unified(authorization, db)
+                logger.info(f"✅ Unified auth success for user: {current_user.email}")
+            else:
+                # Fallback to manual auth parsing
+                logger.warning("⚠️ Using fallback authentication")
+                if not authorization or not authorization.startswith("Bearer "):
+                    raise HTTPException(status_code=401, detail="No authorization token")
+                
+                from app.utils.database import get_db
+                from app.models import User
+                
+                token = authorization.split(" ")[1]
+                decoded = base64.b64decode(token).decode()
+                email, user_id, onboarding_completed, timestamp = decoded.split(":", 3)
+                
+                db = next(get_db())
+                current_user = db.query(User).filter(User.id == int(user_id)).first()
+                if not current_user:
+                    raise HTTPException(status_code=401, detail="User not found")
+            
+            # Call jobs router function
             from app.routers.jobs import get_saved_jobs
             return await get_saved_jobs(discovery_source=None, current_user=current_user, db=db)
+            
         except Exception as e:
             logger.error(f"❌ Error in /api/v1/jobs/saved alias: {e}")
+            import traceback
+            logger.error(f"❌ Full traceback: {traceback.format_exc()}")
             raise HTTPException(status_code=500, detail=f"Error fetching saved jobs: {str(e)}")
 
     @app.get("/health")
