@@ -130,6 +130,39 @@ except ImportError as e:
     logging.error(f"❌ Conversations router import failed: {e}")
     CONVERSATIONS_ROUTER_AVAILABLE = False
 
+# PHASE 1E: Import GraphSage Neural Network routers
+try:
+    from app.routers.enhanced_chat import router as enhanced_chat_router
+    ENHANCED_CHAT_ROUTER_AVAILABLE = True
+    logging.info("✅ Enhanced chat router imported successfully")
+except ImportError as e:
+    logging.error(f"❌ Enhanced chat router import failed: {e}")
+    ENHANCED_CHAT_ROUTER_AVAILABLE = False
+
+try:
+    from app.routers.career_progression import router as career_progression_router
+    CAREER_PROGRESSION_ROUTER_AVAILABLE = True
+    logging.info("✅ Career progression router imported successfully")
+except ImportError as e:
+    logging.error(f"❌ Career progression router import failed: {e}")
+    CAREER_PROGRESSION_ROUTER_AVAILABLE = False
+
+try:
+    from app.routers.career_goals import router as career_goals_router
+    CAREER_GOALS_ROUTER_AVAILABLE = True
+    logging.info("✅ Career goals router imported successfully")
+except ImportError as e:
+    logging.error(f"❌ Career goals router import failed: {e}")
+    CAREER_GOALS_ROUTER_AVAILABLE = False
+
+try:
+    from app.routers.careers import router as careers_router
+    CAREERS_ROUTER_AVAILABLE = True
+    logging.info("✅ Careers router imported successfully")
+except ImportError as e:
+    logging.error(f"❌ Careers router import failed: {e}")
+    CAREERS_ROUTER_AVAILABLE = False
+
 # Test critical model imports
 try:
     from app.models import UserProfile, UserSkill, SavedRecommendation, UserNote
@@ -2202,9 +2235,9 @@ def create_app():
     async def health_check():
         return {
             "status": "healthy",
-            "message": "Phase 1D Enhanced: Program Recommendations & Conversations",
-            "version": "1D.1.0-enhanced-features",
-            "platform": "phase1d_enhanced_integration",
+            "message": "Phase 1E Complete: GraphSage Neural Networks & Advanced ML",
+            "version": "1E.1.0-neural-networks",
+            "platform": "phase1e_neural_integration",
             "routers_included": {
                 "profiles": PROFILES_ROUTER_AVAILABLE,
                 "space": SPACE_ROUTER_AVAILABLE,
@@ -2217,6 +2250,10 @@ def create_app():
                 "recommendations": RECOMMENDATIONS_ROUTER_AVAILABLE,
                 "program_recommendations": PROGRAM_RECOMMENDATIONS_ROUTER_AVAILABLE,
                 "conversations": CONVERSATIONS_ROUTER_AVAILABLE,
+                "enhanced_chat": ENHANCED_CHAT_ROUTER_AVAILABLE,
+                "career_progression": CAREER_PROGRESSION_ROUTER_AVAILABLE,
+                "career_goals": CAREER_GOALS_ROUTER_AVAILABLE,
+                "careers": CAREERS_ROUTER_AVAILABLE,
                 "models": CRITICAL_MODELS_AVAILABLE
             },
             "authentication": {
@@ -2364,8 +2401,61 @@ def create_app():
             logger.error(f"❌ Failed to include conversations router: {e}")
     else:
         logger.warning("⚠️ Conversations router not available")
+
+    # PHASE 1E: Include GraphSage Neural Network routers
+    if ENHANCED_CHAT_ROUTER_AVAILABLE:
+        try:
+            app.include_router(
+                enhanced_chat_router,
+                prefix="/api/v1",
+                tags=["enhanced-chat"]
+            )
+            logger.info("✅ Enhanced chat router included at /api/v1/enhanced-chat")
+        except Exception as e:
+            logger.error(f"❌ Failed to include enhanced chat router: {e}")
+    else:
+        logger.warning("⚠️ Enhanced chat router not available")
+
+    if CAREER_PROGRESSION_ROUTER_AVAILABLE:
+        try:
+            app.include_router(
+                career_progression_router,
+                prefix="/api/v1",
+                tags=["career-progression"]
+            )
+            logger.info("✅ Career progression router included at /api/v1/career-progression")
+        except Exception as e:
+            logger.error(f"❌ Failed to include career progression router: {e}")
+    else:
+        logger.warning("⚠️ Career progression router not available")
+
+    if CAREER_GOALS_ROUTER_AVAILABLE:
+        try:
+            app.include_router(
+                career_goals_router,
+                prefix="/api/v1",
+                tags=["career-goals"]
+            )
+            logger.info("✅ Career goals router included at /api/v1/career-goals")
+        except Exception as e:
+            logger.error(f"❌ Failed to include career goals router: {e}")
+    else:
+        logger.warning("⚠️ Career goals router not available")
+
+    if CAREERS_ROUTER_AVAILABLE:
+        try:
+            app.include_router(
+                careers_router,
+                prefix="/api/v1",
+                tags=["careers"]
+            )
+            logger.info("✅ Careers router included at /api/v1/careers")
+        except Exception as e:
+            logger.error(f"❌ Failed to include careers router: {e}")
+    else:
+        logger.warning("⚠️ Careers router not available")
     
-    logger.info("✅ Phase 1D enhanced app created successfully")
+    logger.info("✅ Phase 1E GraphSage neural networks deployed successfully")
     return app
 
 # Create the app
