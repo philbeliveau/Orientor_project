@@ -27,7 +27,7 @@ api.interceptors.request.use((config) => {
 export const getCareerRecommendations = async (limit = 30) => {
   try {
     console.log('Fetching career recommendations from:', `${API_URL}/careers/recommendations?limit=${limit}`);
-    const response = await api.get(`/careers/recommendations?limit=${limit}`);
+    const response = await api.get(`/api/v1/careers/recommendations?limit=${limit}`);
     return response.data;
   } catch (error: any) {
     console.error('Error fetching career recommendations:', error);
@@ -50,7 +50,7 @@ export const getCareerRecommendations = async (limit = 30) => {
 // Function to save a career when user swipes right
 export const saveCareer = async (careerId: number) => {
   try {
-    const response = await api.post(`/careers/save/${careerId}`);
+    const response = await api.post(`/api/v1/careers/save/${careerId}`);
     return response.data;
   } catch (error) {
     console.error('Error saving career:', error);
@@ -61,7 +61,7 @@ export const saveCareer = async (careerId: number) => {
 // Function to get saved careers (for the My Space section)
 export const getSavedCareers = async () => {
   try {
-    const response = await api.get('/careers/saved');
+    const response = await api.get('/api/v1/careers/saved');
     return response.data;
   } catch (error) {
     console.error('Error fetching saved careers:', error);

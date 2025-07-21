@@ -46,7 +46,7 @@ const SkillShowcase: React.FC<SkillShowcaseProps> = ({ userId, className = '' })
       const token = localStorage.getItem('access_token');
       
       // Generate AI description for the skill
-      const response = await fetch(`${API_URL}/insight/generate`, {
+      const response = await fetch(`${API_URL}/api/v1/insight/generate`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -177,7 +177,7 @@ class OrientatorService {
    */
   async sendMessage(request: SendMessageRequest): Promise<OrientatorMessage> {
     try {
-      const response = await this.api.post<OrientatorMessage>('/message', request);
+      const response = await this.api.post<OrientatorMessage>('/api/v1/message', request);
       return response.data;
     } catch (error) {
       console.error('Error sending message to Orientator:', error);
@@ -190,7 +190,7 @@ class OrientatorService {
    */
   async saveComponent(request: SaveComponentRequest): Promise<SaveComponentResponse> {
     try {
-      const response = await this.api.post<SaveComponentResponse>('/save-component', request);
+      const response = await this.api.post<SaveComponentResponse>('/api/v1/save-component', request);
       return response.data;
     } catch (error) {
       console.error('Error saving component:', error);
@@ -216,7 +216,7 @@ class OrientatorService {
    */
   async getConversations(limit: number = 20, offset: number = 0): Promise<ConversationSummary[]> {
     try {
-      const response = await this.api.get<ConversationSummary[]>('/conversations', {
+      const response = await this.api.get<ConversationSummary[]>('/api/v1/conversations', {
         params: { limit, offset }
       });
       return response.data;
@@ -231,7 +231,7 @@ class OrientatorService {
    */
   async getToolAnalytics(): Promise<ToolAnalytics> {
     try {
-      const response = await this.api.get<ToolAnalytics>('/tool-analytics');
+      const response = await this.api.get<ToolAnalytics>('/api/v1/tool-analytics');
       return response.data;
     } catch (error) {
       console.error('Error fetching tool analytics:', error);
@@ -244,7 +244,7 @@ class OrientatorService {
    */
   async submitFeedback(request: FeedbackRequest): Promise<{ success: boolean; message: string }> {
     try {
-      const response = await this.api.post('/feedback', request, {
+      const response = await this.api.post('/api/v1/feedback', request, {
         params: {
           message_id: request.message_id,
           rating: request.rating
@@ -262,7 +262,7 @@ class OrientatorService {
    */
   async checkHealth(): Promise<{ status: string; service: string; version: string }> {
     try {
-      const response = await this.api.get('/health');
+      const response = await this.api.get('/api/v1/health');
       return response.data;
     } catch (error) {
       console.error('Error checking service health:', error);
@@ -321,7 +321,7 @@ class OrientatorService {
    */
   async *streamMessage(request: SendMessageRequest): AsyncGenerator<Partial<OrientatorMessage>> {
     try {
-      const response = await fetch(`${this.baseURL}/api/orientator/message/stream`, {
+      const response = await fetch(`${this.baseURL}/api/v1/orientator/message/stream`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

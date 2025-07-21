@@ -131,7 +131,7 @@ export class CareerGoalsService {
       }
       
       // Fallback to generic progression endpoint if available
-      const response = await fetch(`${API_BASE}/career/progression`, {
+      const response = await fetch(`${API_BASE}/api/v1/career/progression`, {
         method: 'GET',
         headers: getAuthHeaders(),
       });
@@ -155,7 +155,7 @@ export class CareerGoalsService {
    */
   static async updateGraphSageScores(skillIds: string[]): Promise<GraphSageScore[]> {
     try {
-      const response = await fetch(`${API_BASE}/career/graphsage/update`, {
+      const response = await fetch(`${API_BASE}/api/v1/career/graphsage/update`, {
         method: 'POST',
         headers: getAuthHeaders(),
         body: JSON.stringify({ skill_ids: skillIds }),
@@ -261,7 +261,7 @@ export class CareerGoalsService {
    */
   static async getSkillRecommendations(currentSkillIds: string[]): Promise<SkillNode[]> {
     try {
-      const response = await fetch(`${API_BASE}/career/recommendations/skills`, {
+      const response = await fetch(`${API_BASE}/api/v1/career/recommendations/skills`, {
         method: 'POST',
         headers: getAuthHeaders(),
         body: JSON.stringify({ current_skills: currentSkillIds }),
@@ -296,7 +296,7 @@ export class CareerGoalsService {
     }>;
   }> {
     try {
-      const response = await fetch(`${API_BASE}/career/graphsage/relationships`, {
+      const response = await fetch(`${API_BASE}/api/v1/career/graphsage/relationships`, {
         method: 'POST',
         headers: getAuthHeaders(),
         body: JSON.stringify({ skill_ids: skillIds }),
@@ -333,7 +333,7 @@ export class CareerGoalsService {
     }>;
   }> {
     try {
-      const response = await fetch(`${API_BASE}/career/optimization/${currentTier}`, {
+      const response = await fetch(`${API_BASE}/api/v1/career/optimization/${currentTier}`, {
         method: 'GET',
         headers: getAuthHeaders(),
       });

@@ -91,7 +91,7 @@ export default function PeerChatPage() {
             }
 
             const response = await axios.get<PeerProfile>(
-                `${cleanApiUrl}/profiles/${peerId}`,
+                `${cleanApiUrl}/api/v1/profiles/${peerId}`,
                 {
                     headers: { Authorization: `Bearer ${token}` }
                 }

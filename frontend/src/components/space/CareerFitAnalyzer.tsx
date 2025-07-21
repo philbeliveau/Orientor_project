@@ -52,7 +52,7 @@ const CareerFitAnalyzer: React.FC<CareerFitAnalyzerProps> = ({ job, jobSource })
       const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
       
       // This would call your LLM service with the job context and user query
-      const response = await fetch(`${apiUrl}/api/careers/llm-query`, {
+      const response = await fetch(`${apiUrl}/api/v1/careers/llm-query`, {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json',

@@ -31,7 +31,7 @@ export interface ReflectionResponseBatch {
 }
 
 class ReflectionService {
-  private baseUrl = '/api/reflection';
+  private baseUrl = '/api/v1/reflection';
 
   /**
    * Récupère toutes les questions de réflexion

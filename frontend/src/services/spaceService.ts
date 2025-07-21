@@ -112,7 +112,7 @@ const getAuthHeader = () => {
 export const fetchSavedRecommendations = async (): Promise<Recommendation[]> => {
   try {
     console.log('Fetching saved recommendations from:', `${API_URL}/careers/saved`);
-    const response = await axios.get<Recommendation[]>(`${API_URL}/careers/saved`, getAuthHeader());
+    const response = await axios.get<Recommendation[]>(`${API_URL}/api/v1/careers/saved`, getAuthHeader());
     console.log('API response:', response.data);
     return response.data;
   } catch (error) {
@@ -127,7 +127,7 @@ export const fetchSavedRecommendations = async (): Promise<Recommendation[]> => 
 export const saveRecommendation = async (recommendation: Recommendation): Promise<Recommendation> => {
   try {
     const response = await axios.post<Recommendation>(
-      `${API_URL}/space/recommendations`,
+      `${API_URL}/api/v1/space/recommendations`,
       recommendation,
       getAuthHeader()
     );
@@ -179,7 +179,7 @@ export const saveRecommendationWithLLMAnalysis = async (
 export const deleteRecommendation = async (recommendationId: number | string): Promise<void> => {
   try {
     await axios.delete(
-      `${API_URL}/space/recommendations/${recommendationId}`, 
+      `${API_URL}/api/v1/space/recommendations/${recommendationId}`, 
       getAuthHeader()
     );
   } catch (error) {
@@ -192,7 +192,7 @@ export const deleteRecommendation = async (recommendationId: number | string): P
 export const fetchNotes = async (recommendationId: number): Promise<Note[]> => {
   try {
     const response = await axios.get<Note[]>(
-      `${API_URL}/space/notes?saved_recommendation_id=${recommendationId}`, 
+      `${API_URL}/api/v1/space/notes?saved_recommendation_id=${recommendationId}`, 
       getAuthHeader()
     );
     return response.data;
@@ -206,7 +206,7 @@ export const fetchNotes = async (recommendationId: number): Promise<Note[]> => {
 export const fetchAllUserNotes = async (): Promise<Note[]> => {
   try {
     const response = await axios.get<Note[]>(
-      `${API_URL}/space/notes`, 
+      `${API_URL}/api/v1/space/notes`, 
       getAuthHeader()
     );
     return response.data;
@@ -220,7 +220,7 @@ export const fetchAllUserNotes = async (): Promise<Note[]> => {
 export const createStandaloneNote = async (content: string): Promise<Note> => {
   try {
     const response = await axios.post<Note>(
-      `${API_URL}/space/notes`, 
+      `${API_URL}/api/v1/space/notes`, 
       { content }, 
       getAuthHeader()
     );
@@ -235,7 +235,7 @@ export const createStandaloneNote = async (content: string): Promise<Note> => {
 export const createNote = async (note: NoteCreate): Promise<Note> => {
   try {
     const response = await axios.post<Note>(
-      `${API_URL}/space/notes`, 
+      `${API_URL}/api/v1/space/notes`, 
       note, 
       getAuthHeader()
     );
@@ -250,7 +250,7 @@ export const createNote = async (note: NoteCreate): Promise<Note> => {
 export const updateNote = async (noteId: number, updates: NoteUpdate): Promise<Note> => {
   try {
     const response = await axios.put<Note>(
-      `${API_URL}/space/notes/${noteId}`, 
+      `${API_URL}/api/v1/space/notes/${noteId}`, 
       updates, 
       getAuthHeader()
     );
@@ -265,7 +265,7 @@ export const updateNote = async (noteId: number, updates: NoteUpdate): Promise<N
 export const deleteNote = async (noteId: number): Promise<void> => {
   try {
     await axios.delete(
-      `${API_URL}/space/notes/${noteId}`, 
+      `${API_URL}/api/v1/space/notes/${noteId}`, 
       getAuthHeader()
     );
   } catch (error) {
@@ -297,7 +297,7 @@ export interface LLMAnalysisResult {
 export const generateLLMAnalysisForRecommendation = async (recommendationId: number): Promise<Recommendation> => {
   try {
     const response = await axios.post<Recommendation>(
-      `${API_URL}/space/recommendations/${recommendationId}/generate-analysis`,
+      `${API_URL}/api/v1/space/recommendations/${recommendationId}/generate-analysis`,
       {},
       getAuthHeader()
     );
@@ -333,7 +333,7 @@ export const generateLLMAnalysis = async (input: LLMAnalysisInput): Promise<LLMA
 export const getUserSkills = async (): Promise<UserSkills> => {
   try {
     const response = await axios.get<UserSkills>(
-      `${API_URL}/space/skills`, 
+      `${API_URL}/api/v1/space/skills`, 
       getAuthHeader()
     );
     return response.data;
@@ -347,7 +347,7 @@ export const getUserSkills = async (): Promise<UserSkills> => {
 export const updateUserSkills = async (skills: UserSkills): Promise<UserSkills> => {
   try {
     const response = await axios.put<UserSkills>(
-      `${API_URL}/space/skills`, 
+      `${API_URL}/api/v1/space/skills`, 
       skills, 
       getAuthHeader()
     );
@@ -362,7 +362,7 @@ export const updateUserSkills = async (skills: UserSkills): Promise<UserSkills> 
 export const getSkillComparison = async (oasisCode: string): Promise<any> => {
   try {
     const response = await axios.get(
-      `${API_URL}/space/recommendations/${oasisCode}/skill-comparison`, 
+      `${API_URL}/api/v1/space/recommendations/${oasisCode}/skill-comparison`, 
       getAuthHeader()
     );
     return response.data;
@@ -446,7 +446,7 @@ export interface CareerFitResponse {
 export const analyzeCareerFit = async (jobId: string, jobSource: 'esco' | 'oasis'): Promise<CareerFitResponse> => {
   try {
     const response = await axios.post<CareerFitResponse>(
-      `${API_URL}/careers/fit-analysis`,
+      `${API_URL}/api/v1/careers/fit-analysis`,
       {
         job_id: jobId,
         job_source: jobSource
@@ -464,7 +464,7 @@ export const analyzeCareerFit = async (jobId: string, jobSource: 'esco' | 'oasis
 export const cleanupTestJobs = async (): Promise<{success: boolean, message: string, deleted_count: number}> => {
   try {
     const response = await axios.delete<{success: boolean, message: string, deleted_count: number}>(
-      `${API_URL}/careers/cleanup-test-jobs`,
+      `${API_URL}/api/v1/careers/cleanup-test-jobs`,
       getAuthHeader()
     );
     return response.data;

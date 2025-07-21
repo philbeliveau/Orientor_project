@@ -26,7 +26,7 @@ const getAuthHeader = () => {
 export const generateInsight = async (): Promise<InsightData> => {
   try {
     const response = await axios.post<InsightData>(
-      `${API_URL}/insight/generate`,
+      `${API_URL}/api/v1/insight/generate`,
       {},
       getAuthHeader()
     );
@@ -45,7 +45,7 @@ export const generateInsight = async (): Promise<InsightData> => {
 export const saveInsight = async (philosophicalText: string): Promise<{ success: boolean }> => {
   try {
     const response = await axios.patch<{ success: boolean }>(
-      `${API_URL}/insight/save`,
+      `${API_URL}/api/v1/insight/save`,
       {
         philosophical_text: philosophicalText
       },
@@ -66,7 +66,7 @@ export const saveInsight = async (philosophicalText: string): Promise<{ success:
 export const rewriteInsight = async (feedback: string): Promise<InsightData> => {
   try {
     const response = await axios.post<InsightData>(
-      `${API_URL}/insight/rewrite`,
+      `${API_URL}/api/v1/insight/rewrite`,
       {
         feedback: feedback
       },
@@ -86,7 +86,7 @@ export const rewriteInsight = async (feedback: string): Promise<InsightData> => 
 export const getInsight = async (): Promise<InsightData> => {
   try {
     const response = await axios.get<InsightData>(
-      `${API_URL}/insight/get`,
+      `${API_URL}/api/v1/insight/get`,
       getAuthHeader()
     );
     return response.data;
@@ -103,7 +103,7 @@ export const getInsight = async (): Promise<InsightData> => {
 export const regenerateInsight = async (): Promise<InsightData> => {
   try {
     const response = await axios.post<InsightData>(
-      `${API_URL}/insight/regenerate`,
+      `${API_URL}/api/v1/insight/regenerate`,
       {},
       getAuthHeader()
     );

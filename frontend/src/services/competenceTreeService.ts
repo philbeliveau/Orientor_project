@@ -145,7 +145,7 @@ export const saveJobFromTree = async (jobData: SaveJobRequest): Promise<SavedJob
     }
     
     const response = await axios.post(
-      `${API_URL}/jobs/save`,
+      `${API_URL}/api/v1/jobs/save`,
       jobData,
       {
         headers: {
@@ -173,7 +173,7 @@ export const getSavedJobs = async (): Promise<SavedJobResponse[]> => {
     }
     
     const response = await axios.get(
-      `${API_URL}/jobs/saved`,
+      `${API_URL}/api/v1/jobs/saved`,
       {
         headers: {
           'Authorization': `Bearer ${token}`
