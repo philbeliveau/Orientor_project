@@ -43,6 +43,7 @@ class SavedRecommendation(SavedRecommendationBase):
     entry_qualifications: Optional[str] = None
     suggested_improvements: Optional[str] = None
     class Config:
+        orm_mode = True
         from_attributes = True
 
 # ===== UserNote Schemas =====
@@ -63,6 +64,7 @@ class UserNote(UserNoteBase):
     updated_at: Optional[datetime] = None
     
     class Config:
+        orm_mode = True
         from_attributes = True
 
 # ===== UserSkill Schemas =====
@@ -114,4 +116,5 @@ class RecommendationWithNotes(SavedRecommendation):
     entry_qualifications: Optional[str] = None
     suggested_improvements: Optional[str] = None
     class Config:
+        orm_mode = True
         from_attributes = True 

@@ -4,7 +4,7 @@ from pydantic import BaseModel
 from typing import Optional, Dict, Any
 import logging
 from ..utils.database import get_db
-from ..routers.user import get_current_user
+from ..utils.auth import get_current_user_unified as get_current_user
 from ..models import User, UserProfile, UserSkill, SavedRecommendation
 from ..services.llm_service import generate_career_advice
 import json

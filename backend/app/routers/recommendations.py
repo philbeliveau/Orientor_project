@@ -7,7 +7,7 @@ from ..utils.database import get_db
 from ..services.Oasisembedding_service import generate_embedding
 from ..services.Swipe_career_recommendation_service import get_pinecone_career_recommendations
 from ..models import User, UserRecommendation, SavedRecommendation
-from ..routers.user import get_current_user
+from ..utils.auth import get_current_user_unified as get_current_user
 from ..schemas.space import SavedRecommendationCreate
 import logging
 from ..models import UserProfile

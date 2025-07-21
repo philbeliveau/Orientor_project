@@ -3,7 +3,7 @@ from pydantic import BaseModel
 from typing import List, Optional, Dict, Any
 from sqlalchemy.orm import Session
 from ..utils.database import get_db
-from ..utils.auth import get_current_user_unified as get_current_user
+from ..routers.user import get_current_user
 from ..services.hexaco_service import HexacoService
 from ..services.hexaco_scoring_service import HexacoScoringService
 from ..services.LLMhexaco_service import LLMHexacoService

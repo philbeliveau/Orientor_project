@@ -55,19 +55,25 @@ class GraphSageLLMIntegration:
             )
             
             if os.path.exists(model_path):
-                checkpoint = torch.load(model_path, map_location="cpu", weights_only=False)
-                
-                # Initialize model with correct dimensions
-                self.gnn_model = CareerTreeModel(
-                    input_dim=checkpoint.get('input_dim', 384),
-                    hidden_dim=checkpoint.get('hidden_dim', 256),
-                    output_dim=checkpoint.get('output_dim', 128),
-                    dropout=checkpoint.get('dropout', 0.2)
-                )
-                
-                self.gnn_model.load_state_dict(checkpoint['model_state_dict'])
-                self.gnn_model.eval()
-                logger.info("GraphSage model loaded successfully")
+                try:
+                    checkpoint = torch.load(model_path, map_location="cpu", weights_only=False)
+                    
+                    # Initialize model with checkpoint dimensions to avoid size mismatch
+                    self.gnn_model = CareerTreeModel(
+                        input_dim=checkpoint.get('input_dim', 384),
+                        hidden_dim=checkpoint.get('hidden_dim', 128),  # Use 128 to match checkpoint
+                        output_dim=checkpoint.get('output_dim', 128),
+                        dropout=checkpoint.get('dropout', 0.2)
+                    )
+                    
+                    self.gnn_model.load_state_dict(checkpoint['model_state_dict'])
+                    self.gnn_model.eval()
+                    logger.info("GraphSage model loaded successfully")
+                except Exception as e:
+                    logger.error(f"Error loading GraphSage model: {str(e)}")
+                    logger.warning("Using fallback method without GNN model")
+                    self.gnn_model = None
+                    return
             else:
                 logger.warning(f"GraphSage model not found at {model_path}, using fallback method")
                 self.gnn_model = None

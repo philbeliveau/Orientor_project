@@ -45,6 +45,7 @@ class ChatMessageResponse(ChatMessageBase):
     
     class Config:
         from_attributes = True
+        protected_namespaces = ()
 
 
 class SearchResult(BaseModel):

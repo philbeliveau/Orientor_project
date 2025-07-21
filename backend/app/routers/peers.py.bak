@@ -22,7 +22,7 @@ class PeerResponse(BaseModel):
     interests: Optional[str] = None
     
     class Config:
-        from_attributes = True
+        orm_mode = True
 
 class EnhancedPeerResponse(BaseModel):
     user_id: int
@@ -36,7 +36,7 @@ class EnhancedPeerResponse(BaseModel):
     score_details: Dict[str, Any]
     
     class Config:
-        from_attributes = True
+        orm_mode = True
 
 class HomepagePeerResponse(BaseModel):
     user_id: int
@@ -48,7 +48,7 @@ class HomepagePeerResponse(BaseModel):
     avatar_url: Optional[str] = None
     
     class Config:
-        from_attributes = True
+        orm_mode = True
 
 @router.get("/suggested", response_model=List[PeerResponse])
 def get_suggested_peers(

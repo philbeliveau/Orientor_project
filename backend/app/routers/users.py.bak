@@ -17,7 +17,7 @@ class UserResponse(BaseModel):
     email: str
 
     class Config:
-        from_attributes = True
+        orm_mode = True
 
 class ProfileResponse(BaseModel):
     user_id: int
@@ -28,7 +28,7 @@ class ProfileResponse(BaseModel):
     interests: Optional[str] = None
     
     class Config:
-        from_attributes = True
+        orm_mode = True
 
 @router.get("/me", response_model=UserResponse)
 def read_current_user(current_user: User = Depends(get_current_user)):

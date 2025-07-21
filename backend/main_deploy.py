@@ -97,6 +97,14 @@ except ImportError as e:
     logging.error(f"❌ Insight router import failed: {e}")
     INSIGHT_ROUTER_AVAILABLE = False
 
+try:
+    from app.routers.competence_tree import router as competence_tree_router
+    COMPETENCE_TREE_ROUTER_AVAILABLE = True
+    logging.info("✅ Competence tree router imported successfully")
+except ImportError as e:
+    logging.error(f"❌ Competence tree router import failed: {e}")
+    COMPETENCE_TREE_ROUTER_AVAILABLE = False
+
 # PHASE 1C: Import additional core routers
 try:
     from app.routers.school_programs import router as school_programs_router
@@ -2358,14 +2366,27 @@ def create_app():
         try:
             app.include_router(
                 insight_router,
-                prefix="/api/v1/insights",
-                tags=["insights"]
+                prefix="/api/v1/insight",
+                tags=["insight"]
             )
-            logger.info("✅ Insight router included at /api/v1/insights")
+            logger.info("✅ Insight router included at /api/v1/insight")
         except Exception as e:
             logger.error(f"❌ Failed to include insight router: {e}")
     else:
         logger.warning("⚠️ Insight router not available")
+
+    if COMPETENCE_TREE_ROUTER_AVAILABLE:
+        try:
+            app.include_router(
+                competence_tree_router,
+                prefix="/v1/competence-tree",
+                tags=["competence-tree"]
+            )
+            logger.info("✅ Competence tree router included at /v1/competence-tree")
+        except Exception as e:
+            logger.error(f"❌ Failed to include competence tree router: {e}")
+    else:
+        logger.warning("⚠️ Competence tree router not available")
 
     # PHASE 1C: Include additional core routers
     if SCHOOL_PROGRAMS_ROUTER_AVAILABLE:
