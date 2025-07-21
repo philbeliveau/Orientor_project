@@ -24,6 +24,32 @@ except ImportError as e:
     logging.warning(f"Onboarding router not available: {e}")
     ONBOARDING_ROUTER_AVAILABLE = False
 
+# PHASE 1A: Import critical routers to fix 404 errors
+try:
+    from app.routers.profiles import router as profiles_router
+    PROFILES_ROUTER_AVAILABLE = True
+    logging.info("✅ Profiles router imported successfully")
+except ImportError as e:
+    logging.error(f"❌ Profiles router import failed: {e}")
+    PROFILES_ROUTER_AVAILABLE = False
+
+try:
+    from app.routers.space import router as space_router  
+    SPACE_ROUTER_AVAILABLE = True
+    logging.info("✅ Space router imported successfully")
+except ImportError as e:
+    logging.error(f"❌ Space router import failed: {e}")
+    SPACE_ROUTER_AVAILABLE = False
+
+# Test critical model imports
+try:
+    from app.models import UserProfile, UserSkill, SavedRecommendation, UserNote
+    CRITICAL_MODELS_AVAILABLE = True
+    logging.info("✅ Critical models imported successfully")
+except ImportError as e:
+    logging.error(f"❌ Critical models import failed: {e}")
+    CRITICAL_MODELS_AVAILABLE = False
+
 # Configure logging
 logging.basicConfig(
     level=logging.INFO,
@@ -37,9 +63,9 @@ def create_app():
     """Create FastAPI app with ONLY fallback endpoints"""
     
     app = FastAPI(
-        title="Orientor Platform - Phase 2 Minimal",
-        description="Minimal fallback endpoints for dashboard functionality",
-        version="2.1.1-minimal-fixed",
+        title="Orientor Platform - Phase 1A Migration",
+        description="Critical router integration to fix 404 errors - profiles and space functionality",
+        version="1A.0.1-critical-routers",
     )
 
     # Configure CORS - Secure configuration for production
@@ -1989,9 +2015,15 @@ def create_app():
     async def health_check():
         return {
             "status": "healthy",
-            "message": "Phase 2 Minimal - Fallback endpoints operational",
-            "version": "2.1.0-minimal",
-            "platform": "minimal_fallback_endpoints"
+            "message": "Phase 1A Migration - Critical routers integrated to fix 404 errors",
+            "version": "1A.0.1-critical-routers",
+            "platform": "phase1a_critical_migration",
+            "routers_included": {
+                "profiles": PROFILES_ROUTER_AVAILABLE,
+                "space": SPACE_ROUTER_AVAILABLE,
+                "onboarding": ONBOARDING_ROUTER_AVAILABLE,
+                "models": CRITICAL_MODELS_AVAILABLE
+            }
         }
 
     # Include onboarding router if available
@@ -2000,6 +2032,33 @@ def create_app():
         logger.info("✅ Onboarding router included")
     else:
         logger.warning("⚠️ Onboarding router not available")
+    
+    # PHASE 1A: Include critical routers to fix 404 errors
+    if PROFILES_ROUTER_AVAILABLE and CRITICAL_MODELS_AVAILABLE:
+        try:
+            app.include_router(
+                profiles_router, 
+                prefix="/api/v1", 
+                tags=["profiles"]
+            )
+            logger.info("✅ Profiles router included at /api/v1/profiles")
+        except Exception as e:
+            logger.error(f"❌ Failed to include profiles router: {e}")
+    else:
+        logger.error("❌ Profiles router or critical models not available")
+    
+    if SPACE_ROUTER_AVAILABLE and CRITICAL_MODELS_AVAILABLE:
+        try:
+            app.include_router(
+                space_router,
+                prefix="/api/v1",
+                tags=["space"]
+            )
+            logger.info("✅ Space router included at /api/v1/space")
+        except Exception as e:
+            logger.error(f"❌ Failed to include space router: {e}")
+    else:
+        logger.error("❌ Space router or critical models not available")
     
     logger.info("✅ Minimal app created successfully")
     return app
