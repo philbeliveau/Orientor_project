@@ -4,7 +4,7 @@ from typing import List, Optional, Dict, Any
 from pydantic import BaseModel
 from ..utils.database import get_db
 from ..models import User, UserProfile, SuggestedPeers
-from ..routers.user import get_current_user
+from ..utils.auth import get_current_user_unified as get_current_user
 from ..services.peer_matching_service import find_compatible_peers, generate_enhanced_peer_suggestions
 import logging
 import asyncio

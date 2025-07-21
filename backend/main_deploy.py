@@ -171,6 +171,14 @@ except ImportError as e:
     logging.error(f"❌ Careers router import failed: {e}")
     CAREERS_ROUTER_AVAILABLE = False
 
+try:
+    from app.routers.peers import router as peers_router
+    PEERS_ROUTER_AVAILABLE = True
+    logging.info("✅ Peers router imported successfully")
+except ImportError as e:
+    logging.error(f"❌ Peers router import failed: {e}")
+    PEERS_ROUTER_AVAILABLE = False
+
 # Test critical model imports
 try:
     from app.models import UserProfile, UserSkill, SavedRecommendation, UserNote
@@ -2477,6 +2485,18 @@ def create_app():
             logger.error(f"❌ Failed to include careers router: {e}")
     else:
         logger.warning("⚠️ Careers router not available")
+
+    if PEERS_ROUTER_AVAILABLE:
+        try:
+            app.include_router(
+                peers_router,
+                tags=["peers"]
+            )
+            logger.info("✅ Peers router included at /peers")
+        except Exception as e:
+            logger.error(f"❌ Failed to include peers router: {e}")
+    else:
+        logger.warning("⚠️ Peers router not available")
     
     logger.info("✅ Phase 1E GraphSage neural networks deployed successfully")
     return app
