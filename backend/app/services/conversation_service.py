@@ -23,8 +23,13 @@ class ConversationService:
     ) -> Conversation:
         """Create a new conversation with an initial message"""
         try:
-            # Create conversation with auto-generated title if not provided
+            # Get next available ID to work around sequence issues
+            max_id_result = db.execute("SELECT COALESCE(MAX(id), 0) + 1 FROM conversations").fetchone()
+            next_id = max_id_result[0] if max_id_result else 1
+            
+            # Create conversation with explicit ID and auto-generated title if not provided
             conversation = Conversation(
+                id=next_id,
                 user_id=user_id,
                 title=title or "New Conversation",
                 auto_generated_title=(title is None),
