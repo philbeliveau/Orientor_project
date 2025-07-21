@@ -68,9 +68,21 @@ def extract_fields_from_text(text: str) -> Dict[str, str]:
 
     return fields
 
-# Path to ML models
+# Production-grade path resolution for ML models
+def get_model_path():
+    """Get correct path for career recommendation model."""
+    # Railway deployment path
+    railway_path = "/app/app/models/career_recommender_model.pkl"
+    if os.path.exists(railway_path):
+        return railway_path
+    
+    # Local development path
+    local_model_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "models")
+    local_path = os.path.join(local_model_dir, "career_recommender_model.pkl")
+    return local_path
+
 MODEL_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "models")
-CAREER_MODEL_PATH = os.path.join(MODEL_DIR, "career_recommender_model.pkl")
+CAREER_MODEL_PATH = get_model_path()
 
 # Load models if they exist
 CAREER_MODEL = None

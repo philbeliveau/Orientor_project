@@ -210,8 +210,9 @@ def create_app():
     
     app = FastAPI(
         title="Orientor Platform - Phase 1A Migration",
-        description="Critical router integration to fix 404 errors - profiles and space functionality",
+        description="Critical router integration to fix 404 errors - profiles and space functionality", 
         version="1A.0.1-critical-routers",
+        lifespan=lifespan
     )
 
     # Configure CORS - Enhanced for navigoproject.vercel.app
@@ -2570,9 +2571,12 @@ async def migrate_user_profiles_from_supabase():
         logger.error(f"Error in migrate-user-profiles endpoint: {e}")
         return {"status": "error", "message": str(e)}
 
-@app.on_event("startup")
-async def startup_event():
-    """Startup configuration"""
+from contextlib import asynccontextmanager
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    """Production-grade application lifespan management"""
+    # Startup
     logger.info("🚀 Phase 2 Minimal startup initiated")
     logger.info("🎯 Focus: Essential dashboard endpoints only")
     
@@ -2588,6 +2592,12 @@ async def startup_event():
         logger.warning(f"⚠️ Could not run database sequence fix: {e}")
     
     logger.info("✅ Phase 2 Minimal startup completed")
+    
+    yield
+    
+    # Shutdown
+    logger.info("🔄 Application shutdown initiated")
+    logger.info("✅ Application shutdown completed")
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 8000))

@@ -22,10 +22,39 @@ logging.basicConfig(level=logging.INFO,
                     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
-# Ajouter le chemin pour importer le modèle GraphSAGE
-backend_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-services_path = os.path.join(backend_path, "app", "services")
-gnn_path = os.path.join(services_path, "GNN")
+# Production-grade path resolution for Railway deployment compatibility
+def get_production_paths():
+    """Get correct paths for both local development and Railway deployment."""
+    current_file = os.path.abspath(__file__)
+    
+    # Try Railway deployment paths first
+    railway_paths = {
+        'backend': '/app',
+        'services': '/app/app/services', 
+        'gnn': '/app/app/services/GNN',
+        'model': '/app/app/services/GNN/best_model_20250520_022237.pt'
+    }
+    
+    # Check if we're in Railway environment
+    if os.path.exists('/app/main_deploy.py'):
+        return railway_paths
+    
+    # Local development paths
+    local_backend = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    local_paths = {
+        'backend': local_backend,
+        'services': os.path.join(local_backend, "app", "services"),
+        'gnn': os.path.join(local_backend, "app", "services", "GNN"),
+        'model': os.path.join(local_backend, "app", "services", "GNN", "best_model_20250520_022237.pt")
+    }
+    
+    return local_paths
+
+# Get production paths
+paths = get_production_paths()
+backend_path = paths['backend']
+services_path = paths['services'] 
+gnn_path = paths['gnn']
 
 # Add both paths to ensure imports work
 if services_path not in sys.path:
@@ -78,12 +107,12 @@ class GraphTraversalService:
             node_metadata_path: Chemin vers les métadonnées des nœuds
             max_depth: Profondeur maximale de traversée
         """
-        # Chemin par défaut vers le modèle GraphSAGE
+        # Production-grade model path resolution  
         if model_path is None:
-            model_path = os.path.join(
-                backend_path,
-                "app", "services", "GNN", "best_model_20250520_022237.pt"
-            )
+            # Use the production path system
+            paths = get_production_paths()
+            model_path = paths['model']
+            logger.info(f"Using model path: {model_path}")
         
         # Chemin par défaut vers le dossier de données
         data_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data")
