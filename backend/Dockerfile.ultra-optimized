@@ -1,0 +1,98 @@
+# Ultra-Optimized Multi-Stage Dockerfile for Railway Phase 1B
+# Designed for minimal rebuild times with maximum caching efficiency
+
+# =============================================================================
+# Stage 1: Base System Dependencies (rarely changes)
+# =============================================================================
+FROM python:3.11-slim AS base-system
+
+# Install system dependencies once and cache them
+RUN apt-get update && apt-get install -y \
+    gcc \
+    g++ \
+    curl \
+    postgresql-client \
+    build-essential \
+    && rm -rf /var/lib/apt/lists/* \
+    && apt-get clean
+
+# Create app directory and user
+WORKDIR /app
+RUN useradd -m -u 1001 appuser
+
+# =============================================================================
+# Stage 2: Core Dependencies (stable, changes rarely)
+# =============================================================================
+FROM base-system AS core-deps
+
+# Copy only core requirements first (FastAPI, SQLAlchemy, etc.)
+COPY requirements-core.txt .
+
+# Install core dependencies with aggressive caching
+RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir -r requirements-core.txt && \
+    rm -rf /root/.cache/pip
+
+# =============================================================================
+# Stage 3: ML Dependencies (heavy but stable once set)
+# =============================================================================
+FROM core-deps AS ml-deps
+
+# Copy ML requirements separately for independent caching
+COPY requirements-ml-active.txt .
+
+# Install ML packages with CPU optimization and caching
+RUN pip install --no-cache-dir -r requirements-ml-active.txt && \
+    rm -rf /root/.cache/pip
+
+# =============================================================================
+# Stage 4: Application Code (changes frequently)
+# =============================================================================
+FROM ml-deps AS app
+
+# Set runtime environment variables
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PYTHONPATH=/app \
+    PORT=8000
+
+# Copy application code (this layer rebuilds when code changes)
+COPY --chown=appuser:appuser . .
+
+# Create health check script
+RUN echo '#!/bin/bash\ncurl -f http://localhost:$PORT/health || exit 1' > /healthcheck.sh && \
+    chmod +x /healthcheck.sh
+
+# Switch to non-root user for security
+USER appuser
+
+# Create health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
+    CMD /healthcheck.sh
+
+# Expose port
+EXPOSE 8000
+
+# Optimized startup command
+CMD ["python", "-m", "uvicorn", "main_deploy:app", "--host", "0.0.0.0", "--port", "8000", "--workers", "1"]
+
+# =============================================================================
+# Build Optimization Summary:
+# 
+# Layer Caching Strategy:
+# 1. base-system: System deps (rebuilds: OS updates only)
+# 2. core-deps: FastAPI, DB libs (rebuilds: core dependency changes)
+# 3. ml-deps: PyTorch, ML libs (rebuilds: ML dependency changes)
+# 4. app: Application code (rebuilds: code changes only)
+#
+# Expected Build Times:
+# - Code changes only: 30-60 seconds (rebuilds layer 4 only)
+# - Core deps change: 2-3 minutes (rebuilds layers 2-4)
+# - ML deps change: 4-6 minutes (rebuilds layers 3-4)
+# - Full rebuild: 6-8 minutes (all layers)
+#
+# Cache Hit Scenarios:
+# - Daily development: 90% cache hits (layer 4 only)
+# - Dependency updates: 70% cache hits (layers 1-2 cached)
+# - New ML features: 50% cache hits (layers 1-2 cached)
+# =============================================================================

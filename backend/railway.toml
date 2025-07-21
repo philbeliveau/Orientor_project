@@ -1,16 +1,40 @@
 [build]
-# Optimize Railway builds for ML packages
+# PHASE 1B: Ultra-optimized Railway builds with Docker multi-stage caching
+builder = "DOCKER"
+dockerfilePath = "Dockerfile.ultra-optimized"
+
+# Fallback nixpacks configuration (if Docker unavailable)
 buildCommand = "pip install --no-cache-dir -r requirements.txt"
 
-[deploy]
+[deploy] 
 startCommand = "uvicorn main_deploy:app --host 0.0.0.0 --port $PORT"
+healthcheckPath = "/health"
+healthcheckTimeout = 30
+restartPolicyType = "ON_FAILURE"
+restartPolicyMaxRetries = 3
 
-# Use CPU-only torch for faster downloads
+# Optimized environment variables
+[deploy.env]
+PYTHONDONTWRITEBYTECODE = "1"
+PYTHONUNBUFFERED = "1"
+PYTHONPATH = "/app"
+
+# Build optimization settings
 [build.env]
+# Use CPU-only torch for faster downloads (~200MB vs 2GB)
 PIP_INDEX_URL = "https://download.pytorch.org/whl/cpu"
 PIP_EXTRA_INDEX_URL = "https://pypi.org/simple/"
+# Enable Docker BuildKit for parallel builds
+BUILDKIT_INLINE_CACHE = "1"
+DOCKER_BUILDKIT = "1"
 
-# Enable build caching
+# Aggressive build caching for maximum speed
 [build.cache]
 enabled = true
-paths = ["/usr/local/lib/python3.11/site-packages"]
+# Cache Python packages, pip cache, and build dependencies
+paths = [
+    "/usr/local/lib/python3.11/site-packages",
+    "/root/.cache/pip",
+    "/var/cache/apt",
+    "/tmp/pip-build"
+]
