@@ -38,8 +38,8 @@ openai==1.3.0
 pinecone>=3.0.0
 redis==5.0.1
 
-# Essential data processing (Phase 1A minimum)
-numpy>=1.26.2
+# Essential data processing (Phase 1A minimum) - NumPy 1.x for torch compatibility
+numpy<2.0.0,>=1.26.2
 pandas>=2.0.0
 
 # Utilities
@@ -79,7 +79,7 @@ scipy>=1.11.0          # Scientific computing (~100MB)
 # =============================================================================
 # BUILD INFO
 # =============================================================================
-# Generated: 1753069884.6635046 (core) + 1753075145.647452 (ML)
+# Generated: 1753076270.7541747 (core) + 1753075145.647452 (ML)
 # Total packages: ~40 packages, ~1GB deployment size
 # Expected Railway build time: 6-8 minutes (first build), 1-3 minutes (code changes)
 # Docker optimization: Use Dockerfile.ultra-optimized for maximum caching

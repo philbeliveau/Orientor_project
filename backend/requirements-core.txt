@@ -32,8 +32,8 @@ openai==1.3.0
 pinecone>=3.0.0
 redis==5.0.1
 
-# Essential data processing (Phase 1A minimum)
-numpy>=1.26.2
+# Essential data processing (Phase 1A minimum) - NumPy 1.x for torch compatibility
+numpy<2.0.0,>=1.26.2
 pandas>=2.0.0
 
 # Utilities
