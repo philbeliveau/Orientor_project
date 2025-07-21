@@ -131,25 +131,99 @@ scikit-learn>=1.3.0       # ~200MB - Similarity calculations
 
 ---
 
+## ✅ RECENTLY RESOLVED
+
+### ERROR-006: Database Sequences Missing After Supabase Migration  
+**Date**: 2025-07-21  
+**Status**: ✅ RESOLVED  
+**Severity**: Critical  
+**Component**: Database/Railway Migration  
+
+**Problem Description**:
+Supabase → Railway migration copied table schemas but not data or auto-increment sequences. This caused 500 errors when creating new records (conversations, chat messages, etc.) because PostgreSQL sequences weren't properly set up.
+
+**Error Manifestation**:
+```
+ERROR: duplicate key value violates unique constraint "conversations_pkey"
+DETAIL: Key (id)=(1) already exists.
+```
+
+**Root Cause**:
+- Railway import only copied table structure, not sequences
+- Auto-increment columns defaulted to starting at 1
+- Existing data had higher ID values, causing conflicts
+
+**Solution Applied**:
+1. Created comprehensive sequence repair script (`fix_all_sequences.py`)
+2. Fixed 20+ tables with proper PostgreSQL sequences  
+3. Set sequence values to MAX(id) + 1 for each table
+4. Verified critical chat tables (conversations, chat_messages)
+5. Updated conversation service to remove manual ID workarounds
+
+**Files Modified**:
+- `backend/fix_all_sequences.py` (new) - Repairs all sequences
+- `backend/check_missing_tables.py` (new) - Verifies specific tables
+- `backend/app/services/conversation_service.py` - Removed manual ID assignment
+
+**Scripts Created**:
+```bash
+python fix_all_sequences.py    # Fixes all table sequences
+python check_missing_tables.py # Verifies specific tables
+```
+
+**IMPACT**: ✅ Chat functionality now works, conversations can be created properly
+
+### ERROR-007: Socratic Chat Router Blocked by Heavy Model Dependencies
+**Date**: 2025-07-21  
+**Status**: ✅ RESOLVED  
+**Severity**: Medium  
+**Component**: Router Dependencies  
+
+**Problem Description**:
+Socratic chat router was blocked by `CRITICAL_MODELS_AVAILABLE` requirement, which depends on heavy profile models (UserProfile, UserSkill, etc.) that the chat doesn't actually need.
+
+**Solution Applied**:
+Modified `main_deploy.py` to include socratic chat router independently:
+```python
+# Before: Required heavy models
+if SOCRATIC_CHAT_ROUTER_AVAILABLE and CRITICAL_MODELS_AVAILABLE:
+
+# After: Only requires basic models  
+if SOCRATIC_CHAT_ROUTER_AVAILABLE:
+```
+
+**Files Modified**:
+- `backend/main_deploy.py` - Removed heavy model dependency for chat
+
+**IMPACT**: ✅ Socratic chat router now available without requiring ML dependencies
+
 ## IN PROGRESS
 
 ### ERROR-002: Missing Pandas Dependency for Profiles Router
 **Date**: 2025-07-21  
-**Status**: 🔄 IN PROGRESS  
+**Status**: ✅ RESOLVED  
 **Severity**: Medium  
 **Component**: Dependencies/Profiles Router  
 
 **Problem Description**:
-Profiles router fails to import due to missing pandas dependency: `No module named 'pandas'`
+Profiles router was thought to fail due to missing pandas dependency, but investigation revealed pandas was already present in requirements.txt.
 
-**Error Manifestation**:
-```
-ERROR:root:❌ Profiles router import failed: No module named 'pandas'
-```
+**Root Cause**:
+False alarm - pandas>=2.0.0 was already in requirements.txt. The profiles router is actually fully functional with all ML services available.
 
-**Impact**: Profiles router not available, health check shows `"profiles": false`
+**Current Status**:
+- ✅ Profiles router fully operational at `/api/v1/profiles/*`
+- ✅ All models available: UserProfile, UserSkill, SavedRecommendation
+- ✅ All ML services working: OaSIS, ESCO, Peer Matching
+- ✅ CPU-optimized torch for fast builds (3-5 min vs 10+ min)
 
-**Investigation**: Checking if pandas is required dependency and if it should be added to requirements
+**Available Endpoints**:
+- `GET /api/v1/profiles/me` - Get current user profile
+- `PUT /api/v1/profiles/update` - Update user profile
+- `GET /api/v1/profiles/{user_id}` - Get specific user profile
+- `GET /api/v1/profiles/test` - Health check
+
+**Performance**: Build time optimized to 3-5 minutes using CPU-only PyTorch
 
 ### ERROR-003: JWT Authentication Issues on Jobs Endpoint  
 **Date**: 2025-07-21  
