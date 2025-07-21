@@ -2461,7 +2461,7 @@ def create_app():
 # Create the app
 app = create_app()
 
-# Add database admin endpoint for fixing sequences
+# Add database admin endpoints
 @app.post("/admin/fix-sequences")
 async def fix_database_sequences():
     """Emergency endpoint to fix database sequences"""
@@ -2474,6 +2474,21 @@ async def fix_database_sequences():
             return {"status": "error", "message": "Failed to fix sequences"}
     except Exception as e:
         logger.error(f"Error in fix-sequences endpoint: {e}")
+        return {"status": "error", "message": str(e)}
+
+@app.post("/admin/create-tables")
+async def create_missing_tables():
+    """Emergency endpoint to create missing database tables"""
+    try:
+        from create_missing_tables import create_user_profiles_table, create_other_missing_tables
+        success1 = create_user_profiles_table()
+        success2 = create_other_missing_tables()
+        if success1 and success2:
+            return {"status": "success", "message": "Missing tables created successfully"}
+        else:
+            return {"status": "partial", "message": "Some tables may have failed to create"}
+    except Exception as e:
+        logger.error(f"Error in create-tables endpoint: {e}")
         return {"status": "error", "message": str(e)}
 
 @app.on_event("startup")
